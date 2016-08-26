@@ -7,13 +7,7 @@
     <div class="footer-col-wrapper">
       <div class="footer-col footer-col-1">
         <ul class="contact-list">
-          <li>{{ site.title | escape }}</li>
-          <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col footer-col-2">
-        <ul class="social-media-list">
+          <li>F★ on the interwebs</li>
           {% if site.github_username %}
           <li>
             {% include icon-github.html username=site.github_username %}
@@ -26,8 +20,22 @@
           </li>
           {% endif %}
           <li>
-            <i class="fa fa-link" aria-hidden="true"></i>
-            <a href="http://www.fstar-lang.org">fstar-lang.org</a>
+            <a href="http://www.fstar-lang.org"><i class="fa fa-link" aria-hidden="true"></i> fstar-lang.org</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          <li>Friends of F★ </li>
+          <li>
+            <a href="https://github.com/FStarLang/kremlin/"><span class="icon icon--github">{% include icon-github.svg %}</span><span class="username">{{ include.username }}</span> kreMLin</a>
+          </li>
+          <li>
+            <a href="https://github.com/mitls/mitls-fstar/"><span class="icon icon--github">{% include icon-github.svg %}</span><span class="username">{{ include.username }}</span> mitls</a>
+          </li>
+          <li>
+            <a href="https://project-everest.github.io"><i class="fa fa-link" aria-hidden="true"></i> Project Everest</a>
           </li>
         </ul>
       </div>
