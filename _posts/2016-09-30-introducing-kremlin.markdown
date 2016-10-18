@@ -6,12 +6,21 @@ comments: true
 categories: general
 author: Jonathan Protzenko
 ---
-Most of you are familiar with the Everest expedition already; I'm stuck in the
+
+The work we do these days on F\* is often in service of 
+[Project Everest](https://project-everest.github.io/). The goal of Everest is
+to verify _and_ deploy a drop-in replacement for the HTTPS stack, the protocol
+using which you are probably reading this page, securely (hopefully). So far, 
+we've been focusing most of our efforts in Everest on [TLS](https://tlswg.github.io/tls13-spec/), 
+the protocol at the heart of HTTPS.
+
+Right now, I'm stuck in the
 Eurostar back from our week-long meeting in Cambridge, UK, so it feels like a
-good time to write down some thoughts about KreMLin, the new project that
+good time to write down some thoughts about KreMLin, a new compiler backend that we're
+using in Everest, that
 several of us have been working on over the summer, at MSR and INRIA.
 
-As a reminder, Everest set out to verify _and_ deploy a TLS 1.3 implementation.
+As a reminder, Everest sets out to verify _and_ deploy secure cryptographic protocols, starting with TLS 1.3.
 **Deploy** is the salient part: in order to see people adopt our code, we not
 only need to write and prove our TLS library, but also to
 
@@ -80,7 +89,7 @@ code.
   operations are shown to implement the correct mathematical operations.
 - **Cryptographic properties.** By using a technique called "idealization", one
   can prove two versions of the same code: one that relies on cryptographic
-  assumptions, such as "this function can be replaced by a deterministic function
+  assumptions, such as "this function can be replaced by a function
   that returns random bytes"; and one that actually uses real cryptography
   instead of `Random.bytes()`. The code branches on an `ideal` boolean; for
   cryptographic proof purposes, we consider the `ideal` case; for extraction
