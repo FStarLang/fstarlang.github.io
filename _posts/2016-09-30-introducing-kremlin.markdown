@@ -14,6 +14,7 @@ several of us have been working on over the summer, at MSR and INRIA.
 As a reminder, Everest set out to verify _and_ deploy a TLS 1.3 implementation.
 **Deploy** is the salient part: in order to see people adopt our code, we not
 only need to write and prove our TLS library, but also to
+
 - make sure it delivers a level of performance acceptable for browser vendors,
   and
 - package it in a form that's palatable for a hardcode Windows developer that
@@ -66,6 +67,7 @@ let rec counter_mode key iv counter len plaintext ciphertext =
 
 One goes great lengths to prove the following properties of this piece of F\*
 code.
+
 - **Memory safety.** We model stack allocation in F\* using a new `Stack` effect;
   one may only allocate local mutable variables, or buffers on the stack. Every
   buffer operation needs to prove that the buffer is still live, and that the
