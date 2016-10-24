@@ -1,15 +1,16 @@
 <h1 id="module-fstar.buffer">module FStar.Buffer</h1>
-<pre class="fstar"><code>(* fsdoc: no doc for module FStar.Buffer *)</code></pre>
-<pre><code>let lemma_modifies_2_comm</code></pre>
+<p>fsdoc: no-summary-found</p>
+<p>fsdoc: no-comment-found</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((lemma_modifies_2_comm (#a:Type) (#a&#39;:Type) (b:buffer a) (b&#39;:buffer a&#39;) h0 h1):(Lemma ((requires (True))) ((ensures (&lt;==&gt;(modifies_2 b b&#39; h0 h1, modifies_2 b&#39; b h0 h1)))) (Prims<span class="kw">.</span>Cons (SMTPatT (modifies_2 b b&#39; h0 h1)) (Prims<span class="kw">.</span>Nil )))):()</code></pre></div>
 <p>Commutativity lemmas</p>
-<pre><code>let lemma_modifies_0_trans</code></pre>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((lemma_modifies_0_trans h0 h1 h2):(Lemma ((requires (/\(modifies_0 h0 h1, modifies_0 h1 h2)))) ((ensures (modifies_0 h0 h2))) (Prims<span class="kw">.</span>Cons (SMTPatT (modifies_0 h0 h1)) (Prims<span class="kw">.</span>Cons (SMTPatT (modifies_0 h1 h2)) (Prims<span class="kw">.</span>Nil ))))):()</code></pre></div>
 <p>Transitivity lemmas</p>
-<p>val create</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> create:Unidentified product: [#a:Type] Unidentified product: [init:a] Unidentified product: [len:UInt32<span class="kw">.</span>t] (StackInline (buffer a) ((requires ((<span class="kw">fun</span> h -&gt; True)))) ((ensures ((<span class="kw">fun</span> (h0:mem) b h1 -&gt; /\(/\(/\(/\(/\(/\(/\(~((contains h0 b)), live h1 b), =(idx b, <span class="dv">0</span>)), =(length b, v len)), =(frameOf b, h0.tip)), ==(Map<span class="kw">.</span>domain h1.h, Map<span class="kw">.</span>domain h0.h)), modifies_0 h0 h1), ==(as_seq h1 b, Seq<span class="kw">.</span>create (v len) init)))))))</code></pre></div>
 <p>Concrete getters and setters</p>
-<p>val createL</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> createL:Unidentified product: [#a:Type] Unidentified product: [init:list a] (StackInline (buffer a) ((requires ((<span class="kw">fun</span> h -&gt; /\(&gt;(L<span class="kw">.</span>length init, <span class="dv">0</span>), &lt;(L<span class="kw">.</span>length init, UInt<span class="kw">.</span>max_int <span class="dv">32</span>)))))) ((ensures ((<span class="kw">fun</span> (h0:mem) b h1 -&gt; <span class="kw">let</span>  len = L<span class="kw">.</span>length init <span class="kw">in</span> /\(/\(/\(/\(/\(/\(/\(/\(&gt;(len, <span class="dv">0</span>), ~((contains h0 b))), live h1 b), =(idx b, <span class="dv">0</span>)), =(length b, len)), =(frameOf b, h0.tip)), ==(Map<span class="kw">.</span>domain h1.h, Map<span class="kw">.</span>domain h0.h)), modifies_0 h0 h1), ==(as_seq h1 b, Seq<span class="kw">.</span>of_list init)))))))</code></pre></div>
 <p>Concrete getters and setters</p>
-<p>val lemma_aux</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> lemma_aux:Unidentified product: [#a:Type] Unidentified product: [b:buffer a] Unidentified product: [n:n:UInt32<span class="kw">.</span>t:{&lt;(v n, length b)}] Unidentified product: [z:a] Unidentified product: [h0:mem] (Lemma ((requires (live h0 b))) ((ensures (/\(live h0 b, modifies_1 b h0 (HS<span class="kw">.</span>upd h0 b.content (Seq<span class="kw">.</span>upd (sel h0 b) (+(idx b, v n)) z)))))) (Prims<span class="kw">.</span>Cons (SMTPat (HS<span class="kw">.</span>upd h0 b.content (Seq<span class="kw">.</span>upd (sel h0 b) (+(idx b, v n)) z))) (Prims<span class="kw">.</span>Nil )))</code></pre></div>
 <p>REMARK: the proof of this lemma relies crucially on the <code>a == a'</code> condition in B<code>uffer.disjoint</code>, and on the pattern in <code>SeqProperties.slice_upd</code></p>
-<p>val op_Array_Access</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> op_Array_Access:Unidentified product: [#a:Type] Unidentified product: [b:buffer a] Unidentified product: [n:n:UInt32<span class="kw">.</span>t:{&lt;(v n, length b)}] (Stack a ((requires ((<span class="kw">fun</span> h -&gt; live h b)))) ((ensures ((<span class="kw">fun</span> h0 z h1 -&gt; /\(/\(live h0 b, ==(h1, h0)), ==(z, Seq<span class="kw">.</span>index (as_seq h0 b) (v n))))))))</code></pre></div>
 <pre><code>Defining operators for buffer accesses as specified at
 https://github.com/FStarLang/FStar/wiki/Parsing-and-operator-precedence</code></pre>

@@ -1,10 +1,11 @@
 <h1 id="module-fstar.list.tot">module FStar.List.Tot</h1>
-<pre class="fstar"><code>(* fsdoc: no doc for module FStar.List.Tot *)</code></pre>
-<p>Base operations *</p>
-<p>List searching *</p>
-<p>val subset</p>
+<p>fsdoc: no-summary-found</p>
+<p>fsdoc: no-comment-found</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Base operations *</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> List searching *</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> subset:Unidentified product: [#a:eqtype] Unidentified product: [list a] Unidentified product: [list a] (Tot <span class="dt">bool</span>)</code></pre></div>
 <p>[subset la lb] is true if and only if all the elements from [la] are also in [lb].</p>
-<p>val assoc</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> assoc:Unidentified product: [#a:eqtype] Unidentified product: [#b:Type] Unidentified product: [a] Unidentified product: [list <span class="co">(*(a, b))] (Tot (option b))</span></code></pre></div>
 <p>List of tuples *</p>
-<p>val partition_length</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> partition_length:Unidentified product: [f:(Unidentified product: [&#39;a] (Tot <span class="dt">bool</span>))] Unidentified product: [l:list &#39;a] (Lemma ((requires True)) ((ensures (=(+(length (fst (partition f l)), length (snd (partition f l))), length l)))))</code></pre></div>
 <p>Sorting (implemented as quicksort) *</p>
