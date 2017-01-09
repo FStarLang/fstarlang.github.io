@@ -6,11 +6,36 @@
   <meta name="generator" content="pandoc" />
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
   <link rel="stylesheet" href="style.ccs" type="text/css" />
 </head>
 <body>
 <h1 id="module-fstar.uint">module FStar.UInt</h1>
 <p>fsdoc: no-summary-found</p>
 <p>fsdoc: no-comment-found</p>
+<pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> to_vec_mod_pow2:Unidentified product: [#n:nat] Unidentified product: [a:uint_t n] Unidentified product: [m:pos] Unidentified product: [i:i:nat:{/\(&lt;=(-(n, m), i), &lt;(i, n))}] (Lemma ((requires (==(%(a, pow2 m), 0)))) ((ensures (==(index (to_vec a) i, <span class="kw">false</span>)))) (Prims<span class="kw">.</span>Cons (SMTPat (index (to_vec #n a) i)) (Prims<span class="kw">.</span>Cons (SMTPatT (==(%(a, pow2 m), 0))) (Prims<span class="kw">.</span>Nil ))))</code></pre>
+<p>Used in the next two lemmas</p>
+<pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> to_vec_lt_pow2:Unidentified product: [#n:nat] Unidentified product: [a:uint_t n] Unidentified product: [m:nat] Unidentified product: [i:i:nat:{&lt;(i, -(n, m))}] (Lemma ((requires (&lt;(a, pow2 m)))) ((ensures (==(index (to_vec a) i, <span class="kw">false</span>)))) (Prims<span class="kw">.</span>Cons (SMTPat (index (to_vec #n a) i)) (Prims<span class="kw">.</span>Cons (SMTPatT (&lt;(a, pow2 m))) (Prims<span class="kw">.</span>Nil ))))</code></pre>
+<p>Used in the next two lemmas</p>
+<pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> index_to_vec_ones:Unidentified product: [#n:pos] Unidentified product: [m:m:nat:{&lt;=(m, n)}] Unidentified product: [i:i:nat:{&lt;(i, n)}] (Lemma ((requires True)) ((ensures (/\(/\(&lt;=(pow2 m, pow2 n), (==&gt;(&lt;(i, -(n, m)), ==(index (to_vec #n (-(pow2 m, 1))) i, <span class="kw">false</span>)))), (==&gt;(&lt;=(-(n, m), i), ==(index (to_vec #n (-(pow2 m, 1))) i, <span class="kw">true</span>))))))) (Prims<span class="kw">.</span>Cons (SMTPat (index (to_vec #n (-(pow2 m, 1))) i)) (Prims<span class="kw">.</span>Nil )))</code></pre>
+<p>Used in the next two lemmas</p>
 </body>
 </html>

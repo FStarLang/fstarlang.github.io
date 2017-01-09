@@ -7,41 +7,23 @@
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
-div.sourceCode { overflow-x: auto; }
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
 table.sourceCode { width: 100%; line-height: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
   </style>
   <link rel="stylesheet" href="style.ccs" type="text/css" />
 </head>
@@ -49,17 +31,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1 id="module-fstar.buffer">module FStar.Buffer</h1>
 <p>fsdoc: no-summary-found</p>
 <p>fsdoc: no-comment-found</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((lemma_modifies_2_comm (#a:Type) (#a&#39;:Type) (b:buffer a) (b&#39;:buffer a&#39;) h0 h1):(Lemma ((requires (True))) ((ensures (&lt;==&gt;(modifies_2 b b&#39; h0 h1, modifies_2 b&#39; b h0 h1)))) (Prims<span class="kw">.</span>Cons (SMTPatT (modifies_2 b b&#39; h0 h1)) (Prims<span class="kw">.</span>Nil )))):()</code></pre></div>
+<pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((lemma_modifies_2_comm (#a:Type) (#a&#39;:Type) (b:buffer a) (b&#39;:buffer a&#39;) h0 h1):(Lemma ((requires (True))) ((ensures (&lt;==&gt;(modifies_2 b b&#39; h0 h1, modifies_2 b&#39; b h0 h1)))) (Prims<span class="kw">.</span>Cons (SMTPatT (modifies_2 b b&#39; h0 h1)) (Prims<span class="kw">.</span>Nil )))):()</code></pre>
 <p>Commutativity lemmas</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((lemma_modifies_0_trans h0 h1 h2):(Lemma ((requires (/\(modifies_0 h0 h1, modifies_0 h1 h2)))) ((ensures (modifies_0 h0 h2))) (Prims<span class="kw">.</span>Cons (SMTPatT (modifies_0 h0 h1)) (Prims<span class="kw">.</span>Cons (SMTPatT (modifies_0 h1 h2)) (Prims<span class="kw">.</span>Nil ))))):()</code></pre></div>
+<pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((lemma_modifies_0_trans h0 h1 h2):(Lemma ((requires (/\(modifies_0 h0 h1, modifies_0 h1 h2)))) ((ensures (modifies_0 h0 h2))) (Prims<span class="kw">.</span>Cons (SMTPatT (modifies_0 h0 h1)) (Prims<span class="kw">.</span>Cons (SMTPatT (modifies_0 h1 h2)) (Prims<span class="kw">.</span>Nil ))))):()</code></pre>
 <p>Transitivity lemmas</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> create:Unidentified product: [#a:Type] Unidentified product: [init:a] Unidentified product: [len:UInt32<span class="kw">.</span>t] (StackInline (buffer a) ((requires ((<span class="kw">fun</span> h -&gt; True)))) ((ensures ((<span class="kw">fun</span> (h0:mem) b h1 -&gt; /\(/\(/\(/\(/\(/\(/\(~((contains h0 b)), live h1 b), =(idx b, <span class="dv">0</span>)), =(length b, v len)), =(frameOf b, h0.tip)), ==(Map<span class="kw">.</span>domain h1.h, Map<span class="kw">.</span>domain h0.h)), modifies_0 h0 h1), ==(as_seq h1 b, Seq<span class="kw">.</span>create (v len) init)))))))</code></pre></div>
+<pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> create:Unidentified product: [#a:Type] Unidentified product: [init:a] Unidentified product: [len:UInt32.t] (StackInline (buffer a) ((requires ((<span class="kw">fun</span> h -&gt; True)))) ((ensures ((<span class="kw">fun</span> (h0:mem) b h1 -&gt; /\(/\(/\(/\(/\(/\(/\(~((contains h0 b)), live h1 b), =(idx b, 0)), =(length b, v len)), =(frameOf b, h0.tip)), ==(Map<span class="kw">.</span>domain h1.h, Map<span class="kw">.</span>domain h0.h)), modifies_0 h0 h1), ==(as_seq h1 b, Seq<span class="kw">.</span>create (v len) init)))))))</code></pre>
 <p>Concrete getters and setters</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> createL:Unidentified product: [#a:Type] Unidentified product: [init:list a] (StackInline (buffer a) ((requires ((<span class="kw">fun</span> h -&gt; /\(&gt;(L<span class="kw">.</span>length init, <span class="dv">0</span>), &lt;(L<span class="kw">.</span>length init, UInt<span class="kw">.</span>max_int <span class="dv">32</span>)))))) ((ensures ((<span class="kw">fun</span> (h0:mem) b h1 -&gt; <span class="kw">let</span>  len = L<span class="kw">.</span>length init <span class="kw">in</span> /\(/\(/\(/\(/\(/\(/\(/\(&gt;(len, <span class="dv">0</span>), ~((contains h0 b))), live h1 b), =(idx b, <span class="dv">0</span>)), =(length b, len)), =(frameOf b, h0.tip)), ==(Map<span class="kw">.</span>domain h1.h, Map<span class="kw">.</span>domain h0.h)), modifies_0 h0 h1), ==(as_seq h1 b, Seq<span class="kw">.</span>of_list init)))))))</code></pre></div>
+<pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> createL:Unidentified product: [#a:Type] Unidentified product: [init:list a] (StackInline (buffer a) ((requires ((<span class="kw">fun</span> h -&gt; /\(&lt;(0, normalize_term (L<span class="kw">.</span>length init)), &lt;(normalize_term (L<span class="kw">.</span>length init), UInt<span class="kw">.</span>max_int 32)))))) ((ensures ((<span class="kw">fun</span> (h0:mem) b h1 -&gt; <span class="kw">let</span>  len = L<span class="kw">.</span>length init <span class="kw">in</span> /\(/\(/\(/\(/\(/\(/\(/\(&gt;(len, 0), ~((contains h0 b))), live h1 b), =(idx b, 0)), =(length b, len)), =(frameOf b, h0.tip)), ==(Map<span class="kw">.</span>domain h1.h, Map<span class="kw">.</span>domain h0.h)), modifies_0 h0 h1), ==(as_seq h1 b, Seq<span class="kw">.</span>of_list init)))))))</code></pre>
 <p>Concrete getters and setters</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> lemma_aux:Unidentified product: [#a:Type] Unidentified product: [b:buffer a] Unidentified product: [n:n:UInt32<span class="kw">.</span>t:{&lt;(v n, length b)}] Unidentified product: [z:a] Unidentified product: [h0:mem] (Lemma ((requires (live h0 b))) ((ensures (/\(live h0 b, modifies_1 b h0 (HS<span class="kw">.</span>upd h0 b.content (Seq<span class="kw">.</span>upd (sel h0 b) (+(idx b, v n)) z)))))) (Prims<span class="kw">.</span>Cons (SMTPat (HS<span class="kw">.</span>upd h0 b.content (Seq<span class="kw">.</span>upd (sel h0 b) (+(idx b, v n)) z))) (Prims<span class="kw">.</span>Nil )))</code></pre></div>
+<pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> lemma_aux:Unidentified product: [#a:Type] Unidentified product: [b:buffer a] Unidentified product: [n:n:UInt32.t:{&lt;(v n, length b)}] Unidentified product: [z:a] Unidentified product: [h0:mem] (Lemma ((requires (live h0 b))) ((ensures (/\(live h0 b, modifies_1 b h0 (HS<span class="kw">.</span>upd h0 b.content (Seq<span class="kw">.</span>upd (sel h0 b) (+(idx b, v n)) z)))))) (Prims<span class="kw">.</span>Cons (SMTPat (HS<span class="kw">.</span>upd h0 b.content (Seq<span class="kw">.</span>upd (sel h0 b) (+(idx b, v n)) z))) (Prims<span class="kw">.</span>Nil )))</code></pre>
 <p>REMARK: the proof of this lemma relies crucially on the <code>a == a'</code> condition in B<code>uffer.disjoint</code>, and on the pattern in <code>SeqProperties.slice_upd</code></p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> op_Array_Access:Unidentified product: [#a:Type] Unidentified product: [b:buffer a] Unidentified product: [n:n:UInt32<span class="kw">.</span>t:{&lt;(v n, length b)}] (Stack a ((requires ((<span class="kw">fun</span> h -&gt; live h b)))) ((ensures ((<span class="kw">fun</span> h0 z h1 -&gt; /\(/\(live h0 b, ==(h1, h0)), ==(z, Seq<span class="kw">.</span>index (as_seq h0 b) (v n))))))))</code></pre></div>
+<pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> op_Array_Access:Unidentified product: [#a:Type] Unidentified product: [b:buffer a] Unidentified product: [n:n:UInt32.t:{&lt;(v n, length b)}] (Stack a ((requires ((<span class="kw">fun</span> h -&gt; live h b)))) ((ensures ((<span class="kw">fun</span> h0 z h1 -&gt; /\(/\(live h0 b, ==(h1, h0)), ==(z, Seq<span class="kw">.</span>index (as_seq h0 b) (v n))))))))</code></pre>
 <pre><code>Defining operators for buffer accesses as specified at
 https://github.com/FStarLang/FStar/wiki/Parsing-and-operator-precedence</code></pre>
 </body>
