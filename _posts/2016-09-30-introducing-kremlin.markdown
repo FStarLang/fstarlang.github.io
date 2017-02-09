@@ -36,6 +36,8 @@ handshake connects to the server, says hi, agrees on which algorithms to use,
 and agrees on some cryptographic parameters. Once parameters have been setup,
 the cryptographic layer is responsible for encrypting the stream of data.
 
+<!--excerpt-->
+
 Experience shows that the performance of a TLS library most often boils down to
 the performance of the underlying cryptography. The handshake is network-bound,
 but when transmitting a big file, encryption needs to be fast. This means that
