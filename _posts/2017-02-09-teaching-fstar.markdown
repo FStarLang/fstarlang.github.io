@@ -1,9 +1,10 @@
 ---
 layout: post
 title:  "Teaching F*"
+date:   2017-02-09 22:40:00 +0100
 comments: true
 categories: general
-author: Markulf Kohlweiss, Catalin Hritcu, and Jonathan Protzenko
+author: Markulf Kohlweiss, Karthik Bhargavan, Catalin Hritcu, and Jonathan Protzenko
 ---
 
 Having to teach F* provides strong motivation to dust off the cobwebs
