@@ -7,17 +7,16 @@ categories: general
 author: Catalin Hritcu
 ---
 
-The F* team is pleased to announce the release of F* v0.9.4.0:
-<https://github.com/FStarLang/FStar/releases/tag/V0.9.4.0>
-
+The F* team is pleased to announce the release of
+[F* v0.9.4.0](https://github.com/FStarLang/FStar/releases/tag/V0.9.4.0).
 This is the culmination of exactly one year of hard work from a very
 quickly expanding F* team. We're not very good at keeping precise
 change lists, but here are the main highlights of this release:
 
 - Predicative hierarchy of universes with universe polymorphism
 - Uniform syntax between expressions and types allowing rich type-level computation
-- Dijkstra Monads for Free (https://www.fstar-lang.org/papers/dm4free/)
-- Extraction to C via KreMLin (https://github.com/FStarLang/kremlin)
+- [Dijkstra Monads for Free](https://www.fstar-lang.org/papers/dm4free/)
+- [Extraction to C via KreMLin](https://github.com/FStarLang/kremlin)
 - New parser based on Menhir
 - New pretty printer for surface syntax and `fstar --indent`
 - Changed default effect to Tot
