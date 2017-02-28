@@ -89,6 +89,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>The empty list has no elements.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> memP_existsb:Unidentified product: [#a:Type] Unidentified product: [f:(Unidentified product: [a] (Tot <span class="dt">bool</span>))] Unidentified product: [xs:list a] (Lemma ((ensures (&lt;==&gt;(existsb f xs, (exists x:a.{:pattern } (/\(=(f x, <span class="kw">true</span>), memP x xs))))))))</code></pre></div>
 <p>Full specification for [existsb]: [existsb f xs] holds if, and only if, there exists an element [x] of [xs] such that [f x] holds.</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((noRepeats_nil (#a:eqtype)):(Lemma ((ensures (noRepeats #a (Prims<span class="kw">.</span>Nil )))))):()</code></pre></div>
+<p>Properties of [noRepeats]</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Properties <span class="kw">of</span> [assoc] </code></pre></div>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Properties <span class="kw">of</span> [fold_left] </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Properties <span class="kw">of</span> [strict_prefix_of] </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Properties <span class="kw">of</span> <span class="st">&lt;&lt; with lists </span></code></pre></div>
 </body>
 </html>
