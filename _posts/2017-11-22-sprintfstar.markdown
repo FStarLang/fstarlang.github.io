@@ -13,7 +13,7 @@ Augustsson about a language called
 the first time I had come across dependent types. Lennart's first
 example motivating the need for (and the power of) dependent types is
 `printf`: a function used by legions of programmers that is, in an
-essential way, very dependently type. Having worked since then on many
+essential way, very dependently typed. Having worked since then on many
 programming languages with various forms of dependent types, now, 15
 years later, a language that I contribute to has a proper, dependently
 typed `printf`. Well, a `sprintf`, but Cayenne's example was also a
@@ -87,9 +87,9 @@ let rec sprintf_type (s:string{valid_format_string s}) =
 
 Look at that closely: in the first case, if the format string is
 empty, `sprintf ""` just returns a string. If the format string begins
-with `"%d"`, then sprintf expects one more argument, an int, followed
-by whatever arguments are needed by the rest of the format string, and
-so on.
+with `"%d"`, then sprintf expects one more argument, an `int`,
+followed by whatever arguments are needed by the rest of the format
+string, and so on.
 
 Note: I cut a corner there, treating a `string` as a list of
 characters, whereas in F\* you have to explicitly coerce a string to a
