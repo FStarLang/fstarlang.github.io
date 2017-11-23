@@ -134,7 +134,9 @@ resorting to SMT reasoning.
 
 See [the actual
 library](https://github.com/FStarLang/FStar/blob/master/ulib/FStar.Printf.fst)
-(based on a version that Catalin Hritcu first wrote) for more details
+(based on F* code that Catalin Hritcu initially modeled after [Arthur Azevedo de
+Amorim's Coq sprintf](http://poleiro.info/posts/2013-04-19-type-safe-printf-in-coq.html))
+for more details
 about how this works, including how we compile away uses of `sprintf`
 to a bunch of string concatenations.
 
