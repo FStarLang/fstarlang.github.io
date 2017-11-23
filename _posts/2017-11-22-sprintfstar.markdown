@@ -19,7 +19,7 @@ years later, a language that I contribute to has a proper, dependently
 typed `printf`. Well, a `sprintf`, but Cayenne's example was also a
 `sprintf`. This post is about explaining how `sprintf` works in F*.
 
-* What is `sprintf`?
+## What is `sprintf`?
 
 Some variant of `sprintf` appears in the standard library of many
 programming languages---it allows for a string to be formatted and
@@ -45,7 +45,7 @@ string", and the number and types of its remaining arguments
 **depends** on the format string: i.e., `sprintf` is the
 quintessential dependently typed function.
 
-* A sketch of `sprintf` in F\*
+## A sketch of `sprintf` in F\*
 
 Here's one type for a simplified version of `sprintf` in F\*.
 
@@ -96,7 +96,7 @@ characters, whereas in F\* you have to explicitly coerce a string to a
 list of characters. You can see the whole program, corners restored,
 at the end of this post.
 
-* That was simple! Why did it take so long for F\* to get `sprintf`?
+## That was simple! Why did it take so long for F\* to get `sprintf`?
 
 The version of `sprintf` provided in F\*'s standard library
 (`FStar.Printf.sprintf`) is somewhat more complex than the simple
@@ -130,7 +130,7 @@ Notice the additional calls to `normalize`, which signals to F\* to
 fully reduce `valid_format_string s` and `sprintf_type s` before
 resorting to SMT reasoning.
 
-* Additional material
+## Additional material
 
 See [the actual
 library](https://github.com/FStarLang/FStar/blob/master/ulib/FStar.Printf.fst)
