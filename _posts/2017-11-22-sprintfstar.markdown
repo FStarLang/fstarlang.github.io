@@ -31,13 +31,13 @@ way. A basic usage is like this:
        sprintf "%s %d, %d" month day year
 ```    
 
-Where, `format_data "Nov." 22 2017` returns the string `"Nov. 22, 2017"`.
+Where, `format_date "Nov." 22 2017` returns the string `"Nov. 22, 2017"`.
 
 Or:
 
 ```
-   let format_date (day:string) (month:string) (day:nat) (year:nat) =
-       sprintf "%s, %s %d, %d" day month day year
+   let format_date (dow:string) (month:string) (day:nat) (year:nat) =
+       sprintf "%s, %s %d, %d" dow month day year
 ```
 
 The curious thing here is that `sprintf`'s first argument is a "format
