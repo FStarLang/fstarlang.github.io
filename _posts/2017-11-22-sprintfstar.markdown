@@ -138,7 +138,9 @@ library](https://github.com/FStarLang/FStar/blob/master/ulib/FStar.Printf.fst)
 about how this works, including how we compile away uses of `sprintf`
 to a bunch of string concatenations.
 
-Here's a small standalone version
+Here's a small standalone version. Compare it to the version in
+Cayenne ... it's pretty similar, but it took (well, at least it took
+me) 15 years to get there! : )
 
 ```
 module SimplePrintf
