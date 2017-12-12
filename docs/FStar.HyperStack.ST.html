@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" href="style.ccs" type="text/css" />
+</head>
+<body>
+<h1 id="module-fstar.hyperstack.st">module FStar.HyperStack.ST</h1>
+<p>fsdoc: no-summary-found</p>
+<p>fsdoc: no-comment-found</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">type</span> abbrev </code></pre></div>
+<pre><code>WARNING: this effect is unsafe, for C/C++ extraction it shall only be used by
+code that would later extract to OCaml or by library functions</code></pre>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">type</span> abbrev </code></pre></div>
+<p>Effect of stacked based code: the 'equal_domains' clause enforces that - both mem have the same tip - both mem reference the same heaps (their map: rid -&gt; heap have the same domain) - in each region id, the corresponding heaps contain the same references on both sides</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">type</span> abbrev </code></pre></div>
+<p>Effect of heap-based code. - assumes that the stack is empty (tip = root) - corresponds to the HyperHeap ST effect - can call to Stack and ST code freely - respects the stack invariant: the stack has to be empty when returning</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">type</span> abbrev </code></pre></div>
+<p>Effect of low-level code: - maintains the allocation invariant on the stack: no allocation unless in a new frame that has to be popped before returning - not constraints on heap allocation</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">type</span> abbrev </code></pre></div>
+<p>Effect that indicates to the Kremlin compiler that allocation may occur in the caller's frame. In other terms, the backend has to unfold the body into the caller's body. This effect maintains the stack AND the heap invariant: it can be inlined in the Stack effect function body as well as in a Heap effect function body</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">type</span> abbrev </code></pre></div>
+<p>Effect that indicates to the Kremlin compiler that allocation may occur in the caller's frame. In other terms, the backend has to unfold the body into the caller's body. This effect only maintains the stack invariant: the tip is left unchanged and no allocation may occurs in the stack lower than the tip. Region allocation is not constrained. Heap allocation is not constrained.</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">type</span> abbrev </code></pre></div>
+<pre><code>TODO:
+REMOVE AS SOON AS CONSENSUS IS REACHED ON NEW LOW EFFECT NAMES</code></pre>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> push_frame:Unidentified product: [<span class="dt">unit</span>] (Unsafe <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> m -&gt; True)))) ((ensures ((<span class="kw">fun</span> (m0:mem) _ (m1:mem) -&gt; fresh_frame m0 m1)))))</code></pre></div>
+<p>Pushes a new empty frame on the stack</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> pop_frame:Unidentified product: [<span class="dt">unit</span>] (Unsafe <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> m -&gt; poppable m)))) ((ensures ((<span class="kw">fun</span> (m0:mem) _ (m1:mem) -&gt; /\(/\(poppable m0, ==(m1, pop m0)), popped m0 m1))))))</code></pre></div>
+<p>Removes old frame from the stack</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> salloc:Unidentified product: [#a:Type] Unidentified product: [init:a] (StackInline (stackref a) ((requires ((<span class="kw">fun</span> m -&gt; is_stack_region m.tip)))) ((ensures salloc_post init)))</code></pre></div>
+<pre><code> Allocates on the top-most stack frame
+ </code></pre>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> op_Colon_Equals:Unidentified product: [#a:Type] Unidentified product: [r:reference a] Unidentified product: [v:a] (STL <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> m -&gt; contains m r)))) ((ensures (assign_post r v))))</code></pre></div>
+<p>Assigns, provided that the reference exists. Guaranties the strongest low-level effect: Stack</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> op_Bang:Unidentified product: [#a:Type] Unidentified product: [r:reference a] (Stack a ((requires ((<span class="kw">fun</span> m -&gt; weak_contains m r)))) ((ensures (deref_post r))))</code></pre></div>
+<p>Dereferences, provided that the reference exists. Guaranties the strongest low-level effect: Stack</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> get:Unidentified product: [<span class="dt">unit</span>] (Stack mem ((requires ((<span class="kw">fun</span> m -&gt; True)))) ((ensures ((<span class="kw">fun</span> m0 x m1 -&gt; /\(==(m0, x), ==(m1, m0)))))))</code></pre></div>
+<pre><code>Returns the current stack of heaps --- it should be erased</code></pre>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> recall:Unidentified product: [#a:Type] Unidentified product: [r:<span class="kw">ref</span> a] (Stack <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> m -&gt; True)))) ((ensures ((<span class="kw">fun</span> m0 _ m1 -&gt; /\(==(m0, m1), contains m1 r))))))</code></pre></div>
+<p>We can only recall refs with mm bit unset, not stack refs</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> recall_region:Unidentified product: [i:i:HH<span class="kw">.</span>rid:{is_eternal_region i}] (Stack <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> m -&gt; True)))) ((ensures ((<span class="kw">fun</span> m0 _ m1 -&gt; /\(==(m0, m1), is_in i m1.h))))))</code></pre></div>
+<p>We can only recall eternal regions, not stack regions</p>
+</body>
+</html>

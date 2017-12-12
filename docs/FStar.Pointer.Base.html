@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" href="style.ccs" type="text/css" />
+</head>
+<body>
+<h1 id="module-fstar.pointer.base">module FStar.Pointer.Base</h1>
+<p>fsdoc: no-summary-found</p>
+<p>fsdoc: no-comment-found</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">* Definitions </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Type codes </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((struct_field (l:struct_typ)):(Tot eqtype)):(s:<span class="dt">string</span>:{List<span class="kw">.</span>Tot<span class="kw">.</span>mem s (List<span class="kw">.</span>Tot<span class="kw">.</span>map fst l)})</code></pre></div>
+<p><code>struct_field l</code> is the type of fields of <code>TStruct l</code> (i.e. a refinement of <code>string</code>).</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> union_field:struct_field</code></pre></div>
+<p><code>union_field l</code> is the type of fields of <code>TUnion l</code> (i.e. a refinement of <code>string</code>).</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((typ_of_struct_field (l:struct_typ) (f:struct_field l)):(Tot (t:typ:{<span class="st">&lt;&lt;(t, l)}))):List.Tot.assoc_mem f l; let  y = _ (List.Tot.assoc f l) in List.Tot.assoc_precedes f l y; y</span></code></pre></div>
+<p><code>typ_of_struct_field l f</code> is the type of data associated with field <code>f</code> in <code>TStruct l</code> (i.e. a refinement of <code>typ</code>).</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((typ_of_union_field (l:union_typ) (f:union_field l)):(Tot (t:typ:{<span class="st">&lt;&lt;(t, l)}))):typ_of_struct_field l f</span></code></pre></div>
+<p><code>typ_of_union_field l f</code> is the type of data associated with field <code>f</code> in <code>TUnion l</code> (i.e. a refinement of <code>typ</code>).</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Pointers <span class="kw">to</span> data <span class="kw">of</span> <span class="kw">type</span> t.
+
+    This defines two main types:
+    - `npointer (t: typ)`, a pointer that may be <span class="st">&quot;NULL&quot;</span>;
+    - `pointer (t: typ)`, a pointer that cannot be <span class="st">&quot;NULL&quot;</span>
+      (defined <span class="kw">as</span> a refinement <span class="kw">of</span> `npointer`).
+
+    `nullptr #t` (<span class="kw">of</span> <span class="kw">type</span> `npointer t`) represents the <span class="st">&quot;NULL&quot;</span> value.</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> The <span class="kw">null</span> pointer </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Buffers </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Interpretation <span class="kw">of</span> <span class="kw">type</span> codes.
+
+   Defines functions mapping from <span class="kw">type</span> codes (`typ`) <span class="kw">to</span> their interpretation <span class="kw">as</span>
+   FStar types. For example, `type_of_typ (TBase TUInt8)` is `FStar.UInt8<span class="kw">.</span>t`.</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((type_of_base_typ (t:base_typ)):(Tot Type0)):<span class="kw">match</span> t <span class="kw">with</span> TUInt  -&gt; nat | TUInt8  -&gt; FStar<span class="kw">.</span>UInt8<span class="kw">.</span>t | TUInt16  -&gt; FStar<span class="kw">.</span>UInt16<span class="kw">.</span>t | TUInt32  -&gt; FStar<span class="kw">.</span>UInt32<span class="kw">.</span>t | TUInt64  -&gt; FStar<span class="kw">.</span>UInt64<span class="kw">.</span>t | TInt  -&gt; <span class="dt">int</span> | TInt8  -&gt; FStar<span class="kw">.</span>Int8<span class="kw">.</span>t | TInt16  -&gt; FStar<span class="kw">.</span>Int16<span class="kw">.</span>t | TInt32  -&gt; FStar<span class="kw">.</span>Int32<span class="kw">.</span>t | TInt64  -&gt; FStar<span class="kw">.</span>Int64<span class="kw">.</span>t | TChar  -&gt; FStar<span class="kw">.</span>Char<span class="kw">.</span><span class="dt">char</span> | TBool  -&gt; <span class="dt">bool</span> | TUnit  -&gt; <span class="dt">unit</span></code></pre></div>
+<p>Interpretation of base types.</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">type</span> abbrev </code></pre></div>
+<p>Interpretation of arrays of elements of (interpreted) type <code>t</code>.</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> gtdata:key:eqtype <span class="dv">0</span> -&gt; value:(Unidentified product: [key] (Tot Type0)) -&gt; (Tot Type0)</code></pre></div>
+<p>Helper for the interpretation of unions.</p>
+<pre><code>A C union is interpreted as a dependent pair of a key and a value (which
+depends on the key). The intent is for the key to be ghost, as it will not
+exist at runtime (C unions are untagged).
+
+Therefore,
+- `gtdata_get_key` (defined below) is in `GTot`, and
+- `gtdata_get_value` asks for the key `k` to read, and a proof that `k`
+  matches the ghost key.</code></pre>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> gtdata_get_key:#key:eqtype -&gt; #value:(Unidentified product: [key] (Tot Type0)) -&gt; u:gtdata key value -&gt; (GTot key)</code></pre></div>
+<p>Gets the current tag (or key) of a union.</p>
+<pre><code>This is a ghost function, as this tag only exists at the logical level and
+is not stored in memory.</code></pre>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> gtdata_get_value:#key:eqtype -&gt; #value:(Unidentified product: [key] (Tot Type0)) -&gt; u:gtdata key value -&gt; k:key -&gt; (Pure (value k) ((requires (==(gtdata_get_key u, k)))) ((ensures ((<span class="kw">fun</span> _ -&gt; True)))))</code></pre></div>
+<p>Gets the value of a union, provided the field to read from.</p>
+<pre><code>This field must match the ghost tag of the union (hence the `require`
+clause).</code></pre>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> (<span class="kw">struct</span> (l:struct_typ)):DM<span class="kw">.</span>t (struct_field l) (type_of_struct_field l)</code></pre></div>
+<p>Interpretation of structs, as dependent maps.</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> (union (l:struct_typ)):gtdata (struct_field l) (type_of_struct_field l)</code></pre></div>
+<p>Interpretation of unions, as ghostly-tagged data (see <code>gtdata</code> for more information).</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">* Semantics <span class="kw">of</span> pointers </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Operations on pointers </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> The readable permission.
+    We choose <span class="kw">to</span> implement it only abstractly, instead <span class="kw">of</span> explicitly
+    tracking the permission <span class="kw">in</span> the heap.</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> The active field <span class="kw">of</span> a union </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">* Semantics <span class="kw">of</span> buffers </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Operations on buffers </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">* The modifies clause </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> loc:(Type <span class="dv">0</span>)</code></pre></div>
+<p>Sets of pointers. The set tracks not only the set of pointers, but also the corresponding set of addresses (which cannot be constructed by set comprehension, since it must be computational.)</p>
+<p>In practice, we assume that all pointers in a set should be of the same region, because that is how the modifies clause will be defined. However, we do not need to enforce this constraint.</p>
+<p>We could also completely remove this &quot;assumption&quot; and explicitly track the regions and addresses within those regions. But this way would actually defeat the practical purpose of regions.</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> NOTE: intersection cannot be easily defined, indeed consider two
+different (<span class="kw">not</span> necessarily disjoint) pointers p1, p2 coming from the
+same root address, intersect (singleton p1) (singleton p2) will be
+empty whereas intersect (singleton (as_addr p1)) (singleton (as_addr
+p2)) will <span class="kw">not</span>.
+
+However, <span class="kw">if</span> the pointer <span class="kw">type</span> had decidable equality, <span class="kw">then</span> it should work, by
+recording, <span class="kw">for</span> each address, the computational set <span class="kw">of</span> pointers <span class="kw">in</span> the
+<span class="kw">global</span> set <span class="kw">of</span> pointers, that have that address; <span class="kw">and</span> so the set <span class="kw">of</span>
+addresses will be computed <span class="kw">as</span>: every address whose corresponding set <span class="kw">of</span>
+pointers is nonempty.
+
+Anyway, it seems that we will <span class="kw">not</span> need intersection <span class="kw">for</span> <span class="kw">use</span> <span class="kw">with</span> the
+modifies clauses.
+</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> The modifies clause proper </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Concrete allocators, getters <span class="kw">and</span> setters </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> write_union_field:#l:union_typ -&gt; p:pointer ((TUnion l)) -&gt; fd:struct_field l -&gt; (HST<span class="kw">.</span>Stack <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> h -&gt; live h p)))) ((ensures ((<span class="kw">fun</span> h0 _ h1 -&gt; /\(/\(/\(live h0 p, live h1 p), modifies_1 p h0 h1), is_active_union_field h1 p fd))))))</code></pre></div>
+<p>Given our model, this operation is stateful, however it should be translated to a no-op by Kremlin, as the tag does not actually exist at runtime.</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> NOTE: we historically used <span class="kw">to</span> have this lemma <span class="kw">for</span> arbitrary
+pointer inclusion, but that became wrong <span class="kw">for</span> unions. </code></pre></div>
+</body>
+</html>
