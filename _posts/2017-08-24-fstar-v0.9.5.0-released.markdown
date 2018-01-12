@@ -1,0 +1,26 @@
+---
+layout: post
+title:  "F* v0.9.5.0 released"
+date:   2017-08-24
+comments: true
+categories: general
+author: Catalin Hritcu and Nik Swamy
+---
+
+On 24 August 2017 we released [F* v0.9.5.0](https://github.com/FStarLang/FStar/releases/tag/v0.9.5.0).
+This is another big release with lots of changes and new features compared to v0.9.4.0.
+
+# Main new features
+
+- Proofs by reification (see this [paper](https://arxiv.org/abs/1703.00055))
+- A revision of the libraries based on a new formal account of monotonic state (see this [paper](https://arxiv.org/abs/1707.02466))
+- Extraction of programs with user-defined effects
+- Experimental support for tactics
+- [New IDE protocol](https://github.com/FStarLang/FStar/wiki/Editor-support-for-F*) and [new IDE features](https://github.com/FStarLang/fstar-mode.el): autocompletion, evaluation, real-time syntax checking, jump-to-definition, type-at-point, etc.
+
+# Changes and other improvements
+- A reorganization of the library and a single `fstarlib.cmxa` against which to link all F* programs compiled to OCaml (this change is incompatible with previous versions of F*)
+- A new printer of source terms
+- Revised error reporting from failed SMT queries
+- Improved support for separate compilation via a binary format for checked modules
+- Fixed a ton of bugs ([179 closed GitHub issues](https://github.com/FStarLang/FStar/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aclosed%20closed%3A%222017-02-02%20..%202017-08-23%22%20))

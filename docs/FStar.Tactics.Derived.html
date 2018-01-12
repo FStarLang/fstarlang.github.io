@@ -46,12 +46,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   <link rel="stylesheet" href="style.ccs" type="text/css" />
 </head>
 <body>
-<h1 id="module-fstar.monotonic.seq">module FStar.Monotonic.Seq</h1>
+<h1 id="module-fstar.tactics.derived">module FStar.Tactics.Derived</h1>
 <p>fsdoc: no-summary-found</p>
 <p>fsdoc: no-comment-found</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((write_at_end (#a:Type) (#i:rid) (r:m_rref i (<span class="dt">seq</span> a) grows) (x:a)):(ST <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> h -&gt; True)))) ((ensures ((<span class="kw">fun</span> h0 _ h1 -&gt; /\(/\(/\(/\(contains h1 r, modifies_one i h0 h1), modifies_ref i (Set<span class="kw">.</span>singleton (HS<span class="kw">.</span>as_addr r)) h0 h1), ==(HS<span class="kw">.</span>sel h1 r, Seq<span class="kw">.</span>snoc (HS<span class="kw">.</span>sel h0 r) x)), witnessed (at_least (Seq<span class="kw">.</span>length (HS<span class="kw">.</span>sel h0 r)) x r)))))))):recall r; <span class="kw">let</span>  s0 = !(r) <span class="kw">in</span> <span class="kw">let</span>  n = Seq<span class="kw">.</span>length s0 <span class="kw">in</span> :=(r, Seq<span class="kw">.</span>snoc s0 x); at_least_is_stable n x r; Seq<span class="kw">.</span>contains_snoc s0 x; mr_witness r (at_least n x r)</code></pre></div>
-<p>extending a stored sequence, witnessing its new entry for convenience.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> collect:Unidentified product: [(Unidentified product: [&#39;a] (Tot (<span class="dt">seq</span> &#39;b)))] Unidentified product: [s:<span class="dt">seq</span> &#39;a] (Tot (<span class="dt">seq</span> &#39;b) (decreases (Seq<span class="kw">.</span>length s)))</code></pre></div>
-<p>yields the concatenation of all sequences returned by f applied to the sequence elements</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((exact (t:tactic term)):tactic <span class="dt">unit</span>):t_exact <span class="kw">false</span> <span class="kw">true</span> t</code></pre></div>
+<p>[exact e] will solve a goal [Gamma |- w : t] if [e] has type exactly [t] in [Gamma]. Also, [e] needs to unift with [w], but this will almost always be the case since [w] is usually a uvar.</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((exact_guard (t:tactic term)):tactic <span class="dt">unit</span>):t_exact <span class="kw">false</span> <span class="kw">false</span> t</code></pre></div>
+<p>Like [exact], but allows for the term [e] to have a type [t] only under some guard [g], adding the guard as a goal.</p>
 </body>
 </html>

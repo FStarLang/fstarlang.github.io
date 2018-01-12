@@ -46,12 +46,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   <link rel="stylesheet" href="style.ccs" type="text/css" />
 </head>
 <body>
-<h1 id="module-fstar.monotonic.seq">module FStar.Monotonic.Seq</h1>
+<h1 id="module-fstar.list.pure.base">module FStar.List.Pure.Base</h1>
 <p>fsdoc: no-summary-found</p>
 <p>fsdoc: no-comment-found</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((write_at_end (#a:Type) (#i:rid) (r:m_rref i (<span class="dt">seq</span> a) grows) (x:a)):(ST <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> h -&gt; True)))) ((ensures ((<span class="kw">fun</span> h0 _ h1 -&gt; /\(/\(/\(/\(contains h1 r, modifies_one i h0 h1), modifies_ref i (Set<span class="kw">.</span>singleton (HS<span class="kw">.</span>as_addr r)) h0 h1), ==(HS<span class="kw">.</span>sel h1 r, Seq<span class="kw">.</span>snoc (HS<span class="kw">.</span>sel h0 r) x)), witnessed (at_least (Seq<span class="kw">.</span>length (HS<span class="kw">.</span>sel h0 r)) x r)))))))):recall r; <span class="kw">let</span>  s0 = !(r) <span class="kw">in</span> <span class="kw">let</span>  n = Seq<span class="kw">.</span>length s0 <span class="kw">in</span> :=(r, Seq<span class="kw">.</span>snoc s0 x); at_least_is_stable n x r; Seq<span class="kw">.</span>contains_snoc s0 x; mr_witness r (at_least n x r)</code></pre></div>
-<p>extending a stored sequence, witnessing its new entry for convenience.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> collect:Unidentified product: [(Unidentified product: [&#39;a] (Tot (<span class="dt">seq</span> &#39;b)))] Unidentified product: [s:<span class="dt">seq</span> &#39;a] (Tot (<span class="dt">seq</span> &#39;b) (decreases (Seq<span class="kw">.</span>length s)))</code></pre></div>
-<p>yields the concatenation of all sequences returned by f applied to the sequence elements</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Functions on list <span class="kw">with</span> a pure specification </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> map2:#a1:Type -&gt; #a2:Type -&gt; #b:Type -&gt; f:Unidentified product: [a1] Unidentified product: [a2] b -&gt; l1:list a1 -&gt; l2:list a2 -&gt; (Pure (list b) ((requires (==(length l1, length l2)))) ((ensures ((<span class="kw">fun</span> _ -&gt; True)))) (decreases l1))</code></pre></div>
+<p>[map2] takes a pair of list of the same length [x1; ...; xn] [y1; ... ; yn] and return the list [f x1 y1; ... ; f xn yn]</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> map3:#a1:Type -&gt; #a2:Type -&gt; #a3:Type -&gt; #b:Type -&gt; f:Unidentified product: [a1] Unidentified product: [a2] Unidentified product: [a3] b -&gt; l1:list a1 -&gt; l2:list a2 -&gt; l3:list a3 -&gt; (Pure (list b) ((requires (<span class="kw">let</span>  n = length l1 <span class="kw">in</span> (/\(==(n, length l2), ==(n, length l3)))))) ((ensures ((<span class="kw">fun</span> _ -&gt; True)))) (decreases l1))</code></pre></div>
+<p>[map3] takes three lists of the same length [x1; ...; xn][y1; ... ; yn] [z1; ... ; zn] and return the list [f x1 y1 z1; ... ; f xn yn zn]</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> zip:#a1:Type -&gt; #a2:Type -&gt; l1:list a1 -&gt; l2:list a2 -&gt; (Pure (list <span class="co">(*(a1, a2))) ((requires (let  n = length l1 in ==(n, length l2)))) ((ensures ((fun _ -&gt; True)))))</span></code></pre></div>
+<p>[zip] takes a pair of list of the same length and returns the list of index-wise pairs</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> zip3:#a1:Type -&gt; #a2:Type -&gt; #a3:Type -&gt; l1:list a1 -&gt; l2:list a2 -&gt; l3:list a3 -&gt; (Pure (list <span class="co">(*(*(a1, a2), a3))) ((requires (let  n = length l1 in /\(==(n, length l2), ==(n, length l3))))) ((ensures ((fun _ -&gt; True)))))</span></code></pre></div>
+<p>[zip3] takes a 3-tuple of list of the same length and returns the list of index-wise 3-tuples</p>
 </body>
 </html>

@@ -46,12 +46,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   <link rel="stylesheet" href="style.ccs" type="text/css" />
 </head>
 <body>
-<h1 id="module-fstar.monotonic.seq">module FStar.Monotonic.Seq</h1>
+<h1 id="module-fstar.universe">module FStar.Universe</h1>
 <p>fsdoc: no-summary-found</p>
 <p>fsdoc: no-comment-found</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((write_at_end (#a:Type) (#i:rid) (r:m_rref i (<span class="dt">seq</span> a) grows) (x:a)):(ST <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> h -&gt; True)))) ((ensures ((<span class="kw">fun</span> h0 _ h1 -&gt; /\(/\(/\(/\(contains h1 r, modifies_one i h0 h1), modifies_ref i (Set<span class="kw">.</span>singleton (HS<span class="kw">.</span>as_addr r)) h0 h1), ==(HS<span class="kw">.</span>sel h1 r, Seq<span class="kw">.</span>snoc (HS<span class="kw">.</span>sel h0 r) x)), witnessed (at_least (Seq<span class="kw">.</span>length (HS<span class="kw">.</span>sel h0 r)) x r)))))))):recall r; <span class="kw">let</span>  s0 = !(r) <span class="kw">in</span> <span class="kw">let</span>  n = Seq<span class="kw">.</span>length s0 <span class="kw">in</span> :=(r, Seq<span class="kw">.</span>snoc s0 x); at_least_is_stable n x r; Seq<span class="kw">.</span>contains_snoc s0 x; mr_witness r (at_least n x r)</code></pre></div>
-<p>extending a stored sequence, witnessing its new entry for convenience.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> collect:Unidentified product: [(Unidentified product: [&#39;a] (Tot (<span class="dt">seq</span> &#39;b)))] Unidentified product: [s:<span class="dt">seq</span> &#39;a] (Tot (<span class="dt">seq</span> &#39;b) (decreases (Seq<span class="kw">.</span>length s)))</code></pre></div>
-<p>yields the concatenation of all sequences returned by f applied to the sequence elements</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> This <span class="ot">module</span> implements some basic facilities <span class="kw">to</span> raise the universe <span class="kw">of</span> a <span class="kw">type</span> *
+  * The <span class="kw">type</span> [raise_t a] is supposed <span class="kw">to</span> be isomorphic <span class="kw">to</span> [a] but <span class="kw">in</span> a higher     *
+  * universe. The two functions [raise_val] <span class="kw">and</span> [dowgrade_val] allow <span class="kw">to</span> coerce   *
+  * from [a] <span class="kw">to</span> [raise_t a] <span class="kw">and</span> back.                                            *</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> raise_t:Unidentified product: [(Type a)] (Type max a +(b, <span class="dv">1</span>))</code></pre></div>
+<p>[raise_t a] is an isomorphic copy of [a] (living in universe 'ua) in universe ['ub + 1] *</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> raise_val:Unidentified product: [#a:(Type a)] Unidentified product: [x:a] raise_t a b a</code></pre></div>
+<p>[raise_val x] injects a value [x] of type [a] to [raise_t a] *</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> downgrade_val:Unidentified product: [#a:(Type a)] Unidentified product: [x:raise_t a b a] a</code></pre></div>
+<p>[downgrade_val x] projects a value [x] of type [raise_t a] to [a] *</p>
 </body>
 </html>
