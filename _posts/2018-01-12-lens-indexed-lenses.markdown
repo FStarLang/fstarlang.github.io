@@ -7,11 +7,11 @@ categories: general
 author: Nikhil Swamy
 ---
 
-In languages like Haskell, *lenses* are an increasingly popular,
-highly composable, way of structuring bidirectional data access, i.e.,
-operations to both read and functionally update parts of a composite
-object. There are many introductory tutorials about lenses on the web:
-one that I found to be particularly gentle is by [Gabriel
+In many functional programming languages, *lenses* are an increasingly
+popular, highly composable, way of structuring bidirectional data
+access, i.e., operations to both read and functionally update parts of
+a composite object. There are many introductory tutorials about lenses
+on the web: one that I found to be particularly gentle is by [Gabriel
 Gonzalez](http://www.haskellforall.com/2012/01/haskell-for-mainstream-programmers_28.html). I'll
 borrow some of his ideas to introduce lenses briefly here, although,
 of course, I'll work in F\* rather than Haskell.
