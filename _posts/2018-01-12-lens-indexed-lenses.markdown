@@ -179,7 +179,7 @@ F\* pseudo-syntax) like so:
 ```
 type st_lens a b = {
      st_get : a -> ST b;
-     st{put:  b -> a -> ST a
+     st_put:  b -> a -> ST a
 }
 ```
  
@@ -213,7 +213,7 @@ F\*.
 val get (r:ref a) 
     : ST a
     (requires (fun h -> True))
-    (ensures  (fun h0 x h1 -> h0==h1 /\ x = sel h0 r))
+    (ensures  (fun h0 x h1 -> h0==h1 /\ x == sel h0 r))
 
 val put (v:a) (r:ref a)
     : ST unit 
@@ -252,7 +252,7 @@ type st_lens #a #b (l:hlens a b) = {
    st_get : (x:a
          -> ST b
             (requires (fun h -> True))
-            (ensures  (fun h0 x h1 -> h0==h1 /\ y = l.get (h0, x))));
+            (ensures  (fun h0 x h1 -> h0==h1 /\ y == l.get (h0, x))));
 
    st_put : (y:b 
          -> x:a 
