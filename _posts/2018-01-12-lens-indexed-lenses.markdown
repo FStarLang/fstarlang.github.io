@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Verified in-place updates with lens-indexed lenses"
+title:  "Lens-indexed lenses"
 date:   2018-01-12 00:43:00 -0900
 comments: true
 categories: general
