@@ -55,7 +55,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Realized in C by a pair of a length field and uint8_t* in C Realized in OCaml by a string</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> reveal:Unidentified product: [bytes] (GTot (S<span class="kw">.</span><span class="dt">seq</span> <span class="dt">byte</span>))</code></pre></div>
 <p>representation for specs that need lemmas not defined here.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> get:Unidentified product: [b:bytes] Unidentified product: [pos:pos:u32:{&lt;(U32<span class="kw">.</span>v pos, length b)}] <span class="dt">byte</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> get:Unidentified product: [b:bytes] Unidentified product: [pos:pos:u32:{&lt;(U32<span class="kw">.</span>v pos, length b)}] (Pure <span class="dt">byte</span> ((requires True)) ((ensures ((<span class="kw">fun</span> y -&gt; ==(y, S<span class="kw">.</span>index (reveal b) (U32<span class="kw">.</span>v pos)))))))</code></pre></div>
 <p>If you statically know the length, it is OK to read at arbitrary indexes</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> create:Unidentified product: [len:u32] Unidentified product: [v:<span class="dt">byte</span>] b:lbytes (U32<span class="kw">.</span>v len):{forall i:i:u32:{_}.{:pattern .[](b, i)} =(.[](b, i), v)}</code></pre></div>
 <p>creating byte values *</p>
