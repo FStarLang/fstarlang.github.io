@@ -137,7 +137,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Call the unifier on two terms. The return value is whether unification was possible. When the tactics returns true, the terms may have been instantited by unification. When false, there is no effect.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((launch_process (prog:<span class="dt">string</span>) (args:<span class="dt">string</span>) (input:<span class="dt">string</span>)):(Tac <span class="dt">string</span>)):_ (__launch_process prog args input)</code></pre></div>
 <p>Launches an external process [prog] with arguments [args] and input [input] and returns the output. For security reasons, this can only be performed when the <code>--unsafe_tactic_exec</code> options was provided for the current F* invocation. The tactic will fail if this is not so.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> __fresh_binder_named:Unidentified product: [<span class="dt">string</span>] Unidentified product: [typ] __tac binder</code></pre></div>
-<p>Get a fresh binder of some name and type. The name is only useful for pretty-printing, since there is a fresh unaccessible integer within the binder too.</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> __fresh_bv_named:Unidentified product: [<span class="dt">string</span>] Unidentified product: [typ] __tac bv</code></pre></div>
+<p>Get a fresh bv of some name and type. The name is only useful for pretty-printing, since there is a fresh unaccessible integer within the bv too.</p>
 </body>
 </html>
