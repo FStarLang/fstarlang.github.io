@@ -49,9 +49,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1 id="module-fstar.tactics.derived">module FStar.Tactics.Derived</h1>
 <p>fsdoc: no-summary-found</p>
 <p>fsdoc: no-comment-found</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((exact (t:term)):(Tac <span class="dt">unit</span>)):t_exact <span class="kw">false</span> <span class="kw">true</span> t</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((exact (t:term)):(Tac <span class="dt">unit</span>)):with_policy SMT ((<span class="kw">fun</span> () -&gt; t_exact <span class="kw">false</span> t))</code></pre></div>
 <p>[exact e] will solve a goal [Gamma |- w : t] if [e] has type exactly [t] in [Gamma]. Also, [e] needs to unift with [w], but this will almost always be the case since [w] is usually a uvar.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((exact_guard (t:term)):(Tac <span class="dt">unit</span>)):t_exact <span class="kw">false</span> <span class="kw">false</span> t</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((exact_guard (t:term)):(Tac <span class="dt">unit</span>)):with_policy Goal ((<span class="kw">fun</span> () -&gt; t_exact <span class="kw">false</span> t))</code></pre></div>
 <p>Like [exact], but allows for the term [e] to have a type [t] only under some guard [g], adding the guard as a goal.</p>
 </body>
 </html>

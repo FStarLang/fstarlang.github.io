@@ -64,7 +64,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> (tc (t:term)):_ (__tc t)</code></pre></div>
 <p>[tc] returns the type of a term in the current environment, or fails if it is untypeable.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> (unshelve (t:term)):_ (__unshelve t)</code></pre></div>
-<p>[tc] returns the type of a term in the current environment, or fails if it is untypeable.</p>
+<p>[unshelve] creates a goal from a term for its given type. It can be used when the system decided not to present a goal, but you want one anyway. For example, if you request a uvar through [uvar_env] or [fresh_uvar], you might want to instantiate it explicitly.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((unquote (#a:Type) (t:term)):(Tac a)):_ (__unquote #a t)</code></pre></div>
 <p>[unquote t] with turn a quoted term [t] into an actual value, of any type. This will fail at tactic runtime if the quoted term does not typecheck to type [a].</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> (trytac (t:Unidentified product: [<span class="dt">unit</span>] (Tac &#39;a))):_ (__trytac (reify (t ())))</code></pre></div>
@@ -99,6 +99,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>[divide n t1 t2] will split the current set of goals into the [n] first ones, and the rest. It then runs [t1] on the first set, and [t2] on the second, returning both results (and concatenating remaining goals).</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((<span class="dt">seq</span> (f:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>)) (g:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>))):(Tac <span class="dt">unit</span>)):_ (__seq (reify (f ())) (reify (g ())))</code></pre></div>
 <p>Runs tactic [t1] on the current goal, and then tactic [t2] on <em>each</em> subgoal produced by [t1]. Each invocation of [t2] runs on a proofstate with a single goal (they're &quot;focused&quot;).</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> __t_exact:Unidentified product: [<span class="dt">bool</span>] Unidentified product: [term] __tac <span class="dt">unit</span></code></pre></div>
+<p>boolean is whether to set the expected type internally. * Just use <code>exact</code> from FStar.Tactics.Derived if you don't know what that means.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((apply (t:term)):(Tac <span class="dt">unit</span>)):_ (__apply t)</code></pre></div>
 <p>[apply f] will attempt to produce a solution to the goal by an application of [f] to any amount of arguments (which need to be solved as further goals). The amount of arguments introduced is the least such that [f a_i] unifies with the goal's type.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((apply_raw (t:term)):(Tac <span class="dt">unit</span>)):_ (__apply_raw t)</code></pre></div>
@@ -115,6 +117,24 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Solves a goal [Gamma |= squash (l == r)] by attempting to unify [l] with [r]. This currently only exists because of some universe problems when trying to [apply] a reflexivity lemma.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((pointwise (tau:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>))):(Tac <span class="dt">unit</span>)):_ (__pointwise BottomUp (reify (tau ())))</code></pre></div>
 <p>(TODO: explain bettter) When running [pointwise tau] For every subterm [t'] of the goal's type [t], the engine will build a goal [Gamma |= t' == ?u] and run [tau] on it. When the tactic proves the goal, the engine will rewrite [t'] for [?u] in the original goal type. This is done for every subterm, bottom-up. This allows to recurse over an unknown goal type. By inspecting the goal, the [tau] can then decide what to do (to not do anything, use [trefl]).</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((topdown_rewrite (ctrl:Unidentified product: [term] (Tac <span class="co">(*(bool, int)))) (rw:Unidentified product: [unit] (Tac unit))):(Tac unit)):_ (__topdown_rewrite ((fun x -&gt; reify (ctrl x))) (reify (rw ())))</span></code></pre></div>
+<p>[topdown_rewrite ctrl rw] is used to rewrite those sub-terms [t] of the goal on which [fst (ctrl t)] returns true.</p>
+<pre><code>On each such sub-term, [rw] is presented with an equality of goal
+of the form [Gamma |= t == ?u]. When [rw] proves the goal,
+the engine will rewrite [t] for [?u] in the original goal
+type.
+
+The goal formula is traversed top-down and the traversal can be
+controlled by [snd (ctrl t)]:
+
+When [snd (ctrl t) = 0], the traversal continues down through the
+position in the goal term.
+
+When [snd (ctrl t) = 1], the traversal continues to the next
+sub-tree of the goal.
+
+When [snd (ctrl t) = 2], no more rewrites are performed in the
+goal.</code></pre>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((later ()):(Tac <span class="dt">unit</span>)):_ __later</code></pre></div>
 <p>Push the current goal to the back.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((dup ()):(Tac <span class="dt">unit</span>)):_ __dup</code></pre></div>
@@ -139,5 +159,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Launches an external process [prog] with arguments [args] and input [input] and returns the output. For security reasons, this can only be performed when the <code>--unsafe_tactic_exec</code> options was provided for the current F* invocation. The tactic will fail if this is not so.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> __fresh_bv_named:Unidentified product: [<span class="dt">string</span>] Unidentified product: [typ] __tac bv</code></pre></div>
 <p>Get a fresh bv of some name and type. The name is only useful for pretty-printing, since there is a fresh unaccessible integer within the bv too.</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> __change:Unidentified product: [typ] __tac <span class="dt">unit</span></code></pre></div>
+<p>Change the goal to another type, given that it is convertible * to the current type.</p>
 </body>
 </html>
