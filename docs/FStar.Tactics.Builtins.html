@@ -53,10 +53,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>[top_env] returns the environment where the tactic started running. * This works even if no goals are present.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> (cur_env ()):_ __cur_env</code></pre></div>
 <p>[cur_env] returns the current goal's environment</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> push_binder:Unidentified product: [env] Unidentified product: [binder] env</code></pre></div>
+<p>[push_binder] extends the environment with a single binder. This is useful as one traverses the syntax of a term, pushing binders as one traverses a binder in a lambda, match, etc. Note, the environment here is disconnected to (though perhaps derived from) the environment in the proofstate</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> (cur_goal ()):_ __cur_goal</code></pre></div>
 <p>[cur_goal] returns the current goal's type</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> (cur_witness ()):_ __cur_witness</code></pre></div>
 <p>[cur_witness] returns the current goal's witness</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((ngoals ()):(Tac <span class="dt">int</span>)):_ __ngoals</code></pre></div>
+<p>[ngoals ()] returns the number of goals</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((ngoals_smt ()):(Tac <span class="dt">int</span>)):_ __ngoals_smt</code></pre></div>
+<p>[ngoals_smt ()] returns the number of SMT goals</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> (is_guard ()):_ __is_guard</code></pre></div>
 <p>[is_guard] returns whether the current goal arised from a typechecking guard</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> (refine_intro ()):_ __refine_intro</code></pre></div>
