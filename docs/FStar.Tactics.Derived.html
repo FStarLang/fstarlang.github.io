@@ -49,6 +49,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1 id="module-fstar.tactics.derived">module FStar.Tactics.Derived</h1>
 <p>fsdoc: no-summary-found</p>
 <p>fsdoc: no-comment-found</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((with_policy pol (f:Unidentified product: [<span class="dt">unit</span>] (Tac &#39;a))):(Tac &#39;a)):<span class="kw">let</span>  old_pol = get_guard_policy () <span class="kw">in</span> set_guard_policy pol; <span class="kw">let</span>  r = f () <span class="kw">in</span> set_guard_policy old_pol; r</code></pre></div>
+<p>Set the guard policy only locally, without affecting calling code</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((exact (t:term)):(Tac <span class="dt">unit</span>)):with_policy SMT ((<span class="kw">fun</span> () -&gt; t_exact <span class="kw">false</span> t))</code></pre></div>
 <p>[exact e] will solve a goal [Gamma |- w : t] if [e] has type exactly [t] in [Gamma]. Also, [e] needs to unift with [w], but this will almost always be the case since [w] is usually a uvar.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((exact_guard (t:term)):(Tac <span class="dt">unit</span>)):with_policy Goal ((<span class="kw">fun</span> () -&gt; t_exact <span class="kw">false</span> t))</code></pre></div>
