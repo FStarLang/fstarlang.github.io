@@ -108,25 +108,8 @@ clause).</code></pre>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">* Semantics <span class="kw">of</span> buffers </code></pre></div>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Operations on buffers </code></pre></div>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">* The modifies clause </code></pre></div>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> loc:(Type <span class="dv">0</span>)</code></pre></div>
-<p>Sets of pointers. The set tracks not only the set of pointers, but also the corresponding set of addresses (which cannot be constructed by set comprehension, since it must be computational.)</p>
-<p>In practice, we assume that all pointers in a set should be of the same region, because that is how the modifies clause will be defined. However, we do not need to enforce this constraint.</p>
-<p>We could also completely remove this &quot;assumption&quot; and explicitly track the regions and addresses within those regions. But this way would actually defeat the practical purpose of regions.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> NOTE: intersection cannot be easily defined, indeed consider two
-different (<span class="kw">not</span> necessarily disjoint) pointers p1, p2 coming from the
-same root address, intersect (singleton p1) (singleton p2) will be
-empty whereas intersect (singleton (as_addr p1)) (singleton (as_addr
-p2)) will <span class="kw">not</span>.
-
-However, <span class="kw">if</span> the pointer <span class="kw">type</span> had decidable equality, <span class="kw">then</span> it should work, by
-recording, <span class="kw">for</span> each address, the computational set <span class="kw">of</span> pointers <span class="kw">in</span> the
-<span class="kw">global</span> set <span class="kw">of</span> pointers, that have that address; <span class="kw">and</span> so the set <span class="kw">of</span>
-addresses will be computed <span class="kw">as</span>: every address whose corresponding set <span class="kw">of</span>
-pointers is nonempty.
-
-Anyway, it seems that we will <span class="kw">not</span> need intersection <span class="kw">for</span> <span class="kw">use</span> <span class="kw">with</span> the
-modifies clauses.
-</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> loc_union_idem:s:loc -&gt; (Lemma (==(loc_union s s, s)) (Prims<span class="kw">.</span>Cons (SMTPat (loc_union s s)) (Prims<span class="kw">.</span>Nil )))</code></pre></div>
+<p>The following is useful to make Z3 cut matching loops with modifies_trans and modifies_refl</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> The modifies clause proper </code></pre></div>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Concrete allocators, getters <span class="kw">and</span> setters </code></pre></div>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> write_union_field:#l:union_typ -&gt; p:pointer ((TUnion l)) -&gt; fd:struct_field l -&gt; (HST<span class="kw">.</span>Stack <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> h -&gt; live h p)))) ((ensures ((<span class="kw">fun</span> h0 _ h1 -&gt; /\(/\(/\(live h0 p, live h1 p), modifies_1 p h0 h1), is_active_union_field h1 p fd))))))</code></pre></div>
