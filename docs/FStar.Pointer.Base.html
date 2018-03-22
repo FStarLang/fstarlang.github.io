@@ -51,12 +51,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>fsdoc: no-comment-found</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">* Definitions </code></pre></div>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Type codes </code></pre></div>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((struct_field (l:struct_typ)):(Tot eqtype)):(s:<span class="dt">string</span>:{List<span class="kw">.</span>Tot<span class="kw">.</span>mem s (List<span class="kw">.</span>Tot<span class="kw">.</span>map fst l)})</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((struct_field&#39; (l:struct_typ&#39;)):(Tot eqtype)):(s:<span class="dt">string</span>:{List<span class="kw">.</span>Tot<span class="kw">.</span>mem s (List<span class="kw">.</span>Tot<span class="kw">.</span>map fst l)})</code></pre></div>
 <p><code>struct_field l</code> is the type of fields of <code>TStruct l</code> (i.e. a refinement of <code>string</code>).</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> union_field:struct_field</code></pre></div>
 <p><code>union_field l</code> is the type of fields of <code>TUnion l</code> (i.e. a refinement of <code>string</code>).</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((typ_of_struct_field (l:struct_typ) (f:struct_field l)):(Tot (t:typ:{<span class="st">&lt;&lt;(t, l)}))):List.Tot.assoc_mem f l; let  y = _ (List.Tot.assoc f l) in List.Tot.assoc_precedes f l y; y</span></code></pre></div>
-<p><code>typ_of_struct_field l f</code> is the type of data associated with field <code>f</code> in <code>TStruct l</code> (i.e. a refinement of <code>typ</code>).</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> `typ_of_struct_field l f` is the <span class="kw">type</span> <span class="kw">of</span> data associated <span class="kw">with</span> field `f` in
+    `TStruct l` (i.e. a refinement <span class="kw">of</span> `typ`).</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((typ_of_union_field (l:union_typ) (f:union_field l)):(Tot (t:typ:{<span class="st">&lt;&lt;(t, l)}))):typ_of_struct_field l f</span></code></pre></div>
 <p><code>typ_of_union_field l f</code> is the type of data associated with field <code>f</code> in <code>TUnion l</code> (i.e. a refinement of <code>typ</code>).</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Pointers <span class="kw">to</span> data <span class="kw">of</span> <span class="kw">type</span> t.
@@ -77,28 +77,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Interpretation of base types.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">type</span> abbrev </code></pre></div>
 <p>Interpretation of arrays of elements of (interpreted) type <code>t</code>.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> gtdata:key:eqtype <span class="dv">0</span> -&gt; value:(Unidentified product: [key] (Tot Type0)) -&gt; (Tot Type0)</code></pre></div>
-<p>Helper for the interpretation of unions.</p>
-<pre><code>A C union is interpreted as a dependent pair of a key and a value (which
-depends on the key). The intent is for the key to be ghost, as it will not
-exist at runtime (C unions are untagged).
-
-Therefore,
-- `gtdata_get_key` (defined below) is in `GTot`, and
-- `gtdata_get_value` asks for the key `k` to read, and a proof that `k`
-  matches the ghost key.</code></pre>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> gtdata_get_key:#key:eqtype -&gt; #value:(Unidentified product: [key] (Tot Type0)) -&gt; u:gtdata key value -&gt; (GTot key)</code></pre></div>
-<p>Gets the current tag (or key) of a union.</p>
-<pre><code>This is a ghost function, as this tag only exists at the logical level and
-is not stored in memory.</code></pre>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> gtdata_get_value:#key:eqtype -&gt; #value:(Unidentified product: [key] (Tot Type0)) -&gt; u:gtdata key value -&gt; k:key -&gt; (Pure (value k) ((requires (==(gtdata_get_key u, k)))) ((ensures ((<span class="kw">fun</span> _ -&gt; True)))))</code></pre></div>
-<p>Gets the value of a union, provided the field to read from.</p>
-<pre><code>This field must match the ghost tag of the union (hence the `require`
-clause).</code></pre>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> (<span class="kw">struct</span> (l:struct_typ)):DM<span class="kw">.</span>t (struct_field l) (type_of_struct_field l)</code></pre></div>
-<p>Interpretation of structs, as dependent maps.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> (union (l:struct_typ)):gtdata (struct_field l) (type_of_struct_field l)</code></pre></div>
-<p>Interpretation of unions, as ghostly-tagged data (see <code>gtdata</code> for more information).</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">* Semantics <span class="kw">of</span> pointers </code></pre></div>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Operations on pointers </code></pre></div>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> The readable permission.
