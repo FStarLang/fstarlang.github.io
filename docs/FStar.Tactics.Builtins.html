@@ -119,6 +119,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>[apply_lemma l] will solve a goal of type [squash phi] when [l] is a Lemma ensuring [phi]. The arguments to [l] and its requires clause are introduced as new goals. As a small optimization, [unit] arguments are discharged by the engine.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> print:Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
 <p>[print str] has no effect on the proofstate, but will have the side effect of printing [str] on the compiler's standard output.</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> debug:Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
+<p>[debug str] is similar to [print str], but will only print the message if the [--debug] option was given for the current module.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> dump:Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
 <p>Similar to [print], but will dump a text representation of the proofstate along with the message.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> dump1:Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">unit</span>)</code></pre></div>

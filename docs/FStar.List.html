@@ -56,6 +56,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>[tail l] returns [l] without its first element. Raises an exception if [l] is empty (thus, [tail] hides [List.Tot.tail] which requires [l] to be nonempty at type-checking time). Similar to: tl in OCaml, F#, Coq</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> tl:Unidentified product: [list &#39;a] (ML (list &#39;a))</code></pre></div>
 <p>[tl l] returns [l] without its first element. Raises an exception if [l] is empty (thus, [tl] hides [List.Tot.tl] which requires [l] to be nonempty at type-checking time). Named as in: tl in OCaml, F#, Coq</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> last:Unidentified product: [list &#39;a] (ML &#39;a)</code></pre></div>
+<p>[last l] returns the last element of [l]. Requires, at type-checking time, that [l] be nonempty. Named as in: Haskell</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> init:Unidentified product: [list &#39;a] (ML (list &#39;a))</code></pre></div>
+<p>[init l] returns [l] without its last element. Requires, at type-checking time, that [l] be nonempty. Named as in: Haskell</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> [nth l n] returns the [n]-th element <span class="kw">in</span> list [l] (<span class="kw">with</span> the first
 element being the <span class="dv">0</span>-th) <span class="kw">if</span> [l] is long enough, <span class="kw">or</span> raises an <span class="kw">exception</span>
 otherwise (thus, [nth] hides [List<span class="kw">.</span>Tot<span class="kw">.</span>nth] which has [<span class="dt">option</span>] <span class="kw">type</span>.)

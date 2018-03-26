@@ -59,6 +59,10 @@ Base operations</code></pre></div>
 <p>[tail l] returns [l] without its first element. Requires, at type-checking time, that [l] be nonempty. Similar to: tl in OCaml, F#, Coq</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> tl:Unidentified product: [l:l:list &#39;a:{_ l}] (Tot (list &#39;a))</code></pre></div>
 <p>[tl l] returns [l] without its first element. Requires, at type-checking time, that [l] be nonempty. Named as in: OCaml, F#, Coq</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> last:Unidentified product: [l:l:list &#39;a:{_ l}] (Tot &#39;a)</code></pre></div>
+<p>[last l] returns the last element of [l]. Requires, at type-checking time, that [l] be nonempty. Named as in: Haskell</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> init:Unidentified product: [l:l:list &#39;a:{_ l}] (Tot (list &#39;a))</code></pre></div>
+<p>[init l] returns [l] without its last element. Requires, at type-checking time, that [l] be nonempty. Named as in: Haskell</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> length:Unidentified product: [list &#39;a] (Tot nat)</code></pre></div>
 <p>[length l] returns the total number of elements in [l]. Named as in: OCaml, F#, Coq</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> nth:Unidentified product: [list &#39;a] Unidentified product: [nat] (Tot (<span class="dt">option</span> &#39;a))</code></pre></div>
