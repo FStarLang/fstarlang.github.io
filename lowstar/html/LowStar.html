@@ -1,0 +1,1195 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>The Low* subset of F* &mdash; The KreMLin user manual  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.36.0/codemirror.min.css" type="text/css" />
+  <link rel="stylesheet" href="_static/cm.tango.css" type="text/css" />
+  <link rel="stylesheet" href="_static/fslit.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Introduction" href="Introduction.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> The KreMLin user manual
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The Low* subset of F*</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#some-valid-low-constructs">Some valid Low* constructs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#some-extensions-to-low">Some extensions to Low*</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#some-non-low-code">Some non-Low* code</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#the-low-libraries">The Low* libraries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-memory-model">The memory model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-f-hyperheap-model">The F* HyperHeap model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-hyperstack-model">The HyperStack model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#advanced-the-stackinline-effect">Advanced: the <code class="docutils literal notranslate"><span class="pre">StackInline</span></code> effect</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#machine-integers">Machine integers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-buffer-library">The buffer library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-modifies-clauses-library">The modifies clauses library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#the-low-system-libraries">The Low* system libraries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#c-standard-library">C standard library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#test-helpers">Test helpers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#c-string-literals">C string literals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#c-null-pointers">C <code class="docutils literal notranslate"><span class="pre">NULL</span></code> pointers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#a-polymorphic-exit">A polymorphic exit</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">The KreMLin user manual</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>The Low* subset of F*</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/LowStar.fst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <pre class="code fstar literal-block">
+module LowStar
+
+module B = FStar.Buffer
+
+open FStar.HyperStack.ST
+</pre>
+<div class="section" id="the-low-subset-of-f">
+<span id="language-subset"></span><h1>The Low* subset of F*<a class="headerlink" href="#the-low-subset-of-f" title="Permalink to this headline">¶</a></h1>
+<p>Low*, as formalized and presented on <a class="reference external" href="https://arxiv.org/abs/1703.00053">paper</a>,
+is the first-order lambda calculus. Base types are booleans and
+fixed-width integers. Low* has a primitive notion of <em>buffers</em> and pointer
+arithmetic within buffer bounds. In the formalization, structures are only
+valid when allocated within a buffer.</p>
+<p>This section describes Low* by example, showing valid and invalid
+constructs, to give the reader a good grasp of what syntactic subset of the
+F* language constitutes valid Low*.</p>
+<div class="section" id="some-valid-low-constructs">
+<h2>Some valid Low* constructs<a class="headerlink" href="#some-valid-low-constructs" title="Permalink to this headline">¶</a></h2>
+<p>Low*’s base types are machine integers.</p>
+<pre class="code fstar literal-block">
+let square (x: UInt32.t): UInt32.t =
+  let open FStar.UInt32 in
+  x *%^ x
+</pre>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">uint32_t</span> <span class="n">square</span><span class="p">(</span><span class="n">uint32_t</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Classic control-flow is, naturally, supported. One may use recursive
+functions if they wish to do so, modern versions of GCC are generally quite
+good at performing tail-call optimizations.</p>
+<pre class="code fstar literal-block">
+let abs (x: Int32.t): Pure Int32.t
+  (requires Int32.v x &lt;&gt; Int.min_int 32)
+  (ensures fun r -&gt; Int32.v r &gt;= 0)
+=
+  let open FStar.Int32 in
+  if x &gt;=^ 0l then
+    x
+  else
+    0l -^ x
+</pre>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">int32_t</span> <span class="nb">abs</span><span class="p">(</span><span class="n">int32_t</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="n">int32_t</span><span class="p">)</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">;</span>
+  <span class="k">else</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">int32_t</span><span class="p">)</span><span class="mi">0</span> <span class="o">-</span> <span class="n">x</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Low* models stack allocation, which is covered in <a class="reference internal" href="#buffer-library"><span class="std std-ref">The buffer library</span></a> below.</p>
+<pre class="code fstar literal-block">
+let on_the_stack (): Stack UInt64.t (fun _ -&gt; True) (fun _ _ _ -&gt; True) =
+  let open B in
+  push_frame ();
+  let b = B.create 0UL 64ul in
+  b.(0ul) &lt;- 32UL;
+  let r = b.(0ul) in
+  pop_frame ();
+  r
+</pre>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">uint64_t</span> <span class="n">on_the_stack</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">uint64_t</span> <span class="n">b</span><span class="p">[</span><span class="mi">64</span><span class="n">U</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">0</span><span class="n">U</span> <span class="p">};</span>
+  <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="n">U</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">uint64_t</span><span class="p">)</span><span class="mi">32</span><span class="n">U</span><span class="p">;</span>
+  <span class="n">uint64_t</span> <span class="n">r</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="n">U</span><span class="p">];</span>
+  <span class="k">return</span> <span class="n">r</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Similarly, Low* supports heap allocation.</p>
+<pre class="code fstar literal-block">
+let on_the_heap (): St UInt64.t =
+  let open B in
+  let b = B.rcreate_mm HyperStack.root 0UL 64ul in
+  b.(0ul) &lt;- 32UL;
+  let r = b.(0ul) in
+  B.rfree b;
+  r
+</pre>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">uint64_t</span> <span class="n">on_the_heap</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">uint64_t</span> <span class="o">*</span><span class="n">b</span> <span class="o">=</span> <span class="n">KRML_HOST_CALLOC</span><span class="p">((</span><span class="n">uint32_t</span><span class="p">)</span><span class="mi">64</span><span class="n">U</span><span class="p">,</span> <span class="n">sizeof</span> <span class="p">(</span><span class="n">uint64_t</span><span class="p">));</span>
+  <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="n">U</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">uint64_t</span><span class="p">)</span><span class="mi">32</span><span class="n">U</span><span class="p">;</span>
+  <span class="n">uint64_t</span> <span class="n">r</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="n">U</span><span class="p">];</span>
+  <span class="n">KRML_HOST_FREE</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">r</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Flat records are part of the original paper formalization, and are
+translated as regular C <code class="docutils literal notranslate"><span class="pre">struct</span></code>s.</p>
+<pre class="code fstar literal-block">
+type uint128 = {
+  low: UInt64.t;
+  high: UInt64.t
+}
+</pre>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="n">uint128_s</span>
+<span class="p">{</span>
+  <span class="n">uint64_t</span> <span class="n">low</span><span class="p">;</span>
+  <span class="n">uint64_t</span> <span class="n">high</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">uint128</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>In the original paper, structs may be allocated within buffers.</p>
+<pre class="code fstar literal-block">
+let uint128_alloc (h l: UInt64.t): St (B.buffer uint128) =
+  Buffer.rcreate_mm HyperStack.root ({ low = l; high = h }) 1ul
+</pre>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">uint128</span> <span class="o">*</span><span class="n">uint128_alloc</span><span class="p">(</span><span class="n">uint64_t</span> <span class="n">h</span><span class="p">,</span> <span class="n">uint64_t</span> <span class="n">l</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">KRML_CHECK_SIZE</span><span class="p">(</span><span class="n">sizeof</span> <span class="p">(</span><span class="n">uint128</span><span class="p">),</span> <span class="p">(</span><span class="n">uint32_t</span><span class="p">)</span><span class="mi">1</span><span class="n">U</span><span class="p">);</span>
+  <span class="n">uint128</span> <span class="o">*</span><span class="n">buf</span> <span class="o">=</span> <span class="n">KRML_HOST_MALLOC</span><span class="p">(</span><span class="n">sizeof</span> <span class="p">(</span><span class="n">uint128</span><span class="p">));</span>
+  <span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="n">U</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="n">uint128</span><span class="p">){</span> <span class="o">.</span><span class="n">low</span> <span class="o">=</span> <span class="n">l</span><span class="p">,</span> <span class="o">.</span><span class="n">high</span> <span class="o">=</span> <span class="n">h</span> <span class="p">});</span>
+  <span class="k">return</span> <span class="n">buf</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Still in the original paper, one may access a buffer index, then select a
+number of fields.</p>
+<pre class="code fstar literal-block">
+let uint128_high (x: B.buffer uint128): Stack UInt64.t
+  (requires fun h -&gt; B.live h x /\ B.length x = 1)
+  (ensures fun h0 _ h1 -&gt; B.live h1 x)
+=
+  let open B in
+  (x.(0ul)).high
+</pre>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">uint64_t</span> <span class="n">uint128_high</span><span class="p">(</span><span class="n">uint128</span> <span class="o">*</span><span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">x</span><span class="o">-&gt;</span><span class="n">high</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>One may define global constants too, as long as they evaluate to C
+constants. As a rough approximation, arithmetic expressions and addresses of
+other globals are C constants, but as always, the <a class="reference external" href="http://open-std.org/jtc1/SC22/wg14/www/docs/n1548.pdf">C11 standard</a> is the ultimate
+source of truth.</p>
+<pre class="code fstar literal-block">
+let min_int32 = FStar.Int32.(0l -^ 0x7fffffffl -^ 1l)
+</pre>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Meta</span><span class="o">-</span><span class="n">evaluated</span> <span class="n">by</span> <span class="n">F</span><span class="o">*</span>
+<span class="n">int32_t</span> <span class="n">min_int32</span> <span class="o">=</span> <span class="p">(</span><span class="n">int32_t</span><span class="p">)</span><span class="o">-</span><span class="mi">2147483648</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="some-extensions-to-low">
+<h2>Some extensions to Low*<a class="headerlink" href="#some-extensions-to-low" title="Permalink to this headline">¶</a></h2>
+<p>KreMLin supports a number of programming patterns beyond the original paper
+formalization, which aim to maximize programmer productivity. We now review
+the main ones.</p>
+<p>One can rely on KreMLin to compile F*’s structural equality (the <code class="docutils literal notranslate"><span class="pre">(=)</span></code>
+operator) to C functions specialized to each type. Furthermore, the function
+below demonstrates the use of a struct type as a value, which is
+straightforwardly compiled to a C structure passed by value. Be aware that doing
+so has performance implications (see ??).</p>
+<pre class="code fstar literal-block">
+let uint128_equal (x y: uint128) =
+  x = y
+</pre>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">static</span> <span class="nb">bool</span> <span class="n">__eq__LowStar_uint128</span><span class="p">(</span><span class="n">uint128</span> <span class="n">y</span><span class="p">,</span> <span class="n">uint128</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">true</span> <span class="o">&amp;&amp;</span> <span class="n">x</span><span class="o">.</span><span class="n">low</span> <span class="o">==</span> <span class="n">y</span><span class="o">.</span><span class="n">low</span> <span class="o">&amp;&amp;</span> <span class="n">x</span><span class="o">.</span><span class="n">high</span> <span class="o">==</span> <span class="n">y</span><span class="o">.</span><span class="n">high</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nb">bool</span> <span class="n">uint128_equal</span><span class="p">(</span><span class="n">uint128</span> <span class="n">x</span><span class="p">,</span> <span class="n">uint128</span> <span class="n">y</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">__eq__LowStar_uint128</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>One may also use F* inductives, knowing that KreMLin will compile them as
+tagged unions, with a variety of optimized compilation schemes to make the
+generated code as palatable as possible.</p>
+<pre class="code fstar literal-block">
+noeq
+type key =
+  | Algorithm1: Buffer.buffer UInt32.t -&gt; key
+  | Algorithm2: Buffer.buffer UInt64.t -&gt; key
+</pre>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">enum</span> <span class="p">{</span> <span class="n">Algorithm1</span><span class="p">,</span> <span class="n">Algorithm2</span> <span class="p">}</span> <span class="n">key_tags</span><span class="p">;</span>
+
+<span class="n">typedef</span> <span class="n">struct</span> <span class="n">key_s</span>
+<span class="p">{</span>
+  <span class="n">key_tags</span> <span class="n">tag</span><span class="p">;</span>
+  <span class="n">union</span> <span class="p">{</span>
+    <span class="n">uint32_t</span> <span class="o">*</span><span class="n">case_Algorithm1</span><span class="p">;</span>
+    <span class="n">uint64_t</span> <span class="o">*</span><span class="n">case_Algorithm2</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="p">;</span>
+<span class="p">}</span>
+<span class="n">key</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Generally, KreMLin performs a whole-program monomorphization of
+parameterized data types. The example below demonstrates this, along with a
+“pretty” compilation scheme for the option type that does not involves an
+anonymous union.</p>
+<pre class="code fstar literal-block">
+let abs2 (x: Int32.t): option Int32.t =
+  let open FStar.Int32 in
+  if x = min_int32 then
+    None
+  else if x &gt;=^ 0l then
+    Some x
+  else
+    Some (0l -^ x)
+</pre>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">enum</span> <span class="p">{</span> <span class="n">FStar_Pervasives_Native_None</span><span class="p">,</span> <span class="n">FStar_Pervasives_Native_Some</span> <span class="p">}</span>
+<span class="n">FStar_Pervasives_Native_option__int32_t_tags</span><span class="p">;</span>
+
+<span class="n">typedef</span> <span class="n">struct</span> <span class="n">FStar_Pervasives_Native_option__int32_t_s</span>
+<span class="p">{</span>
+  <span class="n">FStar_Pervasives_Native_option__int32_t_tags</span> <span class="n">tag</span><span class="p">;</span>
+  <span class="n">int32_t</span> <span class="n">v</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">FStar_Pervasives_Native_option__int32_t</span><span class="p">;</span>
+
+<span class="n">FStar_Pervasives_Native_option__int32_t</span> <span class="n">abs2</span><span class="p">(</span><span class="n">int32_t</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="n">min_int32</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">((</span><span class="n">FStar_Pervasives_Native_option__int32_t</span><span class="p">){</span> <span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="n">FStar_Pervasives_Native_None</span> <span class="p">});</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="n">int32_t</span><span class="p">)</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span>
+      <span class="p">((</span><span class="n">FStar_Pervasives_Native_option__int32_t</span><span class="p">){</span> <span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="n">FStar_Pervasives_Native_Some</span><span class="p">,</span> <span class="o">.</span><span class="n">v</span> <span class="o">=</span> <span class="n">x</span> <span class="p">});</span>
+  <span class="k">else</span>
+    <span class="k">return</span>
+      <span class="p">(</span>
+        <span class="p">(</span><span class="n">FStar_Pervasives_Native_option__int32_t</span><span class="p">){</span>
+          <span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="n">FStar_Pervasives_Native_Some</span><span class="p">,</span>
+          <span class="o">.</span><span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">int32_t</span><span class="p">)</span><span class="mi">0</span> <span class="o">-</span> <span class="n">x</span>
+        <span class="p">}</span>
+      <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Inductives are compiled by KreMLin, and so are pattern matches. Note that
+for a series of cascading if-then-elses, KreMLin has to insert a fallback
+else statement, both because the original F* code may be unverified and the
+pattern-matching may be incomplete, but also because the C compiler may
+trigger an error.</p>
+<pre class="code fstar literal-block">
+let fail_if #a #b (package: a * (a -&gt; option b)): St b =
+  let open C.Failure in
+  let open C.String in
+  let x, f = package in
+  match f x with
+  | None -&gt; failwith !$&quot;invalid argument: fail_if&quot;
+  | Some x -&gt; x
+</pre>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">int32_t</span>
+<span class="n">fail_if__int32_t_int32_t</span><span class="p">(</span>
+  <span class="n">K___int32_t_int32_t____FStar_Pervasives_Native_option__int32_t</span> <span class="n">package</span>
+<span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">int32_t</span> <span class="n">x</span> <span class="o">=</span> <span class="n">package</span><span class="o">.</span><span class="n">fst</span><span class="p">;</span>
+  <span class="n">FStar_Pervasives_Native_option__int32_t</span> <span class="p">(</span><span class="o">*</span><span class="n">f</span><span class="p">)(</span><span class="n">int32_t</span> <span class="n">x0</span><span class="p">)</span> <span class="o">=</span> <span class="n">package</span><span class="o">.</span><span class="n">snd</span><span class="p">;</span>
+  <span class="n">FStar_Pervasives_Native_option__int32_t</span> <span class="n">scrut</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">scrut</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="n">FStar_Pervasives_Native_None</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">C_Failure_failwith__int32_t</span><span class="p">(</span><span class="s2">&quot;invalid argument: fail_if&quot;</span><span class="p">);</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">scrut</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="n">FStar_Pervasives_Native_Some</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">int32_t</span> <span class="n">x1</span> <span class="o">=</span> <span class="n">scrut</span><span class="o">.</span><span class="n">v</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">x1</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span>
+  <span class="p">{</span>
+    <span class="n">KRML_HOST_PRINTF</span><span class="p">(</span><span class="s2">&quot;KreMLin abort at </span><span class="si">%s</span><span class="s2">:</span><span class="si">%d</span><span class="se">\n</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+      <span class="n">__FILE__</span><span class="p">,</span>
+      <span class="n">__LINE__</span><span class="p">,</span>
+      <span class="s2">&quot;unreachable (pattern matches are exhaustive in F*)&quot;</span><span class="p">);</span>
+    <span class="n">KRML_HOST_EXIT</span><span class="p">(</span><span class="mi">255</span><span class="n">U</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Higher order is, to a certain extent, possible. The sample above
+demonstrates a block-scope function pointer. The <code class="docutils literal notranslate"><span class="pre">fail_if</span></code> function has
+been specialized on <code class="docutils literal notranslate"><span class="pre">K__int32_t_int32_t</span></code>, which is itself a specialization
+of the polymorphic pair type of F*. Below is a sample caller of
+<code class="docutils literal notranslate"><span class="pre">fail_if__int32_t_int32_t</span></code>, which relies on passing a pair of a function
+pointer and its argument.</p>
+<pre class="code fstar literal-block">
+let abs3 (x: Int32.t): St Int32.t =
+  fail_if (x, abs2)
+</pre>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">int32_t</span> <span class="n">abs3</span><span class="p">(</span><span class="n">int32_t</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span>
+    <span class="n">fail_if__int32_t_int32_t</span><span class="p">((</span>
+        <span class="p">(</span><span class="n">K___int32_t_int32_t____FStar_Pervasives_Native_option__int32_t</span><span class="p">){</span> <span class="o">.</span><span class="n">fst</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="o">.</span><span class="n">snd</span> <span class="o">=</span> <span class="n">abs2</span> <span class="p">}</span>
+      <span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Local closures are not supported, as they do not have a natural compilation
+scheme to C. We will, however, show in (??) how to rely on F*’s
+meta-programming capabilities to normalize these closures away before
+passing them to KreMLin.</p>
+<pre class="code fstar literal-block">
+let pow4 (x: UInt32.t): UInt32.t =
+  let open FStar.UInt32 in
+  [&#64; inline_let ]
+  let pow2 (y: UInt32.t) = y *%^ y in
+  pow2 (pow2 x)
+</pre>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">uint32_t</span> <span class="n">pow4</span><span class="p">(</span><span class="n">uint32_t</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">uint32_t</span> <span class="n">x0</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">x0</span> <span class="o">*</span> <span class="n">x0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In the case that the user defines a global variable that does not compile to
+a C11 constant, KreMLin generates a “static initializer” in the special
+<code class="docutils literal notranslate"><span class="pre">kremlinit_globals</span></code> function. If the program has a <code class="docutils literal notranslate"><span class="pre">main</span></code>, KreMLin
+automatically prepends a call to <code class="docutils literal notranslate"><span class="pre">kremlinit_globals</span></code> in the <code class="docutils literal notranslate"><span class="pre">main</span></code>. If
+the program does not have a <code class="docutils literal notranslate"><span class="pre">main</span></code> and is intended to be used as a
+library, KreMLin emits a warning, which is fatal by default.</p>
+<pre class="code fstar literal-block">
+let uint128_zero (): Tot uint128 =
+  { high = 0UL; low = 0UL }
+
+let zero = uint128_zero ()
+</pre>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ krml -skip-linking -no-prefix LowStar LowStar.fst
+(...)
+Warning 9: : Some globals did not compile to C values and must be
+initialized before starting main(). You did not provide a main function,
+so users of your library MUST MAKE SURE they call kremlinit_globals();
+(see kremlinit.c).
+
+$ cat kremlinit.c
+(...)
+void kremlinit_globals()
+{
+  zero = uint128_zero();
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="some-non-low-code">
+<h2>Some non-Low* code<a class="headerlink" href="#some-non-low-code" title="Permalink to this headline">¶</a></h2>
+<p>We now review some classic programming patterns that are not supported in
+Low*.</p>
+<p>The example below cannot be compiled for the following reasons:</p>
+<ul class="simple">
+<li>local recursive let-bindings are not Low*;</li>
+<li>local closure captures variable in scope (KreMLin does not do closure conversion)</li>
+<li>the list type is not Low*.</li>
+</ul>
+<pre class="code fstar literal-block">
+let filter_map #a #b (f: a -&gt; option b) (l: list a): list b =
+  let rec aux (acc: list b) (l: list a): Tot (list b) (decreases l) =
+    match l with
+    | hd :: tl -&gt;
+        begin match f hd with
+        | Some x -&gt; aux (x :: acc) tl
+        | None -&gt; aux acc tl
+        end
+    | [] -&gt;
+        List.rev acc
+  in
+  aux [] l
+</pre>
+<p>Trying to compile the snippet above will generate a warning when calling F*
+to generate a <code class="docutils literal notranslate"><span class="pre">.krml</span></code> file.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ krml -skip-compilation -verbose LowStar.fst
+⚙ KreMLin auto-detecting tools.
+(...)
+✔ [F*,extract]
+&lt;dummy&gt;(0,0-0,0): (Warning 250) Error while extracting LowStar.filter_map
+to KreMLin (Failure(&quot;Internal error: name not found aux\n&quot;))
+</pre></div>
+</div>
+<p>To explain why the list type cannot be compiled to C, consider the snippet
+below. Data types are compiled as flat structures in C, meaning that the
+list type would have infinite size in C. This is compiled by KreMLin but
+rejected by the C compiler. See ?? for an example of a linked list.</p>
+<pre class="code fstar literal-block">
+type list_int32 =
+| Nil: list_int32
+| Cons: hd:Int32.t -&gt; tl:list_int32 -&gt; list_int32
+
+let mk_list (): St list_int32 =
+  Cons 0l Nil
+</pre>
+<p>Trying to compile the snippet above will generate an error when calling the
+C compiler to generate a <code class="docutils literal notranslate"><span class="pre">.o</span></code> file.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ krml -skip-linking -verbose LowStar.fst
+⚙ KreMLin auto-detecting tools.
+(...)
+✘ [CC,./LowStar.c]
+In file included from ./LowStar.c:8:0:
+./LowStar.h:95:22: error: field ‘tl’ has incomplete type
+   LowStar_list_int32 tl;
+</pre></div>
+</div>
+<p>Polymorphic assumes are also not compiled. KreMLin could generate one C
+<code class="docutils literal notranslate"><span class="pre">extern</span></code> declaration per monomorphic use, but this would require the user
+to provide a substantial amount of manually-written code, so instead we
+refuse to compile the definition below.</p>
+<pre class="code fstar literal-block">
+// Cannot be compiled: polymorphic assume val; solution: make the function
+// monomorphic, or provide a C macro
+assume val pair_up: #a:Type -&gt; #b:Type -&gt; a -&gt; b -&gt; a * b
+</pre>
+<p>Trying to compile the snippet above will generate a warning when calling F*
+to generate a <code class="docutils literal notranslate"><span class="pre">.krml</span></code> file.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ krml -skip-compilation -verbose LowStar.fst
+⚙ KreMLin auto-detecting tools.
+(...)
+✔ [F*,extract]
+Not extracting LowStar.pair_up to KreMLin (polymorphic assumes are not supported)
+</pre></div>
+</div>
+<p>One point worth mentioning is that indexed types are by default not
+supported. See section ?? for an unofficial KreMLin extension that works in
+some very narrow cases, or rewrite your code to make <code class="docutils literal notranslate"><span class="pre">t</span></code> an inductive. KreMLin
+currently does not have support for untagged unions, i.e. automatically
+making <code class="docutils literal notranslate"><span class="pre">t</span></code> a C union.</p>
+<pre class="code fstar literal-block">
+type alg = | Alg1 | Alg2
+let t (a: alg) =
+  match a with
+  | Alg1 -&gt; UInt32.t
+  | Alg2 -&gt; uint128
+
+let default_t (a: alg): t a =
+  match a with
+  | Alg1 -&gt; 0ul
+  | Alg2 -&gt; zero
+</pre>
+<p>Trying to compile the snippet above will generate invalid C code.</p>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="o">*</span><span class="n">default_t</span><span class="p">(</span><span class="n">alg</span> <span class="n">a</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">switch</span> <span class="p">(</span><span class="n">a</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">case</span> <span class="n">Alg1</span><span class="p">:</span>
+      <span class="p">{</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">void</span> <span class="o">*</span><span class="p">)(</span><span class="n">uint32_t</span><span class="p">)</span><span class="mi">0</span><span class="n">U</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="n">case</span> <span class="n">Alg2</span><span class="p">:</span>
+      <span class="p">{</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">void</span> <span class="o">*</span><span class="p">)</span><span class="n">zero</span>
+      <span class="p">}</span>
+    <span class="n">default</span><span class="p">:</span>
+      <span class="p">{</span>
+        <span class="n">KRML_HOST_PRINTF</span><span class="p">(</span><span class="s2">&quot;KreMLin incomplete match at </span><span class="si">%s</span><span class="s2">:</span><span class="si">%d</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">__FILE__</span><span class="p">,</span> <span class="n">__LINE__</span><span class="p">);</span>
+        <span class="n">KRML_HOST_EXIT</span><span class="p">(</span><span class="mi">253</span><span class="n">U</span><span class="p">);</span>
+      <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If you are lucky, the C compiler may generate an error:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ krml -skip-linking LowStar.fst -add-include &#39;&quot;kremstr.h&quot;&#39; -no-prefix LowStar -warn-error +9
+
+✘ [CC,./LowStar.c]
+./LowStar.c: In function ‘default_t’:
+./LowStar.c:291:9: error: cannot convert to a pointer type
+         return (void *)zero;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="the-low-libraries">
+<h1>The Low* libraries<a class="headerlink" href="#the-low-libraries" title="Permalink to this headline">¶</a></h1>
+<p>Low* is made up of a few primitive libraries that enjoy first-class support in
+KreMLin. These core libraries are typically made up of a model (an <code class="docutils literal notranslate"><span class="pre">.fst</span></code>
+file) and an interface (an <code class="docutils literal notranslate"><span class="pre">.fsti</span></code> file). Verification is performed against
+the model, but at extraction-time, the model is replaced with primitive C
+constructs.</p>
+<div class="section" id="the-memory-model">
+<span id="memory-model"></span><h2>The memory model<a class="headerlink" href="#the-memory-model" title="Permalink to this headline">¶</a></h2>
+<p>Beyond the language subset, one defining component of Low* is how it models
+the C memory.</p>
+<div class="section" id="the-f-hyperheap-model">
+<h3>The F* HyperHeap model<a class="headerlink" href="#the-f-hyperheap-model" title="Permalink to this headline">¶</a></h3>
+<p>F* is by default equipped with HyperHeap, a hierarchical memory model that
+divides the heap into a tree of regions. This coarse-grained separation
+allows the programmer to state modifies clauses at the level of regions, rather
+than on individual references.</p>
+<p>The HyperHeap memory model is described in the <a class="reference external" href="https://www.fstar-lang.org/papers/mumon/">2016 POPL paper</a>, as well as the <a class="reference external" href="https://www.fstar-lang.org/tutorial">F* tutorial</a>. We assume that the reader has a passing
+degree of familiarity with HyperHeap.</p>
+</div>
+<div class="section" id="the-hyperstack-model">
+<h3>The HyperStack model<a class="headerlink" href="#the-hyperstack-model" title="Permalink to this headline">¶</a></h3>
+<p>Low* refines the HyperHeap memory model, adding a distinguished set of regions
+that model the C call stack. Programs may use stack allocation, heap allocation
+or both. The HyperStack memory model offers a set of effects that capture the
+allocation behavior of functions.</p>
+<p>The HyperStack memory model comprises the files
+<code class="docutils literal notranslate"><span class="pre">FStar.Monotonic.HyperStack.fst</span></code>, <code class="docutils literal notranslate"><span class="pre">FStar.HyperStack.fst</span></code> and
+<code class="docutils literal notranslate"><span class="pre">FStar.HyperStack.ST.fst</span></code> in the <code class="docutils literal notranslate"><span class="pre">ulib</span></code> directory of F*.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Many verification errors point to definitions in these three files. Being
+familiar with these modules, their combinators and key concepts helps
+understand why a given program fails to verify.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>We recommend always defining the <code class="docutils literal notranslate"><span class="pre">ST</span></code> abbreviation at the beginning of
+your module, in order to shadow the <code class="docutils literal notranslate"><span class="pre">FStar.ST</span></code> module, which is not
+Low*.</p>
+<pre class="code fstar last literal-block">
+module ST = FStar.HyperStack.ST
+module HS = FStar.HyperStack
+</pre>
+</div>
+<p>The top-level region is the root, and is always a valid region. <code class="docutils literal notranslate"><span class="pre">HS.rid</span></code>
+is the type of regions.</p>
+<pre class="code fstar literal-block">
+let root: HS.rid = HS.root
+</pre>
+<p>Stack frames are modeled as distinguished regions that satisfy the
+<code class="docutils literal notranslate"><span class="pre">is_stack_region</span></code> predicate. Allocating in a stack frame, unsurprisingly,
+results in a stack-allocated variable or array in C. Stack frames may be
+de-allocated as program execution progresses up the call stack, meaning that
+the underlying HyperHeap region may disappear.</p>
+<p>Regions that are not stack frames may <em>not</em> be de-allocated, and therefore
+satisfy the <code class="docutils literal notranslate"><span class="pre">is_eternal_region</span></code> predicate. This includes the <code class="docutils literal notranslate"><span class="pre">root</span></code>.
+Allocating in one of these regions amounts to performing a heap allocation
+in C.</p>
+<p>Pushing a new stack frame amount to allocating a new stack region. In the
+HyperHeap model, creating a new region requires a <em>parent</em>. Thus, when a
+new stack frame is allocated, its parent is either the top-most stack frame,
+or the <code class="docutils literal notranslate"><span class="pre">root</span></code> if no stack frame has been allocated so far.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">root</span></code> is not a stack region and does <em>not</em> satisfy <code class="docutils literal notranslate"><span class="pre">is_stack_region</span></code>.</p>
+<pre class="code fstar last literal-block">
+let _ =
+  assert (ST.is_eternal_region root /\ ~ (Monotonic.HyperStack.is_stack_region root))
+</pre>
+</div>
+<p>The most popular effect is the <code class="docutils literal notranslate"><span class="pre">Stack</span></code> effect, which takes:</p>
+<ul>
+<li><p class="first">a precondition over the initial heap, of type <code class="docutils literal notranslate"><span class="pre">HS.mem</span> <span class="pre">-&gt;</span> <span class="pre">Type</span></code>, and a</p>
+</li>
+<li><p class="first">post-condition over the initial heap, the result, the final heap, of type
+<code class="docutils literal notranslate"><span class="pre">HS.mem</span> <span class="pre">-&gt;</span> <span class="pre">a</span> <span class="pre">-&gt;</span> <span class="pre">HS.mem</span> <span class="pre">-&gt;</span> <span class="pre">Type</span></code></p>
+<pre class="code fstar literal-block">
+effect Stack (a:Type) (pre: ST.st_pre) (post: (m0: HS.mem -&gt; Tot (ST.st_post' a (pre m0)))) =
+  STATE a
+    (fun (p: ST.st_post a) (h: HS.mem) -&gt;
+      pre h /\ (forall a h1. (pre h /\ post h a h1 /\ ST.equal_domains h h1) ==&gt; p a h1))
+</pre>
+</li>
+</ul>
+<p>The relevant bit in this otherwise mundane definition is the
+<code class="docutils literal notranslate"><span class="pre">ST.equal_domains</span></code> predicate.</p>
+<pre class="code fstar literal-block">
+let equal_domains (m0 m1: HS.mem) =
+  m0.HS.tip == m1.HS.tip /\
+  Set.equal (Map.domain m0.HS.h) (Map.domain m1.HS.h) /\
+  ST.same_refs_in_all_regions m0 m1
+</pre>
+<p>The <code class="docutils literal notranslate"><span class="pre">equal_domains</span></code> predicate states that a function in the <code class="docutils literal notranslate"><span class="pre">Stack</span></code> effect:</p>
+<ul class="simple">
+<li>preserves the <code class="docutils literal notranslate"><span class="pre">tip</span></code> of the memory, i.e. calling this
+function leaves the C call stack intact;</li>
+<li>does not allocate any new region on the heap, i.e. this is a
+C function that does not heap-allocate;</li>
+<li>does not allocate in any existing region, i.e. this is a C
+function that does not grow any existing stack frame on the call stack.</li>
+</ul>
+<p>A function that satisfies these conditions is a function that can be safely
+compiled as a C function. In other words, using the native C call stack is a
+valid implementation of our model.</p>
+<pre class="code fstar literal-block">
+let f (x: UInt32.t): Stack UInt32.t (fun _ -&gt; True) (fun _ _ _ -&gt; True) =
+  FStar.UInt32.( x *%^ x )
+
+</pre>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The following examples use the <code class="docutils literal notranslate"><span class="pre">[&#64;</span> <span class="pre">fail</span> <span class="pre">]</span></code> F* attribute. Remember that
+this tutorial is a valid F* file, which we put under continuous
+integration and version control. This attribute merely indicates to F*
+that the failure is intentional.</p>
+</div>
+<p>Based on the knowledge above, consider the following failing function.</p>
+<pre class="code fstar literal-block">
+[&#64; fail ]
+let g (): Stack unit (fun _ -&gt; True) (fun _ _ _ -&gt; True) =
+  let b = Buffer.create 0ul 8ul in
+  ()
+</pre>
+<p>F* reports an assertion failure for the <code class="docutils literal notranslate"><span class="pre">is_stack_region</span></code> predicate.
+Indeed, the <code class="docutils literal notranslate"><span class="pre">create</span></code> function requires that the <code class="docutils literal notranslate"><span class="pre">tip</span></code> be a valid stack
+region, which is false when no stack frame has been pushed on the call stack.</p>
+<p>One important insight at this stage is that F* does not “automatically”
+enrich the verification context with the assumption that upon entering
+<code class="docutils literal notranslate"><span class="pre">g</span></code>, we have pushed a new stack frame. This would be the wrong thing to do
+for a total function; furthermore, there is simply no such support in the language.</p>
+<p>Rather, the user is expected to manually indicate which operations need to
+conceptually happen in a new stack frame. The Low* memory model provides two
+combinators for this purpose: <code class="docutils literal notranslate"><span class="pre">push_frame</span></code> and <code class="docutils literal notranslate"><span class="pre">pop_frame</span></code>. The <code class="docutils literal notranslate"><span class="pre">f</span></code>
+function did not need them, because it performed no stateful operation.</p>
+<p>We can attempt to fix <code class="docutils literal notranslate"><span class="pre">g</span></code> by adding a call to <code class="docutils literal notranslate"><span class="pre">push_frame</span></code>.</p>
+<pre class="code fstar literal-block">
+[&#64; fail ]
+let g2 (): Stack unit (fun _ -&gt; True) (fun _ _ _ -&gt; True) =
+  push_frame ();
+  let b = Buffer.create 0ul 8ul in
+  ()
+</pre>
+<p>F* now reports an error for the <code class="docutils literal notranslate"><span class="pre">equal_domains</span></code> predicate above. Indeed,
+the only way to leave the C call stack intact, and therefore satisfy the
+requirements of the <code class="docutils literal notranslate"><span class="pre">Stack</span></code> effect, is to ensure we pop the stack
+frame we just pushed.</p>
+<pre class="code fstar literal-block">
+let g3 (): Stack unit (fun _ -&gt; True) (fun _ _ _ -&gt; True) =
+  push_frame ();
+  let b = Buffer.create 0ul 8ul in
+  pop_frame ();
+  ()
+</pre>
+<p><code class="docutils literal notranslate"><span class="pre">g3</span></code> now successfully compiles to C:</p>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">g3</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">uint32_t</span> <span class="n">b</span><span class="p">[</span><span class="mi">8</span><span class="n">U</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">0</span><span class="n">U</span> <span class="p">};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">Stack</span></code> effect prevents heap allocation, hence ensuring that from the
+caller’s perspective, any heap (“eternal”) regions remain unchanged.</p>
+<p>For code that performs heap allocations, the libraries offer the <code class="docutils literal notranslate"><span class="pre">ST</span></code>
+effect. It is similar to the <code class="docutils literal notranslate"><span class="pre">Stack</span></code> effect, and takes the same form of
+pre- and post-conditions, but allows heap allocation.</p>
+<pre class="code fstar literal-block">
+let g4 (): ST unit (fun _ -&gt; True) (fun _ _ _ -&gt; True) =
+  push_frame ();
+  let b = Buffer.rcreate_mm HS.root 0ul 8ul in
+  pop_frame ();
+  ()
+</pre>
+<p>The <code class="docutils literal notranslate"><span class="pre">St</span></code> effect might occasionally be convenient.</p>
+<pre class="code fstar literal-block">
+effect St (a:Type) = ST a (fun _ -&gt; True) (fun _ _ _ -&gt; True)
+</pre>
+<p>One can reflect the memory as an <code class="docutils literal notranslate"><span class="pre">HS.mem</span></code> at any program point, by using
+<code class="docutils literal notranslate"><span class="pre">ST.get</span> <span class="pre">()</span></code>.</p>
+<pre class="code fstar literal-block">
+let test_st_get (): St unit =
+  push_frame ();
+  let m = ST.get () in
+  assert (Monotonic.HyperStack.is_stack_region m.HS.tip);
+  pop_frame ()
+</pre>
+<p>These are the basic building blocks of our memory model. Verifying on top of
+this memory model involves reflecting the state of the memory at the proof
+level, using the <code class="docutils literal notranslate"><span class="pre">HS.mem</span></code> type, and capturing the effect of allocations,
+updates and de-allocations using suitable pre- and post-conditions. This can
+be done using a combination of modifies clauses and libraries that reflect
+low-level constructs, such as buffers and machine integers, at the proof
+level. All of these are covered in the rest of this chapter.</p>
+</div>
+<div class="section" id="advanced-the-stackinline-effect">
+<h3>Advanced: the <code class="docutils literal notranslate"><span class="pre">StackInline</span></code> effect<a class="headerlink" href="#advanced-the-stackinline-effect" title="Permalink to this headline">¶</a></h3>
+<p>TODO</p>
+</div>
+</div>
+<div class="section" id="machine-integers">
+<span id="id1"></span><h2>Machine integers<a class="headerlink" href="#machine-integers" title="Permalink to this headline">¶</a></h2>
+<p>Machine integers are modeled as natural numbers that fit within a certain number
+of bits. This model is dropped by KreMLin, in favor of C’s fixed-width types.</p>
+<p>Fixed-width integers are found in <code class="docutils literal notranslate"><span class="pre">FStar.UInt{16,32,64,128}.fst</span></code> and
+<code class="docutils literal notranslate"><span class="pre">FStar.Int{16,32,64,128}</span></code>. The <code class="docutils literal notranslate"><span class="pre">FStar.Int.Cast.Full.fst</span></code> module offers
+conversion functions between these integer types.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">By default, KreMLin will rely on the non-standard <code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">__int128</span></code> C
+type to implement <code class="docutils literal notranslate"><span class="pre">FStar.UInt128.t</span></code>. This type is widely supported
+across GCC and Clang versions, but not by the Microsoft compilers. If you
+need 128-bit unsigned integers <em>and</em> portability, consider using
+KreMLin’s <code class="docutils literal notranslate"><span class="pre">-fnouint128</span></code> flag to rely instead on an extracted version of
+<code class="docutils literal notranslate"><span class="pre">FStar.UInt128.fst</span></code> that is proven correct, but slower.</p>
+</div>
+<p>Machine integers offer the classic set of arithmetic operations. Like in C,
+unsigned integers have wraparound overflow semantics, exposed via the
+<code class="docutils literal notranslate"><span class="pre">add_mod</span></code> function. Signed integers offer no such function. Other
+undefined behaviors of C are ruled out at the F* level, such as shifting an
+integer by the bit width.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In addition to classic arithmetic operations, some modules offer
+constant-time operations such as <code class="docutils literal notranslate"><span class="pre">eq_mask</span></code> and <code class="docutils literal notranslate"><span class="pre">gte_mask</span></code>, which
+allow defining a “secret integer” module on top of these integers, that
+offers no comparison operator returning a boolean, to avoid timing leaks.
+This is subject to change soon, with dedicated secret integer modules in
+the F* standard library.</p>
+</div>
+<p>Machine integers modules also define operators, suffixed with <code class="docutils literal notranslate"><span class="pre">^</span></code>. For
+instance, the <code class="docutils literal notranslate"><span class="pre">+</span></code> operation for <code class="docutils literal notranslate"><span class="pre">UInt32</span></code> is <code class="docutils literal notranslate"><span class="pre">+^</span></code>. Wraparound variants
+have an extra <code class="docutils literal notranslate"><span class="pre">%</span></code> character, such as <code class="docutils literal notranslate"><span class="pre">+%^</span></code>, when available.</p>
+<div class="admonition-fixme admonition">
+<p class="first admonition-title">FIXME (Jonathan Protzenko)</p>
+<p class="last">The unary minus is broken for machine integers.
+This does not parse: <code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">UInt32.(-^</span> <span class="pre">0ul)</span></code></p>
+</div>
+<p>Operators follow the standard precedence rules of F*, which are outlined on
+its <a class="reference external" href="https://github.com/FStarLang/FStar/wiki/Parsing-and-operator-precedence">wiki</a>.
+Operators are resolved in the current scope; we recommend the use of module
+abbreviations and the let-open notation <code class="docutils literal notranslate"><span class="pre">M.(</span> <span class="pre">...</span> <span class="pre">)</span></code>.</p>
+<pre class="code fstar literal-block">
+module U32 = FStar.UInt32
+
+let z = U32.(16ul -^ 8ul )
+</pre>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">By default, operations require that the caller prove that the result fits in
+the given integer width. For instance, <code class="docutils literal notranslate"><span class="pre">U32.add</span></code> has <code class="docutils literal notranslate"><span class="pre">(requires</span> <span class="pre">(size</span> <span class="pre">(v</span>
+<span class="pre">a</span> <span class="pre">+</span> <span class="pre">v</span> <span class="pre">b)</span> <span class="pre">n))</span></code> as a precondition. The modules also offer variants such as
+<code class="docutils literal notranslate"><span class="pre">U32.add_underspec</span></code>, which can always be called, and has an implication in
+the post-condition <code class="docutils literal notranslate"><span class="pre">(ensures</span> <span class="pre">(fun</span> <span class="pre">c</span> <span class="pre">-&gt;</span> <span class="pre">size</span> <span class="pre">(v</span> <span class="pre">a</span> <span class="pre">+</span> <span class="pre">v</span> <span class="pre">b)</span> <span class="pre">n</span> <span class="pre">==&gt;</span> <span class="pre">v</span> <span class="pre">a</span> <span class="pre">+</span> <span class="pre">v</span> <span class="pre">b</span> <span class="pre">=</span> <span class="pre">v</span> <span class="pre">c))</span></code>.
+The latter form is seldom used.</p>
+</div>
+<p>Machine integers can be reflected as natural numbers of type <code class="docutils literal notranslate"><span class="pre">nat</span></code> using
+the <code class="docutils literal notranslate"><span class="pre">v</span></code> function. It is generally more convenient to perform proofs on
+natural numbers.</p>
+<pre class="code fstar literal-block">
+let test_v (): unit =
+  let x = 0ul in
+  assert (U32.v x = 0)
+</pre>
+</div>
+<div class="section" id="the-buffer-library">
+<span id="buffer-library"></span><h2>The buffer library<a class="headerlink" href="#the-buffer-library" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>The buffer library currently suffers from severe limitations.</p>
+<ul class="simple">
+<li>It does not protect against some undefined C behaviors, such as
+allocating a zero-length array on the stack, or performing arithmetic on a
+<code class="docutils literal notranslate"><span class="pre">free</span></code>’d pointer.</li>
+<li>The NULL pointer lives in a separate, assumed library.</li>
+<li>Lengths are hard-coded to be 32-bit integers, instead of a proper
+<code class="docutils literal notranslate"><span class="pre">size_t</span></code> like in C.</li>
+</ul>
+<p class="last">A new model is in the works which should address the issues above.</p>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">FStar.Buffer</span></code> is the workhorse of Low*, and allows modeling C arrays on
+the stack and in the heap. <code class="docutils literal notranslate"><span class="pre">FStar.Buffer</span></code> models C arrays as follows:</p>
+<pre class="code fstar literal-block">
+let lseq (a: Type) (l: nat) : Type =
+  (s: Seq.seq a { Seq.length s == l } )
+
+noeq
+type buffer (a:Type) =
+  | MkBuffer: max_length:UInt32.t
+    -&gt; content:reference (s: lseq a (U32.v max_length))
+    -&gt; idx:UInt32.t
+    -&gt; length:UInt32.t{U32.(v idx + v length &lt;= v max_length)}
+    -&gt; buffer a
+</pre>
+<p>In other words, buffers are modeled as a reference to a sequence, along with
+a starting index <code class="docutils literal notranslate"><span class="pre">idx</span></code>, and a <code class="docutils literal notranslate"><span class="pre">length</span></code>, which captures how much of an
+allocation slice one is currently pointing to.</p>
+<p>This is a model: at compilation-time, KreMLin implements buffers using C arrays.</p>
+<p><strong>The length</strong> is available in ghost (proof) code only: just like in C, one
+cannot compute the length of a buffer at run-time. Therefore, a typical
+pattern is to use refinements to tie together a buffer and its length, as we
+saw with the initial <code class="docutils literal notranslate"><span class="pre">memcpy</span></code> example.</p>
+<pre class="code fstar literal-block">
+let do_something (x: Buffer.buffer UInt64.t) (l: U32.t { U32.v l = Buffer.length x }): St unit =
+  ()
+</pre>
+<p><strong>Allocating a buffer on the stack</strong> is done using the <code class="docutils literal notranslate"><span class="pre">create</span></code> function,
+which takes an initial value and a length. <code class="docutils literal notranslate"><span class="pre">create</span></code> requires that the top
+of the stack be a valid stack frame.</p>
+<pre class="code fstar literal-block">
+let test_alloc_stack (): Stack unit (fun _ -&gt; True) (fun _ _ _ -&gt; True) =
+  push_frame ();
+  let b = Buffer.create 0UL 8ul in
+  pop_frame ();
+  ()
+</pre>
+<p><strong>Allocating a buffer on the heap</strong> is done using the <code class="docutils literal notranslate"><span class="pre">rcreate_mm</span></code> function,
+which takes a region, an initial value and a length. The region is purely
+for proof and separation purposes, and has no effect on the generated code. A
+buffer created with <code class="docutils literal notranslate"><span class="pre">rcreate_mm</span></code> can be freed with <code class="docutils literal notranslate"><span class="pre">rfree</span></code>.</p>
+<pre class="code fstar literal-block">
+let test_alloc (): St unit =
+  let b = Buffer.rcreate_mm HS.root 0UL 8ul in
+  Buffer.rfree b
+</pre>
+<p><strong>Pointer arithmetic</strong> is performed by the means of the <code class="docutils literal notranslate"><span class="pre">sub</span></code> function. Under
+the hood, the <code class="docutils literal notranslate"><span class="pre">sub</span></code> function returns a buffer that points to the same
+underlying reference, but has different <code class="docutils literal notranslate"><span class="pre">idx</span></code> and <code class="docutils literal notranslate"><span class="pre">length</span></code> fields.</p>
+<pre class="code fstar literal-block">
+let test_sub (): St unit =
+  let b = Buffer.rcreate_mm HS.root 0UL 8ul in
+  let b_l = Buffer.sub b 0ul 4ul in // idx = 0; length = 4
+  let b_r = Buffer.sub b 4ul 4ul in // idx = 4; length = 4
+  Buffer.rfree b
+</pre>
+<p>Just like in C, one can only free the base pointer, i.e. this is an error:</p>
+<pre class="code fstar literal-block">
+[&#64; fail ]
+let test_sub_error (): St unit =
+  let b = Buffer.rcreate_mm HS.root 0UL 8ul in
+  let b_l = Buffer.sub b 0ul 4ul in // idx = 0; length = 4
+  Buffer.rfree b_l
+</pre>
+<p><strong>Reading and modifying</strong> a buffer is performed by means of the <code class="docutils literal notranslate"><span class="pre">index</span></code>
+and <code class="docutils literal notranslate"><span class="pre">upd</span></code> functions. These are exposed as the <code class="docutils literal notranslate"><span class="pre">.()</span></code> and <code class="docutils literal notranslate"><span class="pre">.()&lt;-</span></code>
+operators respectively.</p>
+<pre class="code fstar literal-block">
+let test_index (): St unit =
+  let open FStar.Buffer in
+  let b = Buffer.rcreate_mm HS.root 0UL 8ul in
+  b.(0ul) &lt;- UInt64.add_mod b.(0ul) b.(0ul);
+  Buffer.rfree b
+</pre>
+<div class="admonition-fixme admonition">
+<p class="first admonition-title">FIXME (Jonathan Protzenko)</p>
+<p class="last">We really should define an <code class="docutils literal notranslate"><span class="pre">FStar.Buffer.Ops</span></code> so that we don’t need to open
+the whole <code class="docutils literal notranslate"><span class="pre">FStar.Buffer</span></code> to enjoy the benefits of the operators.</p>
+</div>
+<p>Buffers are reflected at the proof level using sequences, via the <code class="docutils literal notranslate"><span class="pre">as_seq</span></code>
+function, which returns the contents of a given buffer in a given heap, i.e.
+a sequence slice ranging over the interval <code class="docutils literal notranslate"><span class="pre">[idx;</span> <span class="pre">idx</span> <span class="pre">+</span> <span class="pre">length)</span></code>.</p>
+<pre class="code fstar literal-block">
+let test_as_seq (): St unit =
+  let b = Buffer.rcreate_mm HS.root 0UL 1ul in
+  let h = ST.get () in
+  assert (Seq.equal (Buffer.as_seq h b) (Seq.cons 0UL Seq.createEmpty));
+  Buffer.rfree b
+</pre>
+<p><code class="docutils literal notranslate"><span class="pre">Buffer.get</span></code> is an often-convenient shorthand to index the value of a
+given buffer in a given heap.</p>
+<pre class="code fstar literal-block">
+let test_get (): St unit =
+  let b = Buffer.rcreate_mm HS.root 0UL 1ul in
+  let h = ST.get () in
+  assert (Buffer.get h b 0 = 0UL);
+  Buffer.rfree b
+</pre>
+</div>
+<div class="section" id="the-modifies-clauses-library">
+<span id="modifies-library"></span><h2>The modifies clauses library<a class="headerlink" href="#the-modifies-clauses-library" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="section" id="the-low-system-libraries">
+<span id="c-library"></span><h1>The Low* system libraries<a class="headerlink" href="#the-low-system-libraries" title="Permalink to this headline">¶</a></h1>
+<p>KreMLin offers primitive support for a variety of C concepts.</p>
+<div class="section" id="c-standard-library">
+<h2>C standard library<a class="headerlink" href="#c-standard-library" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">C.fst</span></code> module, found in the <code class="docutils literal notranslate"><span class="pre">kremlib</span></code> directory, exposes a hodgepodge
+of C functions.</p>
+<p>From the C header <code class="docutils literal notranslate"><span class="pre">&lt;stdlib.h&gt;</span></code>:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">rand</span></code> and <code class="docutils literal notranslate"><span class="pre">srand</span></code>; note that this makes the assumption that <code class="docutils literal notranslate"><span class="pre">sizeof</span>
+<span class="pre">int</span> <span class="pre">==</span> <span class="pre">4</span></code>, which is true of most modern platforms</li>
+<li><code class="docutils literal notranslate"><span class="pre">exit</span></code>, which is not polymorphic, per the reasons exposed
+earlier in <a class="reference internal" href="#language-subset"><span class="std std-ref">The Low* subset of F*</span></a>, see <code class="docutils literal notranslate"><span class="pre">C.Failure</span></code> below instead</li>
+<li>the <code class="docutils literal notranslate"><span class="pre">stdout</span></code>, <code class="docutils literal notranslate"><span class="pre">stderr</span></code> and <code class="docutils literal notranslate"><span class="pre">fflush</span></code> functions</li>
+<li>the <code class="docutils literal notranslate"><span class="pre">intptr_t</span></code> C11 type, along with a default value <code class="docutils literal notranslate"><span class="pre">nullptr</span></code> –
+useful to expose external APIs that take <code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">*</span></code></li>
+<li>the <code class="docutils literal notranslate"><span class="pre">EXIT_SUCCESS</span></code> and <code class="docutils literal notranslate"><span class="pre">EXIT_FAILURE</span></code> macros; these are defined as an
+inductive; since <code class="docutils literal notranslate"><span class="pre">C.fst</span></code> is not extracted, the code is left with
+references that resolve to the underlying C macros</li>
+</ul>
+<p>From the C header <code class="docutils literal notranslate"><span class="pre">&lt;time.h&gt;</span></code>:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">clock_t</span></code> and <code class="docutils literal notranslate"><span class="pre">clock</span></code> – the post-condition is not very good and needs
+to be fixed</li>
+</ul>
+<p>Other:</p>
+<ul class="simple">
+<li>a variety of endian-ness conversion macros that are implemented using
+host-specific instructions to maximize efficiency</li>
+<li>a <code class="docutils literal notranslate"><span class="pre">C.char</span></code> type, which is interconvertible with <code class="docutils literal notranslate"><span class="pre">uint8</span></code> through a
+variety of coercions; the C standard states that <code class="docutils literal notranslate"><span class="pre">char</span></code> is the only type
+that is not equal to its <code class="docutils literal notranslate"><span class="pre">signed</span></code> or <code class="docutils literal notranslate"><span class="pre">unsigned</span></code> variants, meaning that
+we can neither expose <code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">char</span> <span class="pre">=</span> <span class="pre">UInt8.t</span></code> or <code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">char</span> <span class="pre">=</span> <span class="pre">Int8.t</span></code>.</li>
+</ul>
+</div>
+<div class="section" id="test-helpers">
+<h2>Test helpers<a class="headerlink" href="#test-helpers" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">TestLib.fsti</span></code> module requires you to call KreMLin with <code class="docutils literal notranslate"><span class="pre">-add-include</span>
+<span class="pre">'&quot;testlib.h&quot;'</span></code> and <code class="docutils literal notranslate"><span class="pre">testlib.c</span></code> as extra arguments. It provides a couple
+helper functions, including <code class="docutils literal notranslate"><span class="pre">print_clock_diff</span></code> to deal with <code class="docutils literal notranslate"><span class="pre">clock_t</span></code> above.</p>
+</div>
+<div class="section" id="c-string-literals">
+<h2>C string literals<a class="headerlink" href="#c-string-literals" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">C.String.fst</span></code> module exposes a bare-bones model of C string literals,
+i.e. <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">char</span> <span class="pre">\*s</span> <span class="pre">=</span> <span class="pre">&quot;my</span> <span class="pre">string</span> <span class="pre">literal&quot;;</span></code>. This relies on a syntactic check
+that the argument to <code class="docutils literal notranslate"><span class="pre">of_literal</span></code> is a constant string literal in the original
+F* source. Such strings are zero-terminated, and their length can be computed
+(TODO). They can be printed on the standard output via <code class="docutils literal notranslate"><span class="pre">C.String.print</span></code>.</p>
+<p>From the F* typing perspective, these strings are values that have an eternal
+lifetime and are immutable. This corresponds exactly to the semantics of a C
+string literal placed in the RODATA section of an ELF executable.</p>
+<p>Operations such as mutation or concatenation cannot be implemented on
+<code class="docutils literal notranslate"><span class="pre">C.String.t</span></code>. The former is not possible given the value semantics of
+<code class="docutils literal notranslate"><span class="pre">C.String.t</span></code>, and the latter would require allocations that would never be
+freed. Instead, one should allocate a C character array and blit string literals
+into it to achieve concatenation, hence properly tracking mutation and the
+underlying allocation. See <code class="docutils literal notranslate"><span class="pre">test/Server.fst</span></code> for an incomplete,
+work-in-progress model of dealing with mutable string buffers.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Writing a string literal directly in the F* source code will confusingly also
+extract it to a C string literal. This is not Low*, because such a string
+has type <code class="docutils literal notranslate"><span class="pre">Prims.string</span></code>, whose operations, such <code class="docutils literal notranslate"><span class="pre">(^)</span></code> (concatenation)
+cannot be implemented in Low*.</p>
+<p class="last">KreMLin offers support for <code class="docutils literal notranslate"><span class="pre">Prims.string</span></code> via the <code class="docutils literal notranslate"><span class="pre">-add-include</span>
+<span class="pre">'&quot;kremstr.h&quot;'</span></code> and <code class="docutils literal notranslate"><span class="pre">kremstr.c</span></code> options. These implement <code class="docutils literal notranslate"><span class="pre">Prims.string</span></code>
+as zero-terminated <code class="docutils literal notranslate"><span class="pre">char</span> <span class="pre">\*</span></code>’s. Operations such as <code class="docutils literal notranslate"><span class="pre">(^)</span></code> perform
+allocations on the heap and never free them, since <code class="docutils literal notranslate"><span class="pre">Prims.string</span></code>s are
+values that do not have a lifetime in the first place. This is a sound
+implementation, but should only be used to facilitate porting existing
+F* programs to Low*. Any program that uses <code class="docutils literal notranslate"><span class="pre">Prims.string</span></code> will leak memory.</p>
+</div>
+</div>
+<div class="section" id="c-null-pointers">
+<h2>C <code class="docutils literal notranslate"><span class="pre">NULL</span></code> pointers<a class="headerlink" href="#c-null-pointers" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">C.Nullity.fst</span></code> exposes a model of the C NULL pointer – this is what
+you should use if you need zero-length buffers. The NULL pointer is always
+live, and always has length 0. The <code class="docutils literal notranslate"><span class="pre">pointer</span></code> and <code class="docutils literal notranslate"><span class="pre">pointer_or_null</span></code>
+functions define convenient aliases, while the <code class="docutils literal notranslate"><span class="pre">(!$)</span></code> operator guarantees
+that the dereference will be pretty-printed with a <code class="docutils literal notranslate"><span class="pre">*</span></code> C dereference, as
+opposed to an access at array index 0. Pointers can always be tested for
+nullity via the <code class="docutils literal notranslate"><span class="pre">is_null</span> <span class="pre">p</span></code> function, which is guaranteed to be
+pretty-printed as <code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">!=</span> <span class="pre">NULL</span></code>.</p>
+</div>
+<div class="section" id="a-polymorphic-exit">
+<h2>A polymorphic exit<a class="headerlink" href="#a-polymorphic-exit" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">C.Failure.fst</span></code> exposes a single <code class="docutils literal notranslate"><span class="pre">failwith</span></code> function that properly
+has a polymorphic return type. This uses a recursion hack in combination
+with KreMLin’s monomorphization, and will require you to disable compiler
+warnings for infinite recursion.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="Introduction.html" class="btn btn-neutral" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Jonathan Protzenko.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.36.0/codemirror.min.js"></script>
+      <script type="text/javascript" src="_static/fstar.cm.js"></script>
+      <script type="text/javascript" src="_static/fslit.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

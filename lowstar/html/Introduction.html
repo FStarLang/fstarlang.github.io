@@ -1,0 +1,514 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Introduction &mdash; The KreMLin user manual  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.36.0/codemirror.min.css" type="text/css" />
+  <link rel="stylesheet" href="_static/cm.tango.css" type="text/css" />
+  <link rel="stylesheet" href="_static/fslit.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The Low* subset of F*" href="LowStar.html" />
+    <link rel="prev" title="The KreMLin user manual and documentation" href="index.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> The KreMLin user manual
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-essence-of-low">The essence of Low*</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tooling-and-setup">Tooling and setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage-of-the-kremlin-tool">Usage of the KreMLin tool</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="LowStar.html">The Low* subset of F*</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LowStar.html#the-low-libraries">The Low* libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LowStar.html#the-low-system-libraries">The Low* system libraries</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">The KreMLin user manual</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Introduction</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/Introduction.fst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <pre class="code fstar literal-block">
+(* {{{ This fslit's file prelude. TODO: find a way to hide this. *)
+module Introduction
+
+// Generate a dependency on LowStar.fst which does not have a main but which
+// we still want to verify
+let _ = LowStar.test_get
+(* }}} *)
+</pre>
+<div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>This manual documents Low*, a subset of F* that enjoys compilation to C
+through its companion compiler KreMLin. As such, Kre<strong>ML</strong>in offers an
+alternative to OCa<strong>ML</strong> for extracting and running F* programs (hence the
+name).</p>
+<p>Low* is not only a language subset, but also a set of F* libraries that
+model a <em>curated</em> set of C features: the C memory model, stack- and
+heap-allocated arrays, machine integers, C string literals, and a few
+system-level functions from the C standard library.</p>
+<p>Writing in Low*, the programmer enjoys the full power of F* for proofs and
+specifications. At compile-time, proofs are erased, leaving only the
+low-level code to be compiled to C. In short:</p>
+<p class="centered">
+<strong><strong>the code is low-level, but the verification is not</strong>.</strong></p><p>This manual offers a tour of Low* and its companion libraries; presents the
+tool KreMLin and the various ways it can be used to generate C programs or
+libraries; covers a few advanced examples.</p>
+<p>Low* has been successfully used to write <a class="reference external" href="https://github.com/mitls/hacl-star">HACL*</a>, a library of verified cryptographic
+primitives used in Firefox, the Linux Kernel and other projects.</p>
+<p>This tutorial assumes the reader is familiar with F*; if in doubt, head over
+to its <a class="reference external" href="https://fstar-lang.org/tutorial">tutorial</a>.</p>
+<div class="section" id="the-essence-of-low">
+<h2>The essence of Low*<a class="headerlink" href="#the-essence-of-low" title="Permalink to this headline">¶</a></h2>
+<p>The snippet below implements a classic <code class="docutils literal notranslate"><span class="pre">memcpy</span></code> function, copying <code class="docutils literal notranslate"><span class="pre">len</span></code>
+elements of type <code class="docutils literal notranslate"><span class="pre">a</span></code> from <code class="docutils literal notranslate"><span class="pre">src</span></code> into <code class="docutils literal notranslate"><span class="pre">dst</span></code>.</p>
+<pre class="code fstar literal-block">
+#set-options &quot;--use_two_phase_tc true&quot;
+
+open FStar.HyperStack.ST
+
+module S = FStar.Seq
+module B = FStar.Buffer
+module M = FStar.Modifies
+module U32 = FStar.UInt32
+module ST = FStar.HyperStack.ST
+
+let slice_plus_one #a (s1 s2: S.seq a) (i: nat): Lemma
+  (requires (
+    i &lt; S.length s1 /\
+    i &lt; S.length s2 /\
+    S.equal (S.slice s1 0 i) (S.slice s2 0 i) /\
+    S.index s1 i == S.index s2 i))
+  (ensures (
+    S.equal (S.slice s1 0 (i + 1)) (S.slice s2 0 (i + 1))))
+  [ SMTPat (S.slice s1 0 (i + 1)); SMTPat (S.slice s2 0 (i + 1)) ]
+=
+  let x = S.index s1 i in
+  let s1' = S.append (S.slice s1 0 i) (S.cons x S.createEmpty) in
+  let s2' = S.append (S.slice s2 0 i) (S.cons x S.createEmpty) in
+  assert (S.equal s1' (S.slice s1 0 (i + 1)));
+  assert (S.equal s2' (S.slice s2 0 (i + 1)))
+
+#set-options &quot;--max_fuel 0 --max_ifuel 0&quot;
+val memcpy: #a:eqtype -&gt; src:B.buffer a -&gt; dst:B.buffer a -&gt; len:U32.t -&gt; Stack unit
+  (requires fun h0 -&gt;
+    let l_src = M.loc_buffer src in
+    let l_dst = M.loc_buffer dst in
+    B.live h0 src /\ B.live h0 dst /\
+    B.length src = U32.v len /\
+    B.length dst = U32.v len /\
+    M.loc_disjoint l_src l_dst)
+  (ensures fun h0 () h1 -&gt;
+    let l_src = M.loc_buffer src in
+    let l_dst = M.loc_buffer dst in
+    B.live h1 src /\
+    B.live h1 dst /\
+    M.(modifies l_dst h0 h1) /\
+    S.equal (B.as_seq h1 dst) (B.as_seq h0 src))
+let memcpy #a src dst len =
+  let h0 = ST.get () in
+  let inv h (i: nat) =
+    B.live h src /\ B.live h dst /\
+    M.(modifies (loc_buffer dst) h0 h) /\
+    i &lt;= U32.v len /\
+    S.equal (Seq.slice (B.as_seq h src) 0 i) (Seq.slice (B.as_seq h dst) 0 i)
+  in
+  let body (i: U32.t{ 0 &lt;= U32.v i /\ U32.v i &lt; U32.v len }): Stack unit
+    (requires (fun h -&gt; inv h (U32.v i)))
+    (ensures (fun h0 () h1 -&gt; inv h0 (U32.v i) /\ inv h1 (U32.v i + 1)))
+  =
+    let open B in
+    dst.(i) &lt;- src.(i)
+  in
+  C.Loops.for 0ul len inv body
+
+let main (): Stack C.exit_code
+  (requires fun _ -&gt; True)
+  (ensures fun h _ h' -&gt; M.modifies M.loc_none h h')
+=
+  push_frame ();
+  let src = B.createL [ 1UL; 2UL ] in
+  let dst = B.create 0UL 2ul in
+  memcpy src dst 2ul;
+  pop_frame ();
+  C.EXIT_SUCCESS
+</pre>
+<p>This example showcases several features of Low*. We first present the code from
+a high-level point of view, then show how it compiles to C. We leave a detailed
+discussion of Low* to the subsequent chapters of this tutorial.</p>
+<p>The code starts by opening several modules that are part of the “Low*
+standard library”.</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">Buffer</span></code> is our model of stack- and heap- allocated C arrays
+(described in <a class="reference internal" href="LowStar.html#buffer-library"><span class="std std-ref">The buffer library</span></a>)</li>
+<li><code class="docutils literal notranslate"><span class="pre">Seq</span></code> is the sequence abstraction from the F* standard library, which
+<code class="docutils literal notranslate"><span class="pre">Buffer</span></code> uses to reflect the contents of a given buffer in a given heap
+at the proof level</li>
+<li><code class="docutils literal notranslate"><span class="pre">Modifies</span></code> provides a universal modifies clause over buffers, references
+and regions (described in <a class="reference internal" href="LowStar.html#modifies-library"><span class="std std-ref">The modifies clauses library</span></a>)</li>
+<li><code class="docutils literal notranslate"><span class="pre">UInt32</span></code> is a model of the C11 <code class="docutils literal notranslate"><span class="pre">uint32_t</span></code> type, reflected at the proof
+level using natural numbers (described in <a class="reference internal" href="LowStar.html#machine-integers"><span class="std std-ref">Machine integers</span></a>)</li>
+<li><code class="docutils literal notranslate"><span class="pre">HyperStack</span></code> is our model of the C memory layout (described in
+<a class="reference internal" href="LowStar.html#memory-model"><span class="std std-ref">The memory model</span></a>)</li>
+<li><code class="docutils literal notranslate"><span class="pre">C</span></code> and <code class="docutils literal notranslate"><span class="pre">C.Loops</span></code> expose some C concepts to F* (described in
+<a class="reference internal" href="LowStar.html#c-library"><span class="std std-ref">The Low* system libraries</span></a>)</li>
+</ul>
+<p>The first definition is a lemma over sequences: if two sequences are equal over
+the slice <code class="docutils literal notranslate"><span class="pre">[0;</span> <span class="pre">i)</span></code> and their <code class="docutils literal notranslate"><span class="pre">i</span></code>-th element is equal, then they are equal
+over the slice <code class="docutils literal notranslate"><span class="pre">[0;</span> <span class="pre">i</span> <span class="pre">+</span> <span class="pre">1)</span></code>. This lemma is required to prove the functional
+correctness of <code class="docutils literal notranslate"><span class="pre">memcpy</span></code>. Lemmas are erased and do not appear in the generated
+code, so it is safe to mix lemmas with Low* code.</p>
+<p>Next, then <code class="docutils literal notranslate"><span class="pre">memcpy</span></code> function is defined and annotated with pre- and
+post-conditions, using liveness and disjointness predicates. The post-condition
+states that after calling <code class="docutils literal notranslate"><span class="pre">memcpy</span> <span class="pre">src</span> <span class="pre">dst</span> <span class="pre">len</span></code>, the destination and the source
+have the same contents up to index <code class="docutils literal notranslate"><span class="pre">len</span></code>.</p>
+<p>The implementation of <code class="docutils literal notranslate"><span class="pre">memcpy</span></code> uses a C-style <code class="docutils literal notranslate"><span class="pre">for</span></code> loop with a loop
+invariant and a loop body. Alternatively, one could write a recursive function,
+relying on the C compiler to hopefully perform tail-call optimization.</p>
+<p>Finally, the <code class="docutils literal notranslate"><span class="pre">main</span></code> function uses <code class="docutils literal notranslate"><span class="pre">push_frame</span></code> and <code class="docutils literal notranslate"><span class="pre">pop_frame</span></code>, two
+combinators from the memory model that indicate that this code conceptually
+executes in a new stack frame. In this new stack frame, two test arrays are
+allocated on the stack. These are arrays of 64-bit unsigned integers, as denoted
+by the <code class="docutils literal notranslate"><span class="pre">UL</span></code> Low* suffix for machine integers. The <code class="docutils literal notranslate"><span class="pre">memcpy</span></code> function is
+called over these two arrays. From a verification perspective, since the stack
+frame is freed after calling <code class="docutils literal notranslate"><span class="pre">main</span></code>, we can successfully state that <code class="docutils literal notranslate"><span class="pre">main</span></code>
+modifies no buffer.</p>
+<p>Leaving an in-depth explanation of these concepts to later sections, it
+suffices to say, for now, that one can invoke the KreMLin compiler to turn
+this code into C:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ krml -no-prefix Introduction introduction.fst
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This tutorial is written using <a class="reference external" href="https://github.com/FStarLang/fstar-mode.el/tree/master/etc/fslit">fslit</a>,
+meaning that this document is actually an F* source file converted to HTML.
+The present file is <code class="docutils literal notranslate"><span class="pre">Introduction.fst</span></code> and can be found in the <code class="docutils literal notranslate"><span class="pre">book</span></code>
+directory of KreMLin. So, you can actually run the command above if you want
+to try things out for yourself!</p>
+</div>
+<p>This generates several C files in the current directory. The resulting
+<code class="docutils literal notranslate"><span class="pre">Introduction.c</span></code> is as follows.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/* This file was generated by KreMLin &lt;https://github.com/FStarLang/kremlin&gt;</span>
+<span class="cm"> * KreMLin invocation: krml -no-prefix Introduction introduction.fst</span>
+<span class="cm"> * F* version: 451c4a69</span>
+<span class="cm"> * KreMLin version: 3d1941d0</span>
+<span class="cm"> */</span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;Introduction.h&quot;</span><span class="cp"></span>
+
+<span class="kt">void</span> <span class="nf">memcpy__uint64_t</span><span class="p">(</span><span class="kt">uint64_t</span> <span class="o">*</span><span class="n">src</span><span class="p">,</span> <span class="kt">uint64_t</span> <span class="o">*</span><span class="n">dst</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">len</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">uint32_t</span> <span class="n">i</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="p">)</span><span class="mi">0U</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="p">)</span><span class="mi">1U</span><span class="p">)</span>
+    <span class="n">dst</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">src</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="n">exit_code</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="kt">uint64_t</span> <span class="n">src</span><span class="p">[</span><span class="mi">2U</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="p">(</span><span class="kt">uint64_t</span><span class="p">)</span><span class="mi">1U</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint64_t</span><span class="p">)</span><span class="mi">2U</span> <span class="p">};</span>
+  <span class="kt">uint64_t</span> <span class="n">dst</span><span class="p">[</span><span class="mi">2U</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">0U</span> <span class="p">};</span>
+  <span class="n">memcpy__uint64_t</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="p">)</span><span class="mi">2U</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">EXIT_SUCCESS</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This informal presentation highlights several key design points of Low*.</p>
+<ul class="simple">
+<li><strong>A shallow embedding of C</strong>. The programmer writes F* syntax, bearing in
+mind that it ought to compile to C, i.e. be in the Low* subset. We offer
+dedicated primitives, such as the <code class="docutils literal notranslate"><span class="pre">C.Loops.for</span></code> function, enabling
+fine-grained control over the generated C.</li>
+<li><strong>A model of C</strong>. The example above relies on modeling several C features in
+F*, such as bounded machine integers, stack-allocated arrays, and the
+separation between the stack and the heap. Dedicated combinators such as
+<code class="docutils literal notranslate"><span class="pre">push_frame</span></code> and <code class="docutils literal notranslate"><span class="pre">pop_frame</span></code> allow reflecting the structure of the call
+stack using F*’s built-in effect system.</li>
+<li><strong>High-level verification of low-level code</strong>. The example contains a vast
+amount of specification, ranging from temporal safety (liveness) to
+spatial safety (disjointness, indices within bounds). Imperative data
+structures, such as buffers or machine integers, are reflected at the
+proof level with sequences and natural numbers respectively. This allows
+for a powerful specification style, which ultimately states that after
+calling <code class="docutils literal notranslate"><span class="pre">memcpy</span></code>, the <code class="docutils literal notranslate"><span class="pre">src</span></code> and <code class="docutils literal notranslate"><span class="pre">dst</span></code> buffers are the same up to <code class="docutils literal notranslate"><span class="pre">len</span></code>.
+All of this specification is erased, leaving only a succinct, low-level
+<code class="docutils literal notranslate"><span class="pre">for</span></code>-loop.</li>
+<li><strong>Tooling support for programmer productivity</strong>. The example relies on
+KreMLin to automatically generate monomorphic instance of the polymorphic
+<code class="docutils literal notranslate"><span class="pre">memcpy</span></code> function above. This is representative of a more general take:
+whenever there is a predictable compilation scheme for a high-level
+feature, KreMLin will provide support to enhance the programming
+experience. In Low*, one enjoys data types, pattern-matching, tuples,
+which are respectively compiled as C tagged unions, cascading
+<code class="docutils literal notranslate"><span class="pre">if</span></code>s, or structures passed by value.</li>
+</ul>
+</div>
+<div class="section" id="tooling-and-setup">
+<h2>Tooling and setup<a class="headerlink" href="#tooling-and-setup" title="Permalink to this headline">¶</a></h2>
+<p>We now show how to get started with the tools and obtain a working F*/KreMLin
+pair.</p>
+<p>KreMLin is intimately tied with F*:</p>
+<ul class="simple">
+<li>the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch of KreMLin works with the <code class="docutils literal notranslate"><span class="pre">stable</span></code> branch of F*</li>
+<li>the <code class="docutils literal notranslate"><span class="pre">fstar-master</span></code> branch of KreMLin works with the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch of F*.</li>
+</ul>
+<p>Due to the fast-paced nature of F* development, this tutorial is kept
+up-to-date with the <em>latter</em> set of revisions, meaning that this tutorial
+expects the user to have:</p>
+<ul class="simple">
+<li>an up-to-date version of F* <code class="docutils literal notranslate"><span class="pre">master</span></code> <a class="reference external" href="https://github.com/FStarLang/FStar/blob/master/INSTALL.md">built from source</a></li>
+<li>an up-to-date version of KreMLin <code class="docutils literal notranslate"><span class="pre">fstar-master</span></code>, <a class="reference external" href="https://github.com/FStarLang/kremlin/tree/fstar-master/#trying-out-kremlin">built from source</a></li>
+<li>a C compiler in the path, preferably a recent version of GCC.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">On Windows, we expect the user to use the same setup as F*, i.e. a Cygwin
+environment with a <a class="reference external" href="https://github.com/fdopen/opam-repository-mingw/">Windows OCaml</a>, along with the MinGW
+64-bit compilers installed <em>as cygwin packages</em>, i.e. the
+<code class="docutils literal notranslate"><span class="pre">x86_64-w64-mingw32-gcc</span></code> executable, along with the corresponding linker,
+archiver, etc.</p>
+</div>
+</div>
+<div class="section" id="usage-of-the-kremlin-tool">
+<h2>Usage of the KreMLin tool<a class="headerlink" href="#usage-of-the-kremlin-tool" title="Permalink to this headline">¶</a></h2>
+<p>The KreMLin compiler comes as a command-line too <code class="docutils literal notranslate"><span class="pre">krml</span></code>. As a reminder, <code class="docutils literal notranslate"><span class="pre">krml</span>
+<span class="pre">-help</span></code> provides the list of options and warnings along with proper
+documentation.</p>
+<p>The process of extracting from F* to C involves:</p>
+<ol class="arabic simple">
+<li>calling <code class="docutils literal notranslate"><span class="pre">fstar.exe</span></code> to generate a set of <code class="docutils literal notranslate"><span class="pre">.krml</span></code> files</li>
+<li>calling <code class="docutils literal notranslate"><span class="pre">krml</span></code> on these files to generate a set of C files</li>
+<li>calling the C compiler to generate an executable.</li>
+</ol>
+<p>KreMLin can automate the first and last steps, and act as a driver for both F*
+and the C compiler, allowing for a quick edit-compile-cycle. For this present
+file, one may use:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ krml introduction.fst -no-prefix Introduction -o test.exe <span class="o">&amp;&amp;</span> ./test.exe
+</pre></div>
+</div>
+<p>The present tutorial will use this mode exclusively, as it
+it by far easier to use and allows trying out KreMLin without writing a
+substantial amount of <code class="docutils literal notranslate"><span class="pre">Makefile</span></code>s. Furthermore, one can pass <code class="docutils literal notranslate"><span class="pre">.c</span></code>, <code class="docutils literal notranslate"><span class="pre">.h</span></code>,
+<code class="docutils literal notranslate"><span class="pre">.o</span></code>, and <code class="docutils literal notranslate"><span class="pre">.S</span></code> files to KreMLin, to be included at the right step of the
+build, along with C linker and compiler options via KreMLin’s <code class="docutils literal notranslate"><span class="pre">-ccopt</span></code> and
+<code class="docutils literal notranslate"><span class="pre">-ldopt</span></code> options.</p>
+<div class="admonition-fixme admonition">
+<p class="first admonition-title">FIXME (Jonathan Protzenko)</p>
+<p class="last">Add a forward pointer to section 8.</p>
+</div>
+<p>However, using KreMLin as a driver is inefficient for two reasons:</p>
+<ul class="simple">
+<li>step 1 uses “legacy” extraction in F*: files are processed sequentially,
+without caching, and verification is by default not performed (use <code class="docutils literal notranslate"><span class="pre">-verify</span></code>)</li>
+<li>step 3 is not parallel</li>
+</ul>
+<p>Section ?? provides a complete sample Makefile that performs parallel
+verification and extraction, along with parallel compilation of the resulting C
+code, using F*’s automated dependency analysis and <code class="docutils literal notranslate"><span class="pre">gcc</span> <span class="pre">-MM</span></code> for correct,
+incremental builds.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="LowStar.html" class="btn btn-neutral float-right" title="The Low* subset of F*" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="The KreMLin user manual and documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Jonathan Protzenko.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.36.0/codemirror.min.js"></script>
+      <script type="text/javascript" src="_static/fstar.cm.js"></script>
+      <script type="text/javascript" src="_static/fslit.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>
