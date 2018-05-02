@@ -1093,11 +1093,10 @@ has type <code class="docutils literal notranslate"><span class="pre">Prims.stri
 cannot be implemented in Low*.</p>
 <p class="last">KreMLin offers support for <code class="docutils literal notranslate"><span class="pre">Prims.string</span></code> via the <code class="docutils literal notranslate"><span class="pre">-add-include</span>
 <span class="pre">'&quot;kremstr.h&quot;'</span></code> and <code class="docutils literal notranslate"><span class="pre">kremstr.c</span></code> options. These implement <code class="docutils literal notranslate"><span class="pre">Prims.string</span></code>
-as zero-terminated <code class="docutils literal notranslate"><span class="pre">char</span> <span class="pre">\*</span></code>’s. Operations such as <code class="docutils literal notranslate"><span class="pre">(^)</span></code> perform
-allocations on the heap and never free them, since <code class="docutils literal notranslate"><span class="pre">Prims.string</span></code>s are
-values that do not have a lifetime in the first place. This is a sound
-implementation, but should only be used to facilitate porting existing
-F* programs to Low*. Any program that uses <code class="docutils literal notranslate"><span class="pre">Prims.string</span></code> will leak memory.</p>
+as zero-terminated <code class="docutils literal notranslate"><span class="pre">char</span> <span class="pre">*</span></code>’s (not <code class="docutils literal notranslate"><span class="pre">const</span></code>). Operations such as <code class="docutils literal notranslate"><span class="pre">(^)</span></code>
+perform allocations on the heap and never free them, since <code class="docutils literal notranslate"><span class="pre">Prims.string</span></code>s are values that do not have a lifetime in the first place. This is a sound
+implementation, but should only be used to facilitate porting existing F*
+programs to Low*. Any program that uses <code class="docutils literal notranslate"><span class="pre">Prims.string</span></code> will leak memory.</p>
 </div>
 </div>
 <div class="section" id="c-null-pointers">
