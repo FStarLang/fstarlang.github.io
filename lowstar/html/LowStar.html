@@ -977,7 +977,10 @@ let test_sub_error (): St unit =
 </pre>
 <p><strong>Reading and modifying</strong> a buffer is performed by means of the <code class="docutils literal notranslate"><span class="pre">index</span></code>
 and <code class="docutils literal notranslate"><span class="pre">upd</span></code> functions. These are exposed as the <code class="docutils literal notranslate"><span class="pre">.()</span></code> and <code class="docutils literal notranslate"><span class="pre">.()&lt;-</span></code>
-operators respectively.</p>
+operators respectively, defined in <code class="docutils literal notranslate"><span class="pre">LowStar.BufferOps</span></code> (the latter
+module only contains those operators, and is meant to be used with
+<code class="docutils literal notranslate"><span class="pre">open</span></code> to bring operators into scope without further polluting the
+context with any definition from <code class="docutils literal notranslate"><span class="pre">LowStar.Buffer</span></code>.)</p>
 <pre class="code fstar literal-block">
 let test_index (): St unit =
   let b = B.malloc HS.root 0UL 8ul in
@@ -1131,10 +1134,12 @@ programs to Low*. Any program that uses <code class="docutils literal notranslat
 </div>
 <div class="section" id="c-null-pointers">
 <h2>C <code class="docutils literal notranslate"><span class="pre">NULL</span></code> pointers<a class="headerlink" href="#c-null-pointers" title="Permalink to this headline">¶</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">C.Nullity.fst</span></code> exposes a model of the C NULL pointer – this is what
+<p><code class="docutils literal notranslate"><span class="pre">LowStar.Buffer</span></code> also exposes a model of the C NULL pointer,
+<code class="docutils literal notranslate"><span class="pre">null</span></code> – this is what
 you should use if you need zero-length buffers. The NULL pointer is always
 live, and always has length 0. The <code class="docutils literal notranslate"><span class="pre">pointer</span></code> and <code class="docutils literal notranslate"><span class="pre">pointer_or_null</span></code>
-functions define convenient aliases, while the <code class="docutils literal notranslate"><span class="pre">(!$)</span></code> operator guarantees
+functions define convenient aliases, while the <code class="docutils literal notranslate"><span class="pre">(!*)</span></code> operator
+(defined in <code class="docutils literal notranslate"><span class="pre">LowStar.BufferOps</span></code>) guarantees
 that the dereference will be pretty-printed with a <code class="docutils literal notranslate"><span class="pre">*</span></code> C dereference, as
 opposed to an access at array index 0. Pointers can always be tested for
 nullity via the <code class="docutils literal notranslate"><span class="pre">is_null</span> <span class="pre">p</span></code> function, which is guaranteed to be
