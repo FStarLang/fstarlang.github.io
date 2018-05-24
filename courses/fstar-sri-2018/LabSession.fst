@@ -46,7 +46,14 @@ let abs2 (x: Int32.t): Pure (option Int32.t)
 (***** Working with references *)
 /// The classic swap on references: provide suitable pre- and post-conditions.
 /// Two useful operations: b *= (e), for writing into a pointer, and !*(e), for
-/// dereferencing a pointer.
+/// dereferencing a pointer. Moreover, in order to state a meaningful
+/// post-condition, you will need:
+/// - loc_buffer, which injects a buffer into the type of abstract memory
+///   locations
+/// - loc_union, which computes the union of two memory locations
+/// - modifies l h0 h1, a predicate stating that going from memory h0 to memory
+///   h1, only location l was modified.
+/// - B.get h p i, which fetches the contents of pointer p in heap h at index i
 let swap (x: B.pointer UInt32.t) (y: B.pointer UInt32.t): Stack unit
   (requires fun h0 -> B.live h0 x /\ B.live h0 y /\ B.disjoint x y)
   (ensures fun _ _ _ -> True)
