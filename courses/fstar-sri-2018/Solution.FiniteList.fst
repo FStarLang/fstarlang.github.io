@@ -94,7 +94,7 @@ let pop #a (l:Seq.seq a) (x: t a): Stack a
   let next = v.first +^ 1ul in
   x *= {v with first=next};
   res
-  
+
 /// Similar thing with push.
 let push #a (l:Seq.seq a) (x: t a) (e:a) : Stack unit
   (requires fun h -> ~(full h l x) /\ repr h x l)

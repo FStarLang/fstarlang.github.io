@@ -52,14 +52,13 @@ let emp #a (l:Seq.seq a) =
 let full #a h (l:Seq.seq a) (x: t a) =
   Seq.length l == U32.v (deref h x).total_length
 
-/// We are using computationally-irrelevant sequences; two helpers to construct
-/// such sequences, to save the user the trouble of writing hide / reveal.
+/// Two specialized helpers you will need.
 let cons #a e (l:Seq.seq a) =
   Seq.cons e l
 
 let nil #a : Seq.seq a = Seq.createEmpty #a
 
-/// Similarly, two accessors operating on ghost sequences.
+/// Similarly, two accessors to facilite that rest of this exercise.
 let head #a (l:Seq.seq a {~(emp l)}) =
   Seq.head l
 
@@ -94,3 +93,16 @@ let create #a (def:a) (len:U32.t) : ST (t a)
   (ensures fun h0 r h1 -> True)
 =
   admit ()
+
+/// As a sanity check, this main function ought to type-check once you've removed
+/// all the admits. Then, try compiling this code with:
+///
+/// krml -no-prefix FiniteList FiniteList.fst -add-include '"kremlin/prims_int.h"'
+/// 
+/// Once you replace sequences with erased sequences, the -add-include
+/// argument will become optional.
+let main (): St Int32.t =
+  let l = create 1l 120ul in
+  push Seq.createEmpty l 0l;
+  pop FStar.Seq.(cons 0l createEmpty) l
+
