@@ -105,6 +105,7 @@ let create #a (def:a) (len:U32.t) : ST (t a)
   (requires fun h -> len <> 0ul)
   (ensures fun h0 r h1 ->
             repr h1 r nil
+          /\ (deref h1 r).total_length = len
           /\ modifies loc_none h0 h1)
  = let buf = {
        b = malloc def len;
@@ -112,3 +113,9 @@ let create #a (def:a) (len:U32.t) : ST (t a)
        total_length = len
    } in
    B.malloc FStar.Monotonic.HyperHeap.root buf 1ul
+
+module I32 = FStar.Int32
+let main (): St I32.t =
+  let l = create 1l 120ul in
+  push nil l 0l;
+  pop (cons 0l nil) l 
