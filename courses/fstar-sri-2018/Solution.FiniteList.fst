@@ -1,3 +1,14 @@
+/// This module is standalone and can be successfully compiled with:
+///
+/// krml -no-prefix Solution.FiniteList Solution.FiniteList.fst -add-include '"kremlin/prims_int.h"'
+///
+/// The reason for the extra add-include is that, at this stage, the sequences
+/// are not erased, meaning that they are extracted by KreMLin; what KreMLin
+/// extracts is "transition helpers", i.e. sequences implemented as lists
+/// without any memory management. This helps port code that is not yet in Low*,
+/// but is not supported by default. Lists generate references to the type
+/// Prims.int, i.e. mathematical unbounded integers, hence the need for the
+/// extra argument.
 module Solution.FiniteList
 
 open FStar.UInt32
@@ -105,6 +116,7 @@ let create #a (def:a) (len:U32.t) : ST (t a)
   (requires fun h -> len <> 0ul)
   (ensures fun h0 r h1 ->
             repr h1 r nil
+          /\ (deref h1 r).total_length = len
           /\ modifies loc_none h0 h1)
  = let buf = {
        b = malloc def len;
@@ -112,3 +124,8 @@ let create #a (def:a) (len:U32.t) : ST (t a)
        total_length = len
    } in
    B.malloc FStar.Monotonic.HyperHeap.root buf 1ul
+
+let main (): St Int32.t =
+  let l = create 1l 120ul in
+  push Seq.createEmpty l 0l;
+  pop FStar.Seq.(cons 0l createEmpty) l
