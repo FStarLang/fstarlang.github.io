@@ -1,4 +1,4 @@
-module Solution.FiniteList
+module Solution.FiniteListWithErasure
 
 open FStar.UInt32
 
