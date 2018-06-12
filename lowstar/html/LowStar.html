@@ -734,8 +734,8 @@ effect Stack (a:Type) (pre: ST.st_pre) (post: (m0: HS.mem -&gt; Tot (ST.st_post'
 <code class="docutils literal notranslate"><span class="pre">ST.equal_domains</span></code> predicate.</p>
 <pre class="code fstar literal-block">
 let equal_domains (m0 m1: HS.mem) =
-  m0.HS.tip == m1.HS.tip /\
-  Set.equal (Map.domain m0.HS.h) (Map.domain m1.HS.h) /\
+  (HS.get_tip m0) == (HS.get_tip m1) /\
+  Set.equal (Map.domain (HS.get_hmap m0)) (Map.domain (HS.get_hmap m1)) /\
   ST.same_refs_in_all_regions m0 m1
 </pre>
 <p>The <code class="docutils literal notranslate"><span class="pre">equal_domains</span></code> predicate states that a function in the <code class="docutils literal notranslate"><span class="pre">Stack</span></code> effect:</p>
@@ -828,7 +828,7 @@ effect St (a:Type) = ST a (fun _ -&gt; True) (fun _ _ _ -&gt; True)
 let test_st_get (): St unit =
   push_frame ();
   let m = ST.get () in
-  assert (Monotonic.HyperStack.is_stack_region m.HS.tip);
+  assert (Monotonic.HyperStack.is_stack_region (HS.get_tip m));
   pop_frame ()
 </pre>
 <p>These are the basic building blocks of our memory model. Verifying on top of
