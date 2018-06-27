@@ -106,7 +106,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#c-standard-library">C standard library</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#test-helpers">Test helpers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#c-string-literals">C string literals</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#c-null-pointers">C <code class="docutils literal notranslate"><span class="pre">NULL</span></code> pointers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#a-polymorphic-exit">A polymorphic exit</a></li>
 </ul>
 </li>
@@ -976,16 +975,15 @@ let test_sub_error (): St unit =
 </pre>
 <p><strong>Reading and modifying</strong> a buffer is performed by means of the <code class="docutils literal notranslate"><span class="pre">index</span></code>
 and <code class="docutils literal notranslate"><span class="pre">upd</span></code> functions. These are exposed as the <code class="docutils literal notranslate"><span class="pre">.()</span></code> and <code class="docutils literal notranslate"><span class="pre">.()&lt;-</span></code>
-operators respectively, defined in <code class="docutils literal notranslate"><span class="pre">LowStar.BufferOps</span></code> (the latter
+operators respectively, defined in <code class="docutils literal notranslate"><span class="pre">LowStar.BufferOps</span></code>. This latter module
 module only contains those operators, and is meant to be used with
 <code class="docutils literal notranslate"><span class="pre">open</span></code> to bring operators into scope without further polluting the
-context with any definition from <code class="docutils literal notranslate"><span class="pre">LowStar.Buffer</span></code>.)</p>
+context with any definition from <code class="docutils literal notranslate"><span class="pre">LowStar.Buffer</span></code>.</p>
 <pre class="code fstar literal-block">
 let test_index (): St unit =
   let b = B.malloc HS.root 0UL 8ul in
   b.(0ul) &lt;- UInt64.add_mod b.(0ul) b.(0ul);
   B.free b
-
 </pre>
 <p>Buffers are reflected at the proof level using sequences, via the <code class="docutils literal notranslate"><span class="pre">as_seq</span></code>
 function, which returns the contents of a given buffer in a given heap, i.e.
@@ -1006,13 +1004,51 @@ let test_get (): St unit =
   assert (B.get h b 0 = 0UL);
   B.free b
 </pre>
+<p><strong>C NULL pointers</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">LowStar.Buffer</span></code> also exposes a model of the C NULL pointer, <code class="docutils literal notranslate"><span class="pre">null</span></code> –
+this is what you should use if you need zero-length buffers. The NULL
+pointer is always live, and always has length 0. The <code class="docutils literal notranslate"><span class="pre">pointer</span></code> and
+<code class="docutils literal notranslate"><span class="pre">pointer_or_null</span></code> functions define convenient aliases, while the <code class="docutils literal notranslate"><span class="pre">(!*)</span></code>
+operator (defined in <code class="docutils literal notranslate"><span class="pre">LowStar.BufferOps</span></code>) guarantees that the dereference
+will be pretty-printed with a <code class="docutils literal notranslate"><span class="pre">*</span></code> C dereference, as opposed to an access
+at array index 0. Pointers can always be tested for nullity via the
+<code class="docutils literal notranslate"><span class="pre">is_null</span> <span class="pre">p</span></code> function, which is guaranteed to be pretty-printed as <code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">!=</span>
+<span class="pre">NULL</span></code>.</p>
 </div>
 <div class="section" id="the-modifies-clauses-library">
 <span id="modifies-library"></span><h2>The modifies clauses library<a class="headerlink" href="#the-modifies-clauses-library" title="Permalink to this headline">¶</a></h2>
-<p>A modifies clause is a part of the postcondition of a Low*
-effectful function which describes which memory locations are
-modified by that function. For instance, consider the following
-function:</p>
+<p>The current heap model of F* is based on a select-update theory: the heap is
+reflected as a map, allocation adds a key in the map, assignment updates the
+map, and reading selects from the map.</p>
+<p>Proving properties of programs therefore requires the programmer to reason about
+the heap model. However, stating precise post-conditions that refer to a
+particular heap after a particular update does not scale up to large programs:
+we want to reason <em>abstractly</em> about modifications, and use a library of
+<em>composable</em> predicates that allow one to <em>generically</em> reason about a given
+modification to the heap.</p>
+<p>This is where the <code class="docutils literal notranslate"><span class="pre">LowStar.Modifies</span></code> library comes in handy. The modifies
+clauses library allows one to reason about allocation, de-allocation,
+modifications using a single unified <code class="docutils literal notranslate"><span class="pre">modifies</span></code> clause. An abstract notion of
+a memory location allows composing predicates, and deriving properties such as:
+“if I modify a location <code class="docutils literal notranslate"><span class="pre">l1</span></code> disjoint from <code class="docutils literal notranslate"><span class="pre">l2</span></code>, then the contents of the
+memory at address <code class="docutils literal notranslate"><span class="pre">l2</span></code> remain unchanged”.</p>
+<p><strong>Abstract memory locations</strong></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">LowStar.Modifies</span></code> library abstracts over memory locations. Memory
+locations have type <code class="docutils literal notranslate"><span class="pre">loc</span></code>. Locations form a monoid, where <code class="docutils literal notranslate"><span class="pre">loc_none</span></code> is
+the empty location and <code class="docutils literal notranslate"><span class="pre">loc_union</span></code> combines two location to form the union of
+the two.</p>
+<p>Several injections exist to create locations; for now, we will mostly use
+<code class="docutils literal notranslate"><span class="pre">loc_buffer</span></code>, which injects a <code class="docutils literal notranslate"><span class="pre">LowStar.Buffer.t</span></code> into an abstract location.</p>
+<p><strong>Inclusion and disjointness</strong></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">LowStar.Modifies</span></code> module provides an inclusion relation, via
+<code class="docutils literal notranslate"><span class="pre">loc_includes</span></code>. This allows the programmer to state, for instance, that the
+location of a stack-allocated buffer is included in its stack frame.</p>
+<p>Perhaps more useful is the <code class="docutils literal notranslate"><span class="pre">loc_disjoint</span></code> predicates, which allows the
+programmer to state that two memory locations do not overlap.</p>
+<p><strong>The modifies clause</strong></p>
+<p>The modifies clause is of the form <code class="docutils literal notranslate"><span class="pre">modifies</span> <span class="pre">l</span> <span class="pre">h0</span> <span class="pre">h1</span></code> where <code class="docutils literal notranslate"><span class="pre">l</span></code> is an
+abstract memory location, <code class="docutils literal notranslate"><span class="pre">h0</span></code> is the initial heap and <code class="docutils literal notranslate"><span class="pre">h1</span></code> is the
+resulting heap. Here is an example:</p>
 <pre class="code fstar literal-block">
 module M = LowStar.Modifies
 
@@ -1096,14 +1132,13 @@ we can neither expose <code class="docutils literal notranslate"><span class="pr
 </div>
 <div class="section" id="test-helpers">
 <h2>Test helpers<a class="headerlink" href="#test-helpers" title="Permalink to this headline">¶</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">TestLib.fsti</span></code> module requires you to call KreMLin with <code class="docutils literal notranslate"><span class="pre">-add-include</span>
-<span class="pre">'&quot;testlib.h&quot;'</span></code> and <code class="docutils literal notranslate"><span class="pre">testlib.c</span></code> as extra arguments. It provides a couple
-helper functions, including <code class="docutils literal notranslate"><span class="pre">print_clock_diff</span></code> to deal with <code class="docutils literal notranslate"><span class="pre">clock_t</span></code> above.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">TestLib.fsti</span></code> module provides a couple helper functions, including
+<code class="docutils literal notranslate"><span class="pre">print_clock_diff</span></code> to deal with <code class="docutils literal notranslate"><span class="pre">clock_t</span></code> above.</p>
 </div>
 <div class="section" id="c-string-literals">
 <h2>C string literals<a class="headerlink" href="#c-string-literals" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">C.String.fst</span></code> module exposes a bare-bones model of C string literals,
-i.e. <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">char</span> <span class="pre">\*s</span> <span class="pre">=</span> <span class="pre">&quot;my</span> <span class="pre">string</span> <span class="pre">literal&quot;;</span></code>. This relies on a syntactic check
+i.e. <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">char</span> <span class="pre">*s</span> <span class="pre">=</span> <span class="pre">&quot;my</span> <span class="pre">string</span> <span class="pre">literal&quot;;</span></code>. This relies on a syntactic check
 that the argument to <code class="docutils literal notranslate"><span class="pre">of_literal</span></code> is a constant string literal in the original
 F* source. Such strings are zero-terminated, and their length can be computed
 (TODO). They can be printed on the standard output via <code class="docutils literal notranslate"><span class="pre">C.String.print</span></code>.</p>
@@ -1124,25 +1159,12 @@ extract it to a C string literal. This is not Low*, because such a string
 has type <code class="docutils literal notranslate"><span class="pre">Prims.string</span></code>, whose operations, such <code class="docutils literal notranslate"><span class="pre">(^)</span></code> (concatenation)
 cannot be implemented in Low*.</p>
 <p class="last">KreMLin offers support for <code class="docutils literal notranslate"><span class="pre">Prims.string</span></code> via the <code class="docutils literal notranslate"><span class="pre">-add-include</span>
-<span class="pre">'&quot;kremstr.h&quot;'</span></code> and <code class="docutils literal notranslate"><span class="pre">kremstr.c</span></code> options. These implement <code class="docutils literal notranslate"><span class="pre">Prims.string</span></code>
+<span class="pre">'&quot;kremlin/internal/compat.h&quot;'</span></code> option. This header implements <code class="docutils literal notranslate"><span class="pre">Prims.string</span></code>
 as zero-terminated <code class="docutils literal notranslate"><span class="pre">char</span> <span class="pre">*</span></code>’s (not <code class="docutils literal notranslate"><span class="pre">const</span></code>). Operations such as <code class="docutils literal notranslate"><span class="pre">(^)</span></code>
 perform allocations on the heap and never free them, since <code class="docutils literal notranslate"><span class="pre">Prims.string</span></code>s are values that do not have a lifetime in the first place. This is a sound
 implementation, but should only be used to facilitate porting existing F*
 programs to Low*. Any program that uses <code class="docutils literal notranslate"><span class="pre">Prims.string</span></code> will leak memory.</p>
 </div>
-</div>
-<div class="section" id="c-null-pointers">
-<h2>C <code class="docutils literal notranslate"><span class="pre">NULL</span></code> pointers<a class="headerlink" href="#c-null-pointers" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">LowStar.Buffer</span></code> also exposes a model of the C NULL pointer,
-<code class="docutils literal notranslate"><span class="pre">null</span></code> – this is what
-you should use if you need zero-length buffers. The NULL pointer is always
-live, and always has length 0. The <code class="docutils literal notranslate"><span class="pre">pointer</span></code> and <code class="docutils literal notranslate"><span class="pre">pointer_or_null</span></code>
-functions define convenient aliases, while the <code class="docutils literal notranslate"><span class="pre">(!*)</span></code> operator
-(defined in <code class="docutils literal notranslate"><span class="pre">LowStar.BufferOps</span></code>) guarantees
-that the dereference will be pretty-printed with a <code class="docutils literal notranslate"><span class="pre">*</span></code> C dereference, as
-opposed to an access at array index 0. Pointers can always be tested for
-nullity via the <code class="docutils literal notranslate"><span class="pre">is_null</span> <span class="pre">p</span></code> function, which is guaranteed to be
-pretty-printed as <code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">!=</span> <span class="pre">NULL</span></code>.</p>
 </div>
 <div class="section" id="a-polymorphic-exit">
 <h2>A polymorphic exit<a class="headerlink" href="#a-polymorphic-exit" title="Permalink to this headline">¶</a></h2>
