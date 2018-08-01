@@ -46,11 +46,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   <link rel="stylesheet" href="style.ccs" type="text/css" />
 </head>
 <body>
-<h1 id="module-fstar.seq.properties">module FStar.Seq.Properties</h1>
+<h1 id="module-fstar.constanttime.integers">module FStar.ConstantTime.Integers</h1>
 <p>fsdoc: no-summary-found</p>
 <p>fsdoc: no-comment-found</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> More properties, <span class="kw">with</span> <span class="kw">new</span> naming conventions </code></pre></div>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((sortWith (#a:eqtype) (f:Unidentified product: [a] Unidentified product: [a] (Tot <span class="dt">int</span>)) (s:<span class="dt">seq</span> a)):<span class="dt">seq</span> a):seq_of_list (List<span class="kw">.</span>Tot<span class="kw">.</span>Base<span class="kw">.</span>sortWith f (seq_to_list s))</code></pre></div>
-<p>**** sortWith *****</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">
+    This <span class="ot">module</span> provides a refinement <span class="kw">of</span> FStar<span class="kw">.</span>IFC providing an
+    interface restricted only <span class="kw">to</span> constant-time operations on integers.
+
+    In contrast, FStar<span class="kw">.</span>IFC provides a general monadic information-flow
+    control framework, which need <span class="kw">not</span> be restricted <span class="kw">to</span> constant-time
+    operations.</code></pre></div>
 </body>
 </html>

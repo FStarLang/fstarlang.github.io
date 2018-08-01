@@ -50,38 +50,100 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>fsdoc: no-summary-found</p>
 <p>fsdoc: no-comment-found</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">*** Global ST (GST) effect <span class="kw">with</span> put, get, witness, <span class="kw">and</span> recall ****</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">type</span> abbrev </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">typeabbrev </code></pre></div>
 <pre><code>WARNING: this effect is unsafe, for C/C++ extraction it shall only be used by
 code that would later extract to OCaml or by library functions</code></pre>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">**** defining predicates <span class="kw">for</span> equal refs <span class="kw">in</span> some regions *****</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">type</span> abbrev </code></pre></div>
-<p>// Effect of stacked based code: the 'equal_domains' clause enforces that // - both mem have the same tip // - both mem reference the same heaps (their map: rid -&gt; heap have the same domain) // - in each region id, the corresponding heaps contain the same references on both sides //</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">type</span> abbrev </code></pre></div>
-<p>// Effect of heap-based code. // - assumes that the stack is empty (tip = root) // - corresponds to the HyperHeap ST effect // - can call to Stack and ST code freely // - respects the stack invariant: the stack has to be empty when returning //</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">type</span> abbrev </code></pre></div>
-<p>// Effect of low-level code: // - maintains the allocation invariant on the stack: no allocation unless in a new frame that has to be popped before returning // - not constraints on heap allocation //</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">type</span> abbrev </code></pre></div>
-<p>// Effect that indicates to the Kremlin compiler that allocation may occur in the caller's frame. // In other terms, the backend has to unfold the body into the caller's body. // This effect maintains the stack AND the heap invariant: it can be inlined in the Stack effect // function body as well as in a Heap effect function body //</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">type</span> abbrev </code></pre></div>
-<p>// Effect that indicates to the Kremlin compiler that allocation may occur in the caller's frame. // In other terms, the backend has to unfold the body into the caller's body. // This effect only maintains the stack invariant: the tip is left unchanged and no allocation // may occurs in the stack lower than the tip. // Region allocation is not constrained. // Heap allocation is not constrained. //</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">type</span> abbrev </code></pre></div>
-<p>// TODO: // REMOVE AS SOON AS CONSENSUS IS REACHED ON NEW LOW EFFECT NAMES //</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">typeabbrev </code></pre></div>
+<ul>
+<li>Effect of stacked based code: the 'equal_domains' clause enforces that</li>
+<li><ul>
+<li>both mem have the same tip</li>
+</ul></li>
+<li><ul>
+<li>both mem reference the same heaps (their map: rid -&gt; heap have the same domain)</li>
+</ul></li>
+<li><ul>
+<li>in each region id, the corresponding heaps contain the same references on both sides</li>
+</ul></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">typeabbrev </code></pre></div>
+<ul>
+<li>Effect of heap-based code.</li>
+<li><ul>
+<li>assumes that the stack is empty (tip = root)</li>
+</ul></li>
+<li><ul>
+<li>corresponds to the HyperHeap ST effect</li>
+</ul></li>
+<li><ul>
+<li>can call to Stack and ST code freely</li>
+</ul></li>
+<li><ul>
+<li>respects the stack invariant: the stack has to be empty when returning</li>
+</ul></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">typeabbrev </code></pre></div>
+<ul>
+<li>Effect of low-level code:</li>
+<li><ul>
+<li>maintains the allocation invariant on the stack: no allocation unless in a new frame that has to be popped before returning</li>
+</ul></li>
+<li><ul>
+<li>not constraints on heap allocation</li>
+</ul></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">typeabbrev </code></pre></div>
+<ul>
+<li>Effect that indicates to the Kremlin compiler that allocation may occur in the caller's frame.</li>
+<li>In other terms, the backend has to unfold the body into the caller's body.</li>
+<li>This effect maintains the stack AND the heap invariant: it can be inlined in the Stack effect</li>
+<li>function body as well as in a Heap effect function body</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">typeabbrev </code></pre></div>
+<ul>
+<li>Effect that indicates to the Kremlin compiler that allocation may occur in the caller's frame.</li>
+<li>In other terms, the backend has to unfold the body into the caller's body.</li>
+<li>This effect only maintains the stack invariant: the tip is left unchanged and no allocation</li>
+<li>may occurs in the stack lower than the tip.</li>
+<li>Region allocation is not constrained.</li>
+<li>Heap allocation is not constrained.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">typeabbrev </code></pre></div>
+<ul>
+<li>TODO:</li>
+<li>REMOVE AS SOON AS CONSENSUS IS REACHED ON NEW LOW EFFECT NAMES</li>
+</ul>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((push_frame (_:<span class="dt">unit</span>)):(Unsafe <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> m -&gt; True)))) ((ensures ((<span class="kw">fun</span> (m0:mem) _ (m1:mem) -&gt; fresh_frame m0 m1)))))):<span class="kw">let</span>  m0 = gst_get () <span class="kw">in</span> <span class="kw">let</span>  m1 = HS<span class="kw">.</span>hs_push_frame m0 <span class="kw">in</span> gst_put m1</code></pre></div>
 <p>// Pushes a new empty frame on the stack //</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((pop_frame (_:<span class="dt">unit</span>)):(Unsafe <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> m -&gt; poppable m)))) ((ensures ((<span class="kw">fun</span> (m0:mem) _ (m1:mem) -&gt; /\(/\(poppable m0, ==(m1, pop m0)), popped m0 m1))))))):<span class="kw">let</span>  m1 = pop (gst_get ()) <span class="kw">in</span> gst_put m1</code></pre></div>
 <p>// Removes old frame from the stack //</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((salloc (#a:Type) (#rel:preorder a) (init:a)):(StackInline (mstackref a rel) ((requires ((<span class="kw">fun</span> m -&gt; is_stack_region m.tip)))) ((ensures salloc_post init)))):salloc_common init <span class="kw">false</span></code></pre></div>
-<p>// Allocates on the top-most stack frame //</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((op_Colon_Equals (#a:Type) (#rel:preorder a) (r:mreference a rel) (v:a)):(STL <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> m -&gt; /\(is_live_for_rw_in r m, rel (HS<span class="kw">.</span>sel m r) v))))) ((ensures (assign_post r v))))):<span class="kw">let</span>  m0 = gst_get () <span class="kw">in</span> gst_recall (region_contains_pred (HS<span class="kw">.</span>frameOf r)); gst_recall (ref_contains_pred r); <span class="kw">let</span>  m1 = HS<span class="kw">.</span>upd_tot m0 r v <span class="kw">in</span> Heap<span class="kw">.</span>lemma_distinct_addrs_distinct_preorders (); Heap<span class="kw">.</span>lemma_distinct_addrs_distinct_mm (); Heap<span class="kw">.</span>lemma_upd_equals_upd_tot_for_contained_refs (Map<span class="kw">.</span>sel m0.h (HS<span class="kw">.</span>frameOf r)) (HS<span class="kw">.</span>as_ref r) v; gst_put m1</code></pre></div>
-<p>// Assigns, provided that the reference exists. // Guaranties the strongest low-level effect: Stack //</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((op_Bang (#a:Type) (#rel:preorder a) (r:mreference a rel)):(Stack a ((requires ((<span class="kw">fun</span> m -&gt; is_live_for_rw_in r m)))) ((ensures (deref_post r))))):<span class="kw">let</span>  m0 = gst_get () <span class="kw">in</span> gst_recall (region_contains_pred (HS<span class="kw">.</span>frameOf r)); gst_recall (ref_contains_pred r); Heap<span class="kw">.</span>lemma_sel_equals_sel_tot_for_contained_refs (Map<span class="kw">.</span>sel m0.h (HS<span class="kw">.</span>frameOf r)) (HS<span class="kw">.</span>as_ref r); HS<span class="kw">.</span>sel_tot m0 r</code></pre></div>
-<p>// Dereferences, provided that the reference exists. // Guaranties the strongest low-level effect: Stack //</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((salloc (#a:Type) (#rel:preorder a) (init:a)):(StackInline (mstackref a rel) ((requires ((<span class="kw">fun</span> m -&gt; is_stack_region (get_tip m))))) ((ensures salloc_post init)))):salloc_common init <span class="kw">false</span></code></pre></div>
+<ul>
+<li>Allocates on the top-most stack frame</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((op_Colon_Equals (#a:Type) (#rel:preorder a) (r:mreference a rel) (v:a)):(STL <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> m -&gt; /\(is_live_for_rw_in r m, rel (HS<span class="kw">.</span>sel m r) v))))) ((ensures (assign_post r v))))):<span class="kw">let</span>  m0 = gst_get () <span class="kw">in</span> gst_recall (region_contains_pred (HS<span class="kw">.</span>frameOf r)); gst_recall (ref_contains_pred r); <span class="kw">let</span>  m1 = HS<span class="kw">.</span>upd_tot m0 r v <span class="kw">in</span> Heap<span class="kw">.</span>lemma_distinct_addrs_distinct_preorders (); Heap<span class="kw">.</span>lemma_distinct_addrs_distinct_mm (); Heap<span class="kw">.</span>lemma_upd_equals_upd_tot_for_contained_refs (Map<span class="kw">.</span>sel get_hmap m0 (HS<span class="kw">.</span>frameOf r)) (HS<span class="kw">.</span>as_ref r) v; gst_put m1</code></pre></div>
+<ul>
+<li>Assigns, provided that the reference exists.</li>
+<li>Guaranties the strongest low-level effect: Stack</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((op_Bang (#a:Type) (#rel:preorder a) (r:mreference a rel)):(Stack a ((requires ((<span class="kw">fun</span> m -&gt; is_live_for_rw_in r m)))) ((ensures (deref_post r))))):<span class="kw">let</span>  m0 = gst_get () <span class="kw">in</span> gst_recall (region_contains_pred (HS<span class="kw">.</span>frameOf r)); gst_recall (ref_contains_pred r); Heap<span class="kw">.</span>lemma_sel_equals_sel_tot_for_contained_refs (Map<span class="kw">.</span>sel get_hmap m0 (HS<span class="kw">.</span>frameOf r)) (HS<span class="kw">.</span>as_ref r); HS<span class="kw">.</span>sel_tot m0 r</code></pre></div>
+<ul>
+<li>Dereferences, provided that the reference exists.</li>
+<li>Guaranties the strongest low-level effect: Stack</li>
+</ul>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((get (_:<span class="dt">unit</span>)):(Stack mem ((requires ((<span class="kw">fun</span> m -&gt; True)))) ((ensures ((<span class="kw">fun</span> m0 x m1 -&gt; /\(==(m0, x), ==(m1, m0)))))))):gst_get ()</code></pre></div>
-<p>// Returns the current stack of heaps --- it should be erased //</p>
+<ul>
+<li>Returns the current stack of heaps --- it should be erased</li>
+</ul>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((recall (#a:Type) (#rel:preorder a) (r:mref a rel)):(Stack <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> m -&gt; True)))) ((ensures ((<span class="kw">fun</span> m0 _ m1 -&gt; /\(==(m0, m1), contains m1 r))))))):gst_recall (ref_contains_pred r); gst_recall (region_contains_pred (HS<span class="kw">.</span>frameOf r))</code></pre></div>
-<p>// We can only recall refs with mm bit unset, not stack refs //</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((recall_region (i:i:rid:{is_eternal_region i})):(Stack <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> m -&gt; True)))) ((ensures ((<span class="kw">fun</span> m0 _ m1 -&gt; /\(==(m0, m1), is_in i m1.h))))))):<span class="kw">if</span> &lt;&gt;(i, HS<span class="kw">.</span>root) <span class="kw">then</span> gst_recall (region_contains_pred i) <span class="kw">else</span> ()</code></pre></div>
-<p>// We can only recall eternal regions, not stack regions //</p>
+<ul>
+<li>We can only recall refs with mm bit unset, not stack refs</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((recall_region (i:i:rid:{is_eternal_region i})):(Stack <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> m -&gt; True)))) ((ensures ((<span class="kw">fun</span> m0 _ m1 -&gt; /\(==(m0, m1), is_in i get_hmap m1))))))):<span class="kw">if</span> &lt;&gt;(i, HS<span class="kw">.</span>root) <span class="kw">then</span> gst_recall (region_contains_pred i) <span class="kw">else</span> ()</code></pre></div>
+<ul>
+<li>We can only recall eternal regions, not stack regions</li>
+</ul>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> MR witness etc. *</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">**** logical properties <span class="kw">of</span> witnessed *****</code></pre></div>
 </body>
