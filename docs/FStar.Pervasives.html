@@ -69,5 +69,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>to allow us to check positivity across abstraction boundaries</li>
 <li>and will eventually remove this attribute.</li>
 </ul>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> (unifier_hint_injective:<span class="dt">unit</span>):()</code></pre></div>
+<ul>
+<li>This attribute is to be used as a hint for the unifier.</li>
+<li>A function-typed symbol <code>t</code> marked with this attribute</li>
+<li>will be treated as being injective in all its arguments</li>
+<li>by the unifier.</li>
+<li>That is, given a problem <code>t a1..an =?= t b1..bn</code></li>
+<li>the unifier will solve it by proving <code>ai =?= bi</code> for</li>
+<li>all <code>i</code>, without trying to unfold the definition of <code>t</code>.</li>
+<li></li>
+</ul>
 </body>
 </html>
