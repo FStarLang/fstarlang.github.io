@@ -94,5 +94,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Join all of the SMT goals into one. This helps when all of them are expected to be similar, and therefore easier to prove at once by the SMT solver. TODO: would be nice to try to join them in a more meaningful way, as the order can matter.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((is_guard ()):(Tac <span class="dt">bool</span>)):Tactics<span class="kw">.</span>Types<span class="kw">.</span>is_guard (_cur_goal ())</code></pre></div>
 <p>[is_guard] returns whether the current goal arised from a typechecking guard</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((l_to_r (lems:list term)):(Tac <span class="dt">unit</span>)):<span class="kw">let</span>  ((first_or_trefl ()):(Tac <span class="dt">unit</span>)) = fold_left ((<span class="kw">fun</span> k l () -&gt; or_else ((<span class="kw">fun</span> () -&gt; apply_lemma l)) k)) trefl lems () <span class="kw">in</span> pointwise first_or_trefl</code></pre></div>
+<p>Rewrites left-to-right, and bottom-up, given a set of lemmas stating equalities</p>
 </body>
 </html>
