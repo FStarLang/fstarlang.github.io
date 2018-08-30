@@ -104,8 +104,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>[debugging ()] returns true if the current module has the debug flag on, i.e. when [--debug MyModule] was passed in.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> dump:Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
 <p>Similar to [print], but will dump a text representation of the proofstate along with the message.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> dump1:Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>Similar to [dump], but only dumping the current goal.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> trefl:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
 <p>Solves a goal [Gamma |= squash (l == r)] by attempting to unify [l] with [r]. This currently only exists because of some universe problems when trying to [apply] a reflexivity lemma.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> t_pointwise:Unidentified product: [direction] Unidentified product: [(Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>))] (Tac <span class="dt">unit</span>)</code></pre></div>
