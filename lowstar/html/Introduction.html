@@ -379,15 +379,16 @@ which are respectively compiled as C tagged unions, cascading
 pair.</p>
 <p>KreMLin is intimately tied with F*:</p>
 <ul class="simple">
-<li>the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch of KreMLin works with the <code class="docutils literal notranslate"><span class="pre">stable</span></code> branch of F*</li>
-<li>the <code class="docutils literal notranslate"><span class="pre">fstar-master</span></code> branch of KreMLin works with the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch of F*.</li>
+<li>stable branches of F* are matched by corresponding branches of KreMLin
+(e.g. <code class="docutils literal notranslate"><span class="pre">v0.9.6+</span></code>)</li>
+<li>the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch of KreMLin works with the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch of F*</li>
 </ul>
 <p>Due to the fast-paced nature of F* development, this tutorial is kept
 up-to-date with the <em>latter</em> set of revisions, meaning that this tutorial
 expects the user to have:</p>
 <ul class="simple">
 <li>an up-to-date version of F* <code class="docutils literal notranslate"><span class="pre">master</span></code> <a class="reference external" href="https://github.com/FStarLang/FStar/blob/master/INSTALL.md">built from source</a></li>
-<li>an up-to-date version of KreMLin <code class="docutils literal notranslate"><span class="pre">fstar-master</span></code>, <a class="reference external" href="https://github.com/FStarLang/kremlin/tree/fstar-master/#trying-out-kremlin">built from source</a></li>
+<li>an up-to-date version of KreMLin <code class="docutils literal notranslate"><span class="pre">master</span></code>, <a class="reference external" href="https://github.com/FStarLang/kremlin/tree/fstar-master/#trying-out-kremlin">built from source</a></li>
 <li>a C compiler in the path, preferably a recent version of GCC.</li>
 </ul>
 <div class="admonition note">
@@ -429,7 +430,8 @@ build, along with C linker and compiler options via KreMLin’s <code class="doc
 <p>However, using KreMLin as a driver is inefficient for two reasons:</p>
 <ul class="simple">
 <li>step 1 uses “legacy” extraction in F*: files are processed sequentially,
-without caching, and verification is by default not performed (use <code class="docutils literal notranslate"><span class="pre">-verify</span></code>)</li>
+without caching, and verification is by default not performed (the
+<code class="docutils literal notranslate"><span class="pre">-verify</span></code> will generate F* errors))</li>
 <li>step 3 is not parallel</li>
 </ul>
 <p>Section ?? provides a complete sample Makefile that performs parallel
