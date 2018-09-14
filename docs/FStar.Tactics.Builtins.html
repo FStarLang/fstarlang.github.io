@@ -49,8 +49,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1 id="module-fstar.tactics.builtins">module FStar.Tactics.Builtins</h1>
 <p>Tactic primitives</p>
 <p>Every tactic primitive, i.e., those built into the compiler</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> fail:Unidentified product: [#a:Type] Unidentified product: [m:<span class="dt">string</span>] (TacH a ((requires ((<span class="kw">fun</span> _ -&gt; True)))) ((ensures ((<span class="kw">fun</span> ps r -&gt; /\(_ r, ==(_ r, ps)))))))</code></pre></div>
-<p>Simply fail. The specs ensures that it fails <em>without changing the proofstate</em>, but hides the message.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> top_env:Unidentified product: [<span class="dt">unit</span>] (Tac env)</code></pre></div>
 <p>[top_env] returns the environment where the tactic started running. * This works even if no goals are present.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> push_binder:Unidentified product: [env] Unidentified product: [binder] env</code></pre></div>
@@ -65,7 +63,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>[unshelve] creates a goal from a term for its given type. It can be used when the system decided not to present a goal, but you want one anyway. For example, if you request a uvar through [uvar_env] or [fresh_uvar], you might want to instantiate it explicitly.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> unquote:Unidentified product: [#a:Type] Unidentified product: [term] (Tac a)</code></pre></div>
 <p>[unquote t] with turn a quoted term [t] into an actual value, of any type. This will fail at tactic runtime if the quoted term does not typecheck to type [a].</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> catch:Unidentified product: [#a:Type] Unidentified product: [(Unidentified product: [<span class="dt">unit</span>] (Tac a))] (TacS (either <span class="dt">string</span> a))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> catch:Unidentified product: [#a:Type] Unidentified product: [(Unidentified product: [<span class="dt">unit</span>] (Tac a))] (TacS (either exn a))</code></pre></div>
 <p>[catch t] will attempt to run [t] and allow to recover from a failure. If [t] succeeds with return value [a], [catch t] returns [Inr a]. On failure, it returns [Inl msg], where [msg] is the error [t] raised. See also [or_else].</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> trivial:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
 <p>[trivial] will discharge the goal if it's exactly [True] after doing normalization and simplification of it.</p>
