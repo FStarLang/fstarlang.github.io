@@ -122,7 +122,7 @@ code that would later extract to OCaml or by library functions</code></pre>
 <ul>
 <li>Allocates on the top-most stack frame</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((op_Colon_Equals (#a:Type) (#rel:preorder a) (r:mreference a rel) (v:a)):(STL <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> m -&gt; /\(is_live_for_rw_in r m, rel (HS<span class="kw">.</span>sel m r) v))))) ((ensures (assign_post r v))))):<span class="kw">let</span>  m0 = gst_get () <span class="kw">in</span> gst_recall (region_contains_pred (HS<span class="kw">.</span>frameOf r)); gst_recall (ref_contains_pred r); <span class="kw">let</span>  m1 = HS<span class="kw">.</span>upd_tot m0 r v <span class="kw">in</span> Heap<span class="kw">.</span>lemma_distinct_addrs_distinct_preorders (); Heap<span class="kw">.</span>lemma_distinct_addrs_distinct_mm (); Heap<span class="kw">.</span>lemma_upd_equals_upd_tot_for_contained_refs (Map<span class="kw">.</span>sel get_hmap m0 (HS<span class="kw">.</span>frameOf r)) (HS<span class="kw">.</span>as_ref r) v; gst_put m1</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((op_Colon_Equals (#a:Type) (#rel:preorder a) (r:mreference a rel) (v:a)):(STL <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> m -&gt; /\(is_live_for_rw_in r m, rel (HS<span class="kw">.</span>sel m r) v))))) ((ensures (assign_post r v))))):<span class="kw">let</span>  m0 = gst_get () <span class="kw">in</span> gst_recall (region_contains_pred (HS<span class="kw">.</span>frameOf r)); gst_recall (ref_contains_pred r); <span class="kw">let</span>  m1 = HS<span class="kw">.</span>upd_tot m0 r v <span class="kw">in</span> Heap<span class="kw">.</span>lemma_distinct_addrs_distinct_preorders (); Heap<span class="kw">.</span>lemma_distinct_addrs_distinct_mm (); Heap<span class="kw">.</span>lemma_upd_equals_upd_tot_for_contained_refs (Map<span class="kw">.</span>sel get_hmap m0 (HS<span class="kw">.</span>frameOf r)) (HS<span class="kw">.</span>as_ref r) v; Heap<span class="kw">.</span>lemma_next_addr_upd (Map<span class="kw">.</span>sel (HS<span class="kw">.</span>get_hmap m0) (HS<span class="kw">.</span>frameOf r)) (HS<span class="kw">.</span>as_ref r) v; gst_put m1</code></pre></div>
 <ul>
 <li>Assigns, provided that the reference exists.</li>
 <li>Guaranties the strongest low-level effect: Stack</li>
@@ -145,6 +145,8 @@ code that would later extract to OCaml or by library functions</code></pre>
 <li>We can only recall eternal regions, not stack regions</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> MR witness etc. *</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">**** Begin: preferred API <span class="kw">for</span> witnessing <span class="kw">and</span> recalling predicates *****</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">**** End: preferred API <span class="kw">for</span> witnessing <span class="kw">and</span> recalling predicates *****</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">**** logical properties <span class="kw">of</span> witnessed *****</code></pre></div>
 </body>
 </html>
