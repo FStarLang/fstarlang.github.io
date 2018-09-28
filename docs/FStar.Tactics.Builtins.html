@@ -1,112 +1,146 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
-  <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>FStar.Tactics.Builtins</title>
   <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
   </style>
-  <link rel="stylesheet" href="style.ccs" type="text/css" />
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="style.ccs" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
 <h1 id="module-fstar.tactics.builtins">module FStar.Tactics.Builtins</h1>
 <p>Tactic primitives</p>
 <p>Every tactic primitive, i.e., those built into the compiler</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> top_env:Unidentified product: [<span class="dt">unit</span>] (Tac env)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">val</span> top_env:Unidentified product: [<span class="dt">unit</span>] (Tac env)</a></code></pre></div>
 <p>[top_env] returns the environment where the tactic started running. * This works even if no goals are present.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> push_binder:Unidentified product: [env] Unidentified product: [binder] env</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">val</span> push_binder:Unidentified product: [env] Unidentified product: [binder] env</a></code></pre></div>
 <p>[push_binder] extends the environment with a single binder. This is useful as one traverses the syntax of a term, pushing binders as one traverses a binder in a lambda, match, etc. Note, the environment here is disconnected to (though perhaps derived from) the environment in the proofstate</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> fresh:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">int</span>)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">val</span> fresh:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">int</span>)</a></code></pre></div>
 <p>[fresh ()] returns a fresh integer. It does not get reset when catching a failure.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> refine_intro:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">val</span> refine_intro:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>)</a></code></pre></div>
 <p>[refine_intro] will turn a goal of shape [w : x:t{phi}] into [w : t] and [phi{w/x}]</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> tc:Unidentified product: [term] (Tac term)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">val</span> tc:Unidentified product: [term] (Tac term)</a></code></pre></div>
 <p>[tc] returns the type of a term in the current environment, or fails if it is untypeable.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> unshelve:Unidentified product: [term] (Tac <span class="dt">unit</span>)</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">val</span> unshelve:Unidentified product: [term] (Tac <span class="dt">unit</span>)</a></code></pre></div>
 <p>[unshelve] creates a goal from a term for its given type. It can be used when the system decided not to present a goal, but you want one anyway. For example, if you request a uvar through [uvar_env] or [fresh_uvar], you might want to instantiate it explicitly.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> unquote:Unidentified product: [#a:Type] Unidentified product: [term] (Tac a)</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">val</span> unquote:Unidentified product: [#a:Type] Unidentified product: [term] (Tac a)</a></code></pre></div>
 <p>[unquote t] with turn a quoted term [t] into an actual value, of any type. This will fail at tactic runtime if the quoted term does not typecheck to type [a].</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> catch:Unidentified product: [#a:Type] Unidentified product: [(Unidentified product: [<span class="dt">unit</span>] (Tac a))] (TacS (either exn a))</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">val</span> catch:Unidentified product: [#a:Type] Unidentified product: [(Unidentified product: [<span class="dt">unit</span>] (Tac a))] (TacS (either exn a))</a></code></pre></div>
 <p>[catch t] will attempt to run [t] and allow to recover from a failure. If [t] succeeds with return value [a], [catch t] returns [Inr a]. On failure, it returns [Inl msg], where [msg] is the error [t] raised. See also [or_else].</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> trivial:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>[trivial] will discharge the goal if it's exactly [True] after doing normalization and simplification of it.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> norm:Unidentified product: [list norm_step] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>[norm steps] will call the normalizer on the current goal's type and witness, with its reduction behaviour parameterized by the flags in [steps]. Currently, the flags (provided in Prims) are [simpl] (do logical simplifications) [whnf] (only reduce until weak head-normal-form) [primops] (performing primitive reductions, such as arithmetic and string operations) [delta] (unfold names) [zeta] (inline let bindings) [iota] (reduce match statements over constructors) [delta_only] (restrict delta to only unfold this list of fully-qualfied identifiers)</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> norm_term_env:Unidentified product: [env] Unidentified product: [list norm_step] Unidentified product: [term] (Tac term)</code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">val</span> trivial:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>)</a></code></pre></div>
+<p>[trivial] will discharge the goal if it’s exactly [True] after doing normalization and simplification of it.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">val</span> norm:Unidentified product: [list norm_step] (Tac <span class="dt">unit</span>)</a></code></pre></div>
+<p>[norm steps] will call the normalizer on the current goal’s type and witness, with its reduction behaviour parameterized by the flags in [steps]. Currently, the flags (provided in Prims) are [simpl] (do logical simplifications) [whnf] (only reduce until weak head-normal-form) [primops] (performing primitive reductions, such as arithmetic and string operations) [delta] (unfold names) [zeta] (inline let bindings) [iota] (reduce match statements over constructors) [delta_only] (restrict delta to only unfold this list of fully-qualfied identifiers)</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">val</span> norm_term_env:Unidentified product: [env] Unidentified product: [list norm_step] Unidentified product: [term] (Tac term)</a></code></pre></div>
 <p>[norm_term_env e steps t] will call the normalizer on the term [t] using the list of steps [steps], over environment [e]. The list has the same meaning as for [norm].</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> norm_binder_type:Unidentified product: [list norm_step] Unidentified product: [binder] (Tac <span class="dt">unit</span>)</code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">val</span> norm_binder_type:Unidentified product: [list norm_step] Unidentified product: [binder] (Tac <span class="dt">unit</span>)</a></code></pre></div>
 <p>[norm_binder_type steps b] will call the normalizer on the type of the [b] binder for the current goal. Notably, this cannot be done via binder_retype and norm, because of uvars being resolved to lambda-abstractions.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> intro:Unidentified product: [<span class="dt">unit</span>] (Tac binder)</code></pre></div>
-<p>[intro] pushes the first argument of an arrow goal into the environment, turning [Gamma |- ?u : x:a -&gt; b] into [Gamma, x:a |- ?u' : b]. Note that this does not work for logical implications/forall. See FStar.Tactics.Logic for that.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> intro_rec:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="co">(*(binder, binder)))</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">val</span> intro:Unidentified product: [<span class="dt">unit</span>] (Tac binder)</a></code></pre></div>
+<p>[intro] pushes the first argument of an arrow goal into the environment, turning [Gamma |- ?u : x:a -&gt; b] into [Gamma, x:a |- ?u’ : b]. Note that this does not work for logical implications/forall. See FStar.Tactics.Logic for that.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">val</span> intro_rec:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="co">(*(binder, binder)))</span></a></code></pre></div>
 <p>Similar to intros, but allows to build a recursive function. Currently broken (c.f. issue #1103)</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> rename_to:Unidentified product: [binder] Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">val</span> rename_to:Unidentified product: [binder] Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">unit</span>)</a></code></pre></div>
 <p>[rename_to b nm] will rename the binder [b] to [nm] in the environment, goal, and witness in a safe manner. The only use of this is to make goals and terms more user readable.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> revert:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">val</span> revert:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>)</a></code></pre></div>
 <p>[revert] pushes out a binder from the environment into the goal type, so a behaviour opposite to [intros].</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> binder_retype:Unidentified product: [binder] (Tac <span class="dt">unit</span>)</code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">val</span> binder_retype:Unidentified product: [binder] (Tac <span class="dt">unit</span>)</a></code></pre></div>
 <p>[binder_retype] changes the type of a binder in the context. After calling it with a binder of type <code>t</code>, the user is presented with a goal of the form <code>t == ?u</code> to be filled. The original goal (following that one) has the type of <code>b</code> in the context replaced by <code>?u</code>.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> clear_top:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">val</span> clear_top:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>)</a></code></pre></div>
 <p>[clear_top] will drop the outermost binder from the environment. Can only be used if the goal does not at all depend on it.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> clear:Unidentified product: [binder] (Tac <span class="dt">unit</span>)</code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">val</span> clear:Unidentified product: [binder] (Tac <span class="dt">unit</span>)</a></code></pre></div>
 <p>[clear] will drop the given binder from the context, is nothing depends on it.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> rewrite:Unidentified product: [binder] (Tac <span class="dt">unit</span>)</code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">val</span> rewrite:Unidentified product: [binder] (Tac <span class="dt">unit</span>)</a></code></pre></div>
 <p>If [b] is a binder of type [v == r], [rewrite b] will rewrite the variable [v] for [r] everywhere in the current goal type and witness/</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> t_exact:Unidentified product: [<span class="dt">bool</span>] Unidentified product: [<span class="dt">bool</span>] Unidentified product: [term] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>First boolean is whether to attempt to intrpoduce a refinement before solving. In that case, a goal for the refinement formula will be added. Second boolean is whether to set the expected type internally. Just use <code>exact</code> from FStar.Tactics.Derived if you don't know what's up with all this.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> t_apply:Unidentified product: [<span class="dt">bool</span>] Unidentified product: [term] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>Inner primitive for [apply], takes a boolean specifying whether to not ask for implicits that appear free in posterior goals. Example: when the boolean is true, applying transitivity to [|- a = c] will give two goals, [|- a = ?u] and [|- ?u = c] without asking to instantiate [?u] since it will most likely be constrained later by solving these goals. In any case, we track [?u] and will fail if it's not solved later.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">val</span> t_exact:Unidentified product: [<span class="dt">bool</span>] Unidentified product: [<span class="dt">bool</span>] Unidentified product: [term] (Tac <span class="dt">unit</span>)</a></code></pre></div>
+<p>First boolean is whether to attempt to intrpoduce a refinement before solving. In that case, a goal for the refinement formula will be added. Second boolean is whether to set the expected type internally. Just use <code>exact</code> from FStar.Tactics.Derived if you don’t know what’s up with all this.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw">val</span> t_apply:Unidentified product: [<span class="dt">bool</span>] Unidentified product: [term] (Tac <span class="dt">unit</span>)</a></code></pre></div>
+<p>Inner primitive for [apply], takes a boolean specifying whether to not ask for implicits that appear free in posterior goals. Example: when the boolean is true, applying transitivity to [|- a = c] will give two goals, [|- a = ?u] and [|- ?u = c] without asking to instantiate [?u] since it will most likely be constrained later by solving these goals. In any case, we track [?u] and will fail if it’s not solved later.</p>
 <p>You probably want [apply] from FStar.Tactics.Derived.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> apply_lemma:Unidentified product: [term] (Tac <span class="dt">unit</span>)</code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">val</span> apply_lemma:Unidentified product: [term] (Tac <span class="dt">unit</span>)</a></code></pre></div>
 <p>[apply_lemma l] will solve a goal of type [squash phi] when [l] is a Lemma ensuring [phi]. The arguments to [l] and its requires clause are introduced as new goals. As a small optimization, [unit] arguments are discharged by the engine.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> print:Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>[print str] has no effect on the proofstate, but will have the side effect of printing [str] on the compiler's standard output.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> debugging:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">bool</span>)</code></pre></div>
-<p>[debugging ()] returns true if the current module has the debug flag on, i.e. when [--debug MyModule] was passed in.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> dump:Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">val</span> print:Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">unit</span>)</a></code></pre></div>
+<p>[print str] has no effect on the proofstate, but will have the side effect of printing [str] on the compiler’s standard output.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw">val</span> debugging:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">bool</span>)</a></code></pre></div>
+<p>[debugging ()] returns true if the current module has the debug flag on, i.e. when [–debug MyModule] was passed in.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw">val</span> dump:Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">unit</span>)</a></code></pre></div>
 <p>Similar to [print], but will dump a text representation of the proofstate along with the message.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> trefl:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw">val</span> trefl:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>)</a></code></pre></div>
 <p>Solves a goal [Gamma |= squash (l == r)] by attempting to unify [l] with [r]. This currently only exists because of some universe problems when trying to [apply] a reflexivity lemma.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> t_pointwise:Unidentified product: [direction] Unidentified product: [(Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>))] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>(TODO: explain bettter) When running [pointwise tau] For every subterm [t'] of the goal's type [t], the engine will build a goal [Gamma |= t' == ?u] and run [tau] on it. When the tactic proves the goal, the engine will rewrite [t'] for [?u] in the original goal type. This is done for every subterm, bottom-up. This allows to recurse over an unknown goal type. By inspecting the goal, the [tau] can then decide what to do (to not do anything, use [trefl]).</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> topdown_rewrite:Unidentified product: [(Unidentified product: [ctrl:term] (Tac <span class="co">(*(bool, int))))] Unidentified product: [(Unidentified product: [rw:unit] (Tac unit))] (Tac unit)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw">val</span> t_pointwise:Unidentified product: [direction] Unidentified product: [(Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>))] (Tac <span class="dt">unit</span>)</a></code></pre></div>
+<p>(TODO: explain bettter) When running [pointwise tau] For every subterm [t’] of the goal’s type [t], the engine will build a goal [Gamma |= t’ == ?u] and run [tau] on it. When the tactic proves the goal, the engine will rewrite [t’] for [?u] in the original goal type. This is done for every subterm, bottom-up. This allows to recurse over an unknown goal type. By inspecting the goal, the [tau] can then decide what to do (to not do anything, use [trefl]).</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">val</span> topdown_rewrite:Unidentified product: [(Unidentified product: [ctrl:term] (Tac <span class="co">(*(bool, int))))] Unidentified product: [(Unidentified product: [rw:unit] (Tac unit))] (Tac unit)</span></a></code></pre></div>
 <p>[topdown_rewrite ctrl rw] is used to rewrite those sub-terms [t] of the goal on which [fst (ctrl t)] returns true.</p>
 <pre><code>On each such sub-term, [rw] is presented with an equality of goal
 of the form [Gamma |= t == ?u]. When [rw] proves the goal,
@@ -124,45 +158,45 @@ sub-tree of the goal.
 
 When [snd (ctrl t) = 2], no more rewrites are performed in the
 goal.</code></pre>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> dup:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>Given the current goal [Gamma |- w : t], [dup] will turn this goal into [Gamma |- ?u : t] and [Gamma |= ?u == w]. It can thus be used to change a goal's witness in any way needed, by choosing some [?u] (possibly with exact) and then solving the other goal.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> prune:Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>[prune &quot;A.B.C&quot;] will mark all top-level definitions in module [A.B.C] (and submodules of it) to not be encoded to the SMT, for the current goal. The string is a namespace prefix. [prune &quot;&quot;] will prune everything, but note that [prune &quot;FStar.S&quot;] will not prune [&quot;FStar.Set&quot;].</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> addns:Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw">val</span> dup:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>)</a></code></pre></div>
+<p>Given the current goal [Gamma |- w : t], [dup] will turn this goal into [Gamma |- ?u : t] and [Gamma |= ?u == w]. It can thus be used to change a goal’s witness in any way needed, by choosing some [?u] (possibly with exact) and then solving the other goal.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">val</span> prune:Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">unit</span>)</a></code></pre></div>
+<p>[prune “A.B.C”] will mark all top-level definitions in module [A.B.C] (and submodules of it) to not be encoded to the SMT, for the current goal. The string is a namespace prefix. [prune &quot;&quot;] will prune everything, but note that [prune “FStar.S”] will not prune [“FStar.Set”].</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="kw">val</span> addns:Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">unit</span>)</a></code></pre></div>
 <p>The opposite operation of [prune]. The latest one takes precedence.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> cases:Unidentified product: [term] (Tac <span class="co">(*(term, term)))</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw">val</span> cases:Unidentified product: [term] (Tac <span class="co">(*(term, term)))</span></a></code></pre></div>
 <p>Given a disjunction [e], destruct it and generate two goals for each case. Return value is terms representing proofs for each case. The first one is only valid in the first goal, and likewise for the second (TODO: change this awful behaviour).</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> t_destruct:Unidentified product: [term] (Tac (list <span class="co">(*(fv, nat))))</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw">val</span> t_destruct:Unidentified product: [term] (Tac (list <span class="co">(*(fv, nat))))</span></a></code></pre></div>
 <p>Destruct a value of an inductive type by matching on it. The generated match has one branch for each constructor and is therefore trivially exhaustive, no VC is generated for that purpose. It returns a list with the fvars of each constructor and their arities, in the order they appear as goals.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> set_options:Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>Set command line options for the current goal. Mostly useful to change SMT encoding options such as [set_options &quot;--z3rlimit 20&quot;].</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> uvar_env:Unidentified product: [env] Unidentified product: [<span class="dt">option</span> typ] (Tac term)</code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="kw">val</span> set_options:Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">unit</span>)</a></code></pre></div>
+<p>Set command line options for the current goal. Mostly useful to change SMT encoding options such as [set_options “–z3rlimit 20”].</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="kw">val</span> uvar_env:Unidentified product: [env] Unidentified product: [<span class="dt">option</span> typ] (Tac term)</a></code></pre></div>
 <p>Creates a new, unconstrained unification variable in environment [env]. The type of the uvar can optionally be provided in [o]. If not provided, a second uvar is created for the type.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> unify_env:Unidentified product: [env] Unidentified product: [term] Unidentified product: [term] (Tac <span class="dt">bool</span>)</code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="kw">val</span> unify_env:Unidentified product: [env] Unidentified product: [term] Unidentified product: [term] (Tac <span class="dt">bool</span>)</a></code></pre></div>
 <p>Call the unifier on two terms. The returned boolean specifies whether unification was possible. When the tactic returns true, the terms have been unified, instantiating uvars as needed. When false, unification was not possible and no change to uvars occurs.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> launch_process:Unidentified product: [<span class="dt">string</span>] Unidentified product: [<span class="dt">string</span>] Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">string</span>)</code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="kw">val</span> launch_process:Unidentified product: [<span class="dt">string</span>] Unidentified product: [<span class="dt">string</span>] Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">string</span>)</a></code></pre></div>
 <p>Launches an external process [prog] with arguments [args] and input [input] and returns the output. For security reasons, this can only be performed when the <code>--unsafe_tactic_exec</code> options was provided for the current F* invocation. The tactic will fail if this is not so.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> fresh_bv_named:Unidentified product: [<span class="dt">string</span>] Unidentified product: [typ] (Tac bv)</code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="kw">val</span> fresh_bv_named:Unidentified product: [<span class="dt">string</span>] Unidentified product: [typ] (Tac bv)</a></code></pre></div>
 <p>Get a fresh bv of some name and type. The name is only useful for pretty-printing, since there is a fresh unaccessible integer within the bv too.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> change:Unidentified product: [typ] (Tac <span class="dt">unit</span>)</code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="kw">val</span> change:Unidentified product: [typ] (Tac <span class="dt">unit</span>)</a></code></pre></div>
 <p>Change the goal to another type, given that it is convertible to the current type.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> get_guard_policy:Unidentified product: [<span class="dt">unit</span>] (Tac guard_policy)</code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw">val</span> get_guard_policy:Unidentified product: [<span class="dt">unit</span>] (Tac guard_policy)</a></code></pre></div>
 <p>Get the current guard policy. The guard policy specifies what should be done when a VC arises internally from the tactic engine. Options are SMT (mark it as an SMT goal), Goal (add it as an extra goal) and Force (only allow trivial guards, that need no SMT.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> set_guard_policy:Unidentified product: [guard_policy] (Tac <span class="dt">unit</span>)</code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="kw">val</span> set_guard_policy:Unidentified product: [guard_policy] (Tac <span class="dt">unit</span>)</a></code></pre></div>
 <p>Set the current guard policy. See [get_guard_policy} for an explanation</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> lax_on:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">bool</span>)</code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="kw">val</span> lax_on:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">bool</span>)</a></code></pre></div>
 <p>[lax_on] returns true iff the current environment has the <code>--lax</code> option set, and thus drops all verification conditions.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> tadmit_t:Unidentified product: [term] (Tac <span class="dt">unit</span>)</code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="kw">val</span> tadmit_t:Unidentified product: [term] (Tac <span class="dt">unit</span>)</a></code></pre></div>
 <p>Admit the current goal and set the witness to the given term. Absolutely unsafe. Raises a warning.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> inspect:Unidentified product: [term] (Tac term_view)</code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="kw">val</span> inspect:Unidentified product: [term] (Tac term_view)</a></code></pre></div>
 <p>View a term in a fully-named representation</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> pack:Unidentified product: [term_view] (Tac term)</code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb47-1" data-line-number="1"><span class="kw">val</span> pack:Unidentified product: [term_view] (Tac term)</a></code></pre></div>
 <p>Pack a term view on a fully-named representation back into a term</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> join:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="kw">val</span> join:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>)</a></code></pre></div>
 <p>Join the first two goals, which must be irrelevant, in a single one by finding a maximal prefix of their environment and reverting appropriately. Useful to minimize SMT queries that share internal obligations.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> set_goals:Unidentified product: [list goal] (Tac <span class="dt">unit</span>)</code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="kw">val</span> set_goals:Unidentified product: [list goal] (Tac <span class="dt">unit</span>)</a></code></pre></div>
 <p>Set the current set of active goals at will. Obligations remain in the implicits.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> set_smt_goals:Unidentified product: [list goal] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>Set the current set of SMT goals at will. Obligations remain in the implicits. TODO: This is a really bad name, there's no special &quot;SMT&quot; about these goals.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb50-1" data-line-number="1"><span class="kw">val</span> set_smt_goals:Unidentified product: [list goal] (Tac <span class="dt">unit</span>)</a></code></pre></div>
+<p>Set the current set of SMT goals at will. Obligations remain in the implicits. TODO: This is a really bad name, there’s no special “SMT” about these goals.</p>
 </body>
 </html>
