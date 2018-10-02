@@ -1,113 +1,79 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="utf-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>FStar.Buffer</title>
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
   </style>
-  <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  }
-@media screen {
-a.sourceLine::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-  </style>
-  <link rel="stylesheet" href="style.ccs" />
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <link rel="stylesheet" href="style.ccs" type="text/css" />
 </head>
 <body>
 <h1 id="module-fstar.buffer">module FStar.Buffer</h1>
 <p>fsdoc: no-summary-found</p>
 <p>fsdoc: no-comment-found</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">let</span> ((lemma_modifies_2_comm (#a:Type) (#a&#39;:Type) (b:buffer a) (b&#39;:buffer a&#39;) h0 h1):(Lemma ((requires True)) ((ensures (&lt;==&gt;(modifies_2 b b&#39; h0 h1, modifies_2 b&#39; b h0 h1)))) (Prims<span class="kw">.</span>Cons (SMTPat (modifies_2 b b&#39; h0 h1)) (Prims<span class="kw">.</span>Nil )))):()</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((lemma_modifies_2_comm (#a:Type) (#a&#39;:Type) (b:buffer a) (b&#39;:buffer a&#39;) h0 h1):(Lemma ((requires True)) ((ensures (&lt;==&gt;(modifies_2 b b&#39; h0 h1, modifies_2 b&#39; b h0 h1)))) (Prims<span class="kw">.</span>Cons (SMTPat (modifies_2 b b&#39; h0 h1)) (Prims<span class="kw">.</span>Nil )))):()</code></pre></div>
 <p>Commutativity lemmas</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">let</span> ((lemma_modifies_0_trans h0 h1 h2):(Lemma ((requires (/\(modifies_0 h0 h1, modifies_0 h1 h2)))) ((ensures (modifies_0 h0 h2))) (Prims<span class="kw">.</span>Cons (SMTPat (modifies_0 h0 h1)) (Prims<span class="kw">.</span>Cons (SMTPat (modifies_0 h1 h2)) (Prims<span class="kw">.</span>Nil ))))):()</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((lemma_modifies_0_trans h0 h1 h2):(Lemma ((requires (/\(modifies_0 h0 h1, modifies_0 h1 h2)))) ((ensures (modifies_0 h0 h2))) (Prims<span class="kw">.</span>Cons (SMTPat (modifies_0 h0 h1)) (Prims<span class="kw">.</span>Cons (SMTPat (modifies_0 h1 h2)) (Prims<span class="kw">.</span>Nil ))))):()</code></pre></div>
 <p>Transitivity lemmas</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">val</span> create:Unidentified product: [#a:Type] Unidentified product: [init:a] Unidentified product: [len:UInt32<span class="kw">.</span>t] (StackInline (buffer a) ((requires ((<span class="kw">fun</span> h -&gt; True)))) ((ensures ((<span class="kw">fun</span> (h0:mem) b h1 -&gt; /\(/\(/\(/\(/\(/\(/\(unused_in b h0, live h1 b), ==(idx b, <span class="dv">0</span>)), ==(length b, v len)), ==(frameOf b, HS<span class="kw">.</span>get_tip h0)), ==(Map<span class="kw">.</span>domain (HS<span class="kw">.</span>get_hmap h1), Map<span class="kw">.</span>domain (HS<span class="kw">.</span>get_hmap h0))), modifies_0 h0 h1), ==(as_seq h1 b, Seq<span class="kw">.</span>create (v len) init)))))))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> create:Unidentified product: [#a:Type] Unidentified product: [init:a] Unidentified product: [len:UInt32<span class="kw">.</span>t] (StackInline (buffer a) ((requires ((<span class="kw">fun</span> h -&gt; True)))) ((ensures ((<span class="kw">fun</span> (h0:mem) b h1 -&gt; /\(/\(/\(/\(/\(/\(/\(unused_in b h0, live h1 b), ==(idx b, <span class="dv">0</span>)), ==(length b, v len)), ==(frameOf b, HS<span class="kw">.</span>get_tip h0)), ==(Map<span class="kw">.</span>domain (HS<span class="kw">.</span>get_hmap h1), Map<span class="kw">.</span>domain (HS<span class="kw">.</span>get_hmap h0))), modifies_0 h0 h1), ==(as_seq h1 b, Seq<span class="kw">.</span>create (v len) init)))))))</code></pre></div>
 <p>Concrete getters and setters</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">val</span> createL:Unidentified product: [#a:Type0] Unidentified product: [init:list a] (StackInline (buffer a) ((requires ((<span class="kw">fun</span> h -&gt; p #a init)))) ((ensures ((<span class="kw">fun</span> (h0:mem) b h1 -&gt; <span class="kw">let</span>  len = FStar<span class="kw">.</span>List<span class="kw">.</span>Tot<span class="kw">.</span>length init <span class="kw">in</span> /\(/\(/\(/\(/\(/\(/\(/\(/\(&gt;(len, <span class="dv">0</span>), unused_in b h0), live h1 b), ==(idx b, <span class="dv">0</span>)), ==(length b, len)), ==(frameOf b, (HS<span class="kw">.</span>get_tip h0))), ==(Map<span class="kw">.</span>domain (HS<span class="kw">.</span>get_hmap h1), Map<span class="kw">.</span>domain (HS<span class="kw">.</span>get_hmap h0))), modifies_0 h0 h1), ==(as_seq h1 b, Seq<span class="kw">.</span>seq_of_list init)), q #a len b))))))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> createL:Unidentified product: [#a:Type0] Unidentified product: [init:list a] (StackInline (buffer a) ((requires ((<span class="kw">fun</span> h -&gt; p #a init)))) ((ensures ((<span class="kw">fun</span> (h0:mem) b h1 -&gt; <span class="kw">let</span>  len = FStar<span class="kw">.</span>List<span class="kw">.</span>Tot<span class="kw">.</span>length init <span class="kw">in</span> /\(/\(/\(/\(/\(/\(/\(/\(/\(&gt;(len, <span class="dv">0</span>), unused_in b h0), live h1 b), ==(idx b, <span class="dv">0</span>)), ==(length b, len)), ==(frameOf b, (HS<span class="kw">.</span>get_tip h0))), ==(Map<span class="kw">.</span>domain (HS<span class="kw">.</span>get_hmap h1), Map<span class="kw">.</span>domain (HS<span class="kw">.</span>get_hmap h0))), modifies_0 h0 h1), ==(as_seq h1 b, Seq<span class="kw">.</span>seq_of_list init)), q #a len b))))))</code></pre></div>
 <p>Concrete getters and setters</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">val</span> rcreate:Unidentified product: [#a:Type] Unidentified product: [r:rid] Unidentified product: [init:a] Unidentified product: [len:UInt32<span class="kw">.</span>t] (ST (buffer a) ((requires ((<span class="kw">fun</span> h -&gt; is_eternal_region r)))) ((ensures ((<span class="kw">fun</span> (h0:mem) b h1 -&gt; /\(rcreate_post_common r init len b h0 h1, ~((is_mm b.content))))))))</a></code></pre></div>
-<p>This function allocates a buffer in an “eternal” region, i.e. a region where memory is // * automatically-managed. One does not need to call rfree on such a buffer. It // * translates to C as a call to malloc and assumes a conservative garbage // * collector is runnning.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">let</span> ((freeable (#a:Type) (b:buffer a)):(GTot Type0)):/\(/\(is_mm b.content, is_eternal_region (frameOf b)), ==(idx b, <span class="dv">0</span>))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> rcreate:Unidentified product: [#a:Type] Unidentified product: [r:rid] Unidentified product: [init:a] Unidentified product: [len:UInt32<span class="kw">.</span>t] (ST (buffer a) ((requires ((<span class="kw">fun</span> h -&gt; is_eternal_region r)))) ((ensures ((<span class="kw">fun</span> (h0:mem) b h1 -&gt; /\(rcreate_post_common r init len b h0 h1, ~((is_mm b.content))))))))</code></pre></div>
+<p>This function allocates a buffer in an &quot;eternal&quot; region, i.e. a region where memory is // * automatically-managed. One does not need to call rfree on such a buffer. It // * translates to C as a call to malloc and assumes a conservative garbage // * collector is runnning.</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((freeable (#a:Type) (b:buffer a)):(GTot Type0)):/\(/\(is_mm b.content, is_eternal_region (frameOf b)), ==(idx b, <span class="dv">0</span>))</code></pre></div>
 <p>This predicate tells whether a buffer can be <code>rfree</code>d. The only way to produce it should be <code>rcreate_mm</code>, and the only way to consume it should be <code>rfree.</code> Rationale: a buffer can be <code>rfree</code>d only if it is the result of <code>rcreate_mm</code>. Subbuffers should not.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">let</span> ((rcreate_mm (#a:Type) (r:rid) (init:a) (len:UInt32<span class="kw">.</span>t)):(ST (buffer a) ((requires ((<span class="kw">fun</span> h0 -&gt; is_eternal_region r)))) ((ensures ((<span class="kw">fun</span> h0 b h1 -&gt; /\(/\(rcreate_post_common r init len b h0 h1, is_mm (content b)), freeable b))))))):rcreate_common r init len <span class="kw">true</span></a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((rcreate_mm (#a:Type) (r:rid) (init:a) (len:UInt32<span class="kw">.</span>t)):(ST (buffer a) ((requires ((<span class="kw">fun</span> h0 -&gt; is_eternal_region r)))) ((ensures ((<span class="kw">fun</span> h0 b h1 -&gt; /\(/\(rcreate_post_common r init len b h0 h1, is_mm (content b)), freeable b))))))):rcreate_common r init len <span class="kw">true</span></code></pre></div>
 <p>This function allocates a buffer into a manually-managed buffer in a heap * region, meaning that the client must call rfree in order to avoid memory * leaks. It translates to C as a straight malloc.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">let</span> ((rfree (#a:Type) (b:buffer a)):(ST <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> h0 -&gt; /\(live h0 b, freeable b))))) ((ensures ((<span class="kw">fun</span> h0 _ h1 -&gt; /\(/\(is_mm (content b), is_eternal_region (frameOf b)), ==(h1, HS<span class="kw">.</span>free (content b) h0)))))))):rfree b.content</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((rfree (#a:Type) (b:buffer a)):(ST <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> h0 -&gt; /\(live h0 b, freeable b))))) ((ensures ((<span class="kw">fun</span> h0 _ h1 -&gt; /\(/\(is_mm (content b), is_eternal_region (frameOf b)), ==(h1, HS<span class="kw">.</span>free (content b) h0)))))))):rfree b.content</code></pre></div>
 <p>This function frees a buffer allocated with <code>rcreate_mm</code>. It translates to C as a regular free.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">let</span> ((lemma_aux_0 (#a:Type) (b:buffer a) (n:n:UInt32<span class="kw">.</span>t:{&lt;(v n, length b)}) (z:a) (h0:mem) (tt:Type) (bb:buffer tt)):(Lemma ((requires (/\(/\(live h0 b, live h0 bb), disjoint b bb)))) ((ensures (/\(/\(live h0 b, live h0 bb), (<span class="kw">let</span>  h1 = HS<span class="kw">.</span>upd h0 b.content (Seq<span class="kw">.</span>upd (sel h0 b) (+(idx b, v n)) z) <span class="kw">in</span> ==(as_seq h0 bb, as_seq h1 bb)))))))):Heap<span class="kw">.</span>lemma_distinct_addrs_distinct_preorders (); Heap<span class="kw">.</span>lemma_distinct_addrs_distinct_mm ()</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((lemma_aux_0 (#a:Type) (b:buffer a) (n:n:UInt32<span class="kw">.</span>t:{&lt;(v n, length b)}) (z:a) (h0:mem) (tt:Type) (bb:buffer tt)):(Lemma ((requires (/\(/\(live h0 b, live h0 bb), disjoint b bb)))) ((ensures (/\(/\(live h0 b, live h0 bb), (<span class="kw">let</span>  h1 = HS<span class="kw">.</span>upd h0 b.content (Seq<span class="kw">.</span>upd (sel h0 b) (+(idx b, v n)) z) <span class="kw">in</span> ==(as_seq h0 bb, as_seq h1 bb)))))))):Heap<span class="kw">.</span>lemma_distinct_addrs_distinct_preorders (); Heap<span class="kw">.</span>lemma_distinct_addrs_distinct_mm ()</code></pre></div>
 <p>REMARK: the proof of this lemma relies crucially on the <code>a == a'</code> condition // in <code>disjoint</code>, and on the pattern in <code>Seq.slice_upd</code></p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">val</span> eqb:Unidentified product: [#a:eqtype] Unidentified product: [b1:buffer a] Unidentified product: [b2:buffer a] Unidentified product: [len:len:UInt32<span class="kw">.</span>t:{/\(&lt;=(v len, length b1), &lt;=(v len, length b2))}] (ST <span class="dt">bool</span> ((requires ((<span class="kw">fun</span> h -&gt; /\(live h b1, live h b2))))) ((ensures ((<span class="kw">fun</span> h0 z h1 -&gt; /\(==(h1, h0), (&lt;==&gt;(z, equal h0 (sub b1 <span class="dv">0</span> len) h0 (sub b2 <span class="dv">0</span> len)))))))))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> eqb:Unidentified product: [#a:eqtype] Unidentified product: [b1:buffer a] Unidentified product: [b2:buffer a] Unidentified product: [len:len:UInt32<span class="kw">.</span>t:{/\(&lt;=(v len, length b1), &lt;=(v len, length b2))}] (ST <span class="dt">bool</span> ((requires ((<span class="kw">fun</span> h -&gt; /\(live h b1, live h b2))))) ((ensures ((<span class="kw">fun</span> h0 z h1 -&gt; /\(==(h1, h0), (&lt;==&gt;(z, equal h0 (sub b1 <span class="dv">0</span> len) h0 (sub b2 <span class="dv">0</span> len)))))))))</code></pre></div>
 <p>Corresponds to memcmp for <code>eqtype</code></p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">val</span> op_Array_Access:Unidentified product: [#a:Type] Unidentified product: [b:buffer a] Unidentified product: [n:n:UInt32<span class="kw">.</span>t:{&lt;(v n, length b)}] (Stack a ((requires ((<span class="kw">fun</span> h -&gt; live h b)))) ((ensures ((<span class="kw">fun</span> h0 z h1 -&gt; /\(==(h1, h0), ==(z, Seq<span class="kw">.</span>index (as_seq h0 b) (v n))))))))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> op_Array_Access:Unidentified product: [#a:Type] Unidentified product: [b:buffer a] Unidentified product: [n:n:UInt32<span class="kw">.</span>t:{&lt;(v n, length b)}] (Stack a ((requires ((<span class="kw">fun</span> h -&gt; live h b)))) ((ensures ((<span class="kw">fun</span> h0 z h1 -&gt; /\(==(h1, h0), ==(z, Seq<span class="kw">.</span>index (as_seq h0 b) (v n))))))))</code></pre></div>
 <p>// Defining operators for buffer accesses as specified at // https://github.com/FStarLang/FStar/wiki/Parsing-and-operator-precedence //</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">val</span> blit:Unidentified product: [#t:Type] Unidentified product: [a:buffer t] Unidentified product: [idx_a:idx_a:UInt32<span class="kw">.</span>t:{&lt;=(v idx_a, length a)}] Unidentified product: [b:b:buffer t:{disjoint a b}] Unidentified product: [idx_b:idx_b:UInt32<span class="kw">.</span>t:{&lt;=(v idx_b, length b)}] Unidentified product: [len:len:UInt32<span class="kw">.</span>t:{/\(&lt;=(+(v idx_a, v len), length a), &lt;=(+(v idx_b, v len), length b))}] (Stack <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> h -&gt; /\(live h a, live h b))))) ((ensures ((<span class="kw">fun</span> h0 _ h1 -&gt; /\(/\(/\(/\(/\(/\(/\(live h0 b, live h0 a), live h1 b), live h1 a), modifies_1 b h0 h1), ==(Seq<span class="kw">.</span>slice (as_seq h1 b) (v idx_b) (+(v idx_b, v len)), Seq<span class="kw">.</span>slice (as_seq h0 a) (v idx_a) (+(v idx_a, v len)))), ==(Seq<span class="kw">.</span>slice (as_seq h1 b) <span class="dv">0</span> (v idx_b), Seq<span class="kw">.</span>slice (as_seq h0 b) <span class="dv">0</span> (v idx_b))), ==(Seq<span class="kw">.</span>slice (as_seq h1 b) (+(v idx_b, v len)) (length b), Seq<span class="kw">.</span>slice (as_seq h0 b) (+(v idx_b, v len)) (length b))))))))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> blit:Unidentified product: [#t:Type] Unidentified product: [a:buffer t] Unidentified product: [idx_a:idx_a:UInt32<span class="kw">.</span>t:{&lt;=(v idx_a, length a)}] Unidentified product: [b:b:buffer t:{disjoint a b}] Unidentified product: [idx_b:idx_b:UInt32<span class="kw">.</span>t:{&lt;=(v idx_b, length b)}] Unidentified product: [len:len:UInt32<span class="kw">.</span>t:{/\(&lt;=(+(v idx_a, v len), length a), &lt;=(+(v idx_b, v len), length b))}] (Stack <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> h -&gt; /\(live h a, live h b))))) ((ensures ((<span class="kw">fun</span> h0 _ h1 -&gt; /\(/\(/\(/\(/\(/\(/\(live h0 b, live h0 a), live h1 b), live h1 a), modifies_1 b h0 h1), ==(Seq<span class="kw">.</span>slice (as_seq h1 b) (v idx_b) (+(v idx_b, v len)), Seq<span class="kw">.</span>slice (as_seq h0 a) (v idx_a) (+(v idx_a, v len)))), ==(Seq<span class="kw">.</span>slice (as_seq h1 b) <span class="dv">0</span> (v idx_b), Seq<span class="kw">.</span>slice (as_seq h0 b) <span class="dv">0</span> (v idx_b))), ==(Seq<span class="kw">.</span>slice (as_seq h1 b) (+(v idx_b, v len)) (length b), Seq<span class="kw">.</span>slice (as_seq h0 b) (+(v idx_b, v len)) (length b))))))))</code></pre></div>
 <p>Corresponds to memcpy</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">val</span> fill:Unidentified product: [#t:Type] Unidentified product: [b:buffer t] Unidentified product: [z:t] Unidentified product: [len:len:UInt32<span class="kw">.</span>t:{&lt;=(v len, length b)}] (Stack <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> h -&gt; live h b)))) ((ensures ((<span class="kw">fun</span> h0 _ h1 -&gt; /\(/\(/\(/\(live h0 b, live h1 b), modifies_1 b h0 h1), ==(Seq<span class="kw">.</span>slice (as_seq h1 b) <span class="dv">0</span> (v len), Seq<span class="kw">.</span>create (v len) z)), ==(Seq<span class="kw">.</span>slice (as_seq h1 b) (v len) (length b), Seq<span class="kw">.</span>slice (as_seq h0 b) (v len) (length b))))))))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> fill:Unidentified product: [#t:Type] Unidentified product: [b:buffer t] Unidentified product: [z:t] Unidentified product: [len:len:UInt32<span class="kw">.</span>t:{&lt;=(v len, length b)}] (Stack <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> h -&gt; live h b)))) ((ensures ((<span class="kw">fun</span> h0 _ h1 -&gt; /\(/\(/\(/\(live h0 b, live h1 b), modifies_1 b h0 h1), ==(Seq<span class="kw">.</span>slice (as_seq h1 b) <span class="dv">0</span> (v len), Seq<span class="kw">.</span>create (v len) z)), ==(Seq<span class="kw">.</span>slice (as_seq h1 b) (v len) (length b), Seq<span class="kw">.</span>slice (as_seq h0 b) (v len) (length b))))))))</code></pre></div>
 <p>Corresponds to memset</p>
 </body>
 </html>
