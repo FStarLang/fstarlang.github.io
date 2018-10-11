@@ -1,70 +1,104 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
-  <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>FStar.Bytes</title>
   <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
   </style>
-  <link rel="stylesheet" href="style.ccs" type="text/css" />
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="style.ccs" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
 <h1 id="module-fstar.bytes">module FStar.Bytes</h1>
 <p>fsdoc: no-summary-found</p>
 <p>fsdoc: no-comment-found</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">typeabbrev </code></pre></div>
-<p>Realized by uint8_t in C and int in OCaml (char does not have necessary operators...)</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> bytes:t:Type0:{hasEq t}</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb1-1" data-line-number="1">typeabbrev </a></code></pre></div>
+<p>Realized by uint8_t in C and int in OCaml (char does not have necessary operators…)</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">val</span> bytes:t:Type0:{hasEq t}</a></code></pre></div>
 <p>Realized in C by a pair of a length field and uint8_t* in C Realized in OCaml by a string</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> reveal:Unidentified product: [bytes] (GTot (S<span class="kw">.</span><span class="dt">seq</span> <span class="dt">byte</span>))</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">val</span> reveal:Unidentified product: [bytes] (GTot (S<span class="kw">.</span><span class="dt">seq</span> <span class="dt">byte</span>))</a></code></pre></div>
 <p>representation for specs that need lemmas not defined here.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> get:Unidentified product: [b:bytes] Unidentified product: [pos:pos:u32:{&lt;(U32<span class="kw">.</span>v pos, length b)}] (Pure <span class="dt">byte</span> ((requires True)) ((ensures ((<span class="kw">fun</span> y -&gt; ==(y, S<span class="kw">.</span>index (reveal b) (U32<span class="kw">.</span>v pos)))))))</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">val</span> get:Unidentified product: [b:bytes] Unidentified product: [pos:pos:u32:{&lt;(U32<span class="kw">.</span>v pos, length b)}] (Pure <span class="dt">byte</span> ((requires True)) ((ensures ((<span class="kw">fun</span> y -&gt; ==(y, S<span class="kw">.</span>index (reveal b) (U32<span class="kw">.</span>v pos)))))))</a></code></pre></div>
 <p>If you statically know the length, it is OK to read at arbitrary indexes</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> create:Unidentified product: [len:u32] Unidentified product: [v:<span class="dt">byte</span>] b:lbytes (U32<span class="kw">.</span>v len):{forall i:i:u32:{_}.{:pattern .[](b, i)} ==(.[](b, i), v)}</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">val</span> create:Unidentified product: [len:u32] Unidentified product: [v:<span class="dt">byte</span>] b:lbytes (U32<span class="kw">.</span>v len):{forall i:i:u32:{_}.{:pattern .[](b, i)} ==(.[](b, i), v)}</a></code></pre></div>
 <p>creating byte values *</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> append:Unidentified product: [b1:bytes] Unidentified product: [b2:bytes] (Pure bytes ((requires (UInt<span class="kw">.</span>size (+(length b1, length b2)) U32<span class="kw">.</span>n))) ((ensures ((<span class="kw">fun</span> b -&gt; ==(reveal b, S<span class="kw">.</span>append (reveal b1) (reveal b2)))))))</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">val</span> append:Unidentified product: [b1:bytes] Unidentified product: [b2:bytes] (Pure bytes ((requires (UInt<span class="kw">.</span>size (+(length b1, length b2)) U32<span class="kw">.</span>n))) ((ensures ((<span class="kw">fun</span> b -&gt; ==(reveal b, S<span class="kw">.</span>append (reveal b1) (reveal b2)))))))</a></code></pre></div>
 <p>appending bytes *</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> (fits_in_k_bytes (n:nat) (k:nat)):FStar<span class="kw">.</span>UInt<span class="kw">.</span>size n (op_Multiply <span class="dv">8</span> k)</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">let</span> (fits_in_k_bytes (n:nat) (k:nat)):FStar<span class="kw">.</span>UInt<span class="kw">.</span>size n (op_Multiply <span class="dv">8</span> k)</a></code></pre></div>
 <p>Interpret a sequence of bytes as a mathematical integer encoded in big endian *</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> repr_bytes:Unidentified product: [n:nat] k:pos:{fits_in_k_bytes n k}</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">val</span> repr_bytes:Unidentified product: [n:nat] k:pos:{fits_in_k_bytes n k}</a></code></pre></div>
 <p>repr_bytes n: The number of bytes needed to represent a nat *</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> A better implementation <span class="kw">of</span> BufferBytes, formerly found <span class="kw">in</span> miTLS </code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb9-1" data-line-number="1"> A better implementation <span class="kw">of</span> BufferBytes, formerly found <span class="kw">in</span> miTLS </a></code></pre></div>
 </body>
 </html>
