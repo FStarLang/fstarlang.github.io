@@ -79,6 +79,10 @@ Base operations</code></pre></div>
 <p>[append l1 l2] appends the elements of [l2] to the end of [l1]. Named as: OCaml, F#. Similar to: [List.app] in Coq.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> (op_At x y):append x y</code></pre></div>
 <p>Defines notation [@] for [append], as in OCaml, F# .</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> snoc:Unidentified product: [<span class="co">(*(list &#39;a, &#39;a))] (Tot (list &#39;a))</span></code></pre></div>
+<p>[snoc (l, x)] adds [x] to the end of the list [l].</p>
+<pre><code>Note: We use an uncurried [snoc (l, x)] instead of the curried
+[snoc l x]. </code></pre>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> flatten:Unidentified product: [list (list &#39;a)] (Tot (list &#39;a))</code></pre></div>
 <p>[flatten l], where [l] is a list of lists, returns the list of the elements of the lists in [l], preserving their order. Named as in: OCaml, Coq.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> map:Unidentified product: [(Unidentified product: [&#39;a] (Tot &#39;b))] Unidentified product: [list &#39;a] (Tot (list &#39;b))</code></pre></div>
@@ -148,6 +152,10 @@ predicate [f] </code></pre></div>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Splitting a list at some index *</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((splitAt (#a:Type) (n:nat) (l:list a)):*(list a, list a)):<span class="kw">if</span> =(n, <span class="dv">0</span>) <span class="kw">then</span> (FStar<span class="kw">.</span>Pervasives<span class="kw">.</span>Native<span class="kw">.</span>Mktuple2 (Prims<span class="kw">.</span>Nil ) l) <span class="kw">else</span> <span class="kw">match</span> l <span class="kw">with</span> []  -&gt; (FStar<span class="kw">.</span>Pervasives<span class="kw">.</span>Native<span class="kw">.</span>Mktuple2 (Prims<span class="kw">.</span>Nil ) l) | (Prims<span class="kw">.</span>Cons x xs)  -&gt; <span class="kw">let</span>  (l1, l2) = splitAt (-(n, <span class="dv">1</span>)) xs <span class="kw">in</span> (FStar<span class="kw">.</span>Pervasives<span class="kw">.</span>Native<span class="kw">.</span>Mktuple2 (Prims<span class="kw">.</span>Cons x l1) l2)</code></pre></div>
 <p>[splitAt] takes a natural number n and a list and returns a pair of the maximal prefix of l of size smaller than n and the rest of the list</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> unsnoc:Unidentified product: [#a:Type] Unidentified product: [l:l:list a:{&gt;(length l, <span class="dv">0</span>)}] (Tot <span class="co">(*(list a, a)))</span></code></pre></div>
+<p>[unsnoc] is an inverse of [snoc]. It splits a list into all-elements-except-last and last element.</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> split3:Unidentified product: [#a:Type] Unidentified product: [l:list a] Unidentified product: [i:i:nat:{&lt;(i, length l)}] (Tot <span class="co">(*(*(list a, a), list a)))</span></code></pre></div>
+<p>[split3] splits a list into 3 parts. This allows easy access to the part of the list before and after the element, as well as the element itself.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Sorting (implemented <span class="kw">as</span> quicksort) *</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> partition_length:Unidentified product: [f:(Unidentified product: [&#39;a] (Tot <span class="dt">bool</span>))] Unidentified product: [l:list &#39;a] (Lemma ((requires True)) ((ensures (=(+(length (fst (partition f l)), length (snd (partition f l))), length l)))))</code></pre></div>
 <p>[partition] splits a list [l] into two lists, the sum of whose lengths is the length of [l].</p>
