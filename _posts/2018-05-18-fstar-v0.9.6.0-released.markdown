@@ -11,7 +11,7 @@ On 18 May 2018 we released [F* v0.9.6.0](https://github.com/FStarLang/FStar/rele
 
 A large number of people contributed to this release: thanks to all!
 
-# Main new features
+### Main new features
 
 - Meta-F*: A metaprogramming and tactic framework, as described in this [report](https://arxiv.org/abs/1803.06547). Code samples are in examples/tactics, examples/native_tactics and the `FStar.Tactics` and `FStar.Reflection` libraries. Many people contributed a lot to this work, especially Guido Martinez.
 
@@ -19,7 +19,9 @@ A large number of people contributed to this release: thanks to all!
 
 - Caching typechecked modules: F* emits ".checked" files, an on-disk representation of a typechecked module that can be read back later. This significantly reduces the time to load a module's dependencies.
 
-# Many other improvements
+<!--excerpt-->
+
+### Many other improvements
 
 A sampling of improvements across the entire tool chain:
 
@@ -43,5 +45,4 @@ A sampling of improvements across the entire tool chain:
 
 - Plus many other improvements and changes as described in https://github.com/FStarLang/FStar/blob/v0.9.6.0/CHANGES.md
 
-- And 180 closed github issues
-https://github.com/FStarLang/FStar/issues?q=is%3Aissue+is%3Aclosed+closed%3A%222017-08-23+..+2018-05-17%22
+- And [180 closed github issues](https://github.com/FStarLang/FStar/issues?q=is%3Aissue+is%3Aclosed+closed%3A%222017-08-23+..+2018-05-17%22)
