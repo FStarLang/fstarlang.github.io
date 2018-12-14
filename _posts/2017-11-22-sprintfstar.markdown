@@ -19,6 +19,8 @@ years later, a language that I contribute to has a proper, dependently
 typed `printf`. Well, a `sprintf`, but Cayenne's example was also a
 `sprintf`. This post is about explaining how `sprintf` works in F*.
 
+<!--excerpt-->
+
 ## What is `sprintf`?
 
 Some variant of `sprintf` appears in the standard library of many

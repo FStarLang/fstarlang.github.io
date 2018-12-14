@@ -27,6 +27,8 @@ solution, the *lens-indexed lens*, is analogous to the [monad-indexed
 monad](https://www.fstar-lang.org/papers/mumon/paper.pdf), a structure
 at the core of the design of F\* itself.
 
+<!--excerpt-->
+
 ## Updating nested records: Clumsy, even with primitive syntax
 
 Consider the following simple representation of a circle:
