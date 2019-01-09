@@ -53,15 +53,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 Base operations</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> isEmpty:Unidentified product: [list &#39;a] (Tot <span class="dt">bool</span>)</code></pre></div>
 <p>[isEmpty l] returns [true] if and only if [l] is empty</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> hd:Unidentified product: [l:l:list &#39;a:{_ l}] (Tot &#39;a)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> hd:Unidentified product: [l:l:list &#39;a:{Cons? l}] (Tot &#39;a)</code></pre></div>
 <p>[hd l] returns the first element of [l]. Requires [l] to be nonempty, at type-checking time. Named as in: OCaml, F#, Coq</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> tail:Unidentified product: [l:l:list &#39;a:{_ l}] (Tot (list &#39;a))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> tail:Unidentified product: [l:l:list &#39;a:{Cons? l}] (Tot (list &#39;a))</code></pre></div>
 <p>[tail l] returns [l] without its first element. Requires, at type-checking time, that [l] be nonempty. Similar to: tl in OCaml, F#, Coq</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> tl:Unidentified product: [l:l:list &#39;a:{_ l}] (Tot (list &#39;a))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> tl:Unidentified product: [l:l:list &#39;a:{Cons? l}] (Tot (list &#39;a))</code></pre></div>
 <p>[tl l] returns [l] without its first element. Requires, at type-checking time, that [l] be nonempty. Named as in: OCaml, F#, Coq</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> last:Unidentified product: [l:l:list &#39;a:{_ l}] (Tot &#39;a)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> last:Unidentified product: [l:l:list &#39;a:{Cons? l}] (Tot &#39;a)</code></pre></div>
 <p>[last l] returns the last element of [l]. Requires, at type-checking time, that [l] be nonempty. Named as in: Haskell</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> init:Unidentified product: [l:l:list &#39;a:{_ l}] (Tot (list &#39;a))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> init:Unidentified product: [l:l:list &#39;a:{Cons? l}] (Tot (list &#39;a))</code></pre></div>
 <p>[init l] returns [l] without its last element. Requires, at type-checking time, that [l] be nonempty. Named as in: Haskell</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> length:Unidentified product: [list &#39;a] (Tot nat)</code></pre></div>
 <p>[length l] returns the total number of elements in [l]. Named as in: OCaml, F#, Coq</p>
@@ -97,6 +97,8 @@ Base operations</code></pre></div>
 <p>[fold_left f x [y1; y2; ...; yn]] computes (f (... (f x y1) y2) ... yn). Requires, at type-checking time, [f] to be a pure total function. Named as in: OCaml, Coq.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> fold_right:Unidentified product: [(Unidentified product: [&#39;a] Unidentified product: [&#39;b] (Tot &#39;b))] Unidentified product: [list &#39;a] Unidentified product: [&#39;b] (Tot &#39;b)</code></pre></div>
 <p>[fold_right f [x1; x2; ...; xn] y] computes (f x1 (f x2 (... (f xn y)) ... )). Requires, at type-checking time, [f] to be a pure total function. Named as in: OCaml, Coq</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((fold_right_gtot (#a:Type) (#b:Type) (l:list a) (f:Unidentified product: [a] Unidentified product: [b] (GTot b)) (x:b)):(GTot b)):<span class="kw">match</span> l <span class="kw">with</span> []  -&gt; x | (Prims<span class="kw">.</span>Cons hd tl)  -&gt; f hd (fold_right_gtot tl f x)</code></pre></div>
+<p>[fold_right_gtot] is just like [fold_right], except <code>f</code> is a ghost function *</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> fold_left2:Unidentified product: [f:(Unidentified product: [&#39;a] Unidentified product: [&#39;b] Unidentified product: [&#39;c] (Tot &#39;a))] Unidentified product: [accu:&#39;a] Unidentified product: [l1:(list &#39;b)] Unidentified product: [l2:(list &#39;c)] (Pure &#39;a ((requires (==(length l1, length l2)))) ((ensures ((<span class="kw">fun</span> _ -&gt; True)))) (decreases l1))</code></pre></div>
 <p>[fold_left2 f x [y1; y2; ...; yn] [z1; z2; ...; zn]] computes (f (... (f x y1 z1) y2 z2) ... yn zn). Requires, at type-checking time, [f] to be a pure total function, and the lists [y1; y2; ...; yn] and [z1; z2; ...; zn] to have the same lengths. Named as in: OCaml</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> List searching *</code></pre></div>
@@ -140,6 +142,8 @@ predicate [f] </code></pre></div>
 <p>[subset la lb] is true if and only if all the elements from [la] are also in [lb]. Requires, at type-checking time, the type of elements of [la] and [lb] to have decidable equality.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> noRepeats:Unidentified product: [#a:eqtype] Unidentified product: [list a] (Tot <span class="dt">bool</span>)</code></pre></div>
 <p>[noRepeats l] returns [true] if, and only if, no element of [l] appears in [l] more than once. Requires, at type-checking time, the type of elements of [la] and [lb] to have decidable equality.</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> no_repeats_p:Unidentified product: [#a:Type] Unidentified product: [list a] (Tot prop)</code></pre></div>
+<p>[no_repeats_p l] valid if, and only if, no element of [l] appears in [l] more than once.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> List <span class="kw">of</span> tuples *</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> assoc:Unidentified product: [#a:eqtype] Unidentified product: [#b:Type] Unidentified product: [a] Unidentified product: [list <span class="co">(*(a, b))] (Tot (option b))</span></code></pre></div>
 <p>[assoc x l] returns [Some y] where [(x, y)] is the first element of [l] whose first element is [x], or [None] only if no such element exists. Requires, at type-checking time, the type of [x] to have decidable equality. Named as in: OCaml.</p>
