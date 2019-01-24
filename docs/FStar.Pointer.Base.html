@@ -1,98 +1,132 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
-  <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>FStar.Pointer.Base</title>
   <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
   </style>
-  <link rel="stylesheet" href="style.ccs" type="text/css" />
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="style.ccs" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
 <h1 id="module-fstar.pointer.base">module FStar.Pointer.Base</h1>
 <p>fsdoc: no-summary-found</p>
 <p>fsdoc: no-comment-found</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">* Definitions </code></pre></div>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Type codes </code></pre></div>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((struct_field&#39; (l:struct_typ&#39;)):(Tot eqtype)):(s:<span class="dt">string</span>:{List<span class="kw">.</span>Tot<span class="kw">.</span>mem s (List<span class="kw">.</span>Tot<span class="kw">.</span>map fst l)})</code></pre></div>
-<p><code>struct_field l</code> is the type of fields of <code>TStruct l</code> (i.e. a refinement of <code>string</code>).</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> union_field:struct_field</code></pre></div>
-<p><code>union_field l</code> is the type of fields of <code>TUnion l</code> (i.e. a refinement of <code>string</code>).</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> `typ_of_struct_field l f` is the <span class="kw">type</span> <span class="kw">of</span> data associated <span class="kw">with</span> field `f` in
-    `TStruct l` (i.e. a refinement <span class="kw">of</span> `typ`).</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((typ_of_union_field (l:union_typ) (f:union_field l)):(Tot (t:typ:{<span class="st">&lt;&lt;(t, l)}))):typ_of_struct_field l f</span></code></pre></div>
-<p><code>typ_of_union_field l f</code> is the type of data associated with field <code>f</code> in <code>TUnion l</code> (i.e. a refinement of <code>typ</code>).</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Pointers <span class="kw">to</span> data <span class="kw">of</span> <span class="kw">type</span> t.
-
-    This defines two main types:
-    - `npointer (t: typ)`, a pointer that may be <span class="st">&quot;NULL&quot;</span>;
-    - `pointer (t: typ)`, a pointer that cannot be <span class="st">&quot;NULL&quot;</span>
-      (defined <span class="kw">as</span> a refinement <span class="kw">of</span> `npointer`).
-
-    `nullptr #t` (<span class="kw">of</span> <span class="kw">type</span> `npointer t`) represents the <span class="st">&quot;NULL&quot;</span> value.</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> The <span class="kw">null</span> pointer </code></pre></div>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Buffers </code></pre></div>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Interpretation <span class="kw">of</span> <span class="kw">type</span> codes.
-
-   Defines functions mapping from <span class="kw">type</span> codes (`typ`) <span class="kw">to</span> their interpretation <span class="kw">as</span>
-   FStar types. For example, `type_of_typ (TBase TUInt8)` is `FStar.UInt8<span class="kw">.</span>t`.</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((type_of_base_typ (t:base_typ)):(Tot Type0)):<span class="kw">match</span> t <span class="kw">with</span> TUInt  -&gt; nat | TUInt8  -&gt; FStar<span class="kw">.</span>UInt8<span class="kw">.</span>t | TUInt16  -&gt; FStar<span class="kw">.</span>UInt16<span class="kw">.</span>t | TUInt32  -&gt; FStar<span class="kw">.</span>UInt32<span class="kw">.</span>t | TUInt64  -&gt; FStar<span class="kw">.</span>UInt64<span class="kw">.</span>t | TInt  -&gt; <span class="dt">int</span> | TInt8  -&gt; FStar<span class="kw">.</span>Int8<span class="kw">.</span>t | TInt16  -&gt; FStar<span class="kw">.</span>Int16<span class="kw">.</span>t | TInt32  -&gt; FStar<span class="kw">.</span>Int32<span class="kw">.</span>t | TInt64  -&gt; FStar<span class="kw">.</span>Int64<span class="kw">.</span>t | TChar  -&gt; FStar<span class="kw">.</span>Char<span class="kw">.</span><span class="dt">char</span> | TBool  -&gt; <span class="dt">bool</span> | TUnit  -&gt; <span class="dt">unit</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb1-1" title="1">* Definitions </a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb2-1" title="1"> Type codes </a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">let</span> ((struct_field&#39; (l:struct_typ&#39;)):(Tot eqtype)):(s:<span class="dt">string</span>:{List<span class="kw">.</span>Tot<span class="kw">.</span>mem s (List<span class="kw">.</span>Tot<span class="kw">.</span>map fst l)})</a></code></pre></div>
+<p><code>struct_field l</code> is the type of fields of <code>TStruct l</code> (i.e. a refinement of <code>string</code>).</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">let</span> union_field:struct_field</a></code></pre></div>
+<p><code>union_field l</code> is the type of fields of <code>TUnion l</code> (i.e. a refinement of <code>string</code>).</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb5-1" title="1"> `typ_of_struct_field l f` is the <span class="kw">type</span> <span class="kw">of</span> data associated <span class="kw">with</span> field `f` in</a>
+<a class="sourceLine" id="cb5-2" title="2">    `TStruct l` (i.e. a refinement <span class="kw">of</span> `typ`).</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">let</span> ((typ_of_union_field (l:union_typ) (f:union_field l)):(Tot (t:typ:{<span class="st">&lt;&lt;(t, l)}))):typ_of_struct_field l f</span></a></code></pre></div>
+<p><code>typ_of_union_field l f</code> is the type of data associated with field <code>f</code> in <code>TUnion l</code> (i.e. a refinement of <code>typ</code>).</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb7-1" title="1"> Pointers <span class="kw">to</span> data <span class="kw">of</span> <span class="kw">type</span> t.</a>
+<a class="sourceLine" id="cb7-2" title="2"></a>
+<a class="sourceLine" id="cb7-3" title="3">    This defines two main types:</a>
+<a class="sourceLine" id="cb7-4" title="4">    - `npointer (t: typ)`, a pointer that may be <span class="st">&quot;NULL&quot;</span>;</a>
+<a class="sourceLine" id="cb7-5" title="5">    - `pointer (t: typ)`, a pointer that cannot be <span class="st">&quot;NULL&quot;</span></a>
+<a class="sourceLine" id="cb7-6" title="6">      (defined <span class="kw">as</span> a refinement <span class="kw">of</span> `npointer`).</a>
+<a class="sourceLine" id="cb7-7" title="7"></a>
+<a class="sourceLine" id="cb7-8" title="8">    `nullptr #t` (<span class="kw">of</span> <span class="kw">type</span> `npointer t`) represents the <span class="st">&quot;NULL&quot;</span> value.</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb8-1" title="1"> The <span class="kw">null</span> pointer </a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb9-1" title="1"> Buffers </a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb10-1" title="1"> Interpretation <span class="kw">of</span> <span class="kw">type</span> codes.</a>
+<a class="sourceLine" id="cb10-2" title="2"></a>
+<a class="sourceLine" id="cb10-3" title="3">   Defines functions mapping from <span class="kw">type</span> codes (`typ`) <span class="kw">to</span> their interpretation <span class="kw">as</span></a>
+<a class="sourceLine" id="cb10-4" title="4">   FStar types. For example, `type_of_typ (TBase TUInt8)` is `FStar.UInt8<span class="kw">.</span>t`.</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">let</span> ((type_of_base_typ (t:base_typ)):(Tot Type0)):<span class="kw">match</span> t <span class="kw">with</span> TUInt  -&gt; nat | TUInt8  -&gt; FStar<span class="kw">.</span>UInt8<span class="kw">.</span>t | TUInt16  -&gt; FStar<span class="kw">.</span>UInt16<span class="kw">.</span>t | TUInt32  -&gt; FStar<span class="kw">.</span>UInt32<span class="kw">.</span>t | TUInt64  -&gt; FStar<span class="kw">.</span>UInt64<span class="kw">.</span>t | TInt  -&gt; <span class="dt">int</span> | TInt8  -&gt; FStar<span class="kw">.</span>Int8<span class="kw">.</span>t | TInt16  -&gt; FStar<span class="kw">.</span>Int16<span class="kw">.</span>t | TInt32  -&gt; FStar<span class="kw">.</span>Int32<span class="kw">.</span>t | TInt64  -&gt; FStar<span class="kw">.</span>Int64<span class="kw">.</span>t | TChar  -&gt; FStar<span class="kw">.</span>Char<span class="kw">.</span><span class="dt">char</span> | TBool  -&gt; <span class="dt">bool</span> | TUnit  -&gt; <span class="dt">unit</span></a></code></pre></div>
 <p>Interpretation of base types.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">typeabbrev </code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb12-1" title="1">typeabbrev </a></code></pre></div>
 <p>Interpretation of arrays of elements of (interpreted) type <code>t</code>.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">* Semantics <span class="kw">of</span> pointers </code></pre></div>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Operations on pointers </code></pre></div>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> The readable permission.
-    We choose <span class="kw">to</span> implement it only abstractly, instead <span class="kw">of</span> explicitly
-    tracking the permission <span class="kw">in</span> the heap.</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> The active field <span class="kw">of</span> a union </code></pre></div>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">* Semantics <span class="kw">of</span> buffers </code></pre></div>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Operations on buffers </code></pre></div>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">* The modifies clause </code></pre></div>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> loc_union_idem:s:loc -&gt; (Lemma (==(loc_union s s, s)) (Prims<span class="kw">.</span>Cons (SMTPat (loc_union s s)) (Prims<span class="kw">.</span>Nil )))</code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb13-1" title="1">* Semantics <span class="kw">of</span> pointers </a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb14-1" title="1"> Operations on pointers </a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb15-1" title="1"> The readable permission.</a>
+<a class="sourceLine" id="cb15-2" title="2">    We choose <span class="kw">to</span> implement it only abstractly, instead <span class="kw">of</span> explicitly</a>
+<a class="sourceLine" id="cb15-3" title="3">    tracking the permission <span class="kw">in</span> the heap.</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb16-1" title="1"> The active field <span class="kw">of</span> a union </a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb17-1" title="1">* Semantics <span class="kw">of</span> buffers </a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb18-1" title="1"> Operations on buffers </a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb19-1" title="1">* The modifies clause </a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">val</span> loc_union_idem:s:loc -&gt; (Lemma (==(loc_union s s, s)) (Prims<span class="kw">.</span>Cons (SMTPat (loc_union s s)) (Prims<span class="kw">.</span>Nil )))</a></code></pre></div>
 <p>The following is useful to make Z3 cut matching loops with modifies_trans and modifies_refl</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> The modifies clause proper </code></pre></div>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Concrete allocators, getters <span class="kw">and</span> setters </code></pre></div>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> write_union_field:#l:union_typ -&gt; p:pointer ((TUnion l)) -&gt; fd:struct_field l -&gt; (HST<span class="kw">.</span>Stack <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> h -&gt; live h p)))) ((ensures ((<span class="kw">fun</span> h0 _ h1 -&gt; /\(/\(/\(live h0 p, live h1 p), modifies_1 p h0 h1), is_active_union_field h1 p fd))))))</code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb21-1" title="1"> The modifies clause proper </a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb22-1" title="1"> Concrete allocators, getters <span class="kw">and</span> setters </a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb23-1" title="1"><span class="kw">val</span> write_union_field:#l:union_typ -&gt; p:pointer ((TUnion l)) -&gt; fd:struct_field l -&gt; (HST<span class="kw">.</span>Stack <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> h -&gt; live h p)))) ((ensures ((<span class="kw">fun</span> h0 _ h1 -&gt; /\(/\(/\(live h0 p, live h1 p), modifies_1 p h0 h1), is_active_union_field h1 p fd))))))</a></code></pre></div>
 <p>Given our model, this operation is stateful, however it should be translated to a no-op by Kremlin, as the tag does not actually exist at runtime.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> NOTE: we historically used <span class="kw">to</span> have this lemma <span class="kw">for</span> arbitrary
-pointer inclusion, but that became wrong <span class="kw">for</span> unions. </code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb24-1" title="1"> NOTE: we historically used <span class="kw">to</span> have this lemma <span class="kw">for</span> arbitrary</a>
+<a class="sourceLine" id="cb24-2" title="2">pointer inclusion, but that became wrong <span class="kw">for</span> unions. </a></code></pre></div>
 </body>
 </html>
