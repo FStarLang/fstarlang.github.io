@@ -1,161 +1,127 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="utf-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>FStar.List</title>
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
   </style>
-  <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  }
-@media screen {
-a.sourceLine::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-  </style>
-  <link rel="stylesheet" href="style.ccs" />
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <link rel="stylesheet" href="style.ccs" type="text/css" />
 </head>
 <body>
 <h1 id="module-fstar.list">module FStar.List</h1>
 <p>F* stdlib List module.</p>
 <p>F* standard library List module.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb1-1" title="1"> Base operations *</a></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">val</span> hd:Unidentified product: [list &#39;a] (ML &#39;a)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Base operations *</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> hd:Unidentified product: [list &#39;a] (ML &#39;a)</code></pre></div>
 <p>[hd l] returns the first element of [l]. Raises an exception if [l] is empty (thus, [hd] hides [List.Tot.hd] which requires [l] to be nonempty at type-checking time.) Named as in: OCaml, F#, Coq</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">val</span> tail:Unidentified product: [list &#39;a] (ML (list &#39;a))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> tail:Unidentified product: [list &#39;a] (ML (list &#39;a))</code></pre></div>
 <p>[tail l] returns [l] without its first element. Raises an exception if [l] is empty (thus, [tail] hides [List.Tot.tail] which requires [l] to be nonempty at type-checking time). Similar to: tl in OCaml, F#, Coq</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">val</span> tl:Unidentified product: [list &#39;a] (ML (list &#39;a))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> tl:Unidentified product: [list &#39;a] (ML (list &#39;a))</code></pre></div>
 <p>[tl l] returns [l] without its first element. Raises an exception if [l] is empty (thus, [tl] hides [List.Tot.tl] which requires [l] to be nonempty at type-checking time). Named as in: tl in OCaml, F#, Coq</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">val</span> last:Unidentified product: [list &#39;a] (ML &#39;a)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> last:Unidentified product: [list &#39;a] (ML &#39;a)</code></pre></div>
 <p>[last l] returns the last element of [l]. Requires, at type-checking time, that [l] be nonempty. Named as in: Haskell</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">val</span> init:Unidentified product: [list &#39;a] (ML (list &#39;a))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> init:Unidentified product: [list &#39;a] (ML (list &#39;a))</code></pre></div>
 <p>[init l] returns [l] without its last element. Requires, at type-checking time, that [l] be nonempty. Named as in: Haskell</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb7-1" title="1"> [nth l n] returns the [n]-th element <span class="kw">in</span> list [l] (<span class="kw">with</span> the first</a>
-<a class="sourceLine" id="cb7-2" title="2">element being the <span class="dv">0</span>-th) <span class="kw">if</span> [l] is long enough, <span class="kw">or</span> raises an <span class="kw">exception</span></a>
-<a class="sourceLine" id="cb7-3" title="3">otherwise (thus, [nth] hides [List<span class="kw">.</span>Tot<span class="kw">.</span>nth] which has [<span class="dt">option</span>] <span class="kw">type</span>.)</a>
-<a class="sourceLine" id="cb7-4" title="4">Named <span class="kw">as</span> <span class="kw">in</span>: OCaml, F#, Coq </a></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb8-1" title="1"> Iterators *</a></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">val</span> iter:Unidentified product: [(Unidentified product: [&#39;a] (ML <span class="dt">unit</span>))] Unidentified product: [list &#39;a] (ML <span class="dt">unit</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> [nth l n] returns the [n]-th element <span class="kw">in</span> list [l] (<span class="kw">with</span> the first
+element being the <span class="dv">0</span>-th) <span class="kw">if</span> [l] is long enough, <span class="kw">or</span> raises an <span class="kw">exception</span>
+otherwise (thus, [nth] hides [List<span class="kw">.</span>Tot<span class="kw">.</span>nth] which has [<span class="dt">option</span>] <span class="kw">type</span>.)
+Named <span class="kw">as</span> <span class="kw">in</span>: OCaml, F#, Coq </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Iterators *</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> iter:Unidentified product: [(Unidentified product: [&#39;a] (ML <span class="dt">unit</span>))] Unidentified product: [list &#39;a] (ML <span class="dt">unit</span>)</code></pre></div>
 <p>[iter f l] performs [f x] for each element [x] of [l], in the order in which they appear in [l]. Named as in: OCaml, F# .</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">val</span> iteri_aux:Unidentified product: [<span class="dt">int</span>] Unidentified product: [(Unidentified product: [<span class="dt">int</span>] Unidentified product: [&#39;a] (ML <span class="dt">unit</span>))] Unidentified product: [list &#39;a] (ML <span class="dt">unit</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> iteri_aux:Unidentified product: [<span class="dt">int</span>] Unidentified product: [(Unidentified product: [<span class="dt">int</span>] Unidentified product: [&#39;a] (ML <span class="dt">unit</span>))] Unidentified product: [list &#39;a] (ML <span class="dt">unit</span>)</code></pre></div>
 <p>[iteri_aux n f l] performs, for each i, [f (i+n) x] for the i-th element [x] of [l], in the order in which they appear in [l].</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">val</span> iteri:Unidentified product: [(Unidentified product: [<span class="dt">int</span>] Unidentified product: [&#39;a] (ML <span class="dt">unit</span>))] Unidentified product: [list &#39;a] (ML <span class="dt">unit</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> iteri:Unidentified product: [(Unidentified product: [<span class="dt">int</span>] Unidentified product: [&#39;a] (ML <span class="dt">unit</span>))] Unidentified product: [list &#39;a] (ML <span class="dt">unit</span>)</code></pre></div>
 <p>[iteri_aux f l] performs, for each [i], [f i x] for the i-th element [x] of [l], in the order in which they appear in [l]. Named as in: OCaml</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">val</span> map:Unidentified product: [(Unidentified product: [&#39;a] (ML &#39;b))] Unidentified product: [list &#39;a] (ML (list &#39;b))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> map:Unidentified product: [(Unidentified product: [&#39;a] (ML &#39;b))] Unidentified product: [list &#39;a] (ML (list &#39;b))</code></pre></div>
 <p>[map f l] applies [f] to each element of [l] and returns the list of results, in the order of the original elements in [l]. (Hides [List.Tot.map] which requires, at type-checking time, [f] to be a pure total function.) Named as in: OCaml, Coq, F#</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">val</span> mapT:Unidentified product: [(Unidentified product: [&#39;a] (Tot &#39;b))] Unidentified product: [list &#39;a] (Tot (list &#39;b))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> mapT:Unidentified product: [(Unidentified product: [&#39;a] (Tot &#39;b))] Unidentified product: [list &#39;a] (Tot (list &#39;b))</code></pre></div>
 <p>[mapT f l] applies [f] to each element of [l] and returns the list of results, in the order of the original elements in [l]. Requires, at type-checking time, [f] to be a pure total function.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">val</span> mapi_init:Unidentified product: [(Unidentified product: [<span class="dt">int</span>] Unidentified product: [&#39;a] (ML &#39;b))] Unidentified product: [list &#39;a] Unidentified product: [<span class="dt">int</span>] (ML (list &#39;b))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> mapi_init:Unidentified product: [(Unidentified product: [<span class="dt">int</span>] Unidentified product: [&#39;a] (ML &#39;b))] Unidentified product: [list &#39;a] Unidentified product: [<span class="dt">int</span>] (ML (list &#39;b))</code></pre></div>
 <p>[mapi_init f n l] applies, for each [k], [f (n+k)] to the [k]-th element of [l] and returns the list of results, in the order of the original elements in [l]. (Hides [List.Tot.mapi_init] which requires, at type-checking time, [f] to be a pure total function.)</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">val</span> mapi:Unidentified product: [(Unidentified product: [<span class="dt">int</span>] Unidentified product: [&#39;a] (ML &#39;b))] Unidentified product: [list &#39;a] (ML (list &#39;b))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> mapi:Unidentified product: [(Unidentified product: [<span class="dt">int</span>] Unidentified product: [&#39;a] (ML &#39;b))] Unidentified product: [list &#39;a] (ML (list &#39;b))</code></pre></div>
 <p>[mapi f l] applies, for each [k], [f k] to the [k]-th element of [l] and returns the list of results, in the order of the original elements in [l]. (Hides [List.Tot.mapi] which requires, at type-checking time, [f] to be a pure total function.) Named as in: OCaml</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb16-1" title="1"> [concatMap f l] applies [f] <span class="kw">to</span> each element <span class="kw">of</span> [l] <span class="kw">and</span> returns the</a>
-<a class="sourceLine" id="cb16-2" title="2">concatenation <span class="kw">of</span> the results, <span class="kw">in</span> the order <span class="kw">of</span> the original elements <span class="kw">of</span></a>
-<a class="sourceLine" id="cb16-3" title="3">[l]. This is equivalent <span class="kw">to</span> [flatten (map f l)]. (Hides</a>
-<a class="sourceLine" id="cb16-4" title="4">[List<span class="kw">.</span>Tot<span class="kw">.</span>concatMap], which requires, at <span class="kw">type</span>-checking time, [f] <span class="kw">to</span> be</a>
-<a class="sourceLine" id="cb16-5" title="5">a pure total <span class="kw">function</span>.) </a></code></pre></div>
-<div class="sourceCode" id="cb17"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">val</span> map2:Unidentified product: [(Unidentified product: [&#39;a] Unidentified product: [&#39;b] (ML &#39;c))] Unidentified product: [list &#39;a] Unidentified product: [list &#39;b] (ML (list &#39;c))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> [concatMap f l] applies [f] <span class="kw">to</span> each element <span class="kw">of</span> [l] <span class="kw">and</span> returns the
+concatenation <span class="kw">of</span> the results, <span class="kw">in</span> the order <span class="kw">of</span> the original elements <span class="kw">of</span>
+[l]. This is equivalent <span class="kw">to</span> [flatten (map f l)]. (Hides
+[List<span class="kw">.</span>Tot<span class="kw">.</span>concatMap], which requires, at <span class="kw">type</span>-checking time, [f] <span class="kw">to</span> be
+a pure total <span class="kw">function</span>.) </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> map2:Unidentified product: [(Unidentified product: [&#39;a] Unidentified product: [&#39;b] (ML &#39;c))] Unidentified product: [list &#39;a] Unidentified product: [list &#39;b] (ML (list &#39;c))</code></pre></div>
 <p>[map2 f l1 l2] computes [f x1 x2] for each element x1 of [l1] and the element [x2] of [l2] at the same position, and returns the list of such results, in the order of the original elements in [l1]. Raises an exception if [l1] and [l2] have different lengths. Named as in: OCaml</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">val</span> map3:Unidentified product: [(Unidentified product: [&#39;a] Unidentified product: [&#39;b] Unidentified product: [&#39;c] (ML &#39;d))] Unidentified product: [list &#39;a] Unidentified product: [list &#39;b] Unidentified product: [list &#39;c] (ML (list &#39;d))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> map3:Unidentified product: [(Unidentified product: [&#39;a] Unidentified product: [&#39;b] Unidentified product: [&#39;c] (ML &#39;d))] Unidentified product: [list &#39;a] Unidentified product: [list &#39;b] Unidentified product: [list &#39;c] (ML (list &#39;d))</code></pre></div>
 <p>[map3 f l1 l2 l3] computes [f x1 x2 x3] for each element x1 of [l1] and the element [x2] of [l2] and the element [x3] of [l3] at the same position, and returns the list of such results, in the order of the original elements in [l1]. Raises an exception if [l1], [l2] and [l3] have different lengths. Named as in: OCaml</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb19-1" title="1"><span class="kw">val</span> fold_left:Unidentified product: [(Unidentified product: [&#39;a] Unidentified product: [&#39;b] (ML &#39;a))] Unidentified product: [&#39;a] Unidentified product: [list &#39;b] (ML &#39;a)</a></code></pre></div>
-<p>[fold_left f x [y1; y2; …; yn]] computes (f (… (f x y1) y2) … yn). (Hides [List.Tot.fold_left], which requires, at type-checking time, [f] to be a pure total function.) Named as in: OCaml, Coq</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">val</span> fold_left2:Unidentified product: [(Unidentified product: [&#39;s] Unidentified product: [&#39;a] Unidentified product: [&#39;b] (ML &#39;s))] Unidentified product: [&#39;s] Unidentified product: [list &#39;a] Unidentified product: [list &#39;b] (ML &#39;s)</a></code></pre></div>
-<p>[fold_left2 f x [y1; y2; …; yn] [z1; z2; …; zn]] computes (f (… (f x y1 z1) y2 z2 … yn zn). Raises an exception if [y1; y2; …] and [z1; z2; …] have different lengths. (Thus, hides [List.Tot.fold_left2] which requires such a condition at type-checking time.) Named as in: OCaml</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb21-1" title="1"><span class="kw">val</span> fold_right:Unidentified product: [(Unidentified product: [&#39;a] Unidentified product: [&#39;b] (ML &#39;b))] Unidentified product: [list &#39;a] Unidentified product: [&#39;b] (ML &#39;b)</a></code></pre></div>
-<p>[fold_right f [x1; x2; …; xn] y] computes (f x1 (f x2 (… (f xn y)) … )). (Hides [List.Tot.fold_right], which requires, at type-checking time, [f] to be a pure total function.) Named as in: OCaml, Coq</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb22-1" title="1"> List searching *</a></code></pre></div>
-<div class="sourceCode" id="cb23"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb23-1" title="1"><span class="kw">val</span> filter:Unidentified product: [(Unidentified product: [&#39;a] (ML <span class="dt">bool</span>))] Unidentified product: [list &#39;a] (ML (list &#39;a))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> fold_left:Unidentified product: [(Unidentified product: [&#39;a] Unidentified product: [&#39;b] (ML &#39;a))] Unidentified product: [&#39;a] Unidentified product: [list &#39;b] (ML &#39;a)</code></pre></div>
+<p>[fold_left f x [y1; y2; ...; yn]] computes (f (... (f x y1) y2) ... yn). (Hides [List.Tot.fold_left], which requires, at type-checking time, [f] to be a pure total function.) Named as in: OCaml, Coq</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> fold_left2:Unidentified product: [(Unidentified product: [&#39;s] Unidentified product: [&#39;a] Unidentified product: [&#39;b] (ML &#39;s))] Unidentified product: [&#39;s] Unidentified product: [list &#39;a] Unidentified product: [list &#39;b] (ML &#39;s)</code></pre></div>
+<p>[fold_left2 f x [y1; y2; ...; yn] [z1; z2; ...; zn]] computes (f (... (f x y1 z1) y2 z2 ... yn zn). Raises an exception if [y1; y2; ...] and [z1; z2; ...] have different lengths. (Thus, hides [List.Tot.fold_left2] which requires such a condition at type-checking time.) Named as in: OCaml</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> fold_right:Unidentified product: [(Unidentified product: [&#39;a] Unidentified product: [&#39;b] (ML &#39;b))] Unidentified product: [list &#39;a] Unidentified product: [&#39;b] (ML &#39;b)</code></pre></div>
+<p>[fold_right f [x1; x2; ...; xn] y] computes (f x1 (f x2 (... (f xn y)) ... )). (Hides [List.Tot.fold_right], which requires, at type-checking time, [f] to be a pure total function.) Named as in: OCaml, Coq</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> List searching *</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> filter:Unidentified product: [(Unidentified product: [&#39;a] (ML <span class="dt">bool</span>))] Unidentified product: [list &#39;a] (ML (list &#39;a))</code></pre></div>
 <p>[filter f l] returns [l] with all elements [x] such that [f x] does not hold removed. (Hides [List.Tot.filter] which requires, at type-checking time, [f] to be a pure total function.) Named as in: OCaml, Coq</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb24-1" title="1"><span class="kw">val</span> for_all:Unidentified product: [(Unidentified product: [&#39;a] (ML <span class="dt">bool</span>))] Unidentified product: [list &#39;a] (ML <span class="dt">bool</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> for_all:Unidentified product: [(Unidentified product: [&#39;a] (ML <span class="dt">bool</span>))] Unidentified product: [list &#39;a] (ML <span class="dt">bool</span>)</code></pre></div>
 <p>[for_all f l] returns [true] if, and only if, for all elements [x] appearing in [l], [f x] holds. (Hides [List.Tot.for_all], which requires, at type-checking time, [f] to be a pure total function.) Named as in: OCaml. Similar to: List.forallb in Coq</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb25-1" title="1"><span class="kw">val</span> forall2:Unidentified product: [(Unidentified product: [&#39;a] Unidentified product: [&#39;b] (ML <span class="dt">bool</span>))] Unidentified product: [list &#39;a] Unidentified product: [list &#39;b] (ML <span class="dt">bool</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> forall2:Unidentified product: [(Unidentified product: [&#39;a] Unidentified product: [&#39;b] (ML <span class="dt">bool</span>))] Unidentified product: [list &#39;a] Unidentified product: [list &#39;b] (ML <span class="dt">bool</span>)</code></pre></div>
 <p>[for_all f l1 l2] returns [true] if, and only if, for all elements [x1] appearing in [l1] and the element [x2] appearing in [l2] at the same position, [f x1 x2] holds. Raises an exception if [l1] and [l2] have different lengths. Similar to: List.for_all2 in OCaml. Similar to: List.Forall2 in Coq (which is propositional)</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb26-1" title="1"><span class="kw">val</span> collect:Unidentified product: [(Unidentified product: [&#39;a] (ML (list &#39;b)))] Unidentified product: [list &#39;a] (ML (list &#39;b))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> collect:Unidentified product: [(Unidentified product: [&#39;a] (ML (list &#39;b)))] Unidentified product: [list &#39;a] (ML (list &#39;b))</code></pre></div>
 <p>[collect f l] applies [f] to each element of [l] and returns the concatenation of the results, in the order of the original elements of [l]. It is equivalent to [flatten (map f l)]. (Hides [List.Tot.collect] which requires, at type-checking time, [f] to be a pure total function.) TODO: what is the difference with [concatMap]?</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb27-1" title="1"><span class="kw">val</span> tryFind:Unidentified product: [(Unidentified product: [&#39;a] (ML <span class="dt">bool</span>))] Unidentified product: [list &#39;a] (ML (<span class="dt">option</span> &#39;a))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> tryFind:Unidentified product: [(Unidentified product: [&#39;a] (ML <span class="dt">bool</span>))] Unidentified product: [list &#39;a] (ML (<span class="dt">option</span> &#39;a))</code></pre></div>
 <p>[tryFind f l] returns [Some x] for some element [x] appearing in [l] such that [f x] holds, or [None] only if no such [x] exists. (Hides [List.Tot.tryFind], which requires, at type-checking time, [f] to be a pure total function.)</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb28-1" title="1"><span class="kw">val</span> tryPick:Unidentified product: [(Unidentified product: [&#39;a] (ML (<span class="dt">option</span> &#39;b)))] Unidentified product: [list &#39;a] (ML (<span class="dt">option</span> &#39;b))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> tryPick:Unidentified product: [(Unidentified product: [&#39;a] (ML (<span class="dt">option</span> &#39;b)))] Unidentified product: [list &#39;a] (ML (<span class="dt">option</span> &#39;b))</code></pre></div>
 <p>[tryPick f l] returns [y] for some element [x] appearing in [l] such that [f x = Some y] for some y, or [None] only if [f x = None] for all elements [x] of [l]. (Hides [List.Tot.tryPick], which requires, at type-checking time, [f] to be a pure total function.)</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb29-1" title="1"><span class="kw">val</span> choose:Unidentified product: [(Unidentified product: [&#39;a] (ML (<span class="dt">option</span> &#39;b)))] Unidentified product: [list &#39;a] (ML (list &#39;b))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> choose:Unidentified product: [(Unidentified product: [&#39;a] (ML (<span class="dt">option</span> &#39;b)))] Unidentified product: [list &#39;a] (ML (list &#39;b))</code></pre></div>
 <p>[choose f l] returns the list of [y] for all elements [x] appearing in [l] such that [f x = Some y] for some [y]. (Hides [List.Tot.choose] which requires, at type-checking time, [f] to be a pure total function.)</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb30-1" title="1"><span class="kw">val</span> partition:Unidentified product: [(Unidentified product: [&#39;a] (ML <span class="dt">bool</span>))] Unidentified product: [list &#39;a] (ML <span class="co">(*(list &#39;a, list &#39;a)))</span></a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> partition:Unidentified product: [(Unidentified product: [&#39;a] (ML <span class="dt">bool</span>))] Unidentified product: [list &#39;a] (ML <span class="co">(*(list &#39;a, list &#39;a)))</span></code></pre></div>
 <p>[partition f l] returns the pair of lists [(l1, l2)] where all elements [x] of [l] are in [l1] if [f x] holds, and in [l2] otherwise. Both [l1] and [l2] retain the original order of [l]. (Hides [List.Tot.partition], which requires, at type-checking time, [f] to be a pure total function.)</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb31-1" title="1"> List <span class="kw">of</span> tuples *</a></code></pre></div>
-<div class="sourceCode" id="cb32"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb32-1" title="1"><span class="kw">val</span> zip:Unidentified product: [list &#39;a] Unidentified product: [list &#39;b] (ML (list <span class="co">(*(&#39;a, &#39;b))))</span></a></code></pre></div>
-<p>[zip] takes two lists [x1, …, xn] and [y1, …, yn] and returns the list of pairs [(x1, y1), …, (xn, yn)]. Raises an exception if the two lists have different lengths. Named as in: Haskell</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb33-1" title="1"> Sorting (implemented <span class="kw">as</span> quicksort) *</a></code></pre></div>
-<div class="sourceCode" id="cb34"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb34-1" title="1"><span class="kw">val</span> sortWith:Unidentified product: [(Unidentified product: [&#39;a] Unidentified product: [&#39;a] (ML <span class="dt">int</span>))] Unidentified product: [list &#39;a] (ML (list &#39;a))</a></code></pre></div>
-<p>[sortWith compare l] returns the list [l’] containing the elements of [l] sorted along the comparison function [compare], in such a way that if [compare x y &gt; 0], then [x] appears before [y] in [l’]. (Hides [List.Tot.sortWith], which requires, at type-checking time, [compare] to be a pure total function.)</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb35-1" title="1"><span class="kw">val</span> splitAt:Unidentified product: [nat] Unidentified product: [list &#39;a] (ML <span class="co">(*(list &#39;a, list &#39;a)))</span></a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> List <span class="kw">of</span> tuples *</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> zip:Unidentified product: [list &#39;a] Unidentified product: [list &#39;b] (ML (list <span class="co">(*(&#39;a, &#39;b))))</span></code></pre></div>
+<p>[zip] takes two lists [x1, ..., xn] and [y1, ..., yn] and returns the list of pairs [(x1, y1), ..., (xn, yn)]. Raises an exception if the two lists have different lengths. Named as in: Haskell</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Sorting (implemented <span class="kw">as</span> quicksort) *</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> sortWith:Unidentified product: [(Unidentified product: [&#39;a] Unidentified product: [&#39;a] (ML <span class="dt">int</span>))] Unidentified product: [list &#39;a] (ML (list &#39;a))</code></pre></div>
+<p>[sortWith compare l] returns the list [l'] containing the elements of [l] sorted along the comparison function [compare], in such a way that if [compare x y &gt; 0], then [x] appears before [y] in [l']. (Hides [List.Tot.sortWith], which requires, at type-checking time, [compare] to be a pure total function.)</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> splitAt:Unidentified product: [nat] Unidentified product: [list &#39;a] (ML <span class="co">(*(list &#39;a, list &#39;a)))</span></code></pre></div>
 <p>[splitAt n l] returns the pair of lists [(l1, l2)] such that [l1] contains the first [n] elements of [l] and [l2] contains the rest. Raises an exception if [l] has fewer than [n] elements.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb36-1" title="1"><span class="kw">let</span> ((filter_map (f:Unidentified product: [&#39;a] (ML (<span class="dt">option</span> &#39;b))) (l:list &#39;a)):(ML (list &#39;b))):<span class="kw">let</span> <span class="kw">rec</span> ((filter_map_acc (acc:list &#39;b) (l:list &#39;a)):(ML (list &#39;b)))=<span class="kw">match</span> l <span class="kw">with</span> []  -&gt; rev acc | (Prims<span class="kw">.</span>Cons hd tl)  -&gt; <span class="kw">match</span> f hd <span class="kw">with</span> (Some hd)  -&gt; filter_map_acc ((Prims<span class="kw">.</span>Cons hd acc)) tl | None  -&gt; filter_map_acc acc tl <span class="kw">in</span> filter_map_acc (Prims<span class="kw">.</span>Nil ) l</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((filter_map (f:Unidentified product: [&#39;a] (ML (<span class="dt">option</span> &#39;b))) (l:list &#39;a)):(ML (list &#39;b))):<span class="kw">let</span> <span class="kw">rec</span> ((filter_map_acc (acc:list &#39;b) (l:list &#39;a)):(ML (list &#39;b)))=<span class="kw">match</span> l <span class="kw">with</span> []  -&gt; rev acc | (Prims<span class="kw">.</span>Cons hd tl)  -&gt; <span class="kw">match</span> f hd <span class="kw">with</span> (Some hd)  -&gt; filter_map_acc ((Prims<span class="kw">.</span>Cons hd acc)) tl | None  -&gt; filter_map_acc acc tl <span class="kw">in</span> filter_map_acc (Prims<span class="kw">.</span>Nil ) l</code></pre></div>
 <p>[filter_map f l] returns the list of [y] for all elements [x] appearing in [l] such that [f x = Some y] for some [y]. (Implemented here as a tail-recursive version of [choose]</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb37-1" title="1"><span class="kw">val</span> index:Unidentified product: [(Unidentified product: [&#39;a] (ML <span class="dt">bool</span>))] Unidentified product: [list &#39;a] (ML <span class="dt">int</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> index:Unidentified product: [(Unidentified product: [&#39;a] (ML <span class="dt">bool</span>))] Unidentified product: [list &#39;a] (ML <span class="dt">int</span>)</code></pre></div>
 <p>[index f l] returns the position index in list [l] of the first element [x] in [l] such that [f x] holds. Raises an exception if no such [x] exists. TODO: rename this function (it hides List.Tot.index which has a completely different semantics.)</p>
 </body>
 </html>

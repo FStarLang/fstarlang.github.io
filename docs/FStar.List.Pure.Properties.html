@@ -1,118 +1,84 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="utf-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>FStar.List.Pure.Properties</title>
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
   </style>
-  <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  }
-@media screen {
-a.sourceLine::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-  </style>
-  <link rel="stylesheet" href="style.ccs" />
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <link rel="stylesheet" href="style.ccs" type="text/css" />
 </head>
 <body>
 <h1 id="module-fstar.list.pure.properties">module FStar.List.Pure.Properties</h1>
 <p>fsdoc: no-summary-found</p>
 <p>fsdoc: no-comment-found</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb1-1" title="1"> Properties <span class="kw">of</span> splitAt </a></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">let</span> ((lemma_splitAt_append (#a:Type) (n:nat) (l:list a)):(Lemma ((requires &lt;=(n, length l))) ((ensures (<span class="kw">let</span>  (l1, l2) = splitAt n l <span class="kw">in</span> /\(==(append l1 l2, l), =(length l1, n))))))):<span class="kw">match</span> n <span class="kw">with</span> <span class="dv">0</span>  -&gt; () | _  -&gt; <span class="kw">match</span> l <span class="kw">with</span> []  -&gt; () | (Prims<span class="kw">.</span>Cons x xs)  -&gt; lemma_splitAt_append (-(n, <span class="dv">1</span>)) xs</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Properties <span class="kw">of</span> splitAt </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((lemma_splitAt_append (#a:Type) (n:nat) (l:list a)):(Lemma ((requires &lt;=(n, length l))) ((ensures (<span class="kw">let</span>  (l1, l2) = splitAt n l <span class="kw">in</span> /\(==(append l1 l2, l), =(length l1, n))))))):<span class="kw">match</span> n <span class="kw">with</span> <span class="dv">0</span>  -&gt; () | _  -&gt; <span class="kw">match</span> l <span class="kw">with</span> []  -&gt; () | (Prims<span class="kw">.</span>Cons x xs)  -&gt; lemma_splitAt_append (-(n, <span class="dv">1</span>)) xs</code></pre></div>
 <p>If we [append] the two lists produced using a [splitAt], then we get back the original list</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">let</span> ((lemma_append_splitAt (#t:Type) (l1:list t) (l2:list t)):(Lemma ((ensures (==(splitAt (length l1) (append l1 l2), ((FStar<span class="kw">.</span>Pervasives<span class="kw">.</span>Native<span class="kw">.</span>Mktuple2 l1 l2)))))))):<span class="kw">match</span> l1 <span class="kw">with</span> []  -&gt; () | _  -&gt; lemma_append_splitAt (tl l1) l2</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((lemma_append_splitAt (#t:Type) (l1:list t) (l2:list t)):(Lemma ((ensures (==(splitAt (length l1) (append l1 l2), ((FStar<span class="kw">.</span>Pervasives<span class="kw">.</span>Native<span class="kw">.</span>Mktuple2 l1 l2)))))))):<span class="kw">match</span> l1 <span class="kw">with</span> []  -&gt; () | _  -&gt; lemma_append_splitAt (tl l1) l2</code></pre></div>
 <p>If we [splitAt] the point at which two lists have been [append]ed, then we get back the original lists.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">let</span> ((lemma_splitAt (#t:Type) (l:list t) (l1:list t) (l2:list t) (n:n:nat:{&lt;=(n, length l)})):(Lemma (&lt;==&gt;(==(splitAt n l, ((FStar<span class="kw">.</span>Pervasives<span class="kw">.</span>Native<span class="kw">.</span>Mktuple2 l1 l2))), /\(==(l, @(l1, l2)), =(length l1, n)))))):lemma_splitAt_append n l; lemma_append_splitAt l1 l2</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((lemma_splitAt (#t:Type) (l:list t) (l1:list t) (l2:list t) (n:n:nat:{&lt;=(n, length l)})):(Lemma (&lt;==&gt;(==(splitAt n l, ((FStar<span class="kw">.</span>Pervasives<span class="kw">.</span>Native<span class="kw">.</span>Mktuple2 l1 l2))), /\(==(l, @(l1, l2)), =(length l1, n)))))):lemma_splitAt_append n l; lemma_append_splitAt l1 l2</code></pre></div>
 <p>Fully characterize behavior of [splitAt] in terms of more standard list concepts</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">let</span> ((lemma_splitAt_index_hd (#t:Type) (n:nat) (l:list t)):(Lemma ((requires (&lt;(n, length l)))) ((ensures (<span class="kw">let</span>  (l1, l2) = splitAt n l <span class="kw">in</span> splitAt_length n l; /\(&gt;(length l2, <span class="dv">0</span>), ==(hd l2, index l n))))))):<span class="kw">let</span>  (Prims<span class="kw">.</span>Cons x xs) = l <span class="kw">in</span> <span class="kw">match</span> n <span class="kw">with</span> <span class="dv">0</span>  -&gt; () | _  -&gt; lemma_splitAt_index_hd (-(n, <span class="dv">1</span>)) (tl l)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((lemma_splitAt_index_hd (#t:Type) (n:nat) (l:list t)):(Lemma ((requires (&lt;(n, length l)))) ((ensures (<span class="kw">let</span>  (l1, l2) = splitAt n l <span class="kw">in</span> splitAt_length n l; /\(&gt;(length l2, <span class="dv">0</span>), ==(hd l2, index l n))))))):<span class="kw">let</span>  (Prims<span class="kw">.</span>Cons x xs) = l <span class="kw">in</span> <span class="kw">match</span> n <span class="kw">with</span> <span class="dv">0</span>  -&gt; () | _  -&gt; lemma_splitAt_index_hd (-(n, <span class="dv">1</span>)) (tl l)</code></pre></div>
 <p>The [hd] of the second list returned via [splitAt] is the [n]th element of the original list</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">let</span> ((lemma_splitAt_shorten_left (#t:Type) (l1:list t) (l2:list t) (i:i:nat:{/\(&lt;=(i, length l1), &lt;=(i, length l2))}) (j:j:nat:{&lt;=(j, i)})):(Lemma ((requires (==(fst (splitAt i l1), fst (splitAt i l2))))) ((ensures (==(fst (splitAt j l1), fst (splitAt j l2))))))):<span class="kw">match</span> j <span class="kw">with</span> <span class="dv">0</span>  -&gt; () | _  -&gt; lemma_splitAt_shorten_left (tl l1) (tl l2) (-(i, <span class="dv">1</span>)) (-(j, <span class="dv">1</span>))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((lemma_splitAt_shorten_left (#t:Type) (l1:list t) (l2:list t) (i:i:nat:{/\(&lt;=(i, length l1), &lt;=(i, length l2))}) (j:j:nat:{&lt;=(j, i)})):(Lemma ((requires (==(fst (splitAt i l1), fst (splitAt i l2))))) ((ensures (==(fst (splitAt j l1), fst (splitAt j l2))))))):<span class="kw">match</span> j <span class="kw">with</span> <span class="dv">0</span>  -&gt; () | _  -&gt; lemma_splitAt_shorten_left (tl l1) (tl l2) (-(i, <span class="dv">1</span>)) (-(j, <span class="dv">1</span>))</code></pre></div>
 <p>If two lists have the same left prefix, then shorter left prefixes are also the same.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">let</span> ((lemma_splitAt_reindex_left (#t:Type) (i:nat) (l:list t) (j:nat)):(Lemma ((requires /\(&lt;=(i, length l), &lt;(j, i)))) ((ensures (<span class="kw">let</span>  (left, right) = splitAt i l <span class="kw">in</span> splitAt_length i l; /\(&lt;(j, length left), ==(index left j, index l j))))))):<span class="kw">match</span> (FStar<span class="kw">.</span>Pervasives<span class="kw">.</span>Native<span class="kw">.</span>Mktuple2 i j) <span class="kw">with</span> (<span class="dv">1</span>, _)|</a>
-<a class="sourceLine" id="cb7-2" title="2"> (_, <span class="dv">0</span>)  -&gt; () | _  -&gt; lemma_splitAt_reindex_left (-(i, <span class="dv">1</span>)) (tl l) (-(j, <span class="dv">1</span>))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((lemma_splitAt_reindex_left (#t:Type) (i:nat) (l:list t) (j:nat)):(Lemma ((requires /\(&lt;=(i, length l), &lt;(j, i)))) ((ensures (<span class="kw">let</span>  (left, right) = splitAt i l <span class="kw">in</span> splitAt_length i l; /\(&lt;(j, length left), ==(index left j, index l j))))))):<span class="kw">match</span> (FStar<span class="kw">.</span>Pervasives<span class="kw">.</span>Native<span class="kw">.</span>Mktuple2 i j) <span class="kw">with</span> (<span class="dv">1</span>, _)|
+ (_, <span class="dv">0</span>)  -&gt; () | _  -&gt; lemma_splitAt_reindex_left (-(i, <span class="dv">1</span>)) (tl l) (-(j, <span class="dv">1</span>))</code></pre></div>
 <p>Doing an [index] on the left-part of a [splitAt] is same as doing it on the original list</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">let</span> ((lemma_splitAt_reindex_right (#t:Type) (i:nat) (l:list t) (j:nat)):(Lemma ((requires /\(&lt;=(i, length l), &lt;(+(j, i), length l)))) ((ensures (<span class="kw">let</span>  (left, right) = splitAt i l <span class="kw">in</span> splitAt_length i l; /\(&lt;(j, length right), ==(index right j, index l (+(j, i))))))))):<span class="kw">match</span> i <span class="kw">with</span> <span class="dv">0</span>  -&gt; () | _  -&gt; lemma_splitAt_reindex_right (-(i, <span class="dv">1</span>)) (tl l) j</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((lemma_splitAt_reindex_right (#t:Type) (i:nat) (l:list t) (j:nat)):(Lemma ((requires /\(&lt;=(i, length l), &lt;(+(j, i), length l)))) ((ensures (<span class="kw">let</span>  (left, right) = splitAt i l <span class="kw">in</span> splitAt_length i l; /\(&lt;(j, length right), ==(index right j, index l (+(j, i))))))))):<span class="kw">match</span> i <span class="kw">with</span> <span class="dv">0</span>  -&gt; () | _  -&gt; lemma_splitAt_reindex_right (-(i, <span class="dv">1</span>)) (tl l) j</code></pre></div>
 <p>Doing an [index] on the right-part of a [splitAt] is same as doing it on the original list, but shifted</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb9-1" title="1"> Properties <span class="kw">of</span> split3 </a></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">let</span> ((lemma_split3_append (#t:Type) (l:list t) (n:n:nat:{&lt;(n, length l)})):(Lemma ((requires True)) ((ensures (<span class="kw">let</span>  (a, b, c) = split3 l n <span class="kw">in</span> ==(l, append a ((Prims<span class="kw">.</span>Cons b c)))))))):lemma_splitAt_append n l</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"> Properties <span class="kw">of</span> split3 </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((lemma_split3_append (#t:Type) (l:list t) (n:n:nat:{&lt;(n, length l)})):(Lemma ((requires True)) ((ensures (<span class="kw">let</span>  (a, b, c) = split3 l n <span class="kw">in</span> ==(l, append a ((Prims<span class="kw">.</span>Cons b c)))))))):lemma_splitAt_append n l</code></pre></div>
 <p>The 3 pieces returned via [split3] can be joined together via an [append] and a [cons]</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">let</span> ((lemma_split3_index (#t:Type) (l:list t) (n:n:nat:{&lt;(n, length l)})):(Lemma ((requires True)) ((ensures (<span class="kw">let</span>  (a, b, c) = split3 l n <span class="kw">in</span> ==(b, index l n)))))):lemma_splitAt_index_hd n l</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((lemma_split3_index (#t:Type) (l:list t) (n:n:nat:{&lt;(n, length l)})):(Lemma ((requires True)) ((ensures (<span class="kw">let</span>  (a, b, c) = split3 l n <span class="kw">in</span> ==(b, index l n)))))):lemma_splitAt_index_hd n l</code></pre></div>
 <p>The middle element returned via [split3] is the [n]th [index]ed element</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">let</span> ((lemma_split3_length (#t:Type) (l:list t) (n:n:nat:{&lt;(n, length l)})):(Lemma ((requires True)) ((ensures (<span class="kw">let</span>  (a, b, c) = split3 l n <span class="kw">in</span> /\(=(length a, n), =(length c, -(-(length l, n), <span class="dv">1</span>)))))))):splitAt_length n l</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((lemma_split3_length (#t:Type) (l:list t) (n:n:nat:{&lt;(n, length l)})):(Lemma ((requires True)) ((ensures (<span class="kw">let</span>  (a, b, c) = split3 l n <span class="kw">in</span> /\(=(length a, n), =(length c, -(-(length l, n), <span class="dv">1</span>)))))))):splitAt_length n l</code></pre></div>
 <p>The lengths of the left and right parts of a [split3] are as expected.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">let</span> ((lemma_split3_on_same_leftprefix (#t:Type) (l1:list t) (l2:list t) (n:n:nat:{/\(&lt;(n, length l1), &lt;(n, length l2))})):(Lemma ((requires (==(fst (splitAt (+(n, <span class="dv">1</span>)) l1), fst (splitAt (+(n, <span class="dv">1</span>)) l2))))) ((ensures (<span class="kw">let</span>  (a1, b1, c1) = split3 l1 n <span class="kw">in</span> <span class="kw">let</span>  (a2, b2, c2) = split3 l2 n <span class="kw">in</span> /\(==(a1, a2), ==(b1, b2))))))):<span class="kw">let</span>  (a1, b1, c1) = split3 l1 n <span class="kw">in</span> <span class="kw">let</span>  (a2, b2, c2) = split3 l2 n <span class="kw">in</span> lemma_split3_append l1 n; lemma_split3_append l2 n; lemma_split3_length l1 n; lemma_split3_length l2 n; append_l_cons b1 c1 a1; append_l_cons b2 c2 a2; <span class="kw">let</span>  (x1, y1) = splitAt (+(n, <span class="dv">1</span>)) l1 <span class="kw">in</span> <span class="kw">let</span>  (x2, y2) = splitAt (+(n, <span class="dv">1</span>)) l2 <span class="kw">in</span> lemma_splitAt_append (+(n, <span class="dv">1</span>)) l1; lemma_splitAt_append (+(n, <span class="dv">1</span>)) l2; splitAt_length (+(n, <span class="dv">1</span>)) l1; splitAt_length (+(n, <span class="dv">1</span>)) l2; append_length_inv_head x1 y1 (append a1 (Prims<span class="kw">.</span>Cons b1 (Prims<span class="kw">.</span>Nil ))) c1; append_length_inv_head x2 y2 (append a2 (Prims<span class="kw">.</span>Cons b2 (Prims<span class="kw">.</span>Nil ))) c2; append_length_inv_tail a1 (Prims<span class="kw">.</span>Cons b1 (Prims<span class="kw">.</span>Nil )) a2 (Prims<span class="kw">.</span>Cons b2 (Prims<span class="kw">.</span>Nil )); ()</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((lemma_split3_on_same_leftprefix (#t:Type) (l1:list t) (l2:list t) (n:n:nat:{/\(&lt;(n, length l1), &lt;(n, length l2))})):(Lemma ((requires (==(fst (splitAt (+(n, <span class="dv">1</span>)) l1), fst (splitAt (+(n, <span class="dv">1</span>)) l2))))) ((ensures (<span class="kw">let</span>  (a1, b1, c1) = split3 l1 n <span class="kw">in</span> <span class="kw">let</span>  (a2, b2, c2) = split3 l2 n <span class="kw">in</span> /\(==(a1, a2), ==(b1, b2))))))):<span class="kw">let</span>  (a1, b1, c1) = split3 l1 n <span class="kw">in</span> <span class="kw">let</span>  (a2, b2, c2) = split3 l2 n <span class="kw">in</span> lemma_split3_append l1 n; lemma_split3_append l2 n; lemma_split3_length l1 n; lemma_split3_length l2 n; append_l_cons b1 c1 a1; append_l_cons b2 c2 a2; <span class="kw">let</span>  (x1, y1) = splitAt (+(n, <span class="dv">1</span>)) l1 <span class="kw">in</span> <span class="kw">let</span>  (x2, y2) = splitAt (+(n, <span class="dv">1</span>)) l2 <span class="kw">in</span> lemma_splitAt_append (+(n, <span class="dv">1</span>)) l1; lemma_splitAt_append (+(n, <span class="dv">1</span>)) l2; splitAt_length (+(n, <span class="dv">1</span>)) l1; splitAt_length (+(n, <span class="dv">1</span>)) l2; append_length_inv_head x1 y1 (append a1 (Prims<span class="kw">.</span>Cons b1 (Prims<span class="kw">.</span>Nil ))) c1; append_length_inv_head x2 y2 (append a2 (Prims<span class="kw">.</span>Cons b2 (Prims<span class="kw">.</span>Nil ))) c2; append_length_inv_tail a1 (Prims<span class="kw">.</span>Cons b1 (Prims<span class="kw">.</span>Nil )) a2 (Prims<span class="kw">.</span>Cons b2 (Prims<span class="kw">.</span>Nil )); ()</code></pre></div>
 <p>If we [split3] on lists with the same left prefix, we get the same element and left prefix.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">let</span> ((lemma_split3_unsnoc (#t:Type) (l:list t) (n:n:nat:{&lt;(n, length l)})):(Lemma ((requires (&lt;&gt;(n, -(length l, <span class="dv">1</span>))))) ((ensures (<span class="kw">let</span>  (a, b, c) = split3 l n <span class="kw">in</span> lemma_split3_length l n; /\(&gt;(length c, <span class="dv">0</span>), (<span class="kw">let</span>  (xs, x) = unsnoc l <span class="kw">in</span> <span class="kw">let</span>  (ys, y) = unsnoc c <span class="kw">in</span> ==(append a ((Prims<span class="kw">.</span>Cons b ys)), xs)))))))):<span class="kw">match</span> n <span class="kw">with</span> <span class="dv">0</span>  -&gt; () | _  -&gt; lemma_split3_unsnoc (tl l) (-(n, <span class="dv">1</span>))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((lemma_split3_unsnoc (#t:Type) (l:list t) (n:n:nat:{&lt;(n, length l)})):(Lemma ((requires (&lt;&gt;(n, -(length l, <span class="dv">1</span>))))) ((ensures (<span class="kw">let</span>  (a, b, c) = split3 l n <span class="kw">in</span> lemma_split3_length l n; /\(&gt;(length c, <span class="dv">0</span>), (<span class="kw">let</span>  (xs, x) = unsnoc l <span class="kw">in</span> <span class="kw">let</span>  (ys, y) = unsnoc c <span class="kw">in</span> ==(append a ((Prims<span class="kw">.</span>Cons b ys)), xs)))))))):<span class="kw">match</span> n <span class="kw">with</span> <span class="dv">0</span>  -&gt; () | _  -&gt; lemma_split3_unsnoc (tl l) (-(n, <span class="dv">1</span>))</code></pre></div>
 <p>If we perform an [unsnoc] on a list, then the left part is the same as an [append]+[cons] on the list after [split3].</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">let</span> ((lemma_unsnoc_split3 (#t:Type) (l:list t) (i:i:nat:{&lt;(i, length l)})):(Lemma ((requires (&lt;&gt;(i, -(length l, <span class="dv">1</span>))))) ((ensures (<span class="kw">let</span>  (xs, x) = unsnoc l <span class="kw">in</span> /\(&lt;(i, length xs), (<span class="kw">let</span>  (a0, b0, c0) = split3 l i <span class="kw">in</span> <span class="kw">let</span>  (a1, b1, c1) = split3 xs i <span class="kw">in</span> /\(==(a0, a1), ==(b0, b1))))))))):<span class="kw">let</span>  (xs, x) = unsnoc l <span class="kw">in</span> lemma_unsnoc_length l; <span class="kw">let</span>  (a0, b0, c0) = split3 l i <span class="kw">in</span> <span class="kw">let</span>  (a1, b1, c1) = split3 xs i <span class="kw">in</span> splitAt_length_total xs; lemma_splitAt_shorten_left xs l (length xs) (+(i, <span class="dv">1</span>)); lemma_split3_on_same_leftprefix l xs i</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((lemma_unsnoc_split3 (#t:Type) (l:list t) (i:i:nat:{&lt;(i, length l)})):(Lemma ((requires (&lt;&gt;(i, -(length l, <span class="dv">1</span>))))) ((ensures (<span class="kw">let</span>  (xs, x) = unsnoc l <span class="kw">in</span> /\(&lt;(i, length xs), (<span class="kw">let</span>  (a0, b0, c0) = split3 l i <span class="kw">in</span> <span class="kw">let</span>  (a1, b1, c1) = split3 xs i <span class="kw">in</span> /\(==(a0, a1), ==(b0, b1))))))))):<span class="kw">let</span>  (xs, x) = unsnoc l <span class="kw">in</span> lemma_unsnoc_length l; <span class="kw">let</span>  (a0, b0, c0) = split3 l i <span class="kw">in</span> <span class="kw">let</span>  (a1, b1, c1) = split3 xs i <span class="kw">in</span> splitAt_length_total xs; lemma_splitAt_shorten_left xs l (length xs) (+(i, <span class="dv">1</span>)); lemma_split3_on_same_leftprefix l xs i</code></pre></div>
 <p>Doing [unsnoc] and [split3] in either order leads to the same left part, and element.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">let</span> ((lemma_split3_r_hd (#t:Type) (l:list t) (i:i:nat:{&lt;(i, length l)})):(Lemma ((ensures (<span class="kw">let</span>  (a, b, c) = split3 l i <span class="kw">in</span> lemma_split3_length l i; ==&gt;(&gt;(length c, <span class="dv">0</span>), /\(&lt;(+(i, <span class="dv">1</span>), length l), ==(hd c, index l (+(i, <span class="dv">1</span>)))))))))):<span class="kw">match</span> i <span class="kw">with</span> <span class="dv">0</span>  -&gt; () | _  -&gt; lemma_split3_r_hd (tl l) (-(i, <span class="dv">1</span>))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((lemma_split3_r_hd (#t:Type) (l:list t) (i:i:nat:{&lt;(i, length l)})):(Lemma ((ensures (<span class="kw">let</span>  (a, b, c) = split3 l i <span class="kw">in</span> lemma_split3_length l i; ==&gt;(&gt;(length c, <span class="dv">0</span>), /\(&lt;(+(i, <span class="dv">1</span>), length l), ==(hd c, index l (+(i, <span class="dv">1</span>)))))))))):<span class="kw">match</span> i <span class="kw">with</span> <span class="dv">0</span>  -&gt; () | _  -&gt; lemma_split3_r_hd (tl l) (-(i, <span class="dv">1</span>))</code></pre></div>
 <p>The head of the right side of a [split3] can be [index]ed from original list.</p>
 </body>
 </html>
