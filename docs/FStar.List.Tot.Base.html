@@ -82,7 +82,13 @@ Base operations</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> snoc:Unidentified product: [<span class="co">(*(list &#39;a, &#39;a))] (Tot (list &#39;a))</span></code></pre></div>
 <p>[snoc (l, x)] adds [x] to the end of the list [l].</p>
 <pre><code>Note: We use an uncurried [snoc (l, x)] instead of the curried
-[snoc l x]. </code></pre>
+[snoc l x]. This is intentional. If [snoc] takes a pair instead
+of 2 arguments, it allows for a better pattern on
+[lemma_unsnoc_snoc], which connects [snoc] and [unsnoc]. In
+particular, if we had two arguments, then either the pattern would
+either be too restrictive or would lead to over-triggering. More
+context for this can be seen in the (collapsed and uncollapsed)
+comments at https://github.com/FStarLang/FStar/pull/1560 </code></pre>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> flatten:Unidentified product: [list (list &#39;a)] (Tot (list &#39;a))</code></pre></div>
 <p>[flatten l], where [l] is a list of lists, returns the list of the elements of the lists in [l], preserving their order. Named as in: OCaml, Coq.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> map:Unidentified product: [(Unidentified product: [&#39;a] (Tot &#39;b))] Unidentified product: [list &#39;a] (Tot (list &#39;b))</code></pre></div>
