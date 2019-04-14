@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "F* Summer Schools 2019"
-date:   2018-05-22
+date:   2019-04-14
 comments: true
 categories: general
 author: Catalin Hritcu
