@@ -59,6 +59,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>[refine_intro] will turn a goal of shape [w : x:t{phi}] into [w : t] and [phi{w/x}]</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> tc:Unidentified product: [term] (Tac term)</code></pre></div>
 <p>[tc] returns the type of a term in the current environment, or fails if it is untypeable.</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> tcc:Unidentified product: [term] (Tac comp)</code></pre></div>
+<p>[tcc] like [tc], but returns the full computation type with the effect label and its arguments (WPs, etc) as well</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> unshelve:Unidentified product: [term] (Tac <span class="dt">unit</span>)</code></pre></div>
 <p>[unshelve] creates a goal from a term for its given type. It can be used when the system decided not to present a goal, but you want one anyway. For example, if you request a uvar through [uvar_env] or [fresh_uvar], you might want to instantiate it explicitly.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> unquote:Unidentified product: [#a:Type] Unidentified product: [term] (Tac a)</code></pre></div>
@@ -130,8 +132,6 @@ goal.</code></pre>
 <p>[prune &quot;A.B.C&quot;] will mark all top-level definitions in module [A.B.C] (and submodules of it) to not be encoded to the SMT, for the current goal. The string is a namespace prefix. [prune &quot;&quot;] will prune everything, but note that [prune &quot;FStar.S&quot;] will not prune [&quot;FStar.Set&quot;].</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> addns:Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
 <p>The opposite operation of [prune]. The latest one takes precedence.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> cases:Unidentified product: [term] (Tac <span class="co">(*(term, term)))</span></code></pre></div>
-<p>Given a disjunction [e], destruct it and generate two goals for each case. Return value is terms representing proofs for each case. The first one is only valid in the first goal, and likewise for the second (TODO: change this awful behaviour).</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> t_destruct:Unidentified product: [term] (Tac (list <span class="co">(*(fv, nat))))</span></code></pre></div>
 <p>Destruct a value of an inductive type by matching on it. The generated match has one branch for each constructor and is therefore trivially exhaustive, no VC is generated for that purpose. It returns a list with the fvars of each constructor and their arities, in the order they appear as goals.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> set_options:Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
