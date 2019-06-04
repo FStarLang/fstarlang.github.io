@@ -20,21 +20,11 @@
   <script type="text/javascript" src="static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'./',
-              VERSION:'',
-              LANGUAGE:'None',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="static/documentation_options.js"></script>
         <script type="text/javascript" src="static/jquery.js"></script>
         <script type="text/javascript" src="static/underscore.js"></script>
         <script type="text/javascript" src="static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="static/language_data.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.36.0/codemirror.min.js"></script>
         <script type="text/javascript" src="static/fstar.cm.js"></script>
         <script type="text/javascript" src="static/fslit.js"></script>
@@ -168,29 +158,23 @@
             
   <div class="section" id="example-ringbuffer">
 <h1>Example: RingBuffer<a class="headerlink" href="#example-ringbuffer" title="Permalink to this headline">¶</a></h1>
-<pre class="code fstar literal-block">
-module RingBuffer
-</pre>
+<pre class="code fstar literal-block"><code>module RingBuffer</code></pre>
 <p>This module demonstrates how to implement a ringbuffer in Low*. It uses the
 new LowStar.Buffer abstraction, and demonstrates how to separate functional
 predicates from their low-level stateful counterparts.</p>
 <p>We define the canonical abbreviations, taking care to shadow ST to make sure
 we don’t end up referring to FStar.ST by accident.</p>
-<pre class="code fstar literal-block">
-module B = LowStar.Buffer
+<pre class="code fstar literal-block"><code>module B = LowStar.Buffer
 module U32 = FStar.UInt32
 module HS = FStar.HyperStack
 module M = LowStar.Modifies
 module ST = FStar.HyperStack.ST
 module S = FStar.Seq
-module L = FStar.List.Tot
-</pre>
+module L = FStar.List.Tot</code></pre>
 <p>This brings into scope the <code class="docutils literal notranslate"><span class="pre">!*</span></code> and <code class="docutils literal notranslate"><span class="pre">*=</span></code> operators, which are
 specifically designed to operate on buffers of size 1, i.e. on pointers.</p>
-<pre class="code fstar literal-block">
-open LowStar.BufferOps
-open FStar.HyperStack.ST
-</pre>
+<pre class="code fstar literal-block"><code>open LowStar.BufferOps
+open FStar.HyperStack.ST</code></pre>
 <p>A ringbuffer is a view over a buffer, with a start index, a length (i.e. how
 many elements are currently being stored) and a total length (i.e. the size
 of the underlying <code class="docutils literal notranslate"><span class="pre">b</span></code>). We chose this style, as opposed to a pair of
@@ -198,54 +182,45 @@ of the underlying <code class="docutils literal notranslate"><span class="pre">b
 would be difficult to reason about.</p>
 <p>There are different ways to go about this; the FiniteList example, instead
 of a buffer and two pointers, uses a single reference to a record instead.</p>
-<pre class="code fstar literal-block">
-noeq
+<pre class="code fstar literal-block"><code>noeq
 type t a = {
   b: B.buffer a;
   first: B.pointer U32.t;
   length: B.pointer U32.t;
   total_length: U32.t
-}
-</pre>
+}</code></pre>
 <p>To facilitate writing predicates, we define a handy shortcut that is the
 reflection of the <code class="docutils literal notranslate"><span class="pre">!*</span></code> operator at the proof level.</p>
-<pre class="code fstar literal-block">
-unfold
-let deref #a (h: HS.mem) (x: B.pointer a) = B.get h x 0
-</pre>
+<pre class="code fstar literal-block"><code>unfold
+let deref #a (h: HS.mem) (x: B.pointer a) = B.get h x 0</code></pre>
 <p>A first version of the well-formedness predicate for ring buffers. This
 predicate refers to a sequence, not a buffer, and therefore does not need
 the memory. It is useful in this module to have two versions of predicates:
 one that takes into account the memory, disjointness, etc. and another one
 that only focuses on index arithmetic. Nothing surprising here. Note that
 zero-sized ringbuffers are not allowed.</p>
-<pre class="code fstar literal-block">
-let well_formed_f #a (b: S.seq a) (first length total_length: U32.t) =
+<pre class="code fstar literal-block"><code>let well_formed_f #a (b: S.seq a) (first length total_length: U32.t) =
   let open U32 in
   S.length b = v total_length /\
   length &lt;=^ total_length /\
   first &lt;^ total_length /\
-  total_length &gt;^ 0ul
-</pre>
+  total_length &gt;^ 0ul</code></pre>
 <p>Same predicate as above, but this time operating on a memory state and using
 a stateful ringbuffer.</p>
-<pre class="code fstar literal-block">
-let well_formed #a (h: HS.mem) (x: t a) =
+<pre class="code fstar literal-block"><code>let well_formed #a (h: HS.mem) (x: t a) =
   B.live h x.b /\ B.live h x.first /\ B.live h x.length /\
   M.(loc_disjoint (loc_buffer x.b) (loc_buffer x.first)) /\
   M.(loc_disjoint (loc_buffer x.b) (loc_buffer x.length)) /\
   M.(loc_disjoint (loc_buffer x.first) (loc_buffer x.length)) /\
-  well_formed_f (B.as_seq h x.b) (deref h x.first) (deref h x.length) x.total_length
-</pre>
+  well_formed_f (B.as_seq h x.b) (deref h x.first) (deref h x.length) x.total_length</code></pre>
 <p>We next define operators for moving around the ringbuffer with wraparound
 semantics. Defining this using a modulo operator is not a good idea, because:</p>
 <ul class="simple">
-<li>writing <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">+^</span> <span class="pre">1ul</span> <span class="pre">%^</span> <span class="pre">total_length</span></code> may overflow</li>
-<li>Z3 is notoriously bad at reasoning with modular arithmetic.</li>
+<li><p>writing <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">+^</span> <span class="pre">1ul</span> <span class="pre">%^</span> <span class="pre">total_length</span></code> may overflow</p></li>
+<li><p>Z3 is notoriously bad at reasoning with modular arithmetic.</p></li>
 </ul>
 <p>So, instead, we just do a simple branch.</p>
-<pre class="code fstar literal-block">
-let next (i total_length: U32.t): Pure U32.t
+<pre class="code fstar literal-block"><code>let next (i total_length: U32.t): Pure U32.t
   (requires U32.(total_length &gt;^ 0ul /\ i &lt;^ total_length))
   (ensures fun r -&gt; U32.( r &lt;^ total_length ))
 =
@@ -263,40 +238,32 @@ let prev (i total_length: U32.t): Pure U32.t
   if i &gt;^ 0ul then
     i -^ 1ul
   else
-    total_length -^ 1ul
-</pre>
+    total_length -^ 1ul</code></pre>
 <p>These two are useful from the client’s perspective, to capture how many slots
 are left in the buffer.</p>
-<pre class="code fstar literal-block">
-let remaining_space #a (h: HS.mem) (x: t a { well_formed h x }) =
+<pre class="code fstar literal-block"><code>let remaining_space #a (h: HS.mem) (x: t a { well_formed h x }) =
   U32.( x.total_length -^ (deref h x.length) )
 
 let space_left #a (h: HS.mem) (x: t a { well_formed h x }) =
-  U32.( remaining_space h x &gt;^ 0ul )
-</pre>
+  U32.( remaining_space h x &gt;^ 0ul )</code></pre>
 <p>A predicate over indices that captures whether a given entry in the buffer
 is occupied. Once again, we avoid modular arithmetic by branching.</p>
-<pre class="code fstar literal-block">
-let used_slot_f (first length total_length i: U32.t) =
+<pre class="code fstar literal-block"><code>let used_slot_f (first length total_length i: U32.t) =
   let first = U32.v first in
   let length = U32.v length in
   let total_length = U32.v total_length in
   let i = U32.v i in
   first &lt;= i /\ i &lt; first + length \/
-  first &lt;= i + total_length /\ i + total_length &lt; first + length
-</pre>
+  first &lt;= i + total_length /\ i + total_length &lt; first + length</code></pre>
 <p>Same thing, but over a memory and the actual references.</p>
-<pre class="code fstar literal-block">
-let used_slot #a (h: HS.mem) (x: t a { well_formed h x }) (i: U32.t) =
+<pre class="code fstar literal-block"><code>let used_slot #a (h: HS.mem) (x: t a { well_formed h x }) (i: U32.t) =
   let first = deref h x.first in
   let length = deref h x.length in
   let total_length = x.total_length in
-  used_slot_f first length total_length i
-</pre>
+  used_slot_f first length total_length i</code></pre>
 <p>We reflect a ringbuffer as a list. This is the functional version that
 operates over a sequence.</p>
-<pre class="code fstar literal-block">
-let rec as_list_f #a
+<pre class="code fstar literal-block"><code>let rec as_list_f #a
   (b: S.seq a)
   (first length total_length: U32.t): Ghost (list a)
     (requires well_formed_f b first length total_length)
@@ -307,12 +274,10 @@ let rec as_list_f #a
     []
   else
     S.index b (U32.v first) ::
-      as_list_f b (next first total_length) U32.( length -^ 1ul ) total_length
-</pre>
+      as_list_f b (next first total_length) U32.( length -^ 1ul ) total_length</code></pre>
 <p>The one central lemma of this module: assigning something in the unused
 parts of the buffer does not affect the contents of the list.</p>
-<pre class="code fstar literal-block">
-let rec seq_update_unused_preserves_list (#a: eqtype)
+<pre class="code fstar literal-block"><code>let rec seq_update_unused_preserves_list (#a: eqtype)
   (b: S.seq a)
   (i: U32.t)
   (e: a)
@@ -333,23 +298,19 @@ let rec seq_update_unused_preserves_list (#a: eqtype)
   else begin
     seq_update_unused_preserves_list b i e (next first total_length)
       U32.(length -^ 1ul) total_length
-  end
-</pre>
+  end</code></pre>
 <p>This version is more convenient and refers to the current memory and buffer,
 as opposed to as sequence.</p>
-<pre class="code fstar literal-block">
-let as_list #a (h: HS.mem) (x: t a): Ghost (list a)
+<pre class="code fstar literal-block"><code>let as_list #a (h: HS.mem) (x: t a): Ghost (list a)
   (requires well_formed h x)
   (ensures fun l -&gt; L.length l = U32.(v (deref h x.length)))
 =
-  as_list_f (B.as_seq h x.b) (deref h x.first) (deref h x.length) x.total_length
-</pre>
+  as_list_f (B.as_seq h x.b) (deref h x.first) (deref h x.length) x.total_length</code></pre>
 <p><code class="docutils literal notranslate"><span class="pre">pop</span></code> is easy to prove, and requires no particular call to a lemma,
 because we don’t modify the underlying buffer. Since the buffer contents
 doesn’t change, the total predicate <code class="docutils literal notranslate"><span class="pre">as_list_f</span></code> is preserved, and F* is able
 to prove automatically the functional specification.</p>
-<pre class="code fstar literal-block">
-let pop (#a: eqtype) (x: t a): Stack a
+<pre class="code fstar literal-block"><code>let pop (#a: eqtype) (x: t a): Stack a
   (requires fun h -&gt;
     well_formed h x /\ U32.(deref h x.length &gt;^ 0ul))
   (ensures fun h0 r h1 -&gt;
@@ -364,11 +325,9 @@ let pop (#a: eqtype) (x: t a): Stack a
   x.first *= next !*x.first x.total_length;
   x.length *= U32.(!*x.length -^ 1ul);
   let h1 = ST.get () in
-  e
-</pre>
+  e</code></pre>
 <p><code class="docutils literal notranslate"><span class="pre">push</span></code> is slightly more involved and crucially relies on the lemma above.</p>
-<pre class="code fstar literal-block">
-let push (#a: eqtype) (x: t a) (e: a): Stack unit
+<pre class="code fstar literal-block"><code>let push (#a: eqtype) (x: t a) (e: a): Stack unit
   (requires fun h -&gt;
     well_formed h x /\ space_left h x)
   (ensures fun h0 _ h1 -&gt;
@@ -385,14 +344,12 @@ let push (#a: eqtype) (x: t a) (e: a): Stack unit
   seq_update_unused_preserves_list (B.as_seq h0 x.b) dest_slot e
     (deref h0 x.first) (deref h0 x.length) x.total_length;
   x.first *= dest_slot;
-  x.length *= U32.(!*x.length +^ 1ul)
-</pre>
+  x.length *= U32.(!*x.length +^ 1ul)</code></pre>
 <p>We are reaching the point of diminishing returns for this example. The
 function below is only moderately interesting; the gist of it is that the
 natural equalities one would write (in comments) are slightly massaged to
 avoid integer overflow.</p>
-<pre class="code fstar literal-block">
-let one_past_last (i length total_length: U32.t): Pure U32.t
+<pre class="code fstar literal-block"><code>let one_past_last (i length total_length: U32.t): Pure U32.t
   (requires U32.(total_length &gt;^ 0ul /\ i &lt;^ total_length /\ length &lt;=^ total_length))
   (ensures fun r -&gt; U32.( r &lt;^ total_length ))
 =
@@ -404,13 +361,11 @@ let one_past_last (i length total_length: U32.t): Pure U32.t
     // i + length - total_length, carefully crafted to avoid overflow
     length -^ (total_length -^ i)
   else
-    i +^ length
-</pre>
+    i +^ length</code></pre>
 <p>A highly specialized lemma geared towards our post-condition. This could
 probably be proven with more automation if we had a more robust library of
 list-based lemmas, but well.</p>
-<pre class="code fstar literal-block">
-let rec as_list_append_one (#a: eqtype)
+<pre class="code fstar literal-block"><code>let rec as_list_append_one (#a: eqtype)
   (b: S.seq a)
   (e: a)
   (first length total_length: U32.t): Lemma
@@ -426,13 +381,11 @@ let rec as_list_append_one (#a: eqtype)
   if U32.(length =^ 0ul) then
     ()
   else
-    as_list_append_one b e (next first total_length) U32.(length -^ 1ul) total_length
-</pre>
+    as_list_append_one b e (next first total_length) U32.(length -^ 1ul) total_length</code></pre>
 <p>Pushing one element at the back is morally equivalent to appending a
 singleton list at the end. This function crucially relies on the custom
 lemma above.</p>
-<pre class="code fstar literal-block">
-let push_back (#a: eqtype) (x: t a) (e: a): Stack unit
+<pre class="code fstar literal-block"><code>let push_back (#a: eqtype) (x: t a) (e: a): Stack unit
   (requires (fun h -&gt;
     well_formed h x /\ space_left h x))
   (ensures (fun h0 r h1 -&gt;
@@ -451,12 +404,10 @@ let push_back (#a: eqtype) (x: t a) (e: a): Stack unit
   let h1 = ST.get () in
   as_list_append_one (B.as_seq h1 x.b) e
     (deref h1 x.first) (deref h1 x.length) x.total_length;
-  x.length *= U32.(!*x.length +^ 1ul)
-</pre>
+  x.length *= U32.(!*x.length +^ 1ul)</code></pre>
 <p>Similarly, we prove by induction a custom lemma that captures what it means
 to split a list at the last element.</p>
-<pre class="code fstar literal-block">
-let rec as_list_minus_one (#a: eqtype)
+<pre class="code fstar literal-block"><code>let rec as_list_minus_one (#a: eqtype)
   (b: S.seq a)
   (e: a)
   (first length total_length: U32.t): Lemma
@@ -474,12 +425,10 @@ let rec as_list_minus_one (#a: eqtype)
   if U32.(length =^ 1ul) then
     ()
   else
-    as_list_minus_one b e (next first total_length) U32.(length -^ 1ul) total_length
-</pre>
+    as_list_minus_one b e (next first total_length) U32.(length -^ 1ul) total_length</code></pre>
 <p>Then, we use the lemma above to specify what it means to pop an element from
 the back: it is equivalent to splitting the list at the last element.</p>
-<pre class="code fstar literal-block">
-let pop_back (#a: eqtype) (x: t a): Stack a
+<pre class="code fstar literal-block"><code>let pop_back (#a: eqtype) (x: t a): Stack a
   (requires fun h -&gt;
     well_formed h x /\ U32.(deref h x.length &gt;^ 0ul))
   (ensures fun h0 e h1 -&gt;
@@ -495,33 +444,28 @@ let pop_back (#a: eqtype) (x: t a): Stack a
   x.length *= U32.(!*x.length -^ 1ul);
   as_list_minus_one (B.as_seq h0 x.b) e
     (deref h0 x.first) (deref h0 x.length) x.total_length;
-  e
-</pre>
+  e</code></pre>
 <p><code class="docutils literal notranslate"><span class="pre">create</span></code> leverages the <code class="docutils literal notranslate"><span class="pre">StackInline</span></code> effect, and allocates three buffers
 – we encapsulate stack allocation in a separate function, which facilitates
 verification. Relying on KreMLin’s support, <code class="docutils literal notranslate"><span class="pre">create</span></code> will be textually
 inlined at call-site so that the allocations are effectively in the caller’s
 stack frame.</p>
-<pre class="code fstar literal-block">
-let create (#a: eqtype) (init: a) (len: U32.t): StackInline (t a)
+<pre class="code fstar literal-block"><code>let create (#a: eqtype) (init: a) (len: U32.t): StackInline (t a)
   (requires (fun _ -&gt; U32.v len &gt; 0))
   (ensures (fun h0 x h1 -&gt;
      well_formed h1 x /\ remaining_space h1 x = len))
 =
   let b = B.alloca init len in
-  { b = b; first = B.alloca 0ul 1ul; length = B.alloca 0ul 1ul; total_length = len }
-</pre>
+  { b = b; first = B.alloca 0ul 1ul; length = B.alloca 0ul 1ul; total_length = len }</code></pre>
 <p>This test is crafted for continuous integration, so that the return value is
 0l, indicating success.</p>
-<pre class="code fstar literal-block">
-let main (): St Int32.t =
+<pre class="code fstar literal-block"><code>let main (): St Int32.t =
   push_frame ();
   let rb = create 1l 32ul in
   push rb 0l;
   let r = pop rb in
   pop_frame ();
-  r
-</pre>
+  r</code></pre>
 </div>
 
 
