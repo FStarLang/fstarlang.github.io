@@ -52,7 +52,7 @@ embedding"); using KreMLin, one extracts it back to C, but gets a verified
 version that pretty much looks like the original. For instance, here's a bit of
 F\* that implements the main entry point of Chacha20.
 
-```
+```fstar
 let rec counter_mode key iv counter len plaintext ciphertext =
   if len =^ 0ul then ()
   else if len <^ blocklen
