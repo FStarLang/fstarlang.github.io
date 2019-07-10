@@ -50,8 +50,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>fsdoc: no-summary-found</p>
 <p>fsdoc: no-comment-found</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((shift_right (a:t) (s:UInt32<span class="kw">.</span>t)):(Pure t ((requires (/\(&lt;=(<span class="dv">0</span>, v a), &lt;(UInt32<span class="kw">.</span>v s, n))))) ((ensures ((<span class="kw">fun</span> c -&gt; =(FStar<span class="kw">.</span>Int<span class="kw">.</span>shift_right (v a) (UInt32<span class="kw">.</span>v s), v c))))))):(Mk (shift_right (v a) (UInt32<span class="kw">.</span>v s)))</code></pre></div>
-<p>If a is negative the result is implementation defined</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((shift_left (a:t) (s:UInt32<span class="kw">.</span>t)):(Pure t ((requires (/\(&lt;=(<span class="dv">0</span>, v a), &lt;(UInt32<span class="kw">.</span>v s, n))))) ((ensures ((<span class="kw">fun</span> c -&gt; =(FStar<span class="kw">.</span>Int<span class="kw">.</span>shift_left (v a) (UInt32<span class="kw">.</span>v s), v c))))))):(Mk (shift_left (v a) (UInt32<span class="kw">.</span>v s)))</code></pre></div>
-<p>If a is negative the result is undefined behaviour</p>
+<p>If a is negative the result is implementation-defined</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((shift_left (a:t) (s:UInt32<span class="kw">.</span>t)):(Pure t ((requires (/\(/\(&lt;=(<span class="dv">0</span>, v a), &lt;=<span class="co">(*(v a, pow2 (UInt32.v s)), max_int n)), &lt;(UInt32.v s, n))))) ((ensures ((fun c -&gt; =(FStar.Int.shift_left (v a) (UInt32.v s), v c))))))):(Mk (shift_left (v a) (UInt32.v s)))</span></code></pre></div>
+<p>If a is negative or a * pow2 s is not representable the result is undefined</p>
 </body>
 </html>
