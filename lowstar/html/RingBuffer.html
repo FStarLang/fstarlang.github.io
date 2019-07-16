@@ -343,6 +343,8 @@ let as_list #a (h: HS.mem) (x: t a): Ghost (list a)
   (ensures fun l -&gt; L.length l = U32.(v (deref h x.length)))
 =
   as_list_f (B.as_seq h x.b) (deref h x.first) (deref h x.length) x.total_length
+
+#reset-options &quot;--z3rlimit 50&quot;
 </pre>
 <p><code class="docutils literal notranslate"><span class="pre">pop</span></code> is easy to prove, and requires no particular call to a lemma,
 because we don’t modify the underlying buffer. Since the buffer contents
