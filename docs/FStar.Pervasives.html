@@ -80,5 +80,32 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>all <code>i</code>, without trying to unfold the definition of <code>t</code>.</li>
 <li></li>
 </ul>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((strict_on_arguments (x:list <span class="dt">int</span>)):<span class="dt">unit</span>):()</code></pre></div>
+<ul>
+<li>This attribute is used to control the evaluation order</li>
+<li>and unfolding strategy for certain definitions.</li>
+<li></li>
+<li>In particular, given</li>
+<li>[@(strict_on_arguments [1;2])]</li>
+<li>let f x0 (x1:list x0) (x1:option x0) = e</li>
+<li></li>
+<li>An application <code>f e0 e1 e2</code> is reduced by the normalizer by:</li>
+<li><ol style="list-style-type: decimal">
+<li>evaluating e0 ~&gt;* v0, e1 ~&gt;* v1, e2 ~&gt;* v2</li>
+</ol></li>
+<li></li>
+<li>2 a.</li>
+<li><pre><code>If, according to the positional arguments [1;2], </code></pre></li>
+<li><pre><code>if v1 and v2 have constant head symbols </code></pre></li>
+<li><pre><code>       (e.g., v1 = Cons _ _ _, and v2 = None _)</code></pre></li>
+<li><pre><code>then `f` is unfolded to `e` and reduced as</code></pre></li>
+<li><pre><code>  e[v0/x0][v1/x1][v2/x2]</code></pre></li>
+<li></li>
+<li>2 b.</li>
+<li></li>
+<li>Otherwise, <code>f</code> is not unfolded and the term is <code>f e0 e1 e2</code></li>
+<li>reduces to <code>f v0 v1 v2</code>.</li>
+<li></li>
+</ul>
 </body>
 </html>
