@@ -1124,8 +1124,6 @@ of C functions.</p>
 <li><code class="docutils literal notranslate"><span class="pre">exit</span></code>, which is not polymorphic, per the reasons exposed
 earlier in <a class="reference internal" href="#language-subset"><span class="std std-ref">The Low* subset of F*</span></a>, see <code class="docutils literal notranslate"><span class="pre">C.Failure</span></code> below instead</li>
 <li>the <code class="docutils literal notranslate"><span class="pre">stdout</span></code>, <code class="docutils literal notranslate"><span class="pre">stderr</span></code> and <code class="docutils literal notranslate"><span class="pre">fflush</span></code> functions</li>
-<li>the <code class="docutils literal notranslate"><span class="pre">intptr_t</span></code> C11 type, along with a default value <code class="docutils literal notranslate"><span class="pre">nullptr</span></code> –
-useful to expose external APIs that take <code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">*</span></code></li>
 <li>the <code class="docutils literal notranslate"><span class="pre">EXIT_SUCCESS</span></code> and <code class="docutils literal notranslate"><span class="pre">EXIT_FAILURE</span></code> macros; these are defined as an
 inductive; since <code class="docutils literal notranslate"><span class="pre">C.fst</span></code> is not extracted, the code is left with
 references that resolve to the underlying C macros</li>
