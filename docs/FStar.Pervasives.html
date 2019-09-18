@@ -107,5 +107,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>reduces to <code>f v0 v1 v2</code>.</li>
 <li></li>
 </ul>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> (erasable:<span class="dt">unit</span>):()</code></pre></div>
+<ul>
+<li>This attribute can be added to an inductive type definition,</li>
+<li>indicating that it should be erased on extraction to <code>unit</code>.</li>
+<li></li>
+<li>However, any pattern matching on the inductive type results</li>
+<li>in a <code>Ghost</code> effect, ensuring that computationally relevant</li>
+<li>code cannot rely on the values of the erasable type.</li>
+<li></li>
+<li>See examples/micro-benchmarks/Erasable.fst, for examples.</li>
+<li>Also see https://github.com/FStarLang/FStar/issues/1844</li>
+</ul>
 </body>
 </html>
