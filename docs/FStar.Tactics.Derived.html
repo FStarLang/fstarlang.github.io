@@ -105,6 +105,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((rewrite&#39; (b:binder)):(Tac <span class="dt">unit</span>)):(&lt;|&gt;(&lt;|&gt;(((<span class="kw">fun</span> () -&gt; rewrite b)), ((<span class="kw">fun</span> () -&gt; binder_retype b; apply_lemma ((`(__eq_sym))); rewrite b))), ((<span class="kw">fun</span> () -&gt; fail <span class="st">&quot;rewrite&#39; failed&quot;</span>)))) ()</code></pre></div>
 <p>Like [rewrite], but works with equalities [v == e] and [e == v]</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((l_to_r (lems:list term)):(Tac <span class="dt">unit</span>)):<span class="kw">let</span>  ((first_or_trefl ()):(Tac <span class="dt">unit</span>)) = fold_left ((<span class="kw">fun</span> k l () -&gt; or_else ((<span class="kw">fun</span> () -&gt; apply_lemma l)) k)) trefl lems () <span class="kw">in</span> pointwise first_or_trefl</code></pre></div>
-<p>Rewrites left-to-right, and bottom-up, given a set of lemmas stating equalities</p>
+<p>Rewrites left-to-right, and bottom-up, given a set of lemmas stating equalities. The lemmas need to prove <em>propositional</em> equalities, that is, using [==].</p>
 </body>
 </html>
