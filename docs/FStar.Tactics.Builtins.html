@@ -164,5 +164,7 @@ goal.</code></pre>
 <p>Set the current set of active goals at will. Obligations remain in the implicits.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> set_smt_goals:Unidentified product: [list goal] (Tac <span class="dt">unit</span>)</code></pre></div>
 <p>Set the current set of SMT goals at will. Obligations remain in the implicits. TODO: This is a really bad name, there's no special &quot;SMT&quot; about these goals.</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> curms:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">int</span>)</code></pre></div>
+<p>[curms ()] returns the current (wall) time in millseconds</p>
 </body>
 </html>
