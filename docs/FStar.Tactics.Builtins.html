@@ -57,9 +57,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>[fresh ()] returns a fresh integer. It does not get reset when catching a failure.</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> refine_intro:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
 <p>[refine_intro] will turn a goal of shape [w : x:t{phi}] into [w : t] and [phi{w/x}]</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> tc:Unidentified product: [term] (Tac term)</code></pre></div>
-<p>[tc] returns the type of a term in the current environment, or fails if it is untypeable.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> tcc:Unidentified product: [term] (Tac comp)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> tc:Unidentified product: [env] Unidentified product: [term] (Tac term)</code></pre></div>
+<p>[tc] returns the type of a term in [env], or fails if it is untypeable.</p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> tcc:Unidentified product: [env] Unidentified product: [term] (Tac comp)</code></pre></div>
 <p>[tcc] like [tc], but returns the full computation type with the effect label and its arguments (WPs, etc) as well</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> unshelve:Unidentified product: [term] (Tac <span class="dt">unit</span>)</code></pre></div>
 <p>[unshelve] creates a goal from a term for its given type. It can be used when the system decided not to present a goal, but you want one anyway. For example, if you request a uvar through [uvar_env] or [fresh_uvar], you might want to instantiate it explicitly.</p>
