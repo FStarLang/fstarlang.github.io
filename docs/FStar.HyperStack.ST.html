@@ -136,7 +136,7 @@ code that would later extract to OCaml or by library functions</code></pre>
 <ul>
 <li>Returns the current stack of heaps --- it should be erased</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> recall:#a:Type -&gt; #rel:preorder a -&gt; r:mref a rel -&gt; (Stack <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> m -&gt; True)))) ((ensures ((<span class="kw">fun</span> m0 _ m1 -&gt; /\(==(m0, m1), contains m1 r))))))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> recall:#a:Type -&gt; #rel:preorder a -&gt; r:r:mreference a rel:{<span class="kw">not</span> (HS<span class="kw">.</span>is_mm r)} -&gt; (Stack <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> m -&gt; \/(is_eternal_region (HS<span class="kw">.</span>frameOf r), contains_region m (HS<span class="kw">.</span>frameOf r)))))) ((ensures ((<span class="kw">fun</span> m0 _ m1 -&gt; /\(==(m0, m1), contains m1 r))))))</code></pre></div>
 <ul>
 <li>We can only recall refs with mm bit unset, not stack refs</li>
 </ul>
@@ -148,5 +148,6 @@ code that would later extract to OCaml or by library functions</code></pre>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">**** Begin: preferred API <span class="kw">for</span> witnessing <span class="kw">and</span> recalling predicates *****</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">**** End: preferred API <span class="kw">for</span> witnessing <span class="kw">and</span> recalling predicates *****</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">**** logical properties <span class="kw">of</span> witnessed *****</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp">* Support <span class="kw">for</span> dynamic regions **</code></pre></div>
 </body>
 </html>
