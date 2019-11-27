@@ -672,6 +672,8 @@ or the <code class="docutils literal notranslate"><span class="pre">root</span><
 <p class="admonition-title">Warning</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">root</span></code> is not a stack region and does <em>not</em> satisfy <code class="docutils literal notranslate"><span class="pre">is_stack_region</span></code>.</p>
 <pre class="code fstar literal-block"><code>let _ =
+  //AR: TODO: FIXME: temporary until I fix it in the memory model
+  HS.root_is_not_freeable ();
   assert (ST.is_eternal_region root /\ ~ (Monotonic.HyperStack.is_stack_region root))</code></pre>
 </div>
 <p>The most popular effect is the <code class="docutils literal notranslate"><span class="pre">Stack</span></code> effect, which takes:</p>
