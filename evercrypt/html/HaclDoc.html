@@ -180,6 +180,19 @@
 <p>Chacha20 comes in three different variants.</p>
 <p>The AVX variant is found in file <code class="docutils literal notranslate"><span class="pre">Hacl_Chacha20_Vec128.h</span></code> and exposes two
 functions.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
+<span class="kt">void</span>
+<span class="nf">Hacl_Chacha20_Vec128_chacha20_encrypt_128</span><span class="p">(</span>
+  <span class="kt">uint32_t</span> <span class="n">len</span><span class="p">,</span>
+  <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span>
+  <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">text</span><span class="p">,</span>
+  <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">key</span><span class="p">,</span>
+  <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">n1</span><span class="p">,</span>
+  <span class="kt">uint32_t</span> <span class="n">ctr</span>
+<span class="p">);</span>
+
+</pre></div>
+</div>
 <p>In addition to the encryption, there’s also
 <code class="docutils literal notranslate"><span class="pre">Hacl_Chacha20_Vec128_chacha20_decrypt_128</span></code> but since they do exactly the same
 thing I’m not sure why there’s two variants.</p>
@@ -189,6 +202,11 @@ thing I’m not sure why there’s two variants.</p>
 <h2>Randomness<a class="headerlink" href="#randomness" title="Permalink to this headline">¶</a></h2>
 <p>HACL* is equipped with a randomness function implemented with
 platform dependant code for Unix and Windows.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
+<span class="k">extern</span> <span class="kt">bool</span> <span class="nf">Lib_RandomBuffer_System_randombytes</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="n">buf1</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">len</span><span class="p">);</span>
+
+</pre></div>
+</div>
 <p>It takes a pointer to a memory location and a number of random bytes
 to be written from that location. Beware of not asking for more bytes
 than owned.</p>
