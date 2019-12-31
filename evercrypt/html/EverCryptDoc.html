@@ -45,7 +45,7 @@
   <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Merkle Tree API" href="Merkle.html" />
+    <link rel="next" title="CPU autodetection (EverCrypt_AutoConfig2.h)" href="EverCryptAutoConfig.html" />
     <link rel="prev" title="HACL APIs" href="HaclDoc.html" /> 
 </head>
 
@@ -95,8 +95,16 @@
 <li class="toctree-l1"><a class="reference internal" href="Supported.html">List of supported algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Overview.html">The research behind</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Obtaining.html">Obtaining the source code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="General.html">General recommendations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="HaclDoc.html">HACL APIs</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">EverCrypt APIs</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">EverCrypt APIs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptAutoConfig.html">CPU autodetection (<code class="docutils literal notranslate"><span class="pre">EverCrypt_AutoConfig2.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptAEAD.html">AEAD (<code class="docutils literal notranslate"><span class="pre">EverCrypt_AEAD.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptHash.html">Hashing (<code class="docutils literal notranslate"><span class="pre">EverCrypt_Hash.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptDeprecated.html">Deprecated block cipher API (<code class="docutils literal notranslate"><span class="pre">EverCrypt_Cipher.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptLegacy.html">Legacy EverCrypt headers (<code class="docutils literal notranslate"><span class="pre">EverCrypt.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverCrypt_Hacl.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverCrypt_Vale.h</span></code>)</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="Merkle.html">Merkle Tree API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="WasmDoc.html">WebAssembly bindings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="OCamlDoc.html">OCaml bindings</a></li>
@@ -166,6 +174,23 @@
             
   <div class="section" id="evercrypt-apis">
 <h1>EverCrypt APIs<a class="headerlink" href="#evercrypt-apis" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="EverCryptAutoConfig.html">CPU autodetection (<code class="docutils literal notranslate"><span class="pre">EverCrypt_AutoConfig2.h</span></code>)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="EverCryptAEAD.html">AEAD (<code class="docutils literal notranslate"><span class="pre">EverCrypt_AEAD.h</span></code>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptAEAD.html#state-management">State management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptAEAD.html#encryption-and-decryption">Encryption and decryption</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="EverCryptHash.html">Hashing (<code class="docutils literal notranslate"><span class="pre">EverCrypt_Hash.h</span></code>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptHash.html#non-incremental-api">Non-incremental API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptHash.html#incremental-api">Incremental API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="EverCryptDeprecated.html">Deprecated block cipher API (<code class="docutils literal notranslate"><span class="pre">EverCrypt_Cipher.h</span></code>)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="EverCryptLegacy.html">Legacy EverCrypt headers (<code class="docutils literal notranslate"><span class="pre">EverCrypt.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverCrypt_Hacl.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverCrypt_Vale.h</span></code>)</a></li>
+</ul>
+</div>
 </div>
 
 
@@ -176,7 +201,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="Merkle.html" class="btn btn-neutral float-right" title="Merkle Tree API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="EverCryptAutoConfig.html" class="btn btn-neutral float-right" title="CPU autodetection (EverCrypt_AutoConfig2.h)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="HaclDoc.html" class="btn btn-neutral float-left" title="HACL APIs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

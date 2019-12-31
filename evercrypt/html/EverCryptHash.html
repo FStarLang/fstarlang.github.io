@@ -1,0 +1,326 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Hashing (EverCrypt_Hash.h) &mdash; The HACL and EverCrypt reference documentation  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="static/jquery.js"></script>
+        <script type="text/javascript" src="static/underscore.js"></script>
+        <script type="text/javascript" src="static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Deprecated block cipher API (EverCrypt_Cipher.h)" href="EverCryptDeprecated.html" />
+    <link rel="prev" title="AEAD (EverCrypt_AEAD.h)" href="EverCryptAEAD.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> The HACL and EverCrypt reference documentation
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Supported.html">List of supported algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">The research behind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Obtaining.html">Obtaining the source code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="General.html">General recommendations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HaclDoc.html">HACL APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="EverCryptDoc.html">EverCrypt APIs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="EverCryptAutoConfig.html">CPU autodetection (<code class="docutils literal notranslate"><span class="pre">EverCrypt_AutoConfig2.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptAEAD.html">AEAD (<code class="docutils literal notranslate"><span class="pre">EverCrypt_AEAD.h</span></code>)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Hashing (<code class="docutils literal notranslate"><span class="pre">EverCrypt_Hash.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#non-incremental-api">Non-incremental API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#incremental-api">Incremental API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptDeprecated.html">Deprecated block cipher API (<code class="docutils literal notranslate"><span class="pre">EverCrypt_Cipher.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptLegacy.html">Legacy EverCrypt headers (<code class="docutils literal notranslate"><span class="pre">EverCrypt.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverCrypt_Hacl.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverCrypt_Vale.h</span></code>)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Merkle.html">Merkle Tree API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="WasmDoc.html">WebAssembly bindings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OCamlDoc.html">OCaml bindings</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">The HACL and EverCrypt reference documentation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="EverCryptDoc.html">EverCrypt APIs</a> &raquo;</li>
+        
+      <li>Hashing (<code class="docutils literal notranslate"><span class="pre">EverCrypt_Hash.h</span></code>)</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/EverCryptHash.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="hashing-evercrypt-hash-h">
+<h1>Hashing (<code class="docutils literal notranslate"><span class="pre">EverCrypt_Hash.h</span></code>)<a class="headerlink" href="#hashing-evercrypt-hash-h" title="Permalink to this headline">¶</a></h1>
+<p>This API is:</p>
+<ul class="simple">
+<li><strong>agile</strong></li>
+<li><strong>multiplexing</strong>: portable C (all); SHAEXT (SHA2-224, SHA2-256)</li>
+<li><strong>stateful</strong></li>
+</ul>
+<p>Possible values for the agility argument (<code class="docutils literal notranslate"><span class="pre">Hacl_Spec.h</span></code>) :</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
+<span class="cp">#define Spec_Hash_Definitions_SHA2_224 0</span>
+<span class="cp">#define Spec_Hash_Definitions_SHA2_256 1</span>
+<span class="cp">#define Spec_Hash_Definitions_SHA2_384 2</span>
+<span class="cp">#define Spec_Hash_Definitions_SHA2_512 3</span>
+<span class="cp">#define Spec_Hash_Definitions_SHA1 4</span>
+<span class="cp">#define Spec_Hash_Definitions_MD5 5</span>
+
+</pre></div>
+</div>
+<p>Supported values for the agility argument: all</p>
+<div class="section" id="non-incremental-api">
+<h2>Non-incremental API<a class="headerlink" href="#non-incremental-api" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">EverCrypt_Hash_*</span></code> functions are <strong>non-incremental</strong> and require the
+client to follow this exact state machine:</p>
+<ol class="arabic simple">
+<li>one call to <code class="docutils literal notranslate"><span class="pre">EverCrypt_Hash_create_in</span></code></li>
+<li>one call to <code class="docutils literal notranslate"><span class="pre">EverCrypt_Hash_init</span></code></li>
+<li>any number of calls to: <code class="docutils literal notranslate"><span class="pre">EverCrypt_Hash_update</span></code> (passing data <strong>exactly</strong> of
+the right block size for the chosen algorithm) or
+<code class="docutils literal notranslate"><span class="pre">EverCrypt_Hash_update_multi</span></code> (passing a multiple of the block size)</li>
+<li>one call to <code class="docutils literal notranslate"><span class="pre">EverCrypt_Hash_update_last</span></code> (data strictly smaller than the
+block size)</li>
+<li>one call to <code class="docutils literal notranslate"><span class="pre">EverCrypt_Hash_finish</span></code></li>
+<li>one call to <code class="docutils literal notranslate"><span class="pre">EverCrypt_Hash_free</span></code></li>
+</ol>
+<p>Clients may jump to state 2 at any point before state 6.</p>
+<p>This API does not allow feeding more data into the hash function after
+<code class="docutils literal notranslate"><span class="pre">update_last</span></code> has been called, the client must proceed with <code class="docutils literal notranslate"><span class="pre">finish</span></code> or
+erase the state with <code class="docutils literal notranslate"><span class="pre">init</span></code>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This API is error-prone and is not recommended for unverified clients. We
+advise clients use the incremental API described below.</p>
+</div>
+</div>
+<div class="section" id="incremental-api">
+<h2>Incremental API<a class="headerlink" href="#incremental-api" title="Permalink to this headline">¶</a></h2>
+<p>The incremental hash API wraps the non-incremental API with an internal buffer
+(at the expense of an extra indirection) and relieves the client from having to
+perform modulo computations and block-size management. Furthermore, the
+incremental API allows extracting intermediary hashes without invalidating the
+state, meaning clients can keep feeding data into the hash function (at the
+expense of a state copy).</p>
+<p>Clients can allocate state via <code class="docutils literal notranslate"><span class="pre">create_in</span></code>. This is a non-faillible function
+and as such does not return an error code. This is possible because i) we always
+have a fallback portable C implementation available for all algorithms and ii)
+we do not yet model allocation failures.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
+<span class="n">EverCrypt_Hash_Incremental_state_s</span>
+<span class="o">*</span><span class="nf">EverCrypt_Hash_Incremental_create_in</span><span class="p">(</span><span class="n">Spec_Hash_Definitions_hash_alg</span> <span class="n">a</span><span class="p">);</span>
+
+</pre></div>
+</div>
+<p>Clients can feed an arbitrary amount of data via <code class="docutils literal notranslate"><span class="pre">update</span></code>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
+<span class="kt">void</span>
+<span class="nf">EverCrypt_Hash_Incremental_update</span><span class="p">(</span>
+  <span class="n">EverCrypt_Hash_Incremental_state_s</span> <span class="o">*</span><span class="n">p1</span><span class="p">,</span>
+  <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">data</span><span class="p">,</span>
+  <span class="kt">uint32_t</span> <span class="n">len</span>
+<span class="p">);</span>
+
+</pre></div>
+</div>
+<p>A hash can be extracted at any time by the client without invalidating the
+state:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
+<span class="kt">void</span> <span class="nf">EverCrypt_Hash_Incremental_finish</span><span class="p">(</span><span class="n">EverCrypt_Hash_Incremental_state_s</span> <span class="o">*</span><span class="n">s</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">dst</span><span class="p">);</span>
+
+</pre></div>
+</div>
+<p>Once done, clients should use <code class="docutils literal notranslate"><span class="pre">free</span></code> which frees all internal buffers and
+underlying non-incremental state:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
+<span class="kt">void</span> <span class="nf">EverCrypt_Hash_Incremental_free</span><span class="p">(</span><span class="n">EverCrypt_Hash_Incremental_state_s</span> <span class="o">*</span><span class="n">s</span><span class="p">);</span>
+
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">There is no incremental HACL* API for hashes, i.e. clients must go through
+agility and multiplexing to enjoy the incremental hash API.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="EverCryptDeprecated.html" class="btn btn-neutral float-right" title="Deprecated block cipher API (EverCrypt_Cipher.h)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="EverCryptAEAD.html" class="btn btn-neutral float-left" title="AEAD (EverCrypt_AEAD.h)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, INRIA, Microsoft Research, CMU
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

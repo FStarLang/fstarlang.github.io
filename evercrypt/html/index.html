@@ -94,6 +94,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Supported.html">List of supported algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Overview.html">The research behind</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Obtaining.html">Obtaining the source code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="General.html">General recommendations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="HaclDoc.html">HACL APIs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="EverCryptDoc.html">EverCrypt APIs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Merkle.html">Merkle Tree API</a></li>
@@ -181,9 +182,10 @@ C clients.</li>
 code. Vale code is not intended to be called from C by end users.</li>
 <li>EverCrypt brings HACL* and Vale under an abstract, high-level API
 that automatically picks the best Vale or HACL* implementation depending on
-the machine the code is running on. EverCrypt also offers a single API for all
-algorithms from the same family (e.g. AEAD, hashes), allowing clients to
-reconfigure their choice of algorithm dynamically without recompiling.</li>
+the machine the code is running on (multiplexing). EverCrypt also offers a
+single API for all algorithms from the same family (e.g. AEAD, hashes),
+allowing clients to reconfigure their choice of algorithm dynamically without
+recompiling (agility).</li>
 </ul>
 <p>All of our code is verified using the F* programming language; once verified,
 our code is extracted to a mixture of C and ASM.</p>
@@ -210,12 +212,24 @@ present repository, but also an implementation of the Signal protocol in F*.</p>
 <li class="toctree-l2"><a class="reference internal" href="Obtaining.html#integrating-the-resulting-code">Integrating the resulting code</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="General.html">General recommendations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="General.html#finding-the-source">Finding the source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="General.html#which-api-to-use">Which API to use</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="HaclDoc.html">HACL APIs</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="HaclDoc.html#stream-ciphers">Stream ciphers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="HaclDoc.html#randomness">Randomness</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="EverCryptDoc.html">EverCrypt APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="EverCryptDoc.html">EverCrypt APIs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptAutoConfig.html">CPU autodetection (<code class="docutils literal notranslate"><span class="pre">EverCrypt_AutoConfig2.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptAEAD.html">AEAD (<code class="docutils literal notranslate"><span class="pre">EverCrypt_AEAD.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptHash.html">Hashing (<code class="docutils literal notranslate"><span class="pre">EverCrypt_Hash.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptDeprecated.html">Deprecated block cipher API (<code class="docutils literal notranslate"><span class="pre">EverCrypt_Cipher.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptLegacy.html">Legacy EverCrypt headers (<code class="docutils literal notranslate"><span class="pre">EverCrypt.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverCrypt_Hacl.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverCrypt_Vale.h</span></code>)</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="Merkle.html">Merkle Tree API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="WasmDoc.html">WebAssembly bindings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="OCamlDoc.html">OCaml bindings</a></li>

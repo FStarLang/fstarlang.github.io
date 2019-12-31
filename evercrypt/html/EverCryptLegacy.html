@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>OCaml bindings &mdash; The HACL and EverCrypt reference documentation  documentation</title>
+  <title>Legacy EverCrypt headers (EverCrypt.h, EverCrypt_Hacl.h, EverCrypt_Vale.h) &mdash; The HACL and EverCrypt reference documentation  documentation</title>
   
 
   
@@ -45,7 +45,8 @@
   <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="WebAssembly bindings" href="WasmDoc.html" /> 
+    <link rel="next" title="Merkle Tree API" href="Merkle.html" />
+    <link rel="prev" title="Deprecated block cipher API (EverCrypt_Cipher.h)" href="EverCryptDeprecated.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -96,10 +97,17 @@
 <li class="toctree-l1"><a class="reference internal" href="Obtaining.html">Obtaining the source code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="General.html">General recommendations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="HaclDoc.html">HACL APIs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="EverCryptDoc.html">EverCrypt APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="EverCryptDoc.html">EverCrypt APIs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="EverCryptAutoConfig.html">CPU autodetection (<code class="docutils literal notranslate"><span class="pre">EverCrypt_AutoConfig2.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptAEAD.html">AEAD (<code class="docutils literal notranslate"><span class="pre">EverCrypt_AEAD.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptHash.html">Hashing (<code class="docutils literal notranslate"><span class="pre">EverCrypt_Hash.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptDeprecated.html">Deprecated block cipher API (<code class="docutils literal notranslate"><span class="pre">EverCrypt_Cipher.h</span></code>)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Legacy EverCrypt headers (<code class="docutils literal notranslate"><span class="pre">EverCrypt.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverCrypt_Hacl.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverCrypt_Vale.h</span></code>)</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="Merkle.html">Merkle Tree API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="WasmDoc.html">WebAssembly bindings</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">OCaml bindings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OCamlDoc.html">OCaml bindings</a></li>
 </ul>
 
             
@@ -145,13 +153,15 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>OCaml bindings</li>
+          <li><a href="EverCryptDoc.html">EverCrypt APIs</a> &raquo;</li>
+        
+      <li>Legacy EverCrypt headers (<code class="docutils literal notranslate"><span class="pre">EverCrypt.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverCrypt_Hacl.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverCrypt_Vale.h</span></code>)</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/OCamlDoc.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/EverCryptLegacy.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -164,8 +174,23 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="ocaml-bindings">
-<h1>OCaml bindings<a class="headerlink" href="#ocaml-bindings" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="legacy-evercrypt-headers-evercrypt-h-evercrypt-hacl-h-evercrypt-vale-h">
+<h1>Legacy EverCrypt headers (<code class="docutils literal notranslate"><span class="pre">EverCrypt.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverCrypt_Hacl.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverCrypt_Vale.h</span></code>)<a class="headerlink" href="#legacy-evercrypt-headers-evercrypt-h-evercrypt-hacl-h-evercrypt-vale-h" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">These are UNVERIFIED, legacy APIs and should not be used. In addition,
+<code class="docutils literal notranslate"><span class="pre">EverCrypt.h</span></code> relies on OpenSSL or BCrypt under the hood and is only there
+to support the needs of miTLS as we finish implementing remaining algorithms
+in EverCrypt.</p>
+</div>
+<p>If you were previously using <code class="docutils literal notranslate"><span class="pre">EverCrypt.h</span></code>:</p>
+<ul class="simple">
+<li>Users of AES-GCM should use <code class="docutils literal notranslate"><span class="pre">EverCrypt_AEAD.h</span></code> instead with a suitable
+algorithm parameter.</li>
+<li>Users of AES-CTR should use <code class="docutils literal notranslate"><span class="pre">EverCrypt_CTR.h</span></code></li>
+<li>Users of randomness should use <code class="docutils literal notranslate"><span class="pre">Lib.System.RandomBuffer</span></code> combined with
+<code class="docutils literal notranslate"><span class="pre">EverCrypt.HMAC.DRBG</span></code></li>
+</ul>
 </div>
 
 
@@ -176,8 +201,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="Merkle.html" class="btn btn-neutral float-right" title="Merkle Tree API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-        <a href="WasmDoc.html" class="btn btn-neutral float-left" title="WebAssembly bindings" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+        <a href="EverCryptDeprecated.html" class="btn btn-neutral float-left" title="Deprecated block cipher API (EverCrypt_Cipher.h)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
