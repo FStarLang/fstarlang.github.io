@@ -97,6 +97,8 @@
 <li class="toctree-l1"><a class="reference internal" href="Obtaining.html">Obtaining the source code</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">General recommendations</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#finding-the-source">Finding the source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reading-f-preconditions">Reading F* preconditions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#static-vs-run-time-checks">Static vs. run-time checks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#which-api-to-use">Which API to use</a></li>
 </ul>
 </li>
@@ -201,6 +203,77 @@ directory.</li>
 </ul>
 <p>In case finding a particular declaration is important: if a function is named
 <code class="docutils literal notranslate"><span class="pre">Foo_Bar_baz</span></code>, then you want to find <code class="docutils literal notranslate"><span class="pre">Foo.Bar.fst{,i}</span></code>.</p>
+</div>
+<div class="section" id="reading-f-preconditions">
+<span id="reading-preconditions"></span><h2>Reading F* preconditions<a class="headerlink" href="#reading-f-preconditions" title="Permalink to this headline">¶</a></h2>
+<p>It is important to be able to read <em>some</em> amount of F* code in order to
+successfully use an API. For instance, looking at AEAD encryption, there are
+various pre-conditions that client must satisfy, related to liveness,
+disjointness and array lengths. We expect unverified C clients to abide by these
+preconditions; otherwise, none of our verification guarantees hold! As such, it
+is up to the user to read the preconditions and make sure they are satisfied.</p>
+<p>As an example, consider <code class="docutils literal notranslate"><span class="pre">EverCrypt_AEAD_encrypt</span></code>. Per the section above, we
+look up <code class="docutils literal notranslate"><span class="pre">providers/evercrypt/EverCrypt.AEAD.fsti</span></code>. The <code class="docutils literal notranslate"><span class="pre">encrypt_pre</span></code>
+definition lists all the properties that must hold for a call to <code class="docutils literal notranslate"><span class="pre">encrypt</span></code> to
+be valid.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">encrypt_pre</span> <span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">supported_alg</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">B</span><span class="o">.</span><span class="n">pointer_or_null</span> <span class="p">(</span><span class="n">state_s</span> <span class="n">a</span><span class="p">))</span>
+  <span class="p">(</span><span class="n">iv</span><span class="p">:</span><span class="n">iv_p</span> <span class="n">a</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">iv_len</span><span class="p">:</span> <span class="n">UInt32</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">ad</span><span class="p">:</span><span class="n">ad_p</span> <span class="n">a</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">ad_len</span><span class="p">:</span> <span class="n">UInt32</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">plain</span><span class="p">:</span> <span class="n">plain_p</span> <span class="n">a</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">plain_len</span><span class="p">:</span> <span class="n">UInt32</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">cipher</span><span class="p">:</span> <span class="n">B</span><span class="o">.</span><span class="n">buffer</span> <span class="n">uint8</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">tag</span><span class="p">:</span> <span class="n">B</span><span class="o">.</span><span class="n">buffer</span> <span class="n">uint8</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">h0</span><span class="p">:</span> <span class="n">HS</span><span class="o">.</span><span class="n">mem</span><span class="p">)</span>
+<span class="o">=</span>
+  <span class="n">v</span> <span class="n">iv_len</span> <span class="o">=</span> <span class="n">B</span><span class="o">.</span><span class="n">length</span> <span class="n">iv</span> <span class="o">/</span>\ <span class="n">v</span> <span class="n">iv_len</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">/</span>\
+  <span class="n">v</span> <span class="n">ad_len</span> <span class="o">=</span> <span class="n">B</span><span class="o">.</span><span class="n">length</span> <span class="n">ad</span> <span class="o">/</span>\ <span class="n">v</span> <span class="n">ad_len</span> <span class="o">&lt;=</span> <span class="n">pow2</span> <span class="mi">31</span> <span class="o">/</span>\
+  <span class="n">v</span> <span class="n">plain_len</span> <span class="o">=</span> <span class="n">B</span><span class="o">.</span><span class="n">length</span> <span class="n">plain</span> <span class="o">/</span>\ <span class="n">v</span> <span class="n">plain_len</span> <span class="o">&lt;=</span> <span class="n">max_length</span> <span class="n">a</span> <span class="o">/</span>\
+  <span class="n">B</span><span class="o">.</span><span class="n">length</span> <span class="n">cipher</span> <span class="o">=</span> <span class="n">B</span><span class="o">.</span><span class="n">length</span> <span class="n">plain</span> <span class="o">/</span>\
+  <span class="n">B</span><span class="o">.</span><span class="n">length</span> <span class="n">tag</span> <span class="o">=</span> <span class="n">tag_length</span> <span class="n">a</span> <span class="o">/</span>\ <span class="p">(</span>
+  <span class="ow">not</span> <span class="p">(</span><span class="n">B</span><span class="o">.</span><span class="n">g_is_null</span> <span class="n">s</span><span class="p">)</span> <span class="o">==&gt;</span>
+    <span class="n">invariant</span> <span class="n">h0</span> <span class="n">s</span> <span class="o">/</span>\
+    <span class="n">B</span><span class="o">.</span><span class="p">(</span><span class="n">loc_disjoint</span> <span class="p">(</span><span class="n">footprint</span> <span class="n">h0</span> <span class="n">s</span><span class="p">)</span> <span class="p">(</span><span class="n">loc_buffer</span> <span class="n">iv</span><span class="p">))</span> <span class="o">/</span>\
+    <span class="n">B</span><span class="o">.</span><span class="p">(</span><span class="n">loc_disjoint</span> <span class="p">(</span><span class="n">footprint</span> <span class="n">h0</span> <span class="n">s</span><span class="p">)</span> <span class="p">(</span><span class="n">loc_buffer</span> <span class="n">ad</span><span class="p">))</span> <span class="o">/</span>\
+    <span class="n">B</span><span class="o">.</span><span class="p">(</span><span class="n">loc_disjoint</span> <span class="p">(</span><span class="n">footprint</span> <span class="n">h0</span> <span class="n">s</span><span class="p">)</span> <span class="p">(</span><span class="n">loc_buffer</span> <span class="n">tag</span><span class="p">))</span> <span class="o">/</span>\
+    <span class="n">B</span><span class="o">.</span><span class="p">(</span><span class="n">loc_disjoint</span> <span class="p">(</span><span class="n">footprint</span> <span class="n">h0</span> <span class="n">s</span><span class="p">)</span> <span class="p">(</span><span class="n">loc_buffer</span> <span class="n">plain</span><span class="p">))</span> <span class="o">/</span>\
+    <span class="n">B</span><span class="o">.</span><span class="p">(</span><span class="n">loc_disjoint</span> <span class="p">(</span><span class="n">footprint</span> <span class="n">h0</span> <span class="n">s</span><span class="p">)</span> <span class="p">(</span><span class="n">loc_buffer</span> <span class="n">cipher</span><span class="p">))</span> <span class="o">/</span>\
+    <span class="n">MB</span><span class="o">.</span><span class="p">(</span><span class="n">all_live</span> <span class="n">h0</span> <span class="p">[</span> <span class="n">buf</span> <span class="n">iv</span><span class="p">;</span> <span class="n">buf</span> <span class="n">ad</span><span class="p">;</span> <span class="n">buf</span> <span class="n">plain</span><span class="p">;</span> <span class="n">buf</span> <span class="n">cipher</span><span class="p">;</span> <span class="n">buf</span> <span class="n">tag</span> <span class="p">])</span> <span class="o">/</span>\
+    <span class="p">(</span><span class="n">B</span><span class="o">.</span><span class="n">disjoint</span> <span class="n">plain</span> <span class="n">cipher</span> \<span class="o">/</span> <span class="n">plain</span> <span class="o">==</span> <span class="n">cipher</span><span class="p">)</span> <span class="o">/</span>\
+    <span class="n">B</span><span class="o">.</span><span class="n">disjoint</span> <span class="n">cipher</span> <span class="n">tag</span> <span class="o">/</span>\
+    <span class="n">B</span><span class="o">.</span><span class="n">disjoint</span> <span class="n">iv</span> <span class="n">cipher</span> <span class="o">/</span>\ <span class="n">B</span><span class="o">.</span><span class="n">disjoint</span> <span class="n">iv</span> <span class="n">tag</span> <span class="o">/</span>\
+    <span class="n">B</span><span class="o">.</span><span class="n">disjoint</span> <span class="n">plain</span> <span class="n">tag</span> <span class="o">/</span>\
+    <span class="n">B</span><span class="o">.</span><span class="n">disjoint</span> <span class="n">plain</span> <span class="n">ad</span> <span class="o">/</span>\
+    <span class="n">B</span><span class="o">.</span><span class="n">disjoint</span> <span class="n">ad</span> <span class="n">cipher</span> <span class="o">/</span>\ <span class="n">B</span><span class="o">.</span><span class="n">disjoint</span> <span class="n">ad</span> <span class="n">tag</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here are some examples:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">B.length</span></code> denotes the length of a C array; we see that <code class="docutils literal notranslate"><span class="pre">iv_len</span></code> <strong>must</strong>
+be the length of the pointer <code class="docutils literal notranslate"><span class="pre">iv</span></code>, and that this length must be strictly
+positive</li>
+<li><code class="docutils literal notranslate"><span class="pre">loc_disjoint</span></code> or <code class="docutils literal notranslate"><span class="pre">B.disjoint</span></code> state that memory chunks <strong>shall</strong> not overlap;
+we see that no overlap is tolerated between <code class="docutils literal notranslate"><span class="pre">cipher</span></code> and <code class="docutils literal notranslate"><span class="pre">tag</span></code>, but that
+<code class="docutils literal notranslate"><span class="pre">plain</span></code> and <code class="docutils literal notranslate"><span class="pre">cipher</span></code> must be either the same pointer, or non-overlapping
+memory allocations</li>
+<li><code class="docutils literal notranslate"><span class="pre">all_live</span></code> means that all of the pointers in the list <strong>must</strong> be valid
+allocations that have not yet been freed</li>
+</ul>
+<p>A few lines below, we see from the signature of <code class="docutils literal notranslate"><span class="pre">encrypt</span></code> that the only two
+possible errors are <code class="docutils literal notranslate"><span class="pre">Success</span></code> and <code class="docutils literal notranslate"><span class="pre">InvalidKey</span></code>.</p>
+</div>
+<div class="section" id="static-vs-run-time-checks">
+<h2>Static vs. run-time checks<a class="headerlink" href="#static-vs-run-time-checks" title="Permalink to this headline">¶</a></h2>
+<p>We sometimes perform additional run-time checks for violations of the API that
+are ruled out for verified clients; for instance, continuing with the
+<code class="docutils literal notranslate"><span class="pre">encrypt</span></code> example, we <strong>do</strong> perform a check at run-time for zero-length IVs,
+even though no F* client would be allowed to do that.</p>
+<p>C clients should not rely on those details, since i) this is best-effort and we
+do not offer any guarantee as to which preconditions we check for and ii) the
+error that is returned is not captured in the post-condition, since it cannot
+happen for verified clients.</p>
 </div>
 <div class="section" id="which-api-to-use">
 <h2>Which API to use<a class="headerlink" href="#which-api-to-use" title="Permalink to this headline">¶</a></h2>

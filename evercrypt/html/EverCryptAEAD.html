@@ -237,6 +237,12 @@ platform (e.g. AES-GCM without ADX+BMI2).</p>
 <h2>Encryption and decryption<a class="headerlink" href="#encryption-and-decryption" title="Permalink to this headline">¶</a></h2>
 <p>Both encryption and decryption take a piece of state which holds the key; a
 piece of state may be reused as many times as desired.</p>
+<p>Encryption has a substantial amount of preconditions; see <code class="docutils literal notranslate"><span class="pre">encrypt_pre</span></code> in
+<code class="docutils literal notranslate"><span class="pre">EverCrypt.AEAD.fsti</span></code>, and <a class="reference internal" href="General.html#reading-preconditions"><span class="std std-ref">Reading F* preconditions</span></a> for a primer on
+deciphering F* code.</p>
+<p>At the time of writing, <code class="docutils literal notranslate"><span class="pre">encrypt</span></code> may return either <code class="docutils literal notranslate"><span class="pre">Success</span></code> or
+<code class="docutils literal notranslate"><span class="pre">InvalidKey</span></code>. The latter is returned if and only if the <code class="docutils literal notranslate"><span class="pre">s</span></code> parameter is
+<code class="docutils literal notranslate"><span class="pre">NULL</span></code>.</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
 <span class="n">EverCrypt_Error_error_code</span>
 <span class="nf">EverCrypt_AEAD_encrypt</span><span class="p">(</span>
@@ -252,6 +258,15 @@ piece of state may be reused as many times as desired.</p>
 <span class="p">);</span>
 
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">There is no length parameter for the tag; looking at the source
+<code class="docutils literal notranslate"><span class="pre">EverCrypt.AEAD.fsti</span></code>, one can see a precondition of the form <code class="docutils literal notranslate"><span class="pre">B.length</span> <span class="pre">tag</span>
+<span class="pre">=</span> <span class="pre">tag_length</span> <span class="pre">a</span></code>, i.e. the length of the <code class="docutils literal notranslate"><span class="pre">tag</span></code> array must be of a suitable
+length for the algorithm <code class="docutils literal notranslate"><span class="pre">a</span></code>. See <code class="docutils literal notranslate"><span class="pre">Spec.Agile.AEAD.fsti</span></code> for the
+definition of <code class="docutils literal notranslate"><span class="pre">tag_length</span></code>. <strong>Unverified clients are strongly encouraged
+to perform a run-time check!</strong></p>
 </div>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
 <span class="n">EverCrypt_Error_error_code</span>
