@@ -1,0 +1,315 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>NaCl API: Box and SecretBox &mdash; HACL* and EverCrypt Manual  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="static/jquery.js"></script>
+        <script type="text/javascript" src="static/underscore.js"></script>
+        <script type="text/javascript" src="static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Randomness" href="Randomness.html" />
+    <link rel="prev" title="Signatures: Ed25519" href="HaclSig.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> HACL* and EverCrypt Manual
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="HaclValeEverCrypt.html">HACL*, Vale, and EverCrypt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Supported.html">List of supported algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Underlying research</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Obtaining.html">Using the crypto library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="General.html">Digging into the F* source code</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="HaclDoc.html">HACL APIs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="HaclAEAD.html">AEAD: Chacha20-Poly1305</a></li>
+<li class="toctree-l2"><a class="reference internal" href="HaclHash.html">Hashing: SHA-2, SHA-3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="HaclECDH.html">ECDH: X25519</a></li>
+<li class="toctree-l2"><a class="reference internal" href="HaclSig.html">Signatures: Ed25519</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">NaCl API: Box and SecretBox</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#public-key-encryption-box">Public-Key Encryption: Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#symmetric-encryption-secretbox">Symmetric Encryption: SecretBox</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Randomness.html">Randomness</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="EverCryptDoc.html">EverCrypt APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API.html">Which API to use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Applications.html">Verified Applications</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">HACL* and EverCrypt Manual</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="HaclDoc.html">HACL APIs</a> &raquo;</li>
+        
+      <li>NaCl API: Box and SecretBox</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+
+           <div itemprop="articleBody">
+            
+  <div class="section" id="nacl-api-box-and-secretbox">
+<span id="hacl-nacl"></span><h1>NaCl API: Box and SecretBox<a class="headerlink" href="#nacl-api-box-and-secretbox" title="Permalink to this headline">¶</a></h1>
+<p>HACL* implements the Box and SecretBox API of <a class="reference external" href="http://nacl.cr.yp.to/">NaCl</a>
+in a way that is compatible with <a class="reference external" href="https://github.com/jedisct1/libsodium">libsodium</a>.
+The functions of this API are in <code class="docutils literal notranslate"><span class="pre">Hacl_NaCl.h</span></code>.</p>
+<div class="section" id="public-key-encryption-box">
+<h2>Public-Key Encryption: Box<a class="headerlink" href="#public-key-encryption-box" title="Permalink to this headline">¶</a></h2>
+<p>The simplest API for Box encryption and decryption is as follows:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
+<span class="kt">uint32_t</span>
+<span class="nf">Hacl_NaCl_crypto_box_easy_afternm</span><span class="p">(</span>
+  <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">c</span><span class="p">,</span>
+  <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">m</span><span class="p">,</span>
+  <span class="kt">uint32_t</span> <span class="n">mlen</span><span class="p">,</span>
+  <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">n1</span><span class="p">,</span>
+  <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">k</span>
+<span class="p">);</span>
+
+</pre></div>
+</div>
+<p>The encryption function <code class="docutils literal notranslate"><span class="pre">Hacl_NaCl_crypto_box_easy</span></code> takes as its arguments
+an output array <code class="docutils literal notranslate"><span class="pre">c</span></code> of length <code class="docutils literal notranslate"><span class="pre">mlen+16</span></code> bytes, an input array
+<code class="docutils literal notranslate"><span class="pre">m</span></code> of length <code class="docutils literal notranslate"><span class="pre">mlen</span></code> bytes, a nonce <code class="docutils literal notranslate"><span class="pre">n1</span></code> of length 24 bytes,
+the Curve25519 private key <code class="docutils literal notranslate"><span class="pre">sk</span></code> of the sender (32 bytes), and the
+Curve25519 public key <code class="docutils literal notranslate"><span class="pre">pk</span></code> of the recipient (32 bytes).
+The function returns 0 on success and -1 (i.e. <code class="docutils literal notranslate"><span class="pre">0xffffffff</span></code>)  on failure.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
+<span class="kt">uint32_t</span>
+<span class="nf">Hacl_NaCl_crypto_box_open_easy_afternm</span><span class="p">(</span>
+  <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">m</span><span class="p">,</span>
+  <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">c</span><span class="p">,</span>
+  <span class="kt">uint32_t</span> <span class="n">clen</span><span class="p">,</span>
+  <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">n1</span><span class="p">,</span>
+  <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">k</span>
+<span class="p">);</span>
+
+</pre></div>
+</div>
+<p>The corresponding decryption function <code class="docutils literal notranslate"><span class="pre">Hacl_NaCl_crypto_box_open_easy</span></code> takes the
+dual arguments: an input array <code class="docutils literal notranslate"><span class="pre">c</span></code> of length <code class="docutils literal notranslate"><span class="pre">clen&gt;16</span></code> bytes, an output array
+<code class="docutils literal notranslate"><span class="pre">m</span></code> of length <code class="docutils literal notranslate"><span class="pre">clen-16</span></code> bytes, a nonce <code class="docutils literal notranslate"><span class="pre">n1</span></code> of length 24 bytes,
+the Curve25519 public key <code class="docutils literal notranslate"><span class="pre">pk</span></code> of the sender (32 bytes), and the
+Curve25519 private key <code class="docutils literal notranslate"><span class="pre">sk</span></code> of the recipient (32 bytes).
+The function retuens 0 on success and -1 (i.e. <code class="docutils literal notranslate"><span class="pre">0xffffffff</span></code>)  on failure.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Hacl_NaCl.h</span></code> also contains two other APIs for Box:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">Hacl_NaCl_crypto_box_detached</span></code> and <code class="docutils literal notranslate"><span class="pre">Hacl_NaCl_crypto_box_open_detached</span></code> store the
+16-byte authentication tag in in a separate buffer called <code class="docutils literal notranslate"><span class="pre">tag</span></code></li>
+<li>To share the expensive X25519 ECDH computation across multiple invocations between
+the same sender and recipient keys, callers can first call <code class="docutils literal notranslate"><span class="pre">Hacl_NaCl_crypto_box_beforenm</span></code>
+and then use the result to call <code class="docutils literal notranslate"><span class="pre">Hacl_NaCl_crypto_box_detached_afternm</span></code> or <code class="docutils literal notranslate"><span class="pre">Hacl_NaCl_crypto_box_easy_afternm</span></code>
+multiple times.</li>
+</ul>
+</div>
+<div class="section" id="symmetric-encryption-secretbox">
+<h2>Symmetric Encryption: SecretBox<a class="headerlink" href="#symmetric-encryption-secretbox" title="Permalink to this headline">¶</a></h2>
+<p>The NaCl API also provides a symmetric encryption primive with the following “easy” API:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
+<span class="kt">uint32_t</span>
+<span class="nf">Hacl_NaCl_crypto_secretbox_easy</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="n">c</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">mlen</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">n1</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">k</span><span class="p">);</span>
+
+</pre></div>
+</div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
+<span class="kt">uint32_t</span>
+<span class="nf">Hacl_NaCl_crypto_secretbox_open_easy</span><span class="p">(</span>
+  <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">m</span><span class="p">,</span>
+  <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">c</span><span class="p">,</span>
+  <span class="kt">uint32_t</span> <span class="n">clen</span><span class="p">,</span>
+  <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">n1</span><span class="p">,</span>
+  <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">k</span>
+<span class="p">);</span>
+
+</pre></div>
+</div>
+<p>The main difference from the Box API is that these functions take a shared symmetric key <code class="docutils literal notranslate"><span class="pre">k</span></code> as
+input (instead of Curve25519 keys for the sender and recipient.)
+As with Box, there is a separate <code class="docutils literal notranslate"><span class="pre">detached</span></code> version of this API.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+    <a href="https://github.com/project-everest/hacl-star/">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub">
+    </a>
+
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Randomness.html" class="btn btn-neutral float-right" title="Randomness" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="HaclSig.html" class="btn btn-neutral float-left" title="Signatures: Ed25519" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, INRIA, Microsoft Research, CMU
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

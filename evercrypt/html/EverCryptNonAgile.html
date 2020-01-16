@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>EverCrypt APIs &mdash; HACL* and EverCrypt Manual  documentation</title>
+  <title>Non-agile APIs &mdash; HACL* and EverCrypt Manual  documentation</title>
   
 
   
@@ -45,8 +45,8 @@
   <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="CPU autodetection (EverCrypt_AutoConfig2.h)" href="EverCryptAutoConfig.html" />
-    <link rel="prev" title="Randomness" href="Randomness.html" /> 
+    <link rel="next" title="Deprecated APIs" href="EverCryptDeprecated.html" />
+    <link rel="prev" title="HMAC-DRBG (EverCrypt_DRBG.h)" href="EverCryptDRBG.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -98,7 +98,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Obtaining.html">Using the crypto library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="General.html">Digging into the F* source code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="HaclDoc.html">HACL APIs</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">EverCrypt APIs</a><ul>
+<li class="toctree-l1 current"><a class="reference internal" href="EverCryptDoc.html">EverCrypt APIs</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="EverCryptAutoConfig.html">CPU autodetection (<code class="docutils literal notranslate"><span class="pre">EverCrypt_AutoConfig2.h</span></code>)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="EverCryptAEAD.html">AEAD (<code class="docutils literal notranslate"><span class="pre">EverCrypt_AEAD.h</span></code>)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="EverCryptCTR.html">CTR-mode encryption (<code class="docutils literal notranslate"><span class="pre">EverCrypt_CTR.h</span></code>)</a></li>
@@ -106,7 +106,13 @@
 <li class="toctree-l2"><a class="reference internal" href="EverCryptHMAC.html">HMAC (<code class="docutils literal notranslate"><span class="pre">EverCrypt_HMAC.h</span></code>)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="EverCryptHKDF.html">HKDF (<code class="docutils literal notranslate"><span class="pre">EverCrypt_HKDF.h</span></code>)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="EverCryptDRBG.html">HMAC-DRBG (<code class="docutils literal notranslate"><span class="pre">EverCrypt_DRBG.h</span></code>)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="EverCryptNonAgile.html">Non-agile APIs</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Non-agile APIs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#chacha20-poly1305">Chacha20-Poly1305</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#curve25519">Curve25519</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#poly1305">Poly1305</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ed25519">Ed25519</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="EverCryptDeprecated.html">Deprecated APIs</a></li>
 </ul>
 </li>
@@ -157,7 +163,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>EverCrypt APIs</li>
+          <li><a href="EverCryptDoc.html">EverCrypt APIs</a> &raquo;</li>
+        
+      <li>Non-agile APIs</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -175,55 +183,48 @@
 
            <div itemprop="articleBody">
             
-  <div class="section" id="evercrypt-apis">
-<h1>EverCrypt APIs<a class="headerlink" href="#evercrypt-apis" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="EverCryptAutoConfig.html">CPU autodetection (<code class="docutils literal notranslate"><span class="pre">EverCrypt_AutoConfig2.h</span></code>)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="EverCryptAEAD.html">AEAD (<code class="docutils literal notranslate"><span class="pre">EverCrypt_AEAD.h</span></code>)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="EverCryptAEAD.html#state-management">State management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="EverCryptAEAD.html#encryption-and-decryption">Encryption and decryption</a></li>
+  <div class="section" id="non-agile-apis">
+<h1>Non-agile APIs<a class="headerlink" href="#non-agile-apis" title="Permalink to this headline">¶</a></h1>
+<p>Not all algorithms have a corresponding agile API. For instance, there is no
+<code class="docutils literal notranslate"><span class="pre">EverCrypt_ECDH.h</span></code> yet. However, clients may still want to call, say
+<code class="docutils literal notranslate"><span class="pre">Curve25519</span></code> and enjoy the benefits of multiplexing.</p>
+<p>To that end, EverCrypt features a variety of <strong>non-agile</strong>, <strong>multiplexing</strong>
+APIs.</p>
+<div class="section" id="chacha20-poly1305">
+<h2>Chacha20-Poly1305<a class="headerlink" href="#chacha20-poly1305" title="Permalink to this headline">¶</a></h2>
+<p>Multiplexes between: portable C, AVX, AVX2</p>
+<p>Found in <code class="docutils literal notranslate"><span class="pre">EverCrypt_Chacha20Poly1305.h</span></code>.</p>
+<p>See <a class="reference internal" href="HaclAEAD.html#hacl-aead"><span class="std std-ref">AEAD: Chacha20-Poly1305</span></a> for the API documentation, which is identical.</p>
+</div>
+<div class="section" id="curve25519">
+<h2>Curve25519<a class="headerlink" href="#curve25519" title="Permalink to this headline">¶</a></h2>
+<p>Multiplexes between: portable C, ADX + BMI2</p>
+<p>Found in <code class="docutils literal notranslate"><span class="pre">EverCrypt_Curve25519.h</span></code>.</p>
+<p>See <a class="reference internal" href="HaclECDH.html#hacl-curve25519"><span class="std std-ref">ECDH: X25519</span></a> for the API documentation, which is identical.</p>
+</div>
+<div class="section" id="poly1305">
+<h2>Poly1305<a class="headerlink" href="#poly1305" title="Permalink to this headline">¶</a></h2>
+<p>Multiplexes between: portable C, AVX, AVX2, X64 assembly</p>
+<p>Found in <code class="docutils literal notranslate"><span class="pre">EverCrypt_Poly1305.h</span></code>.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
+<span class="kt">void</span> <span class="nf">EverCrypt_Poly1305_poly1305</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="n">dst</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">src</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">len</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">key</span><span class="p">);</span>
+
+</pre></div>
+</div>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">dst</span></code> must be at least 16 bytes</li>
+<li>if <code class="docutils literal notranslate"><span class="pre">len</span></code>, the length of <code class="docutils literal notranslate"><span class="pre">src</span></code>, gets close to 4GB, you need to read the
+precondition in <code class="docutils literal notranslate"><span class="pre">EverCrypt.Poly1305.fsti</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">key</span></code> must be at least 32 bytes</li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="EverCryptCTR.html">CTR-mode encryption (<code class="docutils literal notranslate"><span class="pre">EverCrypt_CTR.h</span></code>)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="EverCryptCTR.html#state-management">State management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="EverCryptCTR.html#ctr-mode-of-operation">CTR mode of operation</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="EverCryptHash.html">Hashing (<code class="docutils literal notranslate"><span class="pre">EverCrypt_Hash.h</span></code>)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="EverCryptHash.html#block-based-api">Block-based API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="EverCryptHash.html#streaming-api">Streaming API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="EverCryptHash.html#one-shot-api">One-shot API</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="EverCryptHMAC.html">HMAC (<code class="docutils literal notranslate"><span class="pre">EverCrypt_HMAC.h</span></code>)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="EverCryptHMAC.html#agile-api">Agile API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="EverCryptHMAC.html#non-agile-api">Non-agile API</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="EverCryptHKDF.html">HKDF (<code class="docutils literal notranslate"><span class="pre">EverCrypt_HKDF.h</span></code>)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="EverCryptHKDF.html#agile-api">Agile API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="EverCryptHKDF.html#non-agile-api">Non-agile API</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="EverCryptDRBG.html">HMAC-DRBG (<code class="docutils literal notranslate"><span class="pre">EverCrypt_DRBG.h</span></code>)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="EverCryptDRBG.html#agile-api">Agile API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="EverCryptDRBG.html#non-agile-api">Non-agile API</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="EverCryptNonAgile.html">Non-agile APIs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="EverCryptNonAgile.html#chacha20-poly1305">Chacha20-Poly1305</a></li>
-<li class="toctree-l2"><a class="reference internal" href="EverCryptNonAgile.html#curve25519">Curve25519</a></li>
-<li class="toctree-l2"><a class="reference internal" href="EverCryptNonAgile.html#poly1305">Poly1305</a></li>
-<li class="toctree-l2"><a class="reference internal" href="EverCryptNonAgile.html#ed25519">Ed25519</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="EverCryptDeprecated.html">Deprecated APIs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="EverCryptDeprecated.html#block-cipher-api-evercrypt-cipher-h">Block cipher API (<code class="docutils literal notranslate"><span class="pre">EverCrypt_Cipher.h</span></code>)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="EverCryptDeprecated.html#legacy-evercrypt-headers-evercrypt-h-evercrypt-hacl-h-evercrypt-vale-h">Legacy EverCrypt headers (<code class="docutils literal notranslate"><span class="pre">EverCrypt.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverCrypt_Hacl.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverCrypt_Vale.h</span></code>)</a></li>
-</ul>
-</li>
-</ul>
+</div>
+<div class="section" id="ed25519">
+<h2>Ed25519<a class="headerlink" href="#ed25519" title="Permalink to this headline">¶</a></h2>
+<p>Found in <code class="docutils literal notranslate"><span class="pre">EverCrypt_Ed25519.h</span></code>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is just a placeholder and there is no multiplexing for this API yet.</p>
+</div>
 </div>
 </div>
 
@@ -239,10 +240,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="EverCryptAutoConfig.html" class="btn btn-neutral float-right" title="CPU autodetection (EverCrypt_AutoConfig2.h)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="EverCryptDeprecated.html" class="btn btn-neutral float-right" title="Deprecated APIs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="Randomness.html" class="btn btn-neutral float-left" title="Randomness" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="EverCryptDRBG.html" class="btn btn-neutral float-left" title="HMAC-DRBG (EverCrypt_DRBG.h)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

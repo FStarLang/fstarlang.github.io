@@ -1,0 +1,315 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Signatures: Ed25519 &mdash; HACL* and EverCrypt Manual  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="static/jquery.js"></script>
+        <script type="text/javascript" src="static/underscore.js"></script>
+        <script type="text/javascript" src="static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="NaCl API: Box and SecretBox" href="HaclNaCl.html" />
+    <link rel="prev" title="ECDH: X25519" href="HaclECDH.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> HACL* and EverCrypt Manual
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="HaclValeEverCrypt.html">HACL*, Vale, and EverCrypt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Supported.html">List of supported algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Underlying research</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Obtaining.html">Using the crypto library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="General.html">Digging into the F* source code</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="HaclDoc.html">HACL APIs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="HaclAEAD.html">AEAD: Chacha20-Poly1305</a></li>
+<li class="toctree-l2"><a class="reference internal" href="HaclHash.html">Hashing: SHA-2, SHA-3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="HaclECDH.html">ECDH: X25519</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Signatures: Ed25519</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#key-generation">Key Generation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#eddsa-signing">EdDSA Signing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#eddsa-verify">EdDSA Verify</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#eddsa-sign-expanded">EdDSA Sign Expanded</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#other-signature-algorithms-ecdsa-with-p-256">Other Signature Algorithms: ECDSA with P-256</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="HaclNaCl.html">NaCl API: Box and SecretBox</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Randomness.html">Randomness</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="EverCryptDoc.html">EverCrypt APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API.html">Which API to use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Applications.html">Verified Applications</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">HACL* and EverCrypt Manual</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="HaclDoc.html">HACL APIs</a> &raquo;</li>
+        
+      <li>Signatures: Ed25519</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+
+           <div itemprop="articleBody">
+            
+  <div class="section" id="signatures-ed25519">
+<span id="hacl-ed25519"></span><h1>Signatures: Ed25519<a class="headerlink" href="#signatures-ed25519" title="Permalink to this headline">¶</a></h1>
+<p>HACL* implements the Edwards-Curve Digital Signature Algorithm (EdDSA)
+construction for the Ed25519 elliptic curve as specified in <a class="reference external" href="https://tools.ietf.org/html/rfc8032">IETF RFC 8032</a>.
+The API for this signature algorithm is in <code class="docutils literal notranslate"><span class="pre">Hacl_Ed25519.h</span></code>.</p>
+<div class="section" id="key-generation">
+<h2>Key Generation<a class="headerlink" href="#key-generation" title="Permalink to this headline">¶</a></h2>
+<p>Any 32 byte array can be used as an Ed25519 private key. In
+practice, private keys should be generated using a cryptographically
+strong pseudo-random number generator (CSPRNG).  In some cases, the
+private key may be derived as the result of a key derivation function
+such as HKDF.</p>
+<p>Given a private key, the corresponding public key can be computed
+using the <code class="docutils literal notranslate"><span class="pre">secret_to_public</span></code> function:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
+<span class="kt">void</span> <span class="nf">Hacl_Ed25519_secret_to_public</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="n">pub</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">priv</span><span class="p">);</span>
+
+</pre></div>
+</div>
+<p>The first argument is a pointer to the output public key <code class="docutils literal notranslate"><span class="pre">pub</span></code> (64 bytes);
+the second argument is a pointer to the input private key <code class="docutils literal notranslate"><span class="pre">priv</span></code> (32 bytes).</p>
+</div>
+<div class="section" id="eddsa-signing">
+<h2>EdDSA Signing<a class="headerlink" href="#eddsa-signing" title="Permalink to this headline">¶</a></h2>
+<p>The signature  operation is implemented by the following function:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
+<span class="kt">void</span> <span class="nf">Hacl_Ed25519_sign</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="n">signature</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">priv</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">len</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">msg</span><span class="p">);</span>
+
+</pre></div>
+</div>
+<p>The first argument is a pointer to the output signature <code class="docutils literal notranslate"><span class="pre">signature</span></code>;
+the second argument is the private key of the signer <code class="docutils literal notranslate"><span class="pre">priv</span></code>;
+the third argument is the length <code class="docutils literal notranslate"><span class="pre">len</span></code> of the message to be signed <code class="docutils literal notranslate"><span class="pre">msg</span></code>.
+The size of <code class="docutils literal notranslate"><span class="pre">signature</span></code> must be (at least) 64 bytes; the size of the private
+key is 32 bytes.</p>
+</div>
+<div class="section" id="eddsa-verify">
+<h2>EdDSA Verify<a class="headerlink" href="#eddsa-verify" title="Permalink to this headline">¶</a></h2>
+<p>To verify an Ed25519 signature, one may call the following function:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
+<span class="kt">bool</span> <span class="nf">Hacl_Ed25519_verify</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="n">pub</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">len</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">msg</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">signature</span><span class="p">);</span>
+
+</pre></div>
+</div>
+<p>The first argument is a pointer to the public key <code class="docutils literal notranslate"><span class="pre">pub</span></code> (64 bytes);
+the second argument is the length <code class="docutils literal notranslate"><span class="pre">len</span></code> of the message to be signed <code class="docutils literal notranslate"><span class="pre">msg</span></code>;
+the last argument is the input signature <code class="docutils literal notranslate"><span class="pre">signature</span></code>.
+If the signature verification succeeds the function returns the boolean <code class="docutils literal notranslate"><span class="pre">true</span></code>,
+otherwise it returns <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+</div>
+<div class="section" id="eddsa-sign-expanded">
+<h2>EdDSA Sign Expanded<a class="headerlink" href="#eddsa-sign-expanded" title="Permalink to this headline">¶</a></h2>
+<p>In situations where a signer needs to sign many times with the same
+signature key, a part of the signature computation can be shared
+between these invocations for efficiency. The caller first calls
+<code class="docutils literal notranslate"><span class="pre">Hacl_Ed25519_expand_keys</span></code> to compute an expanded signing key <code class="docutils literal notranslate"><span class="pre">ks</span></code>,
+and then can use <code class="docutils literal notranslate"><span class="pre">ks</span></code> to call <code class="docutils literal notranslate"><span class="pre">Hacl_Ed25519_sign_expanded</span></code> multiple
+times with different arguments.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
+<span class="kt">void</span> <span class="nf">Hacl_Ed25519_expand_keys</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="n">ks</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">priv</span><span class="p">);</span>
+
+</pre></div>
+</div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
+<span class="kt">void</span> <span class="nf">Hacl_Ed25519_sign_expanded</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="n">signature</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">ks</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">len</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">msg</span><span class="p">);</span>
+
+</pre></div>
+</div>
+</div>
+<div class="section" id="other-signature-algorithms-ecdsa-with-p-256">
+<h2>Other Signature Algorithms: ECDSA with P-256<a class="headerlink" href="#other-signature-algorithms-ecdsa-with-p-256" title="Permalink to this headline">¶</a></h2>
+<p>A development branch includes a verified implementation of ECDSA
+signatures with the P-256 elliptic curve, which has not yet been
+merged to master. Contact the HACL* maintainers if you wish to use
+this code.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+    <a href="https://github.com/project-everest/hacl-star/">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub">
+    </a>
+
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="HaclNaCl.html" class="btn btn-neutral float-right" title="NaCl API: Box and SecretBox" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="HaclECDH.html" class="btn btn-neutral float-left" title="ECDH: X25519" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, INRIA, Microsoft Research, CMU
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

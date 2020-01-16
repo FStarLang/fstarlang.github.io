@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>The research behind &mdash; The HACL and EverCrypt reference documentation  documentation</title>
+  <title>Underlying research &mdash; HACL* and EverCrypt Manual  documentation</title>
   
 
   
@@ -45,7 +45,7 @@
   <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Obtaining the source code" href="Obtaining.html" />
+    <link rel="next" title="Using the crypto library" href="Obtaining.html" />
     <link rel="prev" title="List of supported algorithms" href="Supported.html" /> 
 </head>
 
@@ -60,7 +60,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> The HACL and EverCrypt reference documentation
+            <a href="index.html" class="icon icon-home"> HACL* and EverCrypt Manual
           
 
           
@@ -92,20 +92,20 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="HaclValeEverCrypt.html">HACL*, Vale, and EverCrypt</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Supported.html">List of supported algorithms</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">The research behind</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#what-is-verified-software">What is verified software</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Underlying research</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#what-is-verified-software">What is verified software?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#history-and-publications">History and publications</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#the-tools-we-use">The tools we use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#our-verification-tools">Our Verification Tools</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Obtaining.html">Obtaining the source code</a></li>
-<li class="toctree-l1"><a class="reference internal" href="General.html">General recommendations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Obtaining.html">Using the crypto library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="General.html">Digging into the F* source code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="HaclDoc.html">HACL APIs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="EverCryptDoc.html">EverCrypt APIs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Merkle.html">Merkle Tree API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="WasmDoc.html">WebAssembly bindings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="OCamlDoc.html">OCaml bindings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API.html">Which API to use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Applications.html">Verified Applications</a></li>
 </ul>
 
             
@@ -120,7 +120,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">The HACL and EverCrypt reference documentation</a>
+          <a href="index.html">HACL* and EverCrypt Manual</a>
         
       </nav>
 
@@ -151,14 +151,12 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>The research behind</li>
+      <li>Underlying research</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/Overview.rst.txt" rel="nofollow"> View page source</a>
-          
         
       </li>
     
@@ -168,13 +166,14 @@
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+
            <div itemprop="articleBody">
             
-  <div class="section" id="the-research-behind">
-<h1>The research behind<a class="headerlink" href="#the-research-behind" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="underlying-research">
+<h1>Underlying research<a class="headerlink" href="#underlying-research" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="what-is-verified-software">
-<h2>What is verified software<a class="headerlink" href="#what-is-verified-software" title="Permalink to this headline">¶</a></h2>
-<p>Our libraries’ formal verification involves using software tools to analyze <strong>all
+<h2>What is verified software?<a class="headerlink" href="#what-is-verified-software" title="Permalink to this headline">¶</a></h2>
+<p>Formal verification involves using software tools to analyze <strong>all
 possible behaviors</strong> of a program and prove mathematically that they comply with
 the code’s specification (i.e., a machine-readable description of the
 developer’s intentions). Unlike software testing, formal verification provides
@@ -192,28 +191,30 @@ the wrong kind of parameters to another, or accesses its private state.</li>
 <li>Functional correctness: our code’s input/output behavior is fully
 characterized by simple mathematical functions derived directly
 from the official cryptographic standards (e.g., from NIST or the IETF).</li>
-<li>Side-channel resistance: Observations about our code’s low-level behavior
+<li>Secret Independence: Observations about our code’s low-level behavior
 (specifically, the time it takes to execute or the memory addresses that it
 accesses) are independent of the secrets manipulated by the library. Hence, an
 adversary monitoring these “side-channels” learns nothing about the secrets.</li>
 </ul>
-<p>All of these guarantees <em>do not</em> prevent our code from achieving good performance!
-EverCrypt meets or beats the performance of most existing cryptographic implementations in C,
-and for certain targeted platforms meets or beats the performance of state-of-the-art
-libraries that rely on hand-tuned assembly code.</p>
+<p>All of these guarantees <em>do not</em> prevent our code from achieving good
+performance!  HACL* meets or beats the performance of most existing
+cryptographic implementations in C, and on certain platforms, Vale
+code meets or beats the performance of hand-tuned assembly code in
+state-of-the-art libraries.  By bringing them together, the EverCrypt
+provider provides best-in-class performance on most platforms.</p>
 </div>
 <div class="section" id="history-and-publications">
 <h2>History and publications<a class="headerlink" href="#history-and-publications" title="Permalink to this headline">¶</a></h2>
 <p>Our cryptographic code is the culmination of several years of research carried
 through <a class="reference external" href="https://project-everest.github.io/">Project Everest</a>.</p>
 <p>Early attempts at verifying cryptographic code in F* were presented at CSF 2016:
-<a class="reference external" href="https://hal.inria.fr/hal-01425957)">A Verified Extensible Library of Elliptic Curves</a> (Jean Karim Zinzindohoué, Evmorfia-Iro
+<a class="reference external" href="https://hal.inria.fr/hal-01425957">A Verified Extensible Library of Elliptic Curves</a> (Jean Karim Zinzindohoué, Evmorfia-Iro
 Bartzia, Karthikeyan Bhargavan). This work established an initial body of
 verified libraries, but extracted to OCaml and had substandard performance.
 More on this early work be found in J-K Zinzindohoué’s <a class="reference external" href="https://www.theses.fr/s175861">Ph.D. thesis</a>.</p>
-<p>To deliver greater performance, we established a C-like subset of F* that would
+<p>To deliver better performance, we established a C-like subset of F* that would
 compile to C, called Low*. Its foundations were presented at ICFP 2017:
-<a class="reference external" href="https://arxiv.org/abs/1703.00053)">Verified Low-Level Programming Embedded in F*</a> (Jonathan Protzenko, Jean-Karim
+<a class="reference external" href="https://arxiv.org/abs/1703.00053">Verified Low-Level Programming Embedded in F*</a> (Jonathan Protzenko, Jean-Karim
 Zinzindohoué, Aseem Rastogi, Tahina Ramananandro, Peng Wang, Santiago
 Zanella-Béguelin, Antoine Delignat-Lavaud, Cătălin Hriţcu, Karthikeyan
 Bhargavan, Cédric Fournet, and Nikhil Swamy).</p>
@@ -222,8 +223,8 @@ Bhargavan, Cédric Fournet, and Nikhil Swamy).</p>
 first version of the HACL* library at CCS 2017:
 <a class="reference external" href="http://eprint.iacr.org/2017/536">HACL*: A Verified Modern Cryptographic Library</a> (Jean-Karim Zinzindohoué, Karthikeyan
 Bhargavan, Jonathan Protzenko, Benjamin Beurdouche).</p>
-<p>In parallel, we set out to design a DSL for assembly programming, for those algorithms
-which could not achieve maximal performance unless written in hand-tuned
+<p>In parallel to work on HACL*, the Vale team set out to design a DSL for assembly programming,
+for those algorithms which could not achieve maximal performance unless written in hand-tuned
 assembly. The first version of Vale, which used Dafny as its verified backend,
 was presented at Usenix 2017 (distinguished paper award): <a class="reference external" href="https://project-everest.github.io/assets/vale2017.pdf">Vale: Verifying
 High-Performance Cryptographic Assembly Code</a> (Barry Bond, Chris
@@ -239,20 +240,21 @@ to connect the two semantics and establish deep integrations between parts of
 the codebase written in C and those written in assembly. Connecting C and ASM also
 enabled implementation multiplexing and algorithmic agility, while establishing
 strong abstraction boundaries to serve as a foundation for other verified
-clients. We call the result EverCrypt: <a class="reference external" href="https://eprint.iacr.org/2019/757)">EverCrypt: A Fast, Verified,
+clients. We call the result EverCrypt: <a class="reference external" href="https://eprint.iacr.org/2019/757">EverCrypt: A Fast, Verified,
 Cross-Platform Cryptographic Provider</a>
 (Jonathan Protzenko, Bryan Parno, Aymeric Fromherz, Chris Hawblitzel, Marina
 Polubelova, Karthikeyan Bhargavan, Benjamin Beurdouche, Joonwon Choi, Antoine
 Delignat-Lavaud, Cedric Fournet, Tahina Ramananandro, Aseem Rastogi, Nikhil
 Swamy, Christoph Wintersteiger and Santiago Zanella-Beguelin).</p>
 </div>
-<div class="section" id="the-tools-we-use">
-<h2>The tools we use<a class="headerlink" href="#the-tools-we-use" title="Permalink to this headline">¶</a></h2>
-<p>HACL*, the Vale cryptographic libraries and EverCrypt are written and verified
+<div class="section" id="our-verification-tools">
+<h2>Our Verification Tools<a class="headerlink" href="#our-verification-tools" title="Permalink to this headline">¶</a></h2>
+<p>HACL* and EverCrypt are written and verified
 using the <a class="reference external" href="https://github.com/FStarLang/kremlin/">F*</a> language, then compiled
-to a mixture of C (using a dedicated compiler, <a class="reference external" href="https://github.com/FStarLang/kremlin/">KreMLin</a>) and assembly.</p>
-<p>We also use the <a class="reference external" href="https://github.com/project-everest/vale/">Vale</a> tool, which compiles the Vale DSL to F*, and is
-responsible for printing Vale assembly to concrete syntax.</p>
+to a mixture of C (using a dedicated compiler, <a class="reference external" href="https://github.com/FStarLang/kremlin/">KreMLin</a>).</p>
+<p>The Vale cryptographic libraries (used in EverCrypt) rely on the
+<a class="reference external" href="https://github.com/project-everest/vale/">Vale</a> tool, which compiles the Vale DSL to F*, and is
+responsible for compiling the Vale code to assembly.</p>
 </div>
 </div>
 
@@ -260,11 +262,15 @@ responsible for printing Vale assembly to concrete syntax.</p>
            </div>
            
           </div>
+    <a href="https://github.com/project-everest/hacl-star/">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub">
+    </a>
+
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="Obtaining.html" class="btn btn-neutral float-right" title="Obtaining the source code" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="Obtaining.html" class="btn btn-neutral float-right" title="Using the crypto library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="Supported.html" class="btn btn-neutral float-left" title="List of supported algorithms" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

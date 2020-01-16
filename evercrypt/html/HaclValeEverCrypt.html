@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Merkle Tree API &mdash; The HACL and EverCrypt reference documentation  documentation</title>
+  <title>HACL*, Vale, and EverCrypt &mdash; HACL* and EverCrypt Manual  documentation</title>
   
 
   
@@ -45,8 +45,8 @@
   <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="WebAssembly bindings" href="WasmDoc.html" />
-    <link rel="prev" title="Legacy EverCrypt headers (EverCrypt.h, EverCrypt_Hacl.h, EverCrypt_Vale.h)" href="EverCryptLegacy.html" /> 
+    <link rel="next" title="List of supported algorithms" href="Supported.html" />
+    <link rel="prev" title="A High Assurance Cryptographic Library" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -60,7 +60,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> The HACL and EverCrypt reference documentation
+            <a href="index.html" class="icon icon-home"> HACL* and EverCrypt Manual
           
 
           
@@ -92,15 +92,15 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">HACL*, Vale, and EverCrypt</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Supported.html">List of supported algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Overview.html">The research behind</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Obtaining.html">Obtaining the source code</a></li>
-<li class="toctree-l1"><a class="reference internal" href="General.html">General recommendations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Underlying research</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Obtaining.html">Using the crypto library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="General.html">Digging into the F* source code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="HaclDoc.html">HACL APIs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="EverCryptDoc.html">EverCrypt APIs</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Merkle Tree API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="WasmDoc.html">WebAssembly bindings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="OCamlDoc.html">OCaml bindings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API.html">Which API to use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Applications.html">Verified Applications</a></li>
 </ul>
 
             
@@ -115,7 +115,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">The HACL and EverCrypt reference documentation</a>
+          <a href="index.html">HACL* and EverCrypt Manual</a>
         
       </nav>
 
@@ -146,14 +146,12 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Merkle Tree API</li>
+      <li>HACL*, Vale, and EverCrypt</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="sources/Merkle.rst.txt" rel="nofollow"> View page source</a>
-          
         
       </li>
     
@@ -163,24 +161,56 @@
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+
            <div itemprop="articleBody">
             
-  <div class="section" id="merkle-tree-api">
-<h1>Merkle Tree API<a class="headerlink" href="#merkle-tree-api" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="hacl-vale-and-evercrypt">
+<span id="hacl-vale-evercrypt"></span><h1>HACL*, Vale, and EverCrypt<a class="headerlink" href="#hacl-vale-and-evercrypt" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference external" href="https://github.com/project-everest/hacl-star/">hacl-star</a> repository
+contains code from several related projects developed as part of
+<a class="reference external" href="https://project-everest.github.io/">Project Everest</a>, which aims to build
+and deploy a verified HTTPS stack. These components are arranges as shown below.</p>
+<a class="reference internal image-reference" href="images/diagram.png"><img alt="images/diagram.png" class="align-center" src="images/diagram.png" style="width: 80%;" /></a>
+<ul class="simple">
+<li>HACL* provides a set of highly efficient, pure C implementations of complete
+cryptographic primitives. Each algorithm comes with its own API callable from
+C clients.</li>
+<li>Vale provides optimized assembly (ASM) core routines for performance-critical
+code. Vale code is not intended to be called from C by end users.</li>
+<li>EverCrypt brings HACL* and Vale under an abstract, high-level API
+that automatically picks the best Vale or HACL* implementation depending on
+the machine the code is running on (multiplexing). EverCrypt also offers a
+single API for all algorithms from the same family (e.g. AEAD, hashes),
+allowing clients to reconfigure their choice of algorithm dynamically without
+recompiling (agility).</li>
+</ul>
+<p>All of this code is verified using the F* programming language; once verified,
+our code is extracted to a mixture of C and ASM.</p>
+<p>Our code is callable from C clients, and from OCaml, via ctypes bindings. A
+subset of our code (the HACL API) compiles to WebAssembly via a dedicated,
+formalized codepath of the <a class="reference external" href="https://github.com/FStarLang/kremlin/">KreMLin</a> compiler and can be used for any Web context
+(e.g. Electron, website) where modern, trustworthy cryptography is in order.</p>
+<p>In addition to unverified clients, verified clients can be built atop the
+EverCrypt API. These include a library of Merkle Trees, distributed in the
+present repository, but also an implementation of the Signal protocol in F*.</p>
 </div>
 
 
            </div>
            
           </div>
+    <a href="https://github.com/project-everest/hacl-star/">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub">
+    </a>
+
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="WasmDoc.html" class="btn btn-neutral float-right" title="WebAssembly bindings" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="Supported.html" class="btn btn-neutral float-right" title="List of supported algorithms" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="EverCryptLegacy.html" class="btn btn-neutral float-left" title="Legacy EverCrypt headers (EverCrypt.h, EverCrypt_Hacl.h, EverCrypt_Vale.h)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="A High Assurance Cryptographic Library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

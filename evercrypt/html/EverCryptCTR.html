@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>CPU autodetection (EverCrypt_AutoConfig2.h) &mdash; HACL* and EverCrypt Manual  documentation</title>
+  <title>CTR-mode encryption (EverCrypt_CTR.h) &mdash; HACL* and EverCrypt Manual  documentation</title>
   
 
   
@@ -45,8 +45,8 @@
   <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="AEAD (EverCrypt_AEAD.h)" href="EverCryptAEAD.html" />
-    <link rel="prev" title="EverCrypt APIs" href="EverCryptDoc.html" /> 
+    <link rel="next" title="Hashing (EverCrypt_Hash.h)" href="EverCryptHash.html" />
+    <link rel="prev" title="AEAD (EverCrypt_AEAD.h)" href="EverCryptAEAD.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -99,9 +99,13 @@
 <li class="toctree-l1"><a class="reference internal" href="General.html">Digging into the F* source code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="HaclDoc.html">HACL APIs</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="EverCryptDoc.html">EverCrypt APIs</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">CPU autodetection (<code class="docutils literal notranslate"><span class="pre">EverCrypt_AutoConfig2.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptAutoConfig.html">CPU autodetection (<code class="docutils literal notranslate"><span class="pre">EverCrypt_AutoConfig2.h</span></code>)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="EverCryptAEAD.html">AEAD (<code class="docutils literal notranslate"><span class="pre">EverCrypt_AEAD.h</span></code>)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="EverCryptCTR.html">CTR-mode encryption (<code class="docutils literal notranslate"><span class="pre">EverCrypt_CTR.h</span></code>)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">CTR-mode encryption (<code class="docutils literal notranslate"><span class="pre">EverCrypt_CTR.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#state-management">State management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ctr-mode-of-operation">CTR mode of operation</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="EverCryptHash.html">Hashing (<code class="docutils literal notranslate"><span class="pre">EverCrypt_Hash.h</span></code>)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="EverCryptHMAC.html">HMAC (<code class="docutils literal notranslate"><span class="pre">EverCrypt_HMAC.h</span></code>)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="EverCryptHKDF.html">HKDF (<code class="docutils literal notranslate"><span class="pre">EverCrypt_HKDF.h</span></code>)</a></li>
@@ -159,7 +163,7 @@
         
           <li><a href="EverCryptDoc.html">EverCrypt APIs</a> &raquo;</li>
         
-      <li>CPU autodetection (<code class="docutils literal notranslate"><span class="pre">EverCrypt_AutoConfig2.h</span></code>)</li>
+      <li>CTR-mode encryption (<code class="docutils literal notranslate"><span class="pre">EverCrypt_CTR.h</span></code>)</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -177,29 +181,84 @@
 
            <div itemprop="articleBody">
             
-  <div class="section" id="cpu-autodetection-evercrypt-autoconfig2-h">
-<h1>CPU autodetection (<code class="docutils literal notranslate"><span class="pre">EverCrypt_AutoConfig2.h</span></code>)<a class="headerlink" href="#cpu-autodetection-evercrypt-autoconfig2-h" title="Permalink to this headline">¶</a></h1>
-<p>Clients of EverCrypt <strong>should</strong> call the <code class="docutils literal notranslate"><span class="pre">init</span></code> function in order to detect
-the target CPU EverCrypt is running on. Failure to do so will result in the
-EverCrypt APIs always picking a slow, fallback implementation for all
-algorithms.</p>
+  <div class="section" id="ctr-mode-encryption-evercrypt-ctr-h">
+<h1>CTR-mode encryption (<code class="docutils literal notranslate"><span class="pre">EverCrypt_CTR.h</span></code>)<a class="headerlink" href="#ctr-mode-encryption-evercrypt-ctr-h" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Using encryption without a MAC is potentially <strong>dangerous</strong>. We recommend users
+stick with the AEAD API.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p><strong>This API is a work-in-progress and is not fully verified.</strong> If you need it
+for something serious, let us know and we’ll prioritize.</p>
+<ul class="last simple">
+<li>It doesn’t multiplex across all implementations of Chacha</li>
+<li>It doesn’t offer complete encryption, only block-by-block</li>
+<li>It has no streaming API</li>
+</ul>
+</div>
+<p>This API is:</p>
+<ul class="simple">
+<li><strong>agile</strong></li>
+<li><strong>multiplexing</strong>: portable C (Chacha); AESNI + CLMUL (AES128, AES256)</li>
+<li><strong>stateful</strong></li>
+</ul>
+<p>Possible values for the agility argument (<code class="docutils literal notranslate"><span class="pre">Hacl_Spec.h</span></code>) :</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
-<span class="kt">void</span> <span class="nf">EverCrypt_AutoConfig2_init</span><span class="p">();</span>
+<span class="cp">#define Spec_Agile_Cipher_AES128 0</span>
+<span class="cp">#define Spec_Agile_Cipher_AES256 1</span>
+<span class="cp">#define Spec_Agile_Cipher_CHACHA20 2</span>
 
 </pre></div>
 </div>
-<p>After CPU autodetection has run, clients may choose to forbid EverCrypt from
-relying on a specific CPU feature. This can be achieved via the various
-<code class="docutils literal notranslate"><span class="pre">disable_*</span></code> functions, e.g.</p>
+<p>Supported values for the agility argument: all</p>
+<div class="section" id="state-management">
+<h2>State management<a class="headerlink" href="#state-management" title="Permalink to this headline">¶</a></h2>
+<p>Clients are first expected to allocate persistent state via <code class="docutils literal notranslate"><span class="pre">create_in</span></code>, which
+stores the expanded key along with the current value of the counter.</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
-<span class="kt">void</span> <span class="nf">EverCrypt_AutoConfig2_disable_avx2</span><span class="p">();</span>
+<span class="n">EverCrypt_Error_error_code</span>
+<span class="nf">EverCrypt_CTR_create_in</span><span class="p">(</span>
+  <span class="n">Spec_Agile_Cipher_cipher_alg</span> <span class="n">a</span><span class="p">,</span>
+  <span class="n">EverCrypt_CTR_state_s</span> <span class="o">**</span><span class="n">dst</span><span class="p">,</span>
+  <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">k1</span><span class="p">,</span>
+  <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">iv</span><span class="p">,</span>
+  <span class="kt">uint32_t</span> <span class="n">iv_len</span><span class="p">,</span>
+  <span class="kt">uint32_t</span> <span class="n">c</span>
+<span class="p">);</span>
 
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The <code class="docutils literal notranslate"><span class="pre">EverCrypt_AutoConfig2_disable_{hacl,vale,openssl,bcrypt}</span></code> functions are
-only exposed for internal testing and should not be called by end-users.</p>
+<p>The expected usage for <code class="docutils literal notranslate"><span class="pre">create_in</span></code> is similar to <code class="docutils literal notranslate"><span class="pre">EverCrypt_AEAD_create_in</span></code>,
+except arbitrary-length IVs are not supported; IV lengths must satisfy the
+<code class="docutils literal notranslate"><span class="pre">nounce_bound</span></code> predicate from <code class="docutils literal notranslate"><span class="pre">Spec.Agile.CTR.fsti</span></code>. Clients are also
+expected to pass the initial value of the counter.</p>
+<p>State can be reset to a different IV and counter value using the <code class="docutils literal notranslate"><span class="pre">init</span></code>
+function. (This function really should be called <code class="docutils literal notranslate"><span class="pre">reset</span></code>.)</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
+<span class="kt">void</span>
+<span class="nf">EverCrypt_CTR_init</span><span class="p">(</span>
+  <span class="n">EverCrypt_CTR_state_s</span> <span class="o">*</span><span class="n">p</span><span class="p">,</span>
+  <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">k1</span><span class="p">,</span>
+  <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">iv</span><span class="p">,</span>
+  <span class="kt">uint32_t</span> <span class="n">iv_len</span><span class="p">,</span>
+  <span class="kt">uint32_t</span> <span class="n">c</span>
+<span class="p">);</span>
+
+</pre></div>
+</div>
+<p>State <strong>must</strong> be called via <code class="docutils literal notranslate"><span class="pre">free</span></code>.</p>
+</div>
+<div class="section" id="ctr-mode-of-operation">
+<h2>CTR mode of operation<a class="headerlink" href="#ctr-mode-of-operation" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">update_block</span></code> function encrypts a block-sized piece of data using the CTR
+mode, and internally increments the state by one.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
+<span class="kt">void</span> <span class="nf">EverCrypt_CTR_update_block</span><span class="p">(</span><span class="n">EverCrypt_CTR_state_s</span> <span class="o">*</span><span class="n">p</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">dst</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">src</span><span class="p">);</span>
+
+</pre></div>
+</div>
 </div>
 </div>
 
@@ -215,10 +274,10 @@ only exposed for internal testing and should not be called by end-users.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="EverCryptAEAD.html" class="btn btn-neutral float-right" title="AEAD (EverCrypt_AEAD.h)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="EverCryptHash.html" class="btn btn-neutral float-right" title="Hashing (EverCrypt_Hash.h)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="EverCryptDoc.html" class="btn btn-neutral float-left" title="EverCrypt APIs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="EverCryptAEAD.html" class="btn btn-neutral float-left" title="AEAD (EverCrypt_AEAD.h)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

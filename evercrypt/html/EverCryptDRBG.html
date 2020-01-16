@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>HACL APIs &mdash; HACL* and EverCrypt Manual  documentation</title>
+  <title>HMAC-DRBG (EverCrypt_DRBG.h) &mdash; HACL* and EverCrypt Manual  documentation</title>
   
 
   
@@ -45,8 +45,8 @@
   <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="AEAD: Chacha20-Poly1305" href="HaclAEAD.html" />
-    <link rel="prev" title="Digging into the F* source code" href="General.html" /> 
+    <link rel="next" title="Non-agile APIs" href="EverCryptNonAgile.html" />
+    <link rel="prev" title="HKDF (EverCrypt_HKDF.h)" href="EverCryptHKDF.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -97,16 +97,23 @@
 <li class="toctree-l1"><a class="reference internal" href="Overview.html">Underlying research</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Obtaining.html">Using the crypto library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="General.html">Digging into the F* source code</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">HACL APIs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="HaclAEAD.html">AEAD: Chacha20-Poly1305</a></li>
-<li class="toctree-l2"><a class="reference internal" href="HaclHash.html">Hashing: SHA-2, SHA-3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="HaclECDH.html">ECDH: X25519</a></li>
-<li class="toctree-l2"><a class="reference internal" href="HaclSig.html">Signatures: Ed25519</a></li>
-<li class="toctree-l2"><a class="reference internal" href="HaclNaCl.html">NaCl API: Box and SecretBox</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Randomness.html">Randomness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HaclDoc.html">HACL APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="EverCryptDoc.html">EverCrypt APIs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="EverCryptAutoConfig.html">CPU autodetection (<code class="docutils literal notranslate"><span class="pre">EverCrypt_AutoConfig2.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptAEAD.html">AEAD (<code class="docutils literal notranslate"><span class="pre">EverCrypt_AEAD.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptCTR.html">CTR-mode encryption (<code class="docutils literal notranslate"><span class="pre">EverCrypt_CTR.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptHash.html">Hashing (<code class="docutils literal notranslate"><span class="pre">EverCrypt_Hash.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptHMAC.html">HMAC (<code class="docutils literal notranslate"><span class="pre">EverCrypt_HMAC.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptHKDF.html">HKDF (<code class="docutils literal notranslate"><span class="pre">EverCrypt_HKDF.h</span></code>)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">HMAC-DRBG (<code class="docutils literal notranslate"><span class="pre">EverCrypt_DRBG.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#agile-api">Agile API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#non-agile-api">Non-agile API</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="EverCryptDoc.html">EverCrypt APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptNonAgile.html">Non-agile APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptDeprecated.html">Deprecated APIs</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="API.html">Which API to use</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Applications.html">Verified Applications</a></li>
 </ul>
@@ -154,7 +161,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>HACL APIs</li>
+          <li><a href="EverCryptDoc.html">EverCrypt APIs</a> &raquo;</li>
+        
+      <li>HMAC-DRBG (<code class="docutils literal notranslate"><span class="pre">EverCrypt_DRBG.h</span></code>)</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -172,44 +181,36 @@
 
            <div itemprop="articleBody">
             
-  <div class="section" id="hacl-apis">
-<h1>HACL APIs<a class="headerlink" href="#hacl-apis" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="HaclAEAD.html">AEAD: Chacha20-Poly1305</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="HaclAEAD.html#aead-encryption">AEAD Encryption</a></li>
-<li class="toctree-l2"><a class="reference internal" href="HaclAEAD.html#aead-decryption">AEAD Decryption</a></li>
-<li class="toctree-l2"><a class="reference internal" href="HaclAEAD.html#chacha20-and-poly1305">Chacha20 and Poly1305</a></li>
+  <div class="section" id="hmac-drbg-evercrypt-drbg-h">
+<h1>HMAC-DRBG (<code class="docutils literal notranslate"><span class="pre">EverCrypt_DRBG.h</span></code>)<a class="headerlink" href="#hmac-drbg-evercrypt-drbg-h" title="Permalink to this headline">¶</a></h1>
+<p>This API is:</p>
+<ul class="simple">
+<li><strong>agile</strong></li>
+<li><strong>multiplexing</strong>: portable C (all); SHAEXT (SHA2-256)</li>
+<li>stateful</li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="HaclHash.html">Hashing: SHA-2, SHA-3</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="HaclHash.html#sha-2">SHA-2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="HaclHash.html#sha-3">SHA-3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="HaclHash.html#shake">SHAKE</a></li>
-<li class="toctree-l2"><a class="reference internal" href="HaclHash.html#other-hash-functions-blake-2-md5-sha-1">Other Hash Functions: Blake-2, MD5, SHA-1</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="HaclECDH.html">ECDH: X25519</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="HaclECDH.html#key-generation">Key Generation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="HaclECDH.html#ecdh-shared-secret">ECDH Shared Secret</a></li>
-<li class="toctree-l2"><a class="reference internal" href="HaclECDH.html#other-curves-p-256">Other Curves: P-256</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="HaclSig.html">Signatures: Ed25519</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="HaclSig.html#key-generation">Key Generation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="HaclSig.html#eddsa-signing">EdDSA Signing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="HaclSig.html#eddsa-verify">EdDSA Verify</a></li>
-<li class="toctree-l2"><a class="reference internal" href="HaclSig.html#eddsa-sign-expanded">EdDSA Sign Expanded</a></li>
-<li class="toctree-l2"><a class="reference internal" href="HaclSig.html#other-signature-algorithms-ecdsa-with-p-256">Other Signature Algorithms: ECDSA with P-256</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="HaclNaCl.html">NaCl API: Box and SecretBox</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="HaclNaCl.html#public-key-encryption-box">Public-Key Encryption: Box</a></li>
-<li class="toctree-l2"><a class="reference internal" href="HaclNaCl.html#symmetric-encryption-secretbox">Symmetric Encryption: SecretBox</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="Randomness.html">Randomness</a></li>
-</ul>
+<p>Possible values for the agility argument (<code class="docutils literal notranslate"><span class="pre">Hacl_Spec.h</span></code>) :</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
+<span class="cp">#define Spec_Hash_Definitions_SHA2_224 0</span>
+<span class="cp">#define Spec_Hash_Definitions_SHA2_256 1</span>
+<span class="cp">#define Spec_Hash_Definitions_SHA2_384 2</span>
+<span class="cp">#define Spec_Hash_Definitions_SHA2_512 3</span>
+<span class="cp">#define Spec_Hash_Definitions_SHA1 4</span>
+<span class="cp">#define Spec_Hash_Definitions_MD5 5</span>
+
+</pre></div>
+</div>
+<p>Supported values for the agility argument: SHA1; SHA2_256; SHA2_384; SHA2_512.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">As always, the source is authoritative and you should check <code class="docutils literal notranslate"><span class="pre">is_supported_alg</span></code>
+in <code class="docutils literal notranslate"><span class="pre">EverCrypt.HMAC.fsti</span></code>.</p>
+</div>
+<div class="section" id="agile-api">
+<h2>Agile API<a class="headerlink" href="#agile-api" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="non-agile-api">
+<h2>Non-agile API<a class="headerlink" href="#non-agile-api" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -225,10 +226,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="HaclAEAD.html" class="btn btn-neutral float-right" title="AEAD: Chacha20-Poly1305" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="EverCryptNonAgile.html" class="btn btn-neutral float-right" title="Non-agile APIs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="General.html" class="btn btn-neutral float-left" title="Digging into the F* source code" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="EverCryptHKDF.html" class="btn btn-neutral float-left" title="HKDF (EverCrypt_HKDF.h)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

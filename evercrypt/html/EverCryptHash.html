@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Hashing (EverCrypt_Hash.h) &mdash; The HACL and EverCrypt reference documentation  documentation</title>
+  <title>Hashing (EverCrypt_Hash.h) &mdash; HACL* and EverCrypt Manual  documentation</title>
   
 
   
@@ -46,7 +46,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="HMAC (EverCrypt_HMAC.h)" href="EverCryptHMAC.html" />
-    <link rel="prev" title="AEAD (EverCrypt_AEAD.h)" href="EverCryptAEAD.html" /> 
+    <link rel="prev" title="CTR-mode encryption (EverCrypt_CTR.h)" href="EverCryptCTR.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -60,7 +60,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> The HACL and EverCrypt reference documentation
+            <a href="index.html" class="icon icon-home"> HACL* and EverCrypt Manual
           
 
           
@@ -92,28 +92,31 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="HaclValeEverCrypt.html">HACL*, Vale, and EverCrypt</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Supported.html">List of supported algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Overview.html">The research behind</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Obtaining.html">Obtaining the source code</a></li>
-<li class="toctree-l1"><a class="reference internal" href="General.html">General recommendations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Underlying research</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Obtaining.html">Using the crypto library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="General.html">Digging into the F* source code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="HaclDoc.html">HACL APIs</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="EverCryptDoc.html">EverCrypt APIs</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="EverCryptAutoConfig.html">CPU autodetection (<code class="docutils literal notranslate"><span class="pre">EverCrypt_AutoConfig2.h</span></code>)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="EverCryptAEAD.html">AEAD (<code class="docutils literal notranslate"><span class="pre">EverCrypt_AEAD.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptCTR.html">CTR-mode encryption (<code class="docutils literal notranslate"><span class="pre">EverCrypt_CTR.h</span></code>)</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Hashing (<code class="docutils literal notranslate"><span class="pre">EverCrypt_Hash.h</span></code>)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#non-incremental-api">Non-incremental API</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#incremental-api">Incremental API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#block-based-api">Block-based API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#streaming-api">Streaming API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#one-shot-api">One-shot API</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="EverCryptHMAC.html">HMAC (<code class="docutils literal notranslate"><span class="pre">EverCrypt_HMAC.h</span></code>)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="EverCryptHKDF.html">HKDF (<code class="docutils literal notranslate"><span class="pre">EverCrypt_HKDF.h</span></code>)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="EverCryptDeprecated.html">Deprecated block cipher API (<code class="docutils literal notranslate"><span class="pre">EverCrypt_Cipher.h</span></code>)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="EverCryptLegacy.html">Legacy EverCrypt headers (<code class="docutils literal notranslate"><span class="pre">EverCrypt.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverCrypt_Hacl.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverCrypt_Vale.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptDRBG.html">HMAC-DRBG (<code class="docutils literal notranslate"><span class="pre">EverCrypt_DRBG.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptNonAgile.html">Non-agile APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptDeprecated.html">Deprecated APIs</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Merkle.html">Merkle Tree API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="WasmDoc.html">WebAssembly bindings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="OCamlDoc.html">OCaml bindings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API.html">Which API to use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Applications.html">Verified Applications</a></li>
 </ul>
 
             
@@ -128,7 +131,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">The HACL and EverCrypt reference documentation</a>
+          <a href="index.html">HACL* and EverCrypt Manual</a>
         
       </nav>
 
@@ -167,8 +170,6 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/EverCryptHash.rst.txt" rel="nofollow"> View page source</a>
-          
         
       </li>
     
@@ -178,6 +179,7 @@
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+
            <div itemprop="articleBody">
             
   <div class="section" id="hashing-evercrypt-hash-h">
@@ -200,10 +202,10 @@
 </pre></div>
 </div>
 <p>Supported values for the agility argument: all</p>
-<div class="section" id="non-incremental-api">
-<h2>Non-incremental API<a class="headerlink" href="#non-incremental-api" title="Permalink to this headline">¶</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">EverCrypt_Hash_*</span></code> functions are <strong>non-incremental</strong> and require the
-client to follow this exact state machine:</p>
+<div class="section" id="block-based-api">
+<h2>Block-based API<a class="headerlink" href="#block-based-api" title="Permalink to this headline">¶</a></h2>
+<p>The block-based functions require the client to follow this exact state
+machine:</p>
 <ol class="arabic simple">
 <li>one call to <code class="docutils literal notranslate"><span class="pre">EverCrypt_Hash_create_in</span></code></li>
 <li>one call to <code class="docutils literal notranslate"><span class="pre">EverCrypt_Hash_init</span></code></li>
@@ -216,23 +218,25 @@ block size)</li>
 <li>one call to <code class="docutils literal notranslate"><span class="pre">EverCrypt_Hash_free</span></code></li>
 </ol>
 <p>Clients may jump to state 2 at any point before state 6.</p>
-<p>This API does not allow feeding more data into the hash function after
-<code class="docutils literal notranslate"><span class="pre">update_last</span></code> has been called, the client must proceed with <code class="docutils literal notranslate"><span class="pre">finish</span></code> or
-erase the state with <code class="docutils literal notranslate"><span class="pre">init</span></code>.</p>
+<p>As evidenced by the state machine, this API requires clients to buffer data and
+chunk it along the block size (“block-based”). Furthermore, this API does
+not allow feeding more data into the hash function after <code class="docutils literal notranslate"><span class="pre">update_last</span></code> has
+been called: the client must either proceed with <code class="docutils literal notranslate"><span class="pre">finish</span></code> or reset the state
+with <code class="docutils literal notranslate"><span class="pre">init</span></code>.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This API is error-prone and is not recommended for unverified clients. We
-advise clients use the incremental API described below.</p>
+advise clients use the streaming API described below.</p>
 </div>
 </div>
-<div class="section" id="incremental-api">
-<h2>Incremental API<a class="headerlink" href="#incremental-api" title="Permalink to this headline">¶</a></h2>
-<p>The incremental hash API wraps the non-incremental API with an internal buffer
+<div class="section" id="streaming-api">
+<h2>Streaming API<a class="headerlink" href="#streaming-api" title="Permalink to this headline">¶</a></h2>
+<p>The streaming hash API wraps the block-based API with an internal buffer
 (at the expense of an extra indirection) and relieves the client from having to
 perform modulo computations and block-size management. Furthermore, the
-incremental API allows extracting intermediary hashes without invalidating the
-state, meaning clients can keep feeding data into the hash function (at the
-expense of a state copy).</p>
+block-based API allows extracting intermediary hashes without invalidating the
+state, meaning clients can compute a hash, then later feed more data into the
+hash function (at the expense of a state copy).</p>
 <p>Clients can allocate state via <code class="docutils literal notranslate"><span class="pre">create_in</span></code>. This is a non-faillible function
 and as such does not return an error code. This is possible because i) we always
 have a fallback portable C implementation available for all algorithms and ii)
@@ -262,7 +266,7 @@ state:</p>
 </pre></div>
 </div>
 <p>Once done, clients should use <code class="docutils literal notranslate"><span class="pre">free</span></code> which frees all internal buffers and
-underlying non-incremental state:</p>
+underlying block-based state:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
 <span class="kt">void</span> <span class="nf">EverCrypt_Hash_Incremental_free</span><span class="p">(</span><span class="n">EverCrypt_Hash_Incremental_state_s</span> <span class="o">*</span><span class="n">s</span><span class="p">);</span>
 
@@ -270,9 +274,37 @@ underlying non-incremental state:</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">There is no incremental HACL* API for hashes, i.e. clients must go through
-agility and multiplexing to enjoy the incremental hash API.</p>
+<p class="last">There is no streaming HACL* API for hashes, i.e. clients must go through
+agility and multiplexing to enjoy the streaming hash API.</p>
 </div>
+</div>
+<div class="section" id="one-shot-api">
+<h2>One-shot API<a class="headerlink" href="#one-shot-api" title="Permalink to this headline">¶</a></h2>
+<p>If all data is available at once, clients can use the (slightly more efficient),
+agile, multiplexing <code class="docutils literal notranslate"><span class="pre">EverCrypt_Hash_hash</span></code> function.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
+<span class="kt">void</span>
+<span class="nf">EverCrypt_Hash_hash</span><span class="p">(</span>
+  <span class="n">Spec_Hash_Definitions_hash_alg</span> <span class="n">a</span><span class="p">,</span>
+  <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">dst</span><span class="p">,</span>
+  <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">input</span><span class="p">,</span>
+  <span class="kt">uint32_t</span> <span class="n">len</span>
+<span class="p">);</span>
+
+</pre></div>
+</div>
+<p>This function merely dispatches onto one of the numerous non-agile specialized
+variants. As such, the cost of agility is one test.</p>
+<p>For SHA2-256 and SHA2-224, the EverCrypt API provides non-agile, multiplexing
+variants:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
+<span class="kt">void</span> <span class="nf">EverCrypt_Hash_hash_256</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="n">input</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">input_len</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">dst</span><span class="p">);</span>
+
+</pre></div>
+</div>
+<p>For other hash algorithms, for which only one implementation (portable C) is
+currently available, clients can use the non-agile, non-multiplexing HACL Hash
+API.</p>
 </div>
 </div>
 
@@ -280,6 +312,10 @@ agility and multiplexing to enjoy the incremental hash API.</p>
            </div>
            
           </div>
+    <a href="https://github.com/project-everest/hacl-star/">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub">
+    </a>
+
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
@@ -287,7 +323,7 @@ agility and multiplexing to enjoy the incremental hash API.</p>
         <a href="EverCryptHMAC.html" class="btn btn-neutral float-right" title="HMAC (EverCrypt_HMAC.h)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="EverCryptAEAD.html" class="btn btn-neutral float-left" title="AEAD (EverCrypt_AEAD.h)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="EverCryptCTR.html" class="btn btn-neutral float-left" title="CTR-mode encryption (EverCrypt_CTR.h)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

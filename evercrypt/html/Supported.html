@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>List of supported algorithms &mdash; The HACL and EverCrypt reference documentation  documentation</title>
+  <title>List of supported algorithms &mdash; HACL* and EverCrypt Manual  documentation</title>
   
 
   
@@ -45,8 +45,8 @@
   <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="The research behind" href="Overview.html" />
-    <link rel="prev" title="The HACL and EverCrypt reference manual" href="index.html" /> 
+    <link rel="next" title="Underlying research" href="Overview.html" />
+    <link rel="prev" title="HACL*, Vale, and EverCrypt" href="HaclValeEverCrypt.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -60,7 +60,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> The HACL and EverCrypt reference documentation
+            <a href="index.html" class="icon icon-home"> HACL* and EverCrypt Manual
           
 
           
@@ -92,15 +92,15 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="HaclValeEverCrypt.html">HACL*, Vale, and EverCrypt</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">List of supported algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Overview.html">The research behind</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Obtaining.html">Obtaining the source code</a></li>
-<li class="toctree-l1"><a class="reference internal" href="General.html">General recommendations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Underlying research</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Obtaining.html">Using the crypto library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="General.html">Digging into the F* source code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="HaclDoc.html">HACL APIs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="EverCryptDoc.html">EverCrypt APIs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Merkle.html">Merkle Tree API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="WasmDoc.html">WebAssembly bindings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="OCamlDoc.html">OCaml bindings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API.html">Which API to use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Applications.html">Verified Applications</a></li>
 </ul>
 
             
@@ -115,7 +115,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">The HACL and EverCrypt reference documentation</a>
+          <a href="index.html">HACL* and EverCrypt Manual</a>
         
       </nav>
 
@@ -152,8 +152,6 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/Supported.rst.txt" rel="nofollow"> View page source</a>
-          
         
       </li>
     
@@ -163,6 +161,7 @@
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+
            <div itemprop="articleBody">
             
   <div class="section" id="list-of-supported-algorithms">
@@ -170,19 +169,21 @@
 <p>This table provides an overview of all the algorithms we currently support. This
 only lists algorithms for which verification is complete. Please refer to
 documentation for each individual API for the full details.</p>
-<blockquote>
-<div><table border="1" class="docutils">
+<table border="1" class="docutils">
 <colgroup>
 <col width="24%" />
-<col width="31%" />
+<col width="30%" />
 <col width="33%" />
-<col width="12%" />
+<col width="14%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Algorithm</th>
-<th class="head">C version</th>
-<th class="head">ASM version</th>
-<th class="head">Agile API</th>
+<th class="head">Portable C
+(HACL*)</th>
+<th class="head">Intel ASM
+(Vale)</th>
+<th class="head">Agile API
+(EverCrypt)</th>
 </tr>
 </thead>
 <tbody valign="top">
@@ -193,13 +194,43 @@ documentation for each individual API for the full details.</p>
 </tr>
 <tr class="row-odd"><td>AES-GCM</td>
 <td>&#160;</td>
-<td>✔︎ (AES-NI + PCLMULQDQ)</td>
+<td>✔︎ (AES-NI + CLMUL)</td>
 <td>✔︎</td>
 </tr>
-<tr class="row-even"><td>ChachaPoly</td>
-<td>✔︎ (+ AVX + AVX2)</td>
+<tr class="row-even"><td>Chacha20-Poly1305</td>
+<td>✔︎ (+ AVX,AVX2)</td>
 <td>&#160;</td>
 <td>✔︎</td>
+</tr>
+<tr class="row-odd"><td><strong>ECDH</strong></td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>Curve25519</td>
+<td>✔︎</td>
+<td>✔︎ (BMI2 + ADX)</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>P-256</td>
+<td>✔︎</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><strong>Signatures</strong></td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>Ed25519</td>
+<td>✔︎</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>P-256</td>
+<td>✔︎</td>
+<td>&#160;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td><strong>Hashes</strong></td>
 <td>&#160;</td>
@@ -232,49 +263,19 @@ documentation for each individual API for the full details.</p>
 <td>&#160;</td>
 </tr>
 <tr class="row-odd"><td>Blake2</td>
-<td>✔︎</td>
+<td>✔︎ (+ AVX,AVX2)</td>
 <td>&#160;</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-even"><td><strong>MACS</strong></td>
-<td>&#160;</td>
-<td>&#160;</td>
-<td>&#160;</td>
-</tr>
-<tr class="row-odd"><td>HMAC</td>
-<td>✔︎</td>
-<td>✔︎ (see notes below)</td>
-<td>✔︎</td>
-</tr>
-<tr class="row-even"><td>Poly1305</td>
-<td>✔︎ (+ AVX + AVX2)</td>
-<td>✔︎ (X64)</td>
-<td>&#160;</td>
-</tr>
-<tr class="row-odd"><td><strong>Key Derivation</strong></td>
+<tr class="row-even"><td><strong>Key Derivation</strong></td>
 <td>&#160;</td>
 <td>&#160;</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-even"><td>HKDF</td>
+<tr class="row-odd"><td>HKDF</td>
 <td>✔︎</td>
 <td>✔︎ (see notes below)</td>
 <td>✔︎</td>
-</tr>
-<tr class="row-odd"><td><strong>ECC</strong></td>
-<td>&#160;</td>
-<td>&#160;</td>
-<td>&#160;</td>
-</tr>
-<tr class="row-even"><td>Curve25519</td>
-<td>✔︎</td>
-<td>✔︎ (BMI2 + ADX)</td>
-<td>&#160;</td>
-</tr>
-<tr class="row-odd"><td>Ed25519</td>
-<td>✔︎</td>
-<td>&#160;</td>
-<td>&#160;</td>
 </tr>
 <tr class="row-even"><td><strong>Ciphers</strong></td>
 <td>&#160;</td>
@@ -282,32 +283,42 @@ documentation for each individual API for the full details.</p>
 <td>&#160;</td>
 </tr>
 <tr class="row-odd"><td>Chacha20</td>
-<td>✔︎ (+ AVX + AVX2)</td>
+<td>✔︎ (+ AVX,AVX2)</td>
 <td>&#160;</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-even"><td>AES128, 256</td>
+<tr class="row-even"><td>AES-128,256</td>
 <td>&#160;</td>
-<td>✔︎ (AES NI + PCLMULQDQ)</td>
+<td>✔︎ (AES-NI + CLMUL)</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>AES CTR</td>
+<tr class="row-odd"><td><strong>MACS</strong></td>
 <td>&#160;</td>
-<td>✔︎ (AES NI + PCLMULQDQ)</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>HMAC</td>
+<td>✔︎</td>
+<td>✔︎ (see notes below)</td>
+<td>✔︎</td>
+</tr>
+<tr class="row-odd"><td>Poly1305</td>
+<td>✔︎ (+ AVX,AVX2)</td>
+<td>✔︎ (X64)</td>
 <td>&#160;</td>
 </tr>
 </tbody>
 </table>
-</div></blockquote>
 <p>Points of interest:</p>
 <ul class="simple">
-<li>AVX and AVX2 versions of C algorithms are achieved through the use of C
-compiler intrinsics; there is no inline ASM</li>
+<li>Some C implementations also have verified vectorized versions optimized for
+Intel AVX and AVX2 using compiler intrinsics (there is no inline assembly)</li>
 <li>MD5 and SHA1 are provided for legacy purposes and backwards-compatibility
 (e.g. TLS applications); no particular effort has been made to make them
 efficient</li>
 <li>HMAC/HKDF only use ASM implementations if the underlying hash algorithm has
 one</li>
+<li>P-256 and Blake2 are available on a development branch</li>
 </ul>
 </div>
 
@@ -315,14 +326,18 @@ one</li>
            </div>
            
           </div>
+    <a href="https://github.com/project-everest/hacl-star/">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub">
+    </a>
+
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="Overview.html" class="btn btn-neutral float-right" title="The research behind" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="Overview.html" class="btn btn-neutral float-right" title="Underlying research" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral float-left" title="The HACL and EverCrypt reference manual" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="HaclValeEverCrypt.html" class="btn btn-neutral float-left" title="HACL*, Vale, and EverCrypt" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

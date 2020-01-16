@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Deprecated block cipher API (EverCrypt_Cipher.h) &mdash; The HACL and EverCrypt reference documentation  documentation</title>
+  <title>Deprecated APIs &mdash; HACL* and EverCrypt Manual  documentation</title>
   
 
   
@@ -45,8 +45,8 @@
   <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Legacy EverCrypt headers (EverCrypt.h, EverCrypt_Hacl.h, EverCrypt_Vale.h)" href="EverCryptLegacy.html" />
-    <link rel="prev" title="HKDF (EverCrypt_HKDF.h)" href="EverCryptHKDF.html" /> 
+    <link rel="next" title="Which API to use" href="API.html" />
+    <link rel="prev" title="Non-agile APIs" href="EverCryptNonAgile.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -60,7 +60,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> The HACL and EverCrypt reference documentation
+            <a href="index.html" class="icon icon-home"> HACL* and EverCrypt Manual
           
 
           
@@ -92,24 +92,30 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="HaclValeEverCrypt.html">HACL*, Vale, and EverCrypt</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Supported.html">List of supported algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Overview.html">The research behind</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Obtaining.html">Obtaining the source code</a></li>
-<li class="toctree-l1"><a class="reference internal" href="General.html">General recommendations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Underlying research</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Obtaining.html">Using the crypto library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="General.html">Digging into the F* source code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="HaclDoc.html">HACL APIs</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="EverCryptDoc.html">EverCrypt APIs</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="EverCryptAutoConfig.html">CPU autodetection (<code class="docutils literal notranslate"><span class="pre">EverCrypt_AutoConfig2.h</span></code>)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="EverCryptAEAD.html">AEAD (<code class="docutils literal notranslate"><span class="pre">EverCrypt_AEAD.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptCTR.html">CTR-mode encryption (<code class="docutils literal notranslate"><span class="pre">EverCrypt_CTR.h</span></code>)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="EverCryptHash.html">Hashing (<code class="docutils literal notranslate"><span class="pre">EverCrypt_Hash.h</span></code>)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="EverCryptHMAC.html">HMAC (<code class="docutils literal notranslate"><span class="pre">EverCrypt_HMAC.h</span></code>)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="EverCryptHKDF.html">HKDF (<code class="docutils literal notranslate"><span class="pre">EverCrypt_HKDF.h</span></code>)</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Deprecated block cipher API (<code class="docutils literal notranslate"><span class="pre">EverCrypt_Cipher.h</span></code>)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="EverCryptLegacy.html">Legacy EverCrypt headers (<code class="docutils literal notranslate"><span class="pre">EverCrypt.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverCrypt_Hacl.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverCrypt_Vale.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptDRBG.html">HMAC-DRBG (<code class="docutils literal notranslate"><span class="pre">EverCrypt_DRBG.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EverCryptNonAgile.html">Non-agile APIs</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Deprecated APIs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#block-cipher-api-evercrypt-cipher-h">Block cipher API (<code class="docutils literal notranslate"><span class="pre">EverCrypt_Cipher.h</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#legacy-evercrypt-headers-evercrypt-h-evercrypt-hacl-h-evercrypt-vale-h">Legacy EverCrypt headers (<code class="docutils literal notranslate"><span class="pre">EverCrypt.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverCrypt_Hacl.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverCrypt_Vale.h</span></code>)</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Merkle.html">Merkle Tree API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="WasmDoc.html">WebAssembly bindings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="OCamlDoc.html">OCaml bindings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="API.html">Which API to use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Applications.html">Verified Applications</a></li>
 </ul>
 
             
@@ -124,7 +130,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">The HACL and EverCrypt reference documentation</a>
+          <a href="index.html">HACL* and EverCrypt Manual</a>
         
       </nav>
 
@@ -157,14 +163,12 @@
         
           <li><a href="EverCryptDoc.html">EverCrypt APIs</a> &raquo;</li>
         
-      <li>Deprecated block cipher API (<code class="docutils literal notranslate"><span class="pre">EverCrypt_Cipher.h</span></code>)</li>
+      <li>Deprecated APIs</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/EverCryptDeprecated.rst.txt" rel="nofollow"> View page source</a>
-          
         
       </li>
     
@@ -174,26 +178,52 @@
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+
            <div itemprop="articleBody">
             
-  <div class="section" id="deprecated-block-cipher-api-evercrypt-cipher-h">
-<h1>Deprecated block cipher API (<code class="docutils literal notranslate"><span class="pre">EverCrypt_Cipher.h</span></code>)<a class="headerlink" href="#deprecated-block-cipher-api-evercrypt-cipher-h" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="deprecated-apis">
+<h1>Deprecated APIs<a class="headerlink" href="#deprecated-apis" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="block-cipher-api-evercrypt-cipher-h">
+<h2>Block cipher API (<code class="docutils literal notranslate"><span class="pre">EverCrypt_Cipher.h</span></code>)<a class="headerlink" href="#block-cipher-api-evercrypt-cipher-h" title="Permalink to this headline">¶</a></h2>
 <p>We decided to only offer an API for CTR mode rather than exposing the raw block
 cipher function. Clients should used <code class="docutils literal notranslate"><span class="pre">EverCrypt_CTR.h</span></code> instead.</p>
+</div>
+<div class="section" id="legacy-evercrypt-headers-evercrypt-h-evercrypt-hacl-h-evercrypt-vale-h">
+<h2>Legacy EverCrypt headers (<code class="docutils literal notranslate"><span class="pre">EverCrypt.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverCrypt_Hacl.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverCrypt_Vale.h</span></code>)<a class="headerlink" href="#legacy-evercrypt-headers-evercrypt-h-evercrypt-hacl-h-evercrypt-vale-h" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">These are UNVERIFIED, legacy APIs and should not be used. In addition,
+<code class="docutils literal notranslate"><span class="pre">EverCrypt.h</span></code> relies on OpenSSL or BCrypt under the hood and is only there
+to support the needs of miTLS as we finish implementing remaining algorithms
+in EverCrypt.</p>
+</div>
+<p>If you were previously using <code class="docutils literal notranslate"><span class="pre">EverCrypt.h</span></code>:</p>
+<ul class="simple">
+<li>Users of AES-GCM should use <code class="docutils literal notranslate"><span class="pre">EverCrypt_AEAD.h</span></code> instead with a suitable
+algorithm parameter.</li>
+<li>Users of AES-CTR should use <code class="docutils literal notranslate"><span class="pre">EverCrypt_CTR.h</span></code></li>
+<li>Users of randomness should use <code class="docutils literal notranslate"><span class="pre">Lib.System.RandomBuffer</span></code> combined with
+<code class="docutils literal notranslate"><span class="pre">EverCrypt.HMAC.DRBG</span></code></li>
+</ul>
+</div>
 </div>
 
 
            </div>
            
           </div>
+    <a href="https://github.com/project-everest/hacl-star/">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub">
+    </a>
+
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="EverCryptLegacy.html" class="btn btn-neutral float-right" title="Legacy EverCrypt headers (EverCrypt.h, EverCrypt_Hacl.h, EverCrypt_Vale.h)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="API.html" class="btn btn-neutral float-right" title="Which API to use" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="EverCryptHKDF.html" class="btn btn-neutral float-left" title="HKDF (EverCrypt_HKDF.h)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="EverCryptNonAgile.html" class="btn btn-neutral float-left" title="Non-agile APIs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

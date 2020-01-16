@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Obtaining the source code &mdash; The HACL and EverCrypt reference documentation  documentation</title>
+  <title>Using the crypto library &mdash; HACL* and EverCrypt Manual  documentation</title>
   
 
   
@@ -45,8 +45,8 @@
   <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="General recommendations" href="General.html" />
-    <link rel="prev" title="The research behind" href="Overview.html" /> 
+    <link rel="next" title="Digging into the F* source code" href="General.html" />
+    <link rel="prev" title="Underlying research" href="Overview.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -60,7 +60,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> The HACL and EverCrypt reference documentation
+            <a href="index.html" class="icon icon-home"> HACL* and EverCrypt Manual
           
 
           
@@ -92,20 +92,21 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="HaclValeEverCrypt.html">HACL*, Vale, and EverCrypt</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Supported.html">List of supported algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Overview.html">The research behind</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Obtaining the source code</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Underlying research</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Using the crypto library</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#picking-a-distribution">Picking a distribution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#building-the-resulting-code">Building the resulting code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#integrating-the-resulting-code">Integrating the resulting code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#compiling-a-full-distribution">Compiling a full distribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#integrating-the-code">Integrating the code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bindings-for-other-languages">Bindings for Other Languages</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="General.html">General recommendations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="General.html">Digging into the F* source code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="HaclDoc.html">HACL APIs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="EverCryptDoc.html">EverCrypt APIs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Merkle.html">Merkle Tree API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="WasmDoc.html">WebAssembly bindings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="OCamlDoc.html">OCaml bindings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API.html">Which API to use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Applications.html">Verified Applications</a></li>
 </ul>
 
             
@@ -120,7 +121,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">The HACL and EverCrypt reference documentation</a>
+          <a href="index.html">HACL* and EverCrypt Manual</a>
         
       </nav>
 
@@ -151,14 +152,12 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Obtaining the source code</li>
+      <li>Using the crypto library</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/Obtaining.rst.txt" rel="nofollow"> View page source</a>
-          
         
       </li>
     
@@ -168,14 +167,16 @@
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+
            <div itemprop="articleBody">
             
-  <div class="section" id="obtaining-the-source-code">
-<h1>Obtaining the source code<a class="headerlink" href="#obtaining-the-source-code" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="using-the-crypto-library">
+<h1>Using the crypto library<a class="headerlink" href="#using-the-crypto-library" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="picking-a-distribution">
 <h2>Picking a distribution<a class="headerlink" href="#picking-a-distribution" title="Permalink to this headline">¶</a></h2>
-<p>Building the present repository verifies the source F* code, then proceeds to
-extract it to C and ASM. We provide the results of this process in the <code class="docutils literal notranslate"><span class="pre">dist/</span></code>
+<p>Building the full <code class="docutils literal notranslate"><span class="pre">hacl-star</span></code> repository verifies the source F* and Vale code,
+then proceeds to extract it to C and assembly. However, users do not have to use
+this full build process: we provide the generated code in the <code class="docutils literal notranslate"><span class="pre">dist/</span></code>
 directory, under version control to facilitate obtaining the source code.</p>
 <p>Each subdirectory corresponds to a <em>distribution</em>, i.e. a particular set of
 options passed to KreMLin (the F*-to-C compiler) that influence how the
@@ -201,8 +202,8 @@ specific KreMLin compilation options (e.g. Mozilla, CCF) or for testing (e.g.
 portable-gcc-compatible, which compiles without <code class="docutils literal notranslate"><span class="pre">-march=native</span></code>, to ensure all
 our assumptions about CPU targets are explicit in our Makefile).</p>
 </div>
-<div class="section" id="building-the-resulting-code">
-<h2>Building the resulting code<a class="headerlink" href="#building-the-resulting-code" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="compiling-a-full-distribution">
+<h2>Compiling a full distribution<a class="headerlink" href="#compiling-a-full-distribution" title="Permalink to this headline">¶</a></h2>
 <p>Each distribution comes with its own Makefile. It builds a static object
 (libevercrypt.a) and a dynamic object (libevercrypt.{so,dll}) along with the
 import library for Windows systems (libevercrypt.dll.a). On Windows, the
@@ -211,22 +212,26 @@ cross-compilers. The <cite>dist/compact-msvc</cite> distribution works with the 
 compilers, but we provide no build support (i.e. no Visual Studio project, no
 NMake-compatible makefile).</p>
 </div>
-<div class="section" id="integrating-the-resulting-code">
-<h2>Integrating the resulting code<a class="headerlink" href="#integrating-the-resulting-code" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="integrating-the-code">
+<h2>Integrating the code<a class="headerlink" href="#integrating-the-code" title="Permalink to this headline">¶</a></h2>
+<p>To incoroporate our verified crypto code into a C software project, a developer
+has two choices.</p>
 <ul class="simple">
-<li>When integrating EverCrypt, one can pick a distribution, along with the
-<cite>kremlin</cite> directory, thus giving a “wholesale” integration of
-the EverCrypt library.</li>
-<li>For a more gradual integration, consumers can integrate algorithms one at a
-time, by cherry-picking the files that they are interested in. Each header
-file contains the list of other headers (and implementations) it depends on so
-it’s easy to integrate, say, an individual algorithm from the HACL API.</li>
+<li>Pick a full EverCrypt distribution, along with the
+<cite>dist/kremlin</cite> directory, thus giving a “wholesale” integration of
+the EverCrypt library, including all supported algorithms from HACL* and Vale.</li>
+<li>For a more selective integration, cherry-pick the C or assembly
+files for specific versions of specific algorithms.  Each header
+file contains the list of other headers (and implementations) it
+depends on so it’s easy to integrate, say, an individual algorithm
+from the HACL API without taking the full library.</li>
 </ul>
-<p>In addition, you will need the <code class="docutils literal notranslate"><span class="pre">dist/kremlin</span></code> directory which contains all the
-required headers from KreMLin.  In particular, these headers contain
-implementations of FStar.UInt128, the module for 128-bit arithmetic. The
-<code class="docutils literal notranslate"><span class="pre">kremlin/include/kremlin/internal/types.h</span></code> header will attempt to use C
-preprocessor macros to pick the right UInt128 implementation for your platform:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">dist/kremlin</span></code> directory contains all the required headers from
+KreMLin.  In particular, these headers contain implementations of
+FStar.UInt128, the module for 128-bit arithmetic. The
+<code class="docutils literal notranslate"><span class="pre">kremlin/include/kremlin/internal/types.h</span></code> header will attempt to
+use C preprocessor macros to pick the right UInt128 implementation for
+your platform:</p>
 <ul class="simple">
 <li>64-bit environment with GCC/Clang: hand-written implementation using
 <code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">__int128</span></code> (unverified)</li>
@@ -235,20 +240,36 @@ preprocessor macros to pick the right UInt128 implementation for your platform:<
 verified (slow) implementation extracted from FStar.UInt128</li>
 </ul>
 </div>
+<div class="section" id="bindings-for-other-languages">
+<h2>Bindings for Other Languages<a class="headerlink" href="#bindings-for-other-languages" title="Permalink to this headline">¶</a></h2>
+<p>HACL* and EverCrypt are designed to primarily be used either within
+verification-oriented projects in F* or as part of larger C
+developments.  In addition to these use cases, the library developers
+and other HACL* users have also developed bindings for other programming languages:</p>
+<ul class="simple">
+<li>OCaml: In a development branch, we have an OCaml wrapper for the full EverCrypt API</li>
+<li>WebAssembly: The HACL* library has been compiled to <a class="reference external" href="https://github.com/Inria-Prosecco/hacl-wasm">WebAssembly</a></li>
+</ul>
+<p>Various users have also published Rust crates for HACL*, but these have not been vetted by the HACL maintainers.</p>
+</div>
 </div>
 
 
            </div>
            
           </div>
+    <a href="https://github.com/project-everest/hacl-star/">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub">
+    </a>
+
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="General.html" class="btn btn-neutral float-right" title="General recommendations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="General.html" class="btn btn-neutral float-right" title="Digging into the F* source code" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="Overview.html" class="btn btn-neutral float-left" title="The research behind" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="Overview.html" class="btn btn-neutral float-left" title="Underlying research" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
