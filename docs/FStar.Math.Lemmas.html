@@ -49,7 +49,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1 id="module-fstar.math.lemmas">module FStar.Math.Lemmas</h1>
 <p>fsdoc: no-summary-found</p>
 <p>fsdoc: no-comment-found</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> lemma_div_mod:Unidentified product: [a:<span class="dt">int</span>] Unidentified product: [p:pos] (Lemma (=(a, +<span class="co">(*(p, (/(a, p))), %(a, p)))))</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> modulo_lemma:Unidentified product: [a:nat] Unidentified product: [b:pos] (Lemma ((requires (&lt;(a, b)))) ((ensures (=(%(a, b), a)))))</code></pre></div>
+<p>Same as <code>small_mod</code></p>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> lemma_div_mod:Unidentified product: [a:<span class="dt">int</span>] Unidentified product: [p:nonzero] (Lemma (=(a, +<span class="co">(*(p, (/(a, p))), %(a, p)))))</span></code></pre></div>
 <p>Same as <code>lemma_div_def</code> in Math.Lib</p>
 </body>
 </html>

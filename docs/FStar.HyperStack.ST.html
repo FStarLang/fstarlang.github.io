@@ -114,9 +114,9 @@ code that would later extract to OCaml or by library functions</code></pre>
 <li>TODO:</li>
 <li>REMOVE AS SOON AS CONSENSUS IS REACHED ON NEW LOW EFFECT NAMES</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> push_frame:uu___76:<span class="dt">unit</span> -&gt; (Unsafe <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> m -&gt; True)))) ((ensures ((<span class="kw">fun</span> (m0:mem) _ (m1:mem) -&gt; fresh_frame m0 m1)))))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> push_frame:uu___77:<span class="dt">unit</span> -&gt; (Unsafe <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> m -&gt; True)))) ((ensures ((<span class="kw">fun</span> (m0:mem) _ (m1:mem) -&gt; fresh_frame m0 m1)))))</code></pre></div>
 <p>Pushes a new empty frame on the stack *</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> pop_frame:uu___77:<span class="dt">unit</span> -&gt; (Unsafe <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> m -&gt; poppable m)))) ((ensures ((<span class="kw">fun</span> (m0:mem) _ (m1:mem) -&gt; /\(/\(poppable m0, ==(m1, pop m0)), popped m0 m1))))))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> pop_frame:uu___78:<span class="dt">unit</span> -&gt; (Unsafe <span class="dt">unit</span> ((requires ((<span class="kw">fun</span> m -&gt; poppable m)))) ((ensures ((<span class="kw">fun</span> (m0:mem) _ (m1:mem) -&gt; /\(/\(poppable m0, ==(m1, pop m0)), popped m0 m1))))))</code></pre></div>
 <p>Removes old frame from the stack *</p>
 <div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> salloc:#a:Type -&gt; #rel:preorder a -&gt; init:a -&gt; (StackInline (mstackref a rel) ((requires ((<span class="kw">fun</span> m -&gt; is_stack_region (get_tip m))))) ((ensures salloc_post init)))</code></pre></div>
 <ul>
@@ -132,7 +132,7 @@ code that would later extract to OCaml or by library functions</code></pre>
 <li>Dereferences, provided that the reference exists.</li>
 <li>Guaranties the strongest low-level effect: Stack</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> get:uu___78:<span class="dt">unit</span> -&gt; (Stack mem ((requires ((<span class="kw">fun</span> m -&gt; True)))) ((ensures ((<span class="kw">fun</span> m0 x m1 -&gt; /\(==(m0, x), ==(m1, m0)))))))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> get:uu___79:<span class="dt">unit</span> -&gt; (Stack mem ((requires ((<span class="kw">fun</span> m -&gt; True)))) ((ensures ((<span class="kw">fun</span> m0 x m1 -&gt; /\(==(m0, x), ==(m1, m0)))))))</code></pre></div>
 <ul>
 <li>Returns the current stack of heaps --- it should be erased</li>
 </ul>
