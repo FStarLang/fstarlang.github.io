@@ -737,9 +737,9 @@ names.
 
 An example:
 
-  [{
-    `@ CInline ` let f x = UInt32.(x +%^ 1)
-  }]
+ ```fstar
+`@ CInline ` let f x = UInt32.(x +%^ 1)
+  ```
 
 is extracted to C by KReMLin to a C definition tagged with the
 `inline` qualifier.
@@ -943,10 +943,10 @@ let strict_on_arguments (x: list int) : unit = ()
 ```
 
  In particular, given
-    [{
-       `@(strict_on_arguments `1;2`)`
-       let f x0 (x1:list x0) (x1:option x0) = e
-    }]
+    ```fstar
+`@(strict_on_arguments `1;2`)`
+let f x0 (x1:list x0) (x1:option x0) = e
+    ```
 
 An application `f e0 e1 e2` is reduced by the normalizer by:
 
@@ -1038,36 +1038,90 @@ idem
 #### simplify:norm_step
 
 Logical simplification, e.g., `P /\ True ~> P`
-Weak reduction: Do not reduce under binders
-Head normal form
-Reduce primitive operators, e.g., `1 + 1 ~> 2`
-Unfold all non-recursive definitions
-Unroll recursive calls
-Reduce case analysis (i.e., match)
-Use normalization-by-evaluation, instead of interpretation (experimental)
-Reify effectful definitions into their representations
-Unlike `delta`, unfold definitions for only the names in the given
-    list. Each string is a fully qualified name like `A.M.f`
 
 ```fstar
 abstract
 let simplify:norm_step = Simpl
+```
+
+#### weak:norm_step
+
+Weak reduction: Do not reduce under binders
+
+```fstar
 abstract
 let weak:norm_step = Weak
+```
+
+#### hnf:norm_step
+
+Head normal form
+
+```fstar
 abstract
 let hnf:norm_step = HNF
+```
+
+#### primops:norm_step
+
+Reduce primitive operators, e.g., `1 + 1 ~> 2`
+
+```fstar
 abstract
 let primops:norm_step = Primops
+```
+
+#### delta:norm_step
+
+Unfold all non-recursive definitions
+
+```fstar
 abstract
 let delta:norm_step = Delta
+```
+
+#### zeta:norm_step
+
+Unroll recursive calls
+
+```fstar
 abstract
 let zeta:norm_step = Zeta
+```
+
+#### iota:norm_step
+
+Reduce case analysis (i.e., match)
+
+```fstar
 abstract
 let iota:norm_step = Iota
+```
+
+#### nbe:norm_step
+
+Use normalization-by-evaluation, instead of interpretation (experimental)
+
+```fstar
 abstract
 let nbe:norm_step = NBE
+```
+
+#### reify_:norm_step
+
+Reify effectful definitions into their representations
+
+```fstar
 abstract
 let reify_:norm_step = Reify
+```
+
+#### delta_only
+
+Unlike `delta`, unfold definitions for only the names in the given
+list. Each string is a fully qualified name like `A.M.f`
+
+```fstar
 abstract
 let delta_only (s: list string) : norm_step = UnfoldOnly s
 ```
@@ -1084,10 +1138,10 @@ let delta_fully (s: list string) : norm_step = UnfoldFully s
 
 For example, given
 
-  [{
-    let f0 = 0
-    let f1 = f0 + 1
-  }]
+  ```fstar
+let f0 = 0
+let f1 = f0 + 1
+  ```
 
 `norm `delta_only ``%f1`` f1` will reduce to `f0 + 1`.
 `norm `delta_fully ``%f1`` f1` will reduce to `0 + 1`.
@@ -1106,17 +1160,17 @@ abstract
 let delta_attr (s: list string) : norm_step = UnfoldAttr s
 ```
 
- For example
+ For example, given:
 
-   [{
-     irreducible let my_attr = ()
+   ```fstar
+irreducible let my_attr = ()
 
-     `@my_attr`
-     let f0 = 0
+`@my_attr`
+let f0 = 0
 
-     `@my_attr`
-     let f1 = f0 + 1
-   }]
+`@my_attr`
+let f1 = f0 + 1
+   ```
 
 `norm `delta_attr ``%my_attr`` f1` will reduce to `0 + 1`.
 
