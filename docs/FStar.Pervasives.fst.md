@@ -1172,7 +1172,9 @@ let f0 = 0
 let f1 = f0 + 1
    ```
 
-`norm `delta_attr ``%my_attr`` f1` will reduce to `0 + 1`.
+```fstarnorm [delta_attr [`%my_attr]] f1```
+
+will reduce to `0 + 1`.
 
 #### norm
 
