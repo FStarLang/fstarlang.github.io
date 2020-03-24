@@ -856,7 +856,7 @@ the stack and in the heap. <code class="docutils literal notranslate"><span clas
 noeq
 type buffer (a:Type) =
   | MkBuffer: max_length:UInt32.t
-    -&gt; content:reference (s: lseq a (U32.v max_length))
+    -&gt; content:reference (lseq a (U32.v max_length))
     -&gt; idx:UInt32.t
     -&gt; length:UInt32.t{U32.(v idx + v length &lt;= v max_length)}
     -&gt; buffer a</code></pre>
