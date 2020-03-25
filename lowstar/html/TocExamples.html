@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Low* buffer libraries &mdash; The KreMLin user manual  documentation</title>
+  <title>Low* examples &mdash; The KreMLin user manual  documentation</title>
   
 
   
@@ -45,8 +45,8 @@
   <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Low* system libraries" href="MoreLibraries.html" />
-    <link rel="prev" title="Low* core libraries" href="Libraries.html" /> 
+    <link rel="next" title="Example: linked list" href="LinkedList4.html" />
+    <link rel="prev" title="Low* data structure libraries" href="DataStructures.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -95,19 +95,13 @@
 <li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Setup.html">Tooling and project setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Core.html">Low* language</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="TocLibraries.html">Low* libraries</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="Libraries.html">Low* core libraries</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Low* buffer libraries</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#immutable-buffers">Immutable buffers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#uninitialized-buffers">Uninitialized buffers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#const-pointers">Const pointers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TocLibraries.html">Low* libraries</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Low* examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="LinkedList4.html">Example: linked list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="RingBuffer.html">Example: RingBuffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ExampleMemCpy.html">Example: <cite>memcpy</cite></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="MoreLibraries.html">Low* system libraries</a></li>
-<li class="toctree-l2"><a class="reference internal" href="DataStructures.html">Low* data structure libraries</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="TocExamples.html">Low* examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Toy.html">A toy project for learning Low*</a></li>
 <li class="toctree-l1"><a class="reference internal" href="AdvancedTips.html">Advanced tips &amp; tricks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="AdvancedTopics.html">Advanced KreMLin topics</a></li>
@@ -156,15 +150,13 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="TocLibraries.html">Low* libraries</a> &raquo;</li>
-        
-      <li>Low* buffer libraries</li>
+      <li>Low* examples</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/BufferLibraries.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/TocExamples.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -177,35 +169,15 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="low-buffer-libraries">
-<h1>Low* buffer libraries<a class="headerlink" href="#low-buffer-libraries" title="Permalink to this headline">¶</a></h1>
-<p>In addition to mutable buffers, we provide libraries for immutable buffers,
-const pointers and uninitializer buffers.</p>
-<div class="section" id="immutable-buffers">
-<h2>Immutable buffers<a class="headerlink" href="#immutable-buffers" title="Permalink to this headline">¶</a></h2>
-<p>Immutable buffers are in <code class="docutils literal notranslate"><span class="pre">LowStar.ImmutableBuffer</span></code> and enjoy a <code class="docutils literal notranslate"><span class="pre">recall</span></code>
-axiom that allows bringing into scope the fact that the buffer still has the
-same contents as when it was created.</p>
-<p>This is particularly useful for top-level constants. There are numerous examples
-of this in HACL*. Note that owing to some design choices, immutable buffers do
-<em>NOT</em> generate a <code class="docutils literal notranslate"><span class="pre">const</span></code> pointer in C.</p>
-</div>
-<div class="section" id="uninitialized-buffers">
-<h2>Uninitialized buffers<a class="headerlink" href="#uninitialized-buffers" title="Permalink to this headline">¶</a></h2>
-<p>In <code class="docutils literal notranslate"><span class="pre">LowStar.UninitializedBuffer</span></code>.</p>
-</div>
-<div class="section" id="const-pointers">
-<h2>Const pointers<a class="headerlink" href="#const-pointers" title="Permalink to this headline">¶</a></h2>
-<p>In order to manipulate const pointers, you can use <code class="docutils literal notranslate"><span class="pre">LowStar.ConstPointer</span></code>. It
-is represented as an abstract type distinct from regular, immutable, or unitialized
-buffers (all instances of the base monotonic buffer type). Having a separate
-abstract type allows identifiying const pointers as a separate, disjoint type at
-extraction, without requiring the built-in Low* checker in KreMLin to insert
-casts.</p>
-<p>Injecting <code class="docutils literal notranslate"><span class="pre">buffer</span></code> or <code class="docutils literal notranslate"><span class="pre">ibuffer</span></code> into a <code class="docutils literal notranslate"><span class="pre">const_buffer</span></code> generates no casts
-in C, as the conversion from <code class="docutils literal notranslate"><span class="pre">t*</span></code> to <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">t*</span></code> is implicit.</p>
-<p>Projecting <code class="docutils literal notranslate"><span class="pre">const_buffer</span></code> to either <code class="docutils literal notranslate"><span class="pre">buffer</span></code> or <code class="docutils literal notranslate"><span class="pre">ibuffer</span></code> generates a
-cast.</p>
+  <div class="section" id="low-examples">
+<h1>Low* examples<a class="headerlink" href="#low-examples" title="Permalink to this headline">¶</a></h1>
+<p>We provide a few self-contained examples of programming in Low*.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="LinkedList4.html">Example: linked list</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RingBuffer.html">Example: RingBuffer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ExampleMemCpy.html">Example: <cite>memcpy</cite></a></li>
+</ul>
 </div>
 </div>
 
@@ -217,10 +189,10 @@ cast.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="MoreLibraries.html" class="btn btn-neutral float-right" title="Low* system libraries" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="LinkedList4.html" class="btn btn-neutral float-right" title="Example: linked list" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="Libraries.html" class="btn btn-neutral float-left" title="Low* core libraries" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="DataStructures.html" class="btn btn-neutral float-left" title="Low* data structure libraries" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

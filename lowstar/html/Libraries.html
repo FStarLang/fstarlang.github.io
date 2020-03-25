@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Core Low* libraries &mdash; The KreMLin user manual  documentation</title>
+  <title>Low* core libraries &mdash; The KreMLin user manual  documentation</title>
   
 
   
@@ -45,8 +45,8 @@
   <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Extra buffer types" href="BufferLibraries.html" />
-    <link rel="prev" title="The Low* subset of F*" href="Core.html" /> 
+    <link rel="next" title="Low* buffer libraries" href="BufferLibraries.html" />
+    <link rel="prev" title="Low* libraries" href="TocLibraries.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -93,26 +93,28 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Setup.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Core.html">The Low* subset of F*</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Core Low* libraries</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#the-memory-model">The memory model</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#the-f-hyperheap-model">The F* HyperHeap model</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#the-hyperstack-model">The HyperStack model</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#advanced-the-stackinline-effect">Advanced: the <code class="docutils literal notranslate"><span class="pre">StackInline</span></code> effect</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Setup.html">Tooling and project setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Core.html">Low* language</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="TocLibraries.html">Low* libraries</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Low* core libraries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-memory-model">The memory model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#the-f-hyperheap-model">The F* HyperHeap model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-hyperstack-model">The HyperStack model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#advanced-the-stackinline-effect">Advanced: the <code class="docutils literal notranslate"><span class="pre">StackInline</span></code> effect</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#machine-integers">Machine integers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#the-buffer-library">The buffer library</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#the-modifies-clauses-library">The modifies clauses library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#machine-integers">Machine integers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-buffer-library">The buffer library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-modifies-clauses-library">The modifies clauses library</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="BufferLibraries.html">Extra buffer types</a></li>
-<li class="toctree-l1"><a class="reference internal" href="MoreLibraries.html">Low* system libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BufferLibraries.html">Low* buffer libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MoreLibraries.html">Low* system libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DataStructures.html">Low* data structure libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="TocExamples.html">Low* examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Toy.html">A toy project for learning Low*</a></li>
-<li class="toctree-l1"><a class="reference internal" href="LinkedList4.html">Example: linked list</a></li>
-<li class="toctree-l1"><a class="reference internal" href="RingBuffer.html">Example: RingBuffer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ExampleMemCpy.html">Example: <cite>memcpy</cite></a></li>
 <li class="toctree-l1"><a class="reference internal" href="AdvancedTips.html">Advanced tips &amp; tricks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="AdvancedTopics.html">Advanced KreMLin topics</a></li>
 </ul>
@@ -160,7 +162,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Core Low* libraries</li>
+          <li><a href="TocLibraries.html">Low* libraries</a> &raquo;</li>
+        
+      <li>Low* core libraries</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -179,8 +183,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="core-low-libraries">
-<h1>Core Low* libraries<a class="headerlink" href="#core-low-libraries" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="low-core-libraries">
+<h1>Low* core libraries<a class="headerlink" href="#low-core-libraries" title="Permalink to this headline">¶</a></h1>
 <p>Low* is made up of a few primitive libraries that enjoy first-class support in
 KreMLin. These core libraries are typically made up of a model (an <code class="docutils literal notranslate"><span class="pre">.fst</span></code>
 file) and an interface (an <code class="docutils literal notranslate"><span class="pre">.fsti</span></code> file). Verification is performed against
@@ -627,10 +631,10 @@ the sub-buffer of <code class="docutils literal notranslate"><span class="pre">b
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="BufferLibraries.html" class="btn btn-neutral float-right" title="Extra buffer types" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="BufferLibraries.html" class="btn btn-neutral float-right" title="Low* buffer libraries" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="Core.html" class="btn btn-neutral float-left" title="The Low* subset of F*" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="TocLibraries.html" class="btn btn-neutral float-left" title="Low* libraries" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
