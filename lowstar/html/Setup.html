@@ -1,0 +1,702 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Getting started &mdash; The KreMLin user manual  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="static/jquery.js"></script>
+        <script type="text/javascript" src="static/underscore.js"></script>
+        <script type="text/javascript" src="static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The Low* subset of F*" href="Core.html" />
+    <link rel="prev" title="Introduction" href="Introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> The KreMLin user manual
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installing-the-tools">Installing the tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#directory-structure">Directory structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build">Build</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview-of-a-build">Overview of a build</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#separate-f-builds">Separate F* builds</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reference-makefile">Reference Makefile</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Core.html">The Low* subset of F*</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Libraries.html">Core Low* libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BufferLibraries.html">Extra buffer types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MoreLibraries.html">Low* system libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Toy.html">A toy project for learning Low*</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LinkedList4.html">Example: linked list</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RingBuffer.html">Example: RingBuffer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ExampleMemCpy.html">Example: <cite>memcpy</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="AdvancedTips.html">Advanced tips &amp; tricks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AdvancedTopics.html">Advanced KreMLin topics</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">The KreMLin user manual</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Getting started</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/Setup.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="getting-started">
+<h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<p>For the sake of this tutorial, we use a sample project that provides a toy
+implementation of bignum addition in C. The project is located in the kremlin
+repository, under the <code class="docutils literal notranslate"><span class="pre">book/tutorial</span></code> directory.</p>
+<p>The sample project has a minimal specification, a corresponding implementation,
+a powerful build system that should cover most common situations and a set of C
+tests. In short, we hope that this will set a reference style for all new Low*
+projects.</p>
+<p>We now describe how to get a working setup – subsequent sections will take a
+deeper look at the code.</p>
+<div class="section" id="installing-the-tools">
+<h2>Installing the tools<a class="headerlink" href="#installing-the-tools" title="Permalink to this headline">¶</a></h2>
+<p>We recommend using the <a class="reference external" href="https://github.com/project-everest/everest">Everest script</a>, if only for its <code class="docutils literal notranslate"><span class="pre">z3</span></code> and
+<code class="docutils literal notranslate"><span class="pre">opam</span></code> commands, to make sure you have the exact version of the tools we need.
+All of our proofs are intimately tied to a specific version of F*, and if you’re
+not running the right one, you may have trouble even building F*’s standard
+library.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ./everest z3 opam
+</pre></div>
+</div>
+<p>Then, you can either install F* and KreMLin yourself, or rely on the Everest
+script for that purpose:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ./everest pull FStar make kremlin make
+</pre></div>
+</div>
+<p>In any case, remember to export suitable values for the <code class="docutils literal notranslate"><span class="pre">FSTAR_HOME</span></code> and
+<code class="docutils literal notranslate"><span class="pre">KREMLIN_HOME</span></code> environment variables once you’re done.</p>
+<p>Be aware that KreMLin is not at this time compatible with recent versions of
+OCaml. See <a class="reference external" href="https://github.com/FStarLang/kremlin/issues/169">https://github.com/FStarLang/kremlin/issues/169</a> for the discussion.</p>
+<p>We strongly recommend using the <a class="reference external" href="https://github.com/FStarLang/fstar-mode.el">fstar-mode.el</a> Emacs plugin for interactive mode
+support.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">There is an extra customization step which allows querying a Makefile
+to figure out the arguments to pass to F*; please follow instructions at
+<a class="reference external" href="https://github.com/project-everest/mitls-fstar#configuring-emacs-mode">https://github.com/project-everest/mitls-fstar#configuring-emacs-mode</a> – this
+is used pretty pervasively throughout all of the Everest projects and the
+sample project uses it too.</p>
+</div>
+</div>
+<div class="section" id="directory-structure">
+<h2>Directory structure<a class="headerlink" href="#directory-structure" title="Permalink to this headline">¶</a></h2>
+<p>We adopt the following canonical and recommended structure for the toy project.</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">code</span></code>: low-level implementation in Low*, extracts to C</li>
+<li><code class="docutils literal notranslate"><span class="pre">code/c</span></code>: hand-written C code (unverified), linked with the extracted Low*
+code</li>
+<li><code class="docutils literal notranslate"><span class="pre">specs</span></code>: high-level specifications, extract to OCaml for specs testing</li>
+<li><code class="docutils literal notranslate"><span class="pre">specs/ml</span></code>: hand-written OCaml code (unverified), linked with the extracted
+OCaml specifications</li>
+<li><code class="docutils literal notranslate"><span class="pre">obj</span></code>: F* and OCaml build artifacts, i.e. whatever is covered by F*’s
+<code class="docutils literal notranslate"><span class="pre">--depend</span></code> facility: <code class="docutils literal notranslate"><span class="pre">.checked</span></code> files (binary serialized build products
+once a file has been verified), <code class="docutils literal notranslate"><span class="pre">.ml</span></code> files (the result of F* extracting to
+OCaml), <code class="docutils literal notranslate"><span class="pre">.krml</span></code> files (the result of F* dumping its AST for KreMLin),
+<code class="docutils literal notranslate"><span class="pre">.cm*</span></code> files (OCaml build), etc.</li>
+<li><code class="docutils literal notranslate"><span class="pre">hints</span></code>: F* hint files, i.e. serialized Z3 unsat-cores that facilitate proof
+replay</li>
+<li><code class="docutils literal notranslate"><span class="pre">dist</span></code>: a distribution, i.e. a self-contained set of C files for clients to
+consume and check into their project.</li>
+<li><code class="docutils literal notranslate"><span class="pre">tests</span></code>: hand-written C tests to make sure the generated code has a suitable
+API.</li>
+</ul>
+<p>This toy project will thus illustrate mixing hand-written and generated ML and C
+files, a situation that is fairly common when working in Low*. Of course, your
+project might not need such complexity, in which case you should feel free to
+simplify.</p>
+</div>
+<div class="section" id="build">
+<h2>Build<a class="headerlink" href="#build" title="Permalink to this headline">¶</a></h2>
+<p>Build is essential! Running <code class="docutils literal notranslate"><span class="pre">make</span></code> is the entry point for any contributor to
+your project. A poorly designed build system will generate frustration, angst
+and conflict in the project, while a well-ironed and smoothed-out build system
+will ensure bliss and happiness. Do not neglect your build system!</p>
+<p>Reading, understanding and mastering the build of your project might make all
+the difference in the world. This section gives an overview of how we build Low*
+projects, followed by a reference Makefile.</p>
+<div class="section" id="overview-of-a-build">
+<h3>Overview of a build<a class="headerlink" href="#overview-of-a-build" title="Permalink to this headline">¶</a></h3>
+<p>We advocate the usage of Makefiles (GNU), mostly because F* supports directly
+generating a .depend that will contain all the build rules for you. This is a
+well-debugged build system, used everywhere in Everest. It’s also easy to use,
+in that it only requires GNU make.</p>
+<p>From a high-level perspective, the following steps need to happen in order to
+sucessfully build a Low* project:</p>
+<ul class="simple">
+<li>dependency analysis of all F* source files, generating a <code class="docutils literal notranslate"><span class="pre">.depend</span></code></li>
+<li>verify all the source files for this project, generating <code class="docutils literal notranslate"><span class="pre">.checked</span></code> files</li>
+<li>extract F* code using those checked files to either <code class="docutils literal notranslate"><span class="pre">.krml</span></code> or <code class="docutils literal notranslate"><span class="pre">.ml</span></code></li>
+<li>build and link ML code (for specs)</li>
+<li>run KreMLin and generate C code</li>
+<li>dependency analysis for the generated C code</li>
+<li>build C code, generating a C library (more rarely, an executable)</li>
+<li>build C tests and link against compiled library.</li>
+</ul>
+<p>To limit the amount of complexity, we only recursively execute <code class="docutils literal notranslate"><span class="pre">make</span></code> when a
+new dependency analysis needs to be performed. This means that C code
+compilation will be a sub-make, but everything is tied together in a single
+Makefile. In short, our Makefile has only two stages.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">As a point of comparison, the HACL* Makefile has more stages: an initial one
+that runs the Vale tool to generate F* files, a second stage (F* compilation &amp;
+extraction to C), a third stage (compilation of generated C code and ctypes
+bindings generation code), a fourth stage (execution then compilation of the
+generated Ctypes OCaml bindings), and perhaps a few more.</p>
+</div>
+<p>Interestingly enough, F* generates in a single pass enough information in the
+<code class="docutils literal notranslate"><span class="pre">.depend</span></code> to build your F* project, but also (roughly) enough information to
+build the resulting extracted OCaml files. This means that we do not need to
+rely on <code class="docutils literal notranslate"><span class="pre">ocamldep</span></code> to generate a dependency graph for building the extracted
+OCaml files.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You could conceivably extract all the <code class="docutils literal notranslate"><span class="pre">.ml</span></code> files to a separate directory
+and use an external build tool, e.g. <code class="docutils literal notranslate"><span class="pre">dune</span></code> – this is not covered here</p>
+</div>
+</div>
+<div class="section" id="separate-f-builds">
+<h3>Separate F* builds<a class="headerlink" href="#separate-f-builds" title="Permalink to this headline">¶</a></h3>
+<p>Each project is expected to build its own .checked files; running <code class="docutils literal notranslate"><span class="pre">make</span></code> in
+<code class="docutils literal notranslate"><span class="pre">FStar/</span></code> establishes the invariant that all the checked files are up-to-date
+w.r.t. their respective source files; similarly, running make in <code class="docutils literal notranslate"><span class="pre">kremlin/</span></code>
+ensures that all the <code class="docutils literal notranslate"><span class="pre">kremlib</span></code> (C support libraries) <code class="docutils literal notranslate"><span class="pre">.checked</span></code> files are
+up-to-date.</p>
+<p>Any Low* program will need to refer to both ulib in F* and kremlib in KreMLin.
+The client Makefile we provide will therefore <em>enforce</em> that all the checked
+files for the projects it depends on be up-to-date, and will error out
+otherwise.</p>
+<p>The rationale is that the client project should not need to know how to build F*
+.checked files: there may be magic command-line flags, particular options, and
+special rules involved in the production of those checked files (for ulib, there
+are). If, say, <code class="docutils literal notranslate"><span class="pre">ulib/.cache/LowStar.Comment.fst.checked</span></code> is out-of-date, then
+the user needs to rebuild F*.</p>
+</div>
+<div class="section" id="reference-makefile">
+<h3>Reference Makefile<a class="headerlink" href="#reference-makefile" title="Permalink to this headline">¶</a></h3>
+<p>I now provide a reference build system (authored with GNU make) that contains
+more comments than actual code.  It describes a very comprehensive scenario in
+which:</p>
+<ul class="simple">
+<li>you need to mix hand-written and kremlin-generated C files to produce a C
+library <code class="docutils literal notranslate"><span class="pre">libbignum.a</span></code></li>
+<li>you need to extract the specs to OCaml for spec testing, with a hand-written
+test driver;</li>
+<li>you have hand-written C tests.</li>
+</ul>
+<p>Of course this should be simplified if you’re not relying on all these features.
+This build is under Everest CI and will remain up-to-date.</p>
+<p>The first Makefile defines just enough to compute the arguments to the
+interactive mode:</p>
+<div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="c"># This Makefile may be included from any sub-directory, provided BIGNUM_HOME is</span>
+<span class="c"># suitably defined, in order to define the %.fst-in and %.fsti-in targets for</span>
+<span class="c"># computing the arguments to the interactive mode.</span>
+
+<span class="nv">BIGNUM_HOME</span> <span class="o">?=</span> .
+
+<span class="cp">ifeq (,$(FSTAR_HOME))</span>
+  <span class="k">$(</span>error FSTAR_HOME is not defined<span class="k">)</span>
+<span class="cp">endif</span>
+
+<span class="cp">ifeq (,$(KREMLIN_HOME))</span>
+  <span class="k">$(</span>error KREMLIN_HOME is not defined<span class="k">)</span>
+<span class="cp">endif</span>
+
+<span class="c"># I prefer to always check all fst files in the source directories; otherwise,</span>
+<span class="c"># it&#39;s too easy to add a new file only to find out later that it&#39;s not being</span>
+<span class="c"># checked. Note the usage of BIGNUM_HOME</span>
+<span class="nv">SOURCE_DIRS</span> <span class="o">=</span> <span class="k">$(</span>BIGNUM_HOME<span class="k">)</span>/code <span class="k">$(</span>BIGNUM_HOME<span class="k">)</span>/specs
+
+<span class="c"># We want our source tree on the include path, along with pre-built ulib and</span>
+<span class="c"># kremlib so that F* can reuse these build artifacts rather than reverify F* and</span>
+<span class="c"># kremlib as part of this build (which would be doomed to fail since there&#39;s a</span>
+<span class="c"># lot of trickery involved in building ulib -- better leave it up to the F*</span>
+<span class="c"># build!).</span>
+<span class="c">#</span>
+<span class="c"># Also note that we have our own directory on the include path for the sake of</span>
+<span class="c"># the interactive mode, for finding checked files for our own F* files.</span>
+<span class="nv">INCLUDE_DIRS</span> <span class="o">=</span> <span class="se">\</span>
+  <span class="k">$(</span>SOURCE_DIRS<span class="k">)</span> <span class="se">\</span>
+  <span class="k">$(</span>FSTAR_HOME<span class="k">)</span>/ulib/.cache <span class="se">\</span>
+  <span class="k">$(</span>KREMLIN_HOME<span class="k">)</span>/kremlib <span class="se">\</span>
+  <span class="k">$(</span>BIGNUM_HOME<span class="k">)</span>/obj
+
+
+<span class="nv">FSTAR_INCLUDES</span> <span class="o">=</span> <span class="k">$(</span>addprefix --include ,<span class="k">$(</span>INCLUDE_DIRS<span class="k">))</span>
+
+<span class="nf">%.fst-in %.fsti-in</span><span class="o">:</span>
+	@echo <span class="k">$(</span>FSTAR_INCLUDES<span class="k">)</span>
+</pre></div>
+</div>
+<p>This allows authoring a minimalistic Makefile for sub-directories, whose sole
+purpose is to compute include paths for the interactive mode:</p>
+<div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="nv">BIGNUM_HOME</span><span class="o">=</span>..
+
+<span class="cp">include $(BIGNUM_HOME)/Makefile.include</span>
+</pre></div>
+</div>
+<p>See note above regarding the customization for the fstar-mode.el that you
+absolutely should have.</p>
+<p>The top-level Makefile combines everything together. Note that, at this stage,
+the jury is still out as to whether you should rely on the F*-generated
+<code class="docutils literal notranslate"><span class="pre">.depend</span></code> to perform OCaml compilation, or fork out the build of the extracted
+OCaml code to an external tool (e.g. Dune). The latter is simpler but you lose
+parallelism in your build quite significantly, since extraction &amp; compilation of
+OCaml can no longer be interleaved.</p>
+<div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="c">#############################</span>
+<span class="c"># This is the main Makefile #</span>
+<span class="c">#############################</span>
+
+<span class="c"># This tutorial assumes you have a degree of familiarity with GNU make,</span>
+<span class="c"># including automatic variables such as $@, $&lt; and $^. Some mandatory reading if</span>
+<span class="c"># you are not fluent in GNU make:</span>
+<span class="c"># - https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html#Automatic-Variables</span>
+<span class="c"># - https://www.gnu.org/software/make/manual/html_node/Pattern-Intro.html#Pattern-Intro</span>
+<span class="c"># - https://www.gnu.org/software/make/manual/html_node/Pattern_002dspecific.html#Pattern_002dspecific</span>
+
+<span class="c"># I usually prefer to rule out OSX make on the basis that it doesn&#39;t have the</span>
+<span class="c"># shortest stem rule, which is incredibly useful.</span>
+<span class="cp">ifeq (3.81,$(MAKE_VERSION))</span>
+  <span class="k">$(</span>error You seem to be using the OSX antiquated Make version. Hint: brew <span class="se">\</span>
+    install make, <span class="k">then</span> invoke gmake instead of make<span class="k">)</span>
+<span class="cp">endif</span>
+
+
+<span class="c"># Main entry points (first one is default)</span>
+<span class="c"># ----------------------------------------</span>
+
+<span class="nf">all</span><span class="o">:</span> <span class="n">dist</span>/<span class="n">libbignum</span>.<span class="n">a</span>
+
+<span class="nf">test</span><span class="o">:</span> <span class="n">tests</span>/<span class="n">c</span>-<span class="n">tests</span>.<span class="n">test</span> <span class="n">obj</span>/<span class="n">specs</span>-<span class="n">test</span>.<span class="n">test</span>
+
+<span class="nf">%.test</span><span class="o">:</span> %.<span class="n">exe</span>
+	$&lt;
+
+<span class="cp">include Makefile.include</span>
+
+<span class="c"># Definition of F* flags</span>
+<span class="c"># ----------------------</span>
+
+<span class="nv">FSTAR_HINTS</span> <span class="o">?=</span> --use_hints --use_hint_hashes --record_hints
+
+<span class="c"># This flag controls what gets extracted to OCaml. Generally, we don&#39;t extract</span>
+<span class="c"># the FStar namespace since it&#39;s already extracted and packaged as the ocamlfind</span>
+<span class="c"># package fstarlib. Here, unlike in -bundle, +Spec matches both Spec and</span>
+<span class="c"># Spec.*</span>
+<span class="nv">FSTAR_EXTRACT</span> <span class="o">=</span> --extract <span class="s1">&#39;-* +Spec&#39;</span>
+
+<span class="c"># Some reasonable flags to turn on:</span>
+<span class="c"># - 247: checked file not written because some of its dependencies...</span>
+<span class="c"># - 285: missing or file not found, almost always something to act on</span>
+<span class="c"># - 241: stale dependencies, almost always a sign that the build is incorrect</span>
+<span class="c">#</span>
+<span class="c"># But also:</span>
+<span class="c"># - --cmi, for cross-module inlining, a must-have for anyone who relies on</span>
+<span class="c">#   inline_for_extraction in the presence of interfaces</span>
+<span class="c"># - --cache_checked_modules to rely on a pre-built ulib and kremlib</span>
+<span class="c"># - --cache_dir, to avoid polluting our generated build artifacts outside o</span>
+<span class="nv">FSTAR_NO_FLAGS</span> <span class="o">=</span> <span class="k">$(</span>FSTAR_HOME<span class="k">)</span>/bin/fstar.exe <span class="k">$(</span>FSTAR_HINTS<span class="k">)</span> <span class="se">\</span>
+  --odir obj --cache_checked_modules <span class="k">$(</span>FSTAR_INCLUDES<span class="k">)</span> --cmi <span class="se">\</span>
+  --already_cached <span class="s1">&#39;Prims FStar LowStar C Spec.Loops TestLib WasmSupport&#39;</span> --warn_error <span class="s1">&#39;+241@247+285&#39;</span> <span class="se">\</span>
+  --cache_dir obj --hint_dir hints
+
+<span class="c"># Initial dependency analysis</span>
+<span class="c"># ---------------------------</span>
+
+<span class="c"># Important to wildcard both fst and fsti since there are fstis without fsts,</span>
+<span class="c"># etc. Note that I&#39;m using wildcard rather than assume $(SHELL) is bash and has</span>
+<span class="c"># fancy globbing rules -- particularly true on Windows.</span>
+<span class="nv">FSTAR_ROOTS</span> <span class="o">=</span> <span class="k">$(</span>wildcard <span class="k">$(</span>addsuffix /*.fsti,<span class="k">$(</span>SOURCE_DIRS<span class="k">)))</span> <span class="se">\</span>
+  <span class="k">$(</span>wildcard <span class="k">$(</span>addsuffix /*.fst,<span class="k">$(</span>SOURCE_DIRS<span class="k">)))</span> <span class="se">\</span>
+
+
+<span class="c"># This is the only bulletproof way that I know of forcing a regeneration of the</span>
+<span class="c"># .depend file every single time. Why, you may ask? Well, it&#39;s frequent enough</span>
+<span class="c"># to add a new file that you don&#39;t want to decipher a cryptic error only to</span>
+<span class="c"># remember you should run `make depend`. Also, if you move files around, it&#39;s</span>
+<span class="c"># good to force regeneration even though .depend may be more recent than the</span>
+<span class="c"># mtime of the moved files.</span>
+<span class="cp">ifndef MAKE_RESTARTS</span>
+<span class="nf">.depend</span><span class="o">:</span> .<span class="n">FORCE</span>
+	<span class="k">$(</span>FSTAR_NO_FLAGS<span class="k">)</span> --dep full <span class="k">$(</span>notdir <span class="k">$(</span>FSTAR_ROOTS<span class="k">))</span> <span class="k">$(</span>FSTAR_EXTRACT<span class="k">)</span> &gt; <span class="nv">$@</span>
+
+<span class="nf">.PHONY</span><span class="o">:</span> .<span class="n">FORCE</span>
+<span class="nf">.FORCE</span><span class="o">:</span>
+<span class="cp">endif</span>
+
+<span class="cp">include .depend</span>
+
+<span class="c"># Verification</span>
+<span class="c"># ------------</span>
+
+<span class="c"># Everest-specific idiom: all makefiles accept OTHERFLAGS, for instance, if one</span>
+<span class="c"># wants to rebuild with OTHERFLAGS=&quot;--admit_smt_queries true&quot;. We just don&#39;t</span>
+<span class="c"># pass such flags to the dependency analysis.</span>
+<span class="nv">FSTAR</span> <span class="o">=</span> <span class="k">$(</span>FSTAR_NO_FLAGS<span class="k">)</span> <span class="k">$(</span>OTHERFLAGS<span class="k">)</span>
+
+<span class="c"># Creating these directories via a make rule, rather than rely on F* creating</span>
+<span class="c"># them, as two calls to F* might race.</span>
+<span class="nf">hints</span><span class="o">:</span>
+	mkdir <span class="nv">$@</span>
+
+<span class="nf">obj</span><span class="o">:</span>
+	mkdir <span class="nv">$@</span>
+
+<span class="c"># We allow some specific pattern rules to be added here, relying on the shortest</span>
+<span class="c"># stem rule for them to take precedence. For instance, you may want to do:</span>
+<span class="c">#</span>
+<span class="c"># obj/Bignum.Impl.fst.checked: FSTAR_FLAGS = &quot;--query_stats&quot;</span>
+<span class="c">#</span>
+<span class="c"># (Note: for options that control the SMT encoding, such as</span>
+<span class="c"># --smtencoding.nl_arith_repr native, please make sure you also define them in</span>
+<span class="c"># Makefile.common for %.fst-in otherwise you&#39;ll observe different behaviors</span>
+<span class="c"># between interactive and batch modes.)</span>
+<span class="c">#</span>
+<span class="c"># By default, however, variables are inherited through the dependencies, meaning</span>
+<span class="c"># that the example above would normally set these FSTAR_FLAGS for any .checked</span>
+<span class="c"># that is rebuilt because it&#39;s a dependency of Bignum.Impl.fst.checked.</span>
+<span class="c">#</span>
+<span class="c"># To avoid this unpleasant behavior, the most general pattern rule (longest</span>
+<span class="c"># stem) also defines a suitable default value for FSTAR_FLAGS.</span>
+<span class="nf">%.checked</span><span class="o">:</span> <span class="n">FSTAR_FLAGS</span>=
+
+<span class="c"># Note: F* will not change the mtime of a checked file if it is</span>
+<span class="c"># up-to-date (checksum matches, file unchanged), but this will confuse</span>
+<span class="c"># make and result in endless rebuilds. So, we touch that file.</span>
+<span class="nf">%.checked</span><span class="o">:</span> <span class="p">|</span> <span class="n">hints</span> <span class="n">obj</span>
+	<span class="k">$(</span>FSTAR<span class="k">)</span> $&lt; <span class="k">$(</span>FSTAR_FLAGS<span class="k">)</span> <span class="o">&amp;&amp;</span> touch -c <span class="nv">$@</span>
+
+<span class="c"># Extraction</span>
+<span class="c"># ----------</span>
+
+<span class="c"># A few mismatches here between the dependencies present in the .depend and the</span>
+<span class="c"># expected F* invocation. In .depend:</span>
+<span class="c">#</span>
+<span class="c"># obj/Bignum_Impl.ml: obj/Bignum.Impl.fst.checked ... more dependencies ...</span>
+<span class="c">#</span>
+<span class="c"># But F* wants (remember that F* searches for source files anywhere on the</span>
+<span class="c"># include path):</span>
+<span class="c">#</span>
+<span class="c"># fstar Bignum.Impl.fst --extract_module BigNum.Impl</span>
+<span class="c">#</span>
+<span class="c"># We use basename because we may also extract krml files from .fsti.checked</span>
+<span class="c"># files (not true for OCaml, we don&#39;t extract mlis from fstis).</span>
+<span class="nf">.PRECIOUS</span><span class="o">:</span> <span class="n">obj</span>/%.<span class="n">ml</span>
+<span class="nf">obj/%.ml</span><span class="o">:</span>
+	<span class="k">$(</span>FSTAR<span class="k">)</span> <span class="k">$(</span>notdir <span class="k">$(</span>subst .checked,,$&lt;<span class="k">))</span> --codegen OCaml <span class="se">\</span>
+	--extract_module <span class="k">$(</span>basename <span class="k">$(</span>notdir <span class="k">$(</span>subst .checked,,$&lt;<span class="k">)))</span>
+
+<span class="nf">.PRECIOUS</span><span class="o">:</span> <span class="n">obj</span>/%.<span class="n">krml</span>
+<span class="nf">obj/%.krml</span><span class="o">:</span>
+	<span class="k">$(</span>FSTAR<span class="k">)</span> <span class="k">$(</span>notdir <span class="k">$(</span>subst .checked,,$&lt;<span class="k">))</span> --codegen Kremlin <span class="se">\</span>
+	--extract_module <span class="k">$(</span>basename <span class="k">$(</span>notdir <span class="k">$(</span>subst .checked,,$&lt;<span class="k">)))</span>
+
+<span class="nf">obj/Specs_Driver.ml</span><span class="o">:</span> <span class="n">specs</span>/<span class="n">ml</span>/<span class="n">Specs_Driver</span>.<span class="n">ml</span>
+<span class="c">	# This ensures that all the source directories are not polluted with</span>
+<span class="c">	# build artifacts</span>
+	cp $&lt; <span class="nv">$@</span>
+
+<span class="c"># F* --&gt; C</span>
+<span class="c"># --------</span>
+
+<span class="nv">KRML</span><span class="o">=</span><span class="k">$(</span>KREMLIN_HOME<span class="k">)</span>/krml
+
+<span class="c"># Note: the implementation of the intrinsic uses external linkage, but you could</span>
+<span class="c"># easily turn this file into a .h, use -add-include &#39;&quot;Impl_Bignum_Intrinsics.h&quot;&#39;</span>
+<span class="c"># and pass -static-header Impl.Bignum.Intrinsics as described in the</span>
+<span class="c"># documentation.</span>
+<span class="nv">HAND_WRITTEN_C_FILES</span> <span class="o">=</span> code/c/Impl_Bignum_Intrinsics.c
+
+<span class="c"># This is now the preferred and recommended way to compile C code with KreMLin.</span>
+<span class="c">#</span>
+<span class="c"># KreMLin (via -skip-compilation) only generates a stub Makefile in dist/,</span>
+<span class="c"># instead of acting as a C compilation driver like it did before. The Makefile</span>
+<span class="c"># that is generated by KreMLin is basic, but takes into account:</span>
+<span class="c"># - the -o option to determine what is being built</span>
+<span class="c"># - the C files passed on the command line, which will be linked together</span>
+<span class="c"># - C compiler flags passed to KreMLin via -ccopts</span>
+<span class="c">#</span>
+<span class="c"># This Makefile is called Makefile.basic and should be enough for all your basic</span>
+<span class="c"># needs. If you need something more fancy, you can easily author your own custom</span>
+<span class="c"># dist/Makefile, which includes Makefile.basic, then proceeds to redefine /</span>
+<span class="c"># tweak some variables.</span>
+<span class="c">#</span>
+<span class="c"># Note that you are of course more than welcome to define your own</span>
+<span class="c"># CMakeLists.txt or whatever your favorite build system is: this tutorial only</span>
+<span class="c"># describes the supported canonical way of compiling code.</span>
+<span class="c">#</span>
+<span class="c"># See the advanced topics section for an in-depth explanation of how the -bundle</span>
+<span class="c"># option works. We also use -minimal.</span>
+<span class="nf">dist/Makefile.basic</span><span class="o">:</span> <span class="k">$(</span><span class="nv">filter-out</span> %<span class="nv">prims.krml</span>,<span class="k">$(</span><span class="nv">ALL_KRML_FILES</span><span class="k">))</span> <span class="k">$(</span><span class="nv">HAND_WRITTEN_C_FILES</span><span class="k">)</span>
+	mkdir -p <span class="k">$(</span>dir <span class="nv">$@</span><span class="k">)</span>
+	cp <span class="k">$(</span>HAND_WRITTEN_C_FILES<span class="k">)</span> <span class="k">$(</span>dir <span class="nv">$@</span><span class="k">)</span>
+	<span class="k">$(</span>KRML<span class="k">)</span> -tmpdir <span class="k">$(</span>dir <span class="nv">$@</span><span class="k">)</span> -skip-compilation <span class="se">\</span>
+	  <span class="k">$(</span>filter %.krml,$^<span class="k">)</span> <span class="se">\</span>
+	  -warn-error @4@5@18 <span class="se">\</span>
+	  -fparentheses <span class="se">\</span>
+	  -bundle Impl.Bignum.Intrinsics<span class="o">=</span> <span class="se">\</span>
+	  -bundle <span class="s1">&#39;LowStar.*,Prims&#39;</span> <span class="se">\</span>
+	  -bundle Impl.Bignum<span class="o">=</span>Impl.Bignum.*,Spec.*<span class="o">[</span><span class="nv">rename</span><span class="o">=</span>Bignum<span class="o">]</span> <span class="se">\</span>
+	  -minimal <span class="se">\</span>
+	  -bundle <span class="s1">&#39;FStar.*&#39;</span> <span class="se">\</span>
+	  -add-include <span class="s1">&#39;&lt;stdint.h&gt;&#39;</span> <span class="se">\</span>
+	  -add-include <span class="s1">&#39;&quot;kremlin/internal/target.h&quot;&#39;</span> <span class="se">\</span>
+	  <span class="k">$(</span>notdir <span class="k">$(</span>HAND_WRITTEN_C_FILES<span class="k">))</span> <span class="se">\</span>
+	  -o libbignum.a
+
+<span class="c"># Compiling the generated C code</span>
+<span class="c"># ------------------------------</span>
+
+<span class="c"># Here we do a recursive make invocation because a new dependency analysis needs</span>
+<span class="c"># to be performed on the generated C files. This recursive make deals with all</span>
+<span class="c"># the files copied in dist, which includes kremlin-generated and hand-written,</span>
+<span class="c"># copied files from HAND_WRITTEN_C_FILES.</span>
+
+<span class="nf">dist/libbignum.a</span><span class="o">:</span> <span class="n">dist</span>/<span class="n">Makefile</span>.<span class="n">basic</span>
+	<span class="k">$(</span>MAKE<span class="k">)</span> -C <span class="k">$(</span>dir <span class="nv">$@</span><span class="k">)</span> -f <span class="k">$(</span>notdir $&lt;<span class="k">)</span>
+
+<span class="c"># Compiling the generated OCaml code</span>
+<span class="c"># ----------------------------------</span>
+
+<span class="c"># This is much more difficult, and you&#39;re probably better off calling OCamlbuild</span>
+<span class="c"># or Dune at this stage. Nonetheless, I still show how to compile the generate</span>
+<span class="c"># OCaml code with only GNU make and without relying on an external tool or an</span>
+<span class="c"># extra dependency analysis.</span>
+
+<span class="c"># First complication... no comment.</span>
+<span class="cp">ifeq ($(OS),Windows_NT)</span>
+  <span class="nb">export</span> OCAMLPATH :<span class="o">=</span> <span class="k">$(</span>FSTAR_HOME<span class="k">)</span>/bin<span class="p">;</span><span class="k">$(</span>OCAMLPATH<span class="k">)</span>
+<span class="cp">else</span>
+  <span class="nb">export</span> OCAMLPATH :<span class="o">=</span> <span class="k">$(</span>FSTAR_HOME<span class="k">)</span>/bin:<span class="k">$(</span>OCAMLPATH<span class="k">)</span>
+<span class="cp">endif</span>
+
+<span class="c"># Second complication: F* generates a list of ML files in the reverse linking</span>
+<span class="c"># order. No POSIX-portable way of reversing the order of a list.</span>
+<span class="nv">TAC</span> <span class="o">=</span> <span class="k">$(</span>shell which tac &gt;/dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;tac&quot;</span> <span class="o">||</span> <span class="nb">echo</span> <span class="s2">&quot;tail -r&quot;</span><span class="k">)</span>
+
+<span class="nv">ALL_CMX_FILES</span> <span class="o">=</span> <span class="k">$(</span>patsubst %.ml,%.cmx,<span class="k">$(</span>shell <span class="nb">echo</span> <span class="k">$(</span>ALL_ML_FILES<span class="k">)</span> <span class="p">|</span> <span class="k">$(</span>TAC<span class="k">)))</span>
+
+<span class="c"># Third complication: F* does not know about our hand-written files. So, we need</span>
+<span class="c"># to manually add dependency edges in the graph. In our case, the test driver</span>
+<span class="c"># needs all files to be built before. This is convenient because the</span>
+<span class="c"># hand-written file only needs to be inserted at the end of the list of CMX</span>
+<span class="c"># files. If it had to be inserted somewhere in the middle of the topological</span>
+<span class="c"># order, it would be trickier...</span>
+
+<span class="nf">obj/Specs_Driver.cmx</span><span class="o">:</span> <span class="k">$(</span><span class="nv">ALL_CMX_FILES</span><span class="k">)</span>
+
+<span class="c"># Finally, how to compile things...</span>
+
+<span class="nv">OCAMLOPT</span> <span class="o">=</span> ocamlfind opt -package fstarlib -linkpkg -g -I <span class="k">$(</span>BIGNUM_HOME<span class="k">)</span>/obj -w -8-20-26
+
+<span class="nf">.PRECIOUS</span><span class="o">:</span> <span class="n">obj</span>/%.<span class="n">cmx</span>
+<span class="nf">obj/%.cmx</span><span class="o">:</span> <span class="n">obj</span>/%.<span class="n">ml</span>
+	<span class="k">$(</span>OCAMLOPT<span class="k">)</span> -c $&lt; -o <span class="nv">$@</span>
+
+<span class="nf">obj/specs-test.exe</span><span class="o">:</span> <span class="k">$(</span><span class="nv">ALL_CMX_FILES</span><span class="k">)</span> <span class="n">obj</span>/<span class="n">Specs_Driver</span>.<span class="n">cmx</span>
+	<span class="k">$(</span>OCAMLOPT<span class="k">)</span> $^ -o <span class="nv">$@</span>
+
+<span class="c"># Compiling the hand-written test</span>
+<span class="c"># -------------------------------</span>
+
+<span class="nv">CFLAGS</span> <span class="o">+=</span> -I dist -I <span class="k">$(</span>KREMLIN_HOME<span class="k">)</span>/include
+
+<span class="nf">tests/c-tests.exe</span><span class="o">:</span> <span class="n">dist</span>/<span class="n">libbignum</span>.<span class="n">a</span> <span class="n">tests</span>/<span class="n">c</span>-<span class="n">tests</span>.<span class="n">o</span>
+	<span class="k">$(</span>CC<span class="k">)</span> $^ -o <span class="nv">$@</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Core.html" class="btn btn-neutral float-right" title="The Low* subset of F*" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Introduction.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Jonathan Protzenko
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

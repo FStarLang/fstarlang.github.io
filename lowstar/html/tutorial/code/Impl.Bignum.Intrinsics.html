@@ -1,0 +1,254 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Linking with the outside world &mdash; The KreMLin user manual  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../../static/jquery.js"></script>
+        <script type="text/javascript" src="../../static/underscore.js"></script>
+        <script type="text/javascript" src="../../static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Example: linked list" href="../../LinkedList4.html" />
+    <link rel="prev" title="Main implementation file" href="Impl.Bignum.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> The KreMLin user manual
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Setup.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Core.html">The Low* subset of F*</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Libraries.html">Core Low* libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../BufferLibraries.html">Extra buffer types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../MoreLibraries.html">Low* system libraries</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../Toy.html">A toy project for learning Low*</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../specs/Spec.Bignum.html">Main specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../specs/Spec.Test.html">Specification test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Impl.Bignum.Lemmas.html">Auxiliary implementation lemmas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Impl.Bignum.html">Main implementation file</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Linking with the outside world</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../LinkedList4.html">Example: linked list</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RingBuffer.html">Example: RingBuffer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ExampleMemCpy.html">Example: <cite>memcpy</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../AdvancedTips.html">Advanced tips &amp; tricks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../AdvancedTopics.html">Advanced KreMLin topics</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">The KreMLin user manual</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../Toy.html">A toy project for learning Low*</a> &raquo;</li>
+        
+      <li>Linking with the outside world</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/tutorial/code/Impl.Bignum.Intrinsics.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="linking-with-the-outside-world">
+<h1>Linking with the outside world<a class="headerlink" href="#linking-with-the-outside-world" title="Permalink to this headline">¶</a></h1>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">Impl</span><span class="o">.</span><span class="n">Bignum</span><span class="o">.</span><span class="n">Intrinsics</span>
+</pre></div>
+</div>
+<p>This module just demonstrates how to expose a C-written function in F*. We
+don’t currently use this module anywhere but it’s one of the suggested
+exercises.</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">B</span> <span class="o">=</span> <span class="n">LowStar</span><span class="o">.</span><span class="n">Buffer</span>
+
+<span class="nb">open</span> <span class="n">FStar</span><span class="o">.</span><span class="n">HyperStack</span><span class="o">.</span><span class="n">ST</span>
+
+<span class="n">val</span> <span class="n">add_carry</span> <span class="p">(</span><span class="n">dst</span><span class="p">:</span> <span class="n">B</span><span class="o">.</span><span class="n">buffer</span> <span class="n">UInt32</span><span class="o">.</span><span class="n">t</span><span class="p">)</span> <span class="p">(</span><span class="n">x</span> <span class="n">y</span><span class="p">:</span> <span class="n">UInt32</span><span class="o">.</span><span class="n">t</span><span class="p">)</span> <span class="p">(</span><span class="n">c</span><span class="p">:</span> <span class="n">UInt32</span><span class="o">.</span><span class="n">t</span><span class="p">):</span> <span class="n">Stack</span> <span class="n">UInt32</span><span class="o">.</span><span class="n">t</span>
+  <span class="p">(</span><span class="n">requires</span> <span class="n">fun</span> <span class="n">h0</span> <span class="o">-&gt;</span>
+    <span class="n">B</span><span class="o">.</span><span class="n">live</span> <span class="n">h0</span> <span class="n">dst</span> <span class="o">/</span>\
+    <span class="n">B</span><span class="o">.</span><span class="n">length</span> <span class="n">dst</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">ensures</span> <span class="n">fun</span> <span class="n">h0</span> <span class="n">c1</span> <span class="n">h1</span> <span class="o">-&gt;</span>
+    <span class="n">B</span><span class="o">.</span><span class="p">(</span><span class="n">modifies</span> <span class="p">(</span><span class="n">loc_buffer</span> <span class="n">dst</span><span class="p">)</span> <span class="n">h0</span> <span class="n">h1</span><span class="p">)</span> <span class="o">/</span>\ <span class="p">(</span>
+    <span class="n">let</span> <span class="n">r</span> <span class="o">=</span> <span class="n">UInt32</span><span class="o">.</span><span class="n">v</span> <span class="n">x</span> <span class="o">+</span> <span class="n">UInt32</span><span class="o">.</span><span class="n">v</span> <span class="n">y</span> <span class="o">+</span> <span class="n">UInt32</span><span class="o">.</span><span class="n">v</span> <span class="n">c</span> <span class="ow">in</span>
+    <span class="n">UInt32</span><span class="o">.</span><span class="n">v</span> <span class="p">(</span><span class="n">B</span><span class="o">.</span><span class="n">get</span> <span class="n">h1</span> <span class="n">dst</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="n">r</span> <span class="o">%</span> <span class="n">pow2</span> <span class="mi">32</span> <span class="o">/</span>\
+    <span class="n">UInt32</span><span class="o">.</span><span class="n">v</span> <span class="n">c1</span> <span class="o">==</span> <span class="n">r</span> <span class="o">/</span> <span class="n">pow2</span> <span class="mi">32</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../LinkedList4.html" class="btn btn-neutral float-right" title="Example: linked list" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Impl.Bignum.html" class="btn btn-neutral float-left" title="Main implementation file" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Jonathan Protzenko
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

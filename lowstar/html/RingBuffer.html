@@ -20,14 +20,21 @@
   <script type="text/javascript" src="static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="static/documentation_options.js"></script>
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
         <script type="text/javascript" src="static/jquery.js"></script>
         <script type="text/javascript" src="static/underscore.js"></script>
         <script type="text/javascript" src="static/doctools.js"></script>
-        <script type="text/javascript" src="static/language_data.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.36.0/codemirror.min.js"></script>
-        <script type="text/javascript" src="static/fstar.cm.js"></script>
-        <script type="text/javascript" src="static/fslit.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="static/js/theme.js"></script>
 
@@ -36,12 +43,10 @@
   
   <link rel="stylesheet" href="static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.36.0/codemirror.min.css" type="text/css" />
-  <link rel="stylesheet" href="static/cm.tango.css" type="text/css" />
-  <link rel="stylesheet" href="static/fslit.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="The Low* subset of F*" href="LowStar.html" /> 
+    <link rel="next" title="Example: memcpy" href="ExampleMemCpy.html" />
+    <link rel="prev" title="Example: linked list" href="LinkedList4.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -88,10 +93,17 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="LowStar.html">The Low* subset of F*</a></li>
-<li class="toctree-l1"><a class="reference internal" href="LowStar.html#the-low-libraries">The Low* libraries</a></li>
-<li class="toctree-l1"><a class="reference internal" href="LowStar.html#the-low-system-libraries">The Low* system libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Setup.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Core.html">The Low* subset of F*</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Libraries.html">Core Low* libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BufferLibraries.html">Extra buffer types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MoreLibraries.html">Low* system libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Toy.html">A toy project for learning Low*</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LinkedList4.html">Example: linked list</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Example: RingBuffer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ExampleMemCpy.html">Example: <cite>memcpy</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="AdvancedTips.html">Advanced tips &amp; tricks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AdvancedTopics.html">Advanced KreMLin topics</a></li>
 </ul>
 
             
@@ -143,7 +155,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/RingBuffer.fst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/RingBuffer.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -158,23 +170,29 @@
             
   <div class="section" id="example-ringbuffer">
 <h1>Example: RingBuffer<a class="headerlink" href="#example-ringbuffer" title="Permalink to this headline">¶</a></h1>
-<pre class="code fstar literal-block"><code>module RingBuffer</code></pre>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">RingBuffer</span>
+</pre></div>
+</div>
 <p>This module demonstrates how to implement a ringbuffer in Low*. It uses the
 new LowStar.Buffer abstraction, and demonstrates how to separate functional
 predicates from their low-level stateful counterparts.</p>
 <p>We define the canonical abbreviations, taking care to shadow ST to make sure
 we don’t end up referring to FStar.ST by accident.</p>
-<pre class="code fstar literal-block"><code>module B = LowStar.Buffer
-module U32 = FStar.UInt32
-module HS = FStar.HyperStack
-module M = LowStar.Modifies
-module ST = FStar.HyperStack.ST
-module S = FStar.Seq
-module L = FStar.List.Tot</code></pre>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">B</span> <span class="o">=</span> <span class="n">LowStar</span><span class="o">.</span><span class="n">Buffer</span>
+<span class="n">module</span> <span class="n">U32</span> <span class="o">=</span> <span class="n">FStar</span><span class="o">.</span><span class="n">UInt32</span>
+<span class="n">module</span> <span class="n">HS</span> <span class="o">=</span> <span class="n">FStar</span><span class="o">.</span><span class="n">HyperStack</span>
+<span class="n">module</span> <span class="n">M</span> <span class="o">=</span> <span class="n">LowStar</span><span class="o">.</span><span class="n">Modifies</span>
+<span class="n">module</span> <span class="n">ST</span> <span class="o">=</span> <span class="n">FStar</span><span class="o">.</span><span class="n">HyperStack</span><span class="o">.</span><span class="n">ST</span>
+<span class="n">module</span> <span class="n">S</span> <span class="o">=</span> <span class="n">FStar</span><span class="o">.</span><span class="n">Seq</span>
+<span class="n">module</span> <span class="n">L</span> <span class="o">=</span> <span class="n">FStar</span><span class="o">.</span><span class="n">List</span><span class="o">.</span><span class="n">Tot</span>
+</pre></div>
+</div>
 <p>This brings into scope the <code class="docutils literal notranslate"><span class="pre">!*</span></code> and <code class="docutils literal notranslate"><span class="pre">*=</span></code> operators, which are
 specifically designed to operate on buffers of size 1, i.e. on pointers.</p>
-<pre class="code fstar literal-block"><code>open LowStar.BufferOps
-open FStar.HyperStack.ST</code></pre>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">open</span> <span class="n">LowStar</span><span class="o">.</span><span class="n">BufferOps</span>
+<span class="nb">open</span> <span class="n">FStar</span><span class="o">.</span><span class="n">HyperStack</span><span class="o">.</span><span class="n">ST</span>
+</pre></div>
+</div>
 <p>A ringbuffer is a view over a buffer, with a start index, a length (i.e. how
 many elements are currently being stored) and a total length (i.e. the size
 of the underlying <code class="docutils literal notranslate"><span class="pre">b</span></code>). We chose this style, as opposed to a pair of
@@ -182,137 +200,159 @@ of the underlying <code class="docutils literal notranslate"><span class="pre">b
 would be difficult to reason about.</p>
 <p>There are different ways to go about this; the FiniteList example, instead
 of a buffer and two pointers, uses a single reference to a record instead.</p>
-<pre class="code fstar literal-block"><code>noeq
-type t a = {
-  b: B.buffer a;
-  first: B.pointer U32.t;
-  length: B.pointer U32.t;
-  total_length: U32.t
-}</code></pre>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">noeq</span>
+<span class="nb">type</span> <span class="n">t</span> <span class="n">a</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">b</span><span class="p">:</span> <span class="n">B</span><span class="o">.</span><span class="n">buffer</span> <span class="n">a</span><span class="p">;</span>
+  <span class="n">first</span><span class="p">:</span> <span class="n">B</span><span class="o">.</span><span class="n">pointer</span> <span class="n">U32</span><span class="o">.</span><span class="n">t</span><span class="p">;</span>
+  <span class="n">length</span><span class="p">:</span> <span class="n">B</span><span class="o">.</span><span class="n">pointer</span> <span class="n">U32</span><span class="o">.</span><span class="n">t</span><span class="p">;</span>
+  <span class="n">total_length</span><span class="p">:</span> <span class="n">U32</span><span class="o">.</span><span class="n">t</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <p>To facilitate writing predicates, we define a handy shortcut that is the
 reflection of the <code class="docutils literal notranslate"><span class="pre">!*</span></code> operator at the proof level.</p>
-<pre class="code fstar literal-block"><code>unfold
-let deref #a (h: HS.mem) (x: B.pointer a) = B.get h x 0</code></pre>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">unfold</span>
+<span class="n">let</span> <span class="n">deref</span> <span class="c1">#a (h: HS.mem) (x: B.pointer a) = B.get h x 0</span>
+</pre></div>
+</div>
 <p>A first version of the well-formedness predicate for ring buffers. This
 predicate refers to a sequence, not a buffer, and therefore does not need
 the memory. It is useful in this module to have two versions of predicates:
 one that takes into account the memory, disjointness, etc. and another one
 that only focuses on index arithmetic. Nothing surprising here. Note that
 zero-sized ringbuffers are not allowed.</p>
-<pre class="code fstar literal-block"><code>let well_formed_f #a (b: S.seq a) (first length total_length: U32.t) =
-  let open U32 in
-  S.length b = v total_length /\
-  length &lt;=^ total_length /\
-  first &lt;^ total_length /\
-  total_length &gt;^ 0ul</code></pre>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">well_formed_f</span> <span class="c1">#a (b: S.seq a) (first length total_length: U32.t) =</span>
+  <span class="n">let</span> <span class="nb">open</span> <span class="n">U32</span> <span class="ow">in</span>
+  <span class="n">S</span><span class="o">.</span><span class="n">length</span> <span class="n">b</span> <span class="o">=</span> <span class="n">v</span> <span class="n">total_length</span> <span class="o">/</span>\
+  <span class="n">length</span> <span class="o">&lt;=^</span> <span class="n">total_length</span> <span class="o">/</span>\
+  <span class="n">first</span> <span class="o">&lt;^</span> <span class="n">total_length</span> <span class="o">/</span>\
+  <span class="n">total_length</span> <span class="o">&gt;^</span> <span class="mi">0</span><span class="n">ul</span>
+</pre></div>
+</div>
 <p>Same predicate as above, but this time operating on a memory state and using
 a stateful ringbuffer.</p>
-<pre class="code fstar literal-block"><code>let well_formed #a (h: HS.mem) (x: t a) =
-  B.live h x.b /\ B.live h x.first /\ B.live h x.length /\
-  M.(loc_disjoint (loc_buffer x.b) (loc_buffer x.first)) /\
-  M.(loc_disjoint (loc_buffer x.b) (loc_buffer x.length)) /\
-  M.(loc_disjoint (loc_buffer x.first) (loc_buffer x.length)) /\
-  well_formed_f (B.as_seq h x.b) (deref h x.first) (deref h x.length) x.total_length</code></pre>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">well_formed</span> <span class="c1">#a (h: HS.mem) (x: t a) =</span>
+  <span class="n">B</span><span class="o">.</span><span class="n">live</span> <span class="n">h</span> <span class="n">x</span><span class="o">.</span><span class="n">b</span> <span class="o">/</span>\ <span class="n">B</span><span class="o">.</span><span class="n">live</span> <span class="n">h</span> <span class="n">x</span><span class="o">.</span><span class="n">first</span> <span class="o">/</span>\ <span class="n">B</span><span class="o">.</span><span class="n">live</span> <span class="n">h</span> <span class="n">x</span><span class="o">.</span><span class="n">length</span> <span class="o">/</span>\
+  <span class="n">M</span><span class="o">.</span><span class="p">(</span><span class="n">loc_disjoint</span> <span class="p">(</span><span class="n">loc_buffer</span> <span class="n">x</span><span class="o">.</span><span class="n">b</span><span class="p">)</span> <span class="p">(</span><span class="n">loc_buffer</span> <span class="n">x</span><span class="o">.</span><span class="n">first</span><span class="p">))</span> <span class="o">/</span>\
+  <span class="n">M</span><span class="o">.</span><span class="p">(</span><span class="n">loc_disjoint</span> <span class="p">(</span><span class="n">loc_buffer</span> <span class="n">x</span><span class="o">.</span><span class="n">b</span><span class="p">)</span> <span class="p">(</span><span class="n">loc_buffer</span> <span class="n">x</span><span class="o">.</span><span class="n">length</span><span class="p">))</span> <span class="o">/</span>\
+  <span class="n">M</span><span class="o">.</span><span class="p">(</span><span class="n">loc_disjoint</span> <span class="p">(</span><span class="n">loc_buffer</span> <span class="n">x</span><span class="o">.</span><span class="n">first</span><span class="p">)</span> <span class="p">(</span><span class="n">loc_buffer</span> <span class="n">x</span><span class="o">.</span><span class="n">length</span><span class="p">))</span> <span class="o">/</span>\
+  <span class="n">well_formed_f</span> <span class="p">(</span><span class="n">B</span><span class="o">.</span><span class="n">as_seq</span> <span class="n">h</span> <span class="n">x</span><span class="o">.</span><span class="n">b</span><span class="p">)</span> <span class="p">(</span><span class="n">deref</span> <span class="n">h</span> <span class="n">x</span><span class="o">.</span><span class="n">first</span><span class="p">)</span> <span class="p">(</span><span class="n">deref</span> <span class="n">h</span> <span class="n">x</span><span class="o">.</span><span class="n">length</span><span class="p">)</span> <span class="n">x</span><span class="o">.</span><span class="n">total_length</span>
+</pre></div>
+</div>
 <p>We next define operators for moving around the ringbuffer with wraparound
 semantics. Defining this using a modulo operator is not a good idea, because:</p>
 <ul class="simple">
-<li><p>writing <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">+^</span> <span class="pre">1ul</span> <span class="pre">%^</span> <span class="pre">total_length</span></code> may overflow</p></li>
-<li><p>Z3 is notoriously bad at reasoning with modular arithmetic.</p></li>
+<li>writing <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">+^</span> <span class="pre">1ul</span> <span class="pre">%^</span> <span class="pre">total_length</span></code> may overflow</li>
+<li>Z3 is notoriously bad at reasoning with modular arithmetic.</li>
 </ul>
 <p>So, instead, we just do a simple branch.</p>
-<pre class="code fstar literal-block"><code>let next (i total_length: U32.t): Pure U32.t
-  (requires U32.(total_length &gt;^ 0ul /\ i &lt;^ total_length))
-  (ensures fun r -&gt; U32.( r &lt;^ total_length ))
-=
-  let open U32 in
-  if i =^ total_length -^ 1ul then
-    0ul
-  else
-    i +^ 1ul
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="nb">next</span> <span class="p">(</span><span class="n">i</span> <span class="n">total_length</span><span class="p">:</span> <span class="n">U32</span><span class="o">.</span><span class="n">t</span><span class="p">):</span> <span class="n">Pure</span> <span class="n">U32</span><span class="o">.</span><span class="n">t</span>
+  <span class="p">(</span><span class="n">requires</span> <span class="n">U32</span><span class="o">.</span><span class="p">(</span><span class="n">total_length</span> <span class="o">&gt;^</span> <span class="mi">0</span><span class="n">ul</span> <span class="o">/</span>\ <span class="n">i</span> <span class="o">&lt;^</span> <span class="n">total_length</span><span class="p">))</span>
+  <span class="p">(</span><span class="n">ensures</span> <span class="n">fun</span> <span class="n">r</span> <span class="o">-&gt;</span> <span class="n">U32</span><span class="o">.</span><span class="p">(</span> <span class="n">r</span> <span class="o">&lt;^</span> <span class="n">total_length</span> <span class="p">))</span>
+<span class="o">=</span>
+  <span class="n">let</span> <span class="nb">open</span> <span class="n">U32</span> <span class="ow">in</span>
+  <span class="k">if</span> <span class="n">i</span> <span class="o">=^</span> <span class="n">total_length</span> <span class="o">-^</span> <span class="mi">1</span><span class="n">ul</span> <span class="n">then</span>
+    <span class="mi">0</span><span class="n">ul</span>
+  <span class="k">else</span>
+    <span class="n">i</span> <span class="o">+^</span> <span class="mi">1</span><span class="n">ul</span>
 
-let prev (i total_length: U32.t): Pure U32.t
-  (requires U32.(total_length &gt;^ 0ul /\ i &lt;^ total_length))
-  (ensures fun r -&gt; U32.( r &lt;^ total_length ))
-=
-  let open U32 in
-  if i &gt;^ 0ul then
-    i -^ 1ul
-  else
-    total_length -^ 1ul</code></pre>
+<span class="n">let</span> <span class="n">prev</span> <span class="p">(</span><span class="n">i</span> <span class="n">total_length</span><span class="p">:</span> <span class="n">U32</span><span class="o">.</span><span class="n">t</span><span class="p">):</span> <span class="n">Pure</span> <span class="n">U32</span><span class="o">.</span><span class="n">t</span>
+  <span class="p">(</span><span class="n">requires</span> <span class="n">U32</span><span class="o">.</span><span class="p">(</span><span class="n">total_length</span> <span class="o">&gt;^</span> <span class="mi">0</span><span class="n">ul</span> <span class="o">/</span>\ <span class="n">i</span> <span class="o">&lt;^</span> <span class="n">total_length</span><span class="p">))</span>
+  <span class="p">(</span><span class="n">ensures</span> <span class="n">fun</span> <span class="n">r</span> <span class="o">-&gt;</span> <span class="n">U32</span><span class="o">.</span><span class="p">(</span> <span class="n">r</span> <span class="o">&lt;^</span> <span class="n">total_length</span> <span class="p">))</span>
+<span class="o">=</span>
+  <span class="n">let</span> <span class="nb">open</span> <span class="n">U32</span> <span class="ow">in</span>
+  <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;^</span> <span class="mi">0</span><span class="n">ul</span> <span class="n">then</span>
+    <span class="n">i</span> <span class="o">-^</span> <span class="mi">1</span><span class="n">ul</span>
+  <span class="k">else</span>
+    <span class="n">total_length</span> <span class="o">-^</span> <span class="mi">1</span><span class="n">ul</span>
+</pre></div>
+</div>
 <p>These two are useful from the client’s perspective, to capture how many slots
 are left in the buffer.</p>
-<pre class="code fstar literal-block"><code>let remaining_space #a (h: HS.mem) (x: t a { well_formed h x }) =
-  U32.( x.total_length -^ (deref h x.length) )
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">remaining_space</span> <span class="c1">#a (h: HS.mem) (x: t a { well_formed h x }) =</span>
+  <span class="n">U32</span><span class="o">.</span><span class="p">(</span> <span class="n">x</span><span class="o">.</span><span class="n">total_length</span> <span class="o">-^</span> <span class="p">(</span><span class="n">deref</span> <span class="n">h</span> <span class="n">x</span><span class="o">.</span><span class="n">length</span><span class="p">)</span> <span class="p">)</span>
 
-let space_left #a (h: HS.mem) (x: t a { well_formed h x }) =
-  U32.( remaining_space h x &gt;^ 0ul )</code></pre>
+<span class="n">let</span> <span class="n">space_left</span> <span class="c1">#a (h: HS.mem) (x: t a { well_formed h x }) =</span>
+  <span class="n">U32</span><span class="o">.</span><span class="p">(</span> <span class="n">remaining_space</span> <span class="n">h</span> <span class="n">x</span> <span class="o">&gt;^</span> <span class="mi">0</span><span class="n">ul</span> <span class="p">)</span>
+</pre></div>
+</div>
 <p>A predicate over indices that captures whether a given entry in the buffer
 is occupied. Once again, we avoid modular arithmetic by branching.</p>
-<pre class="code fstar literal-block"><code>let used_slot_f (first length total_length i: U32.t) =
-  let first = U32.v first in
-  let length = U32.v length in
-  let total_length = U32.v total_length in
-  let i = U32.v i in
-  first &lt;= i /\ i &lt; first + length \/
-  first &lt;= i + total_length /\ i + total_length &lt; first + length</code></pre>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">used_slot_f</span> <span class="p">(</span><span class="n">first</span> <span class="n">length</span> <span class="n">total_length</span> <span class="n">i</span><span class="p">:</span> <span class="n">U32</span><span class="o">.</span><span class="n">t</span><span class="p">)</span> <span class="o">=</span>
+  <span class="n">let</span> <span class="n">first</span> <span class="o">=</span> <span class="n">U32</span><span class="o">.</span><span class="n">v</span> <span class="n">first</span> <span class="ow">in</span>
+  <span class="n">let</span> <span class="n">length</span> <span class="o">=</span> <span class="n">U32</span><span class="o">.</span><span class="n">v</span> <span class="n">length</span> <span class="ow">in</span>
+  <span class="n">let</span> <span class="n">total_length</span> <span class="o">=</span> <span class="n">U32</span><span class="o">.</span><span class="n">v</span> <span class="n">total_length</span> <span class="ow">in</span>
+  <span class="n">let</span> <span class="n">i</span> <span class="o">=</span> <span class="n">U32</span><span class="o">.</span><span class="n">v</span> <span class="n">i</span> <span class="ow">in</span>
+  <span class="n">first</span> <span class="o">&lt;=</span> <span class="n">i</span> <span class="o">/</span>\ <span class="n">i</span> <span class="o">&lt;</span> <span class="n">first</span> <span class="o">+</span> <span class="n">length</span> \<span class="o">/</span>
+  <span class="n">first</span> <span class="o">&lt;=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">total_length</span> <span class="o">/</span>\ <span class="n">i</span> <span class="o">+</span> <span class="n">total_length</span> <span class="o">&lt;</span> <span class="n">first</span> <span class="o">+</span> <span class="n">length</span>
+</pre></div>
+</div>
 <p>Same thing, but over a memory and the actual references.</p>
-<pre class="code fstar literal-block"><code>let used_slot #a (h: HS.mem) (x: t a { well_formed h x }) (i: U32.t) =
-  let first = deref h x.first in
-  let length = deref h x.length in
-  let total_length = x.total_length in
-  used_slot_f first length total_length i</code></pre>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">used_slot</span> <span class="c1">#a (h: HS.mem) (x: t a { well_formed h x }) (i: U32.t) =</span>
+  <span class="n">let</span> <span class="n">first</span> <span class="o">=</span> <span class="n">deref</span> <span class="n">h</span> <span class="n">x</span><span class="o">.</span><span class="n">first</span> <span class="ow">in</span>
+  <span class="n">let</span> <span class="n">length</span> <span class="o">=</span> <span class="n">deref</span> <span class="n">h</span> <span class="n">x</span><span class="o">.</span><span class="n">length</span> <span class="ow">in</span>
+  <span class="n">let</span> <span class="n">total_length</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">total_length</span> <span class="ow">in</span>
+  <span class="n">used_slot_f</span> <span class="n">first</span> <span class="n">length</span> <span class="n">total_length</span> <span class="n">i</span>
+</pre></div>
+</div>
 <p>We reflect a ringbuffer as a list. This is the functional version that
 operates over a sequence.</p>
-<pre class="code fstar literal-block"><code>let rec as_list_f #a
-  (b: S.seq a)
-  (first length total_length: U32.t): Ghost (list a)
-    (requires well_formed_f b first length total_length)
-    (ensures fun l -&gt; L.length l = U32.v length)
-    (decreases (U32.v length))
-=
-  if U32.( length =^ 0ul ) then
-    []
-  else
-    S.index b (U32.v first) ::
-      as_list_f b (next first total_length) U32.( length -^ 1ul ) total_length</code></pre>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">rec</span> <span class="n">as_list_f</span> <span class="c1">#a</span>
+  <span class="p">(</span><span class="n">b</span><span class="p">:</span> <span class="n">S</span><span class="o">.</span><span class="n">seq</span> <span class="n">a</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">first</span> <span class="n">length</span> <span class="n">total_length</span><span class="p">:</span> <span class="n">U32</span><span class="o">.</span><span class="n">t</span><span class="p">):</span> <span class="n">Ghost</span> <span class="p">(</span><span class="nb">list</span> <span class="n">a</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">requires</span> <span class="n">well_formed_f</span> <span class="n">b</span> <span class="n">first</span> <span class="n">length</span> <span class="n">total_length</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">ensures</span> <span class="n">fun</span> <span class="n">l</span> <span class="o">-&gt;</span> <span class="n">L</span><span class="o">.</span><span class="n">length</span> <span class="n">l</span> <span class="o">=</span> <span class="n">U32</span><span class="o">.</span><span class="n">v</span> <span class="n">length</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">decreases</span> <span class="p">(</span><span class="n">U32</span><span class="o">.</span><span class="n">v</span> <span class="n">length</span><span class="p">))</span>
+<span class="o">=</span>
+  <span class="k">if</span> <span class="n">U32</span><span class="o">.</span><span class="p">(</span> <span class="n">length</span> <span class="o">=^</span> <span class="mi">0</span><span class="n">ul</span> <span class="p">)</span> <span class="n">then</span>
+    <span class="p">[]</span>
+  <span class="k">else</span>
+    <span class="n">S</span><span class="o">.</span><span class="n">index</span> <span class="n">b</span> <span class="p">(</span><span class="n">U32</span><span class="o">.</span><span class="n">v</span> <span class="n">first</span><span class="p">)</span> <span class="p">::</span>
+      <span class="n">as_list_f</span> <span class="n">b</span> <span class="p">(</span><span class="nb">next</span> <span class="n">first</span> <span class="n">total_length</span><span class="p">)</span> <span class="n">U32</span><span class="o">.</span><span class="p">(</span> <span class="n">length</span> <span class="o">-^</span> <span class="mi">1</span><span class="n">ul</span> <span class="p">)</span> <span class="n">total_length</span>
+</pre></div>
+</div>
 <p>The one central lemma of this module: assigning something in the unused
 parts of the buffer does not affect the contents of the list.</p>
-<pre class="code fstar literal-block"><code>let rec seq_update_unused_preserves_list (#a: eqtype)
-  (b: S.seq a)
-  (i: U32.t)
-  (e: a)
-  (first length total_length: U32.t): Lemma
-  (requires
-    U32.v i &lt; S.length b /\
-    well_formed_f b first length total_length /\
-     ~(used_slot_f first length total_length i))
-  (ensures
-    well_formed_f b first length total_length /\ (
-    let b' = S.upd b (U32.v i) e in
-    as_list_f b first length total_length = as_list_f b' first length total_length
-  ))
-  (decreases (U32.v length))
-=
-  if U32.(length =^ 0ul) then
-    ()
-  else begin
-    seq_update_unused_preserves_list b i e (next first total_length)
-      U32.(length -^ 1ul) total_length
-  end</code></pre>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">rec</span> <span class="n">seq_update_unused_preserves_list</span> <span class="p">(</span><span class="c1">#a: eqtype)</span>
+  <span class="p">(</span><span class="n">b</span><span class="p">:</span> <span class="n">S</span><span class="o">.</span><span class="n">seq</span> <span class="n">a</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">i</span><span class="p">:</span> <span class="n">U32</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="n">a</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">first</span> <span class="n">length</span> <span class="n">total_length</span><span class="p">:</span> <span class="n">U32</span><span class="o">.</span><span class="n">t</span><span class="p">):</span> <span class="n">Lemma</span>
+  <span class="p">(</span><span class="n">requires</span>
+    <span class="n">U32</span><span class="o">.</span><span class="n">v</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">S</span><span class="o">.</span><span class="n">length</span> <span class="n">b</span> <span class="o">/</span>\
+    <span class="n">well_formed_f</span> <span class="n">b</span> <span class="n">first</span> <span class="n">length</span> <span class="n">total_length</span> <span class="o">/</span>\
+     <span class="o">~</span><span class="p">(</span><span class="n">used_slot_f</span> <span class="n">first</span> <span class="n">length</span> <span class="n">total_length</span> <span class="n">i</span><span class="p">))</span>
+  <span class="p">(</span><span class="n">ensures</span>
+    <span class="n">well_formed_f</span> <span class="n">b</span> <span class="n">first</span> <span class="n">length</span> <span class="n">total_length</span> <span class="o">/</span>\ <span class="p">(</span>
+    <span class="n">let</span> <span class="sa">b</span><span class="s1">&#39; = S.upd b (U32.v i) e in</span>
+    <span class="n">as_list_f</span> <span class="n">b</span> <span class="n">first</span> <span class="n">length</span> <span class="n">total_length</span> <span class="o">=</span> <span class="n">as_list_f</span> <span class="sa">b</span><span class="s1">&#39; first length total_length</span>
+  <span class="p">))</span>
+  <span class="p">(</span><span class="n">decreases</span> <span class="p">(</span><span class="n">U32</span><span class="o">.</span><span class="n">v</span> <span class="n">length</span><span class="p">))</span>
+<span class="o">=</span>
+  <span class="k">if</span> <span class="n">U32</span><span class="o">.</span><span class="p">(</span><span class="n">length</span> <span class="o">=^</span> <span class="mi">0</span><span class="n">ul</span><span class="p">)</span> <span class="n">then</span>
+    <span class="p">()</span>
+  <span class="k">else</span> <span class="n">begin</span>
+    <span class="n">seq_update_unused_preserves_list</span> <span class="n">b</span> <span class="n">i</span> <span class="n">e</span> <span class="p">(</span><span class="nb">next</span> <span class="n">first</span> <span class="n">total_length</span><span class="p">)</span>
+      <span class="n">U32</span><span class="o">.</span><span class="p">(</span><span class="n">length</span> <span class="o">-^</span> <span class="mi">1</span><span class="n">ul</span><span class="p">)</span> <span class="n">total_length</span>
+  <span class="n">end</span>
+</pre></div>
+</div>
 <p>This version is more convenient and refers to the current memory and buffer,
 as opposed to as sequence.</p>
-<pre class="code fstar literal-block"><code>let as_list #a (h: HS.mem) (x: t a): Ghost (list a)
-  (requires well_formed h x)
-  (ensures fun l -&gt; L.length l = U32.(v (deref h x.length)))
-=
-  as_list_f (B.as_seq h x.b) (deref h x.first) (deref h x.length) x.total_length
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">as_list</span> <span class="c1">#a (h: HS.mem) (x: t a): Ghost (list a)</span>
+  <span class="p">(</span><span class="n">requires</span> <span class="n">well_formed</span> <span class="n">h</span> <span class="n">x</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">ensures</span> <span class="n">fun</span> <span class="n">l</span> <span class="o">-&gt;</span> <span class="n">L</span><span class="o">.</span><span class="n">length</span> <span class="n">l</span> <span class="o">=</span> <span class="n">U32</span><span class="o">.</span><span class="p">(</span><span class="n">v</span> <span class="p">(</span><span class="n">deref</span> <span class="n">h</span> <span class="n">x</span><span class="o">.</span><span class="n">length</span><span class="p">)))</span>
+<span class="o">=</span>
+  <span class="n">as_list_f</span> <span class="p">(</span><span class="n">B</span><span class="o">.</span><span class="n">as_seq</span> <span class="n">h</span> <span class="n">x</span><span class="o">.</span><span class="n">b</span><span class="p">)</span> <span class="p">(</span><span class="n">deref</span> <span class="n">h</span> <span class="n">x</span><span class="o">.</span><span class="n">first</span><span class="p">)</span> <span class="p">(</span><span class="n">deref</span> <span class="n">h</span> <span class="n">x</span><span class="o">.</span><span class="n">length</span><span class="p">)</span> <span class="n">x</span><span class="o">.</span><span class="n">total_length</span>
 
-#reset-options &quot;--z3rlimit 50&quot;</code></pre>
+<span class="c1">#reset-options &quot;--z3rlimit 50&quot;</span>
+</pre></div>
+</div>
 <p><code class="docutils literal notranslate"><span class="pre">pop</span></code> is easy to prove, and requires no particular call to a lemma,
 because we don’t modify the underlying buffer. Since the buffer contents
 doesn’t change, the total predicate <code class="docutils literal notranslate"><span class="pre">as_list_f</span></code> is preserved, and F* is able
 to prove automatically the functional specification.</p>
-<pre class="code fstar literal-block"><code>let pop (#a: eqtype) (x: t a): Stack a
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span>let pop (#a: eqtype) (x: t a): Stack a
   (requires fun h -&gt;
     well_formed h x /\ U32.(deref h x.length &gt;^ 0ul))
   (ensures fun h0 r h1 -&gt;
@@ -327,9 +367,11 @@ to prove automatically the functional specification.</p>
   x.first *= next !*x.first x.total_length;
   x.length *= U32.(!*x.length -^ 1ul);
   let h1 = ST.get () in
-  e</code></pre>
+  e
+</pre></div>
+</div>
 <p><code class="docutils literal notranslate"><span class="pre">push</span></code> is slightly more involved and crucially relies on the lemma above.</p>
-<pre class="code fstar literal-block"><code>let push (#a: eqtype) (x: t a) (e: a): Stack unit
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span>let push (#a: eqtype) (x: t a) (e: a): Stack unit
   (requires fun h -&gt;
     well_formed h x /\ space_left h x)
   (ensures fun h0 _ h1 -&gt;
@@ -346,48 +388,54 @@ to prove automatically the functional specification.</p>
   seq_update_unused_preserves_list (B.as_seq h0 x.b) dest_slot e
     (deref h0 x.first) (deref h0 x.length) x.total_length;
   x.first *= dest_slot;
-  x.length *= U32.(!*x.length +^ 1ul)</code></pre>
+  x.length *= U32.(!*x.length +^ 1ul)
+</pre></div>
+</div>
 <p>We are reaching the point of diminishing returns for this example. The
 function below is only moderately interesting; the gist of it is that the
 natural equalities one would write (in comments) are slightly massaged to
 avoid integer overflow.</p>
-<pre class="code fstar literal-block"><code>let one_past_last (i length total_length: U32.t): Pure U32.t
-  (requires U32.(total_length &gt;^ 0ul /\ i &lt;^ total_length /\ length &lt;=^ total_length))
-  (ensures fun r -&gt; U32.( r &lt;^ total_length ))
-=
-  let open U32 in
-  if length = total_length then
-    i
-  // i + length &gt;= total_length
-  else if i &gt;=^ total_length -^ length then
-    // i + length - total_length, carefully crafted to avoid overflow
-    length -^ (total_length -^ i)
-  else
-    i +^ length</code></pre>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">one_past_last</span> <span class="p">(</span><span class="n">i</span> <span class="n">length</span> <span class="n">total_length</span><span class="p">:</span> <span class="n">U32</span><span class="o">.</span><span class="n">t</span><span class="p">):</span> <span class="n">Pure</span> <span class="n">U32</span><span class="o">.</span><span class="n">t</span>
+  <span class="p">(</span><span class="n">requires</span> <span class="n">U32</span><span class="o">.</span><span class="p">(</span><span class="n">total_length</span> <span class="o">&gt;^</span> <span class="mi">0</span><span class="n">ul</span> <span class="o">/</span>\ <span class="n">i</span> <span class="o">&lt;^</span> <span class="n">total_length</span> <span class="o">/</span>\ <span class="n">length</span> <span class="o">&lt;=^</span> <span class="n">total_length</span><span class="p">))</span>
+  <span class="p">(</span><span class="n">ensures</span> <span class="n">fun</span> <span class="n">r</span> <span class="o">-&gt;</span> <span class="n">U32</span><span class="o">.</span><span class="p">(</span> <span class="n">r</span> <span class="o">&lt;^</span> <span class="n">total_length</span> <span class="p">))</span>
+<span class="o">=</span>
+  <span class="n">let</span> <span class="nb">open</span> <span class="n">U32</span> <span class="ow">in</span>
+  <span class="k">if</span> <span class="n">length</span> <span class="o">=</span> <span class="n">total_length</span> <span class="n">then</span>
+    <span class="n">i</span>
+  <span class="o">//</span> <span class="n">i</span> <span class="o">+</span> <span class="n">length</span> <span class="o">&gt;=</span> <span class="n">total_length</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=^</span> <span class="n">total_length</span> <span class="o">-^</span> <span class="n">length</span> <span class="n">then</span>
+    <span class="o">//</span> <span class="n">i</span> <span class="o">+</span> <span class="n">length</span> <span class="o">-</span> <span class="n">total_length</span><span class="p">,</span> <span class="n">carefully</span> <span class="n">crafted</span> <span class="n">to</span> <span class="n">avoid</span> <span class="n">overflow</span>
+    <span class="n">length</span> <span class="o">-^</span> <span class="p">(</span><span class="n">total_length</span> <span class="o">-^</span> <span class="n">i</span><span class="p">)</span>
+  <span class="k">else</span>
+    <span class="n">i</span> <span class="o">+^</span> <span class="n">length</span>
+</pre></div>
+</div>
 <p>A highly specialized lemma geared towards our post-condition. This could
 probably be proven with more automation if we had a more robust library of
 list-based lemmas, but well.</p>
-<pre class="code fstar literal-block"><code>let rec as_list_append_one (#a: eqtype)
-  (b: S.seq a)
-  (e: a)
-  (first length total_length: U32.t): Lemma
-  (requires
-    well_formed_f b first length total_length /\
-    U32.(length &lt;^ total_length) /\
-    S.index b (U32.v (one_past_last first length total_length)) = e)
-  (ensures
-    as_list_f b first U32.(length +^ 1ul) total_length =
-    L.append (as_list_f b first length total_length) [ e ])
-  (decreases (U32.v length))
-=
-  if U32.(length =^ 0ul) then
-    ()
-  else
-    as_list_append_one b e (next first total_length) U32.(length -^ 1ul) total_length</code></pre>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">rec</span> <span class="n">as_list_append_one</span> <span class="p">(</span><span class="c1">#a: eqtype)</span>
+  <span class="p">(</span><span class="n">b</span><span class="p">:</span> <span class="n">S</span><span class="o">.</span><span class="n">seq</span> <span class="n">a</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="n">a</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">first</span> <span class="n">length</span> <span class="n">total_length</span><span class="p">:</span> <span class="n">U32</span><span class="o">.</span><span class="n">t</span><span class="p">):</span> <span class="n">Lemma</span>
+  <span class="p">(</span><span class="n">requires</span>
+    <span class="n">well_formed_f</span> <span class="n">b</span> <span class="n">first</span> <span class="n">length</span> <span class="n">total_length</span> <span class="o">/</span>\
+    <span class="n">U32</span><span class="o">.</span><span class="p">(</span><span class="n">length</span> <span class="o">&lt;^</span> <span class="n">total_length</span><span class="p">)</span> <span class="o">/</span>\
+    <span class="n">S</span><span class="o">.</span><span class="n">index</span> <span class="n">b</span> <span class="p">(</span><span class="n">U32</span><span class="o">.</span><span class="n">v</span> <span class="p">(</span><span class="n">one_past_last</span> <span class="n">first</span> <span class="n">length</span> <span class="n">total_length</span><span class="p">))</span> <span class="o">=</span> <span class="n">e</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">ensures</span>
+    <span class="n">as_list_f</span> <span class="n">b</span> <span class="n">first</span> <span class="n">U32</span><span class="o">.</span><span class="p">(</span><span class="n">length</span> <span class="o">+^</span> <span class="mi">1</span><span class="n">ul</span><span class="p">)</span> <span class="n">total_length</span> <span class="o">=</span>
+    <span class="n">L</span><span class="o">.</span><span class="n">append</span> <span class="p">(</span><span class="n">as_list_f</span> <span class="n">b</span> <span class="n">first</span> <span class="n">length</span> <span class="n">total_length</span><span class="p">)</span> <span class="p">[</span> <span class="n">e</span> <span class="p">])</span>
+  <span class="p">(</span><span class="n">decreases</span> <span class="p">(</span><span class="n">U32</span><span class="o">.</span><span class="n">v</span> <span class="n">length</span><span class="p">))</span>
+<span class="o">=</span>
+  <span class="k">if</span> <span class="n">U32</span><span class="o">.</span><span class="p">(</span><span class="n">length</span> <span class="o">=^</span> <span class="mi">0</span><span class="n">ul</span><span class="p">)</span> <span class="n">then</span>
+    <span class="p">()</span>
+  <span class="k">else</span>
+    <span class="n">as_list_append_one</span> <span class="n">b</span> <span class="n">e</span> <span class="p">(</span><span class="nb">next</span> <span class="n">first</span> <span class="n">total_length</span><span class="p">)</span> <span class="n">U32</span><span class="o">.</span><span class="p">(</span><span class="n">length</span> <span class="o">-^</span> <span class="mi">1</span><span class="n">ul</span><span class="p">)</span> <span class="n">total_length</span>
+</pre></div>
+</div>
 <p>Pushing one element at the back is morally equivalent to appending a
 singleton list at the end. This function crucially relies on the custom
 lemma above.</p>
-<pre class="code fstar literal-block"><code>let push_back (#a: eqtype) (x: t a) (e: a): Stack unit
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span>let push_back (#a: eqtype) (x: t a) (e: a): Stack unit
   (requires (fun h -&gt;
     well_formed h x /\ space_left h x))
   (ensures (fun h0 r h1 -&gt;
@@ -406,31 +454,35 @@ lemma above.</p>
   let h1 = ST.get () in
   as_list_append_one (B.as_seq h1 x.b) e
     (deref h1 x.first) (deref h1 x.length) x.total_length;
-  x.length *= U32.(!*x.length +^ 1ul)</code></pre>
+  x.length *= U32.(!*x.length +^ 1ul)
+</pre></div>
+</div>
 <p>Similarly, we prove by induction a custom lemma that captures what it means
 to split a list at the last element.</p>
-<pre class="code fstar literal-block"><code>let rec as_list_minus_one (#a: eqtype)
-  (b: S.seq a)
-  (e: a)
-  (first length total_length: U32.t): Lemma
-  (requires
-    well_formed_f b first length total_length /\
-    U32.(length &gt;^ 0ul) /\
-    S.index b (U32.v (prev (one_past_last first length total_length) total_length)) = e)
-  (ensures (
-    let l = as_list_f b first length total_length in
-    let l1, l2 = L.splitAt (L.length l - 1) l in
-    l1 = as_list_f b first U32.(length -^ 1ul) total_length /\
-    l2 = [ e ]))
-  (decreases (U32.v length))
-=
-  if U32.(length =^ 1ul) then
-    ()
-  else
-    as_list_minus_one b e (next first total_length) U32.(length -^ 1ul) total_length</code></pre>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">rec</span> <span class="n">as_list_minus_one</span> <span class="p">(</span><span class="c1">#a: eqtype)</span>
+  <span class="p">(</span><span class="n">b</span><span class="p">:</span> <span class="n">S</span><span class="o">.</span><span class="n">seq</span> <span class="n">a</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="n">a</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">first</span> <span class="n">length</span> <span class="n">total_length</span><span class="p">:</span> <span class="n">U32</span><span class="o">.</span><span class="n">t</span><span class="p">):</span> <span class="n">Lemma</span>
+  <span class="p">(</span><span class="n">requires</span>
+    <span class="n">well_formed_f</span> <span class="n">b</span> <span class="n">first</span> <span class="n">length</span> <span class="n">total_length</span> <span class="o">/</span>\
+    <span class="n">U32</span><span class="o">.</span><span class="p">(</span><span class="n">length</span> <span class="o">&gt;^</span> <span class="mi">0</span><span class="n">ul</span><span class="p">)</span> <span class="o">/</span>\
+    <span class="n">S</span><span class="o">.</span><span class="n">index</span> <span class="n">b</span> <span class="p">(</span><span class="n">U32</span><span class="o">.</span><span class="n">v</span> <span class="p">(</span><span class="n">prev</span> <span class="p">(</span><span class="n">one_past_last</span> <span class="n">first</span> <span class="n">length</span> <span class="n">total_length</span><span class="p">)</span> <span class="n">total_length</span><span class="p">))</span> <span class="o">=</span> <span class="n">e</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">ensures</span> <span class="p">(</span>
+    <span class="n">let</span> <span class="n">l</span> <span class="o">=</span> <span class="n">as_list_f</span> <span class="n">b</span> <span class="n">first</span> <span class="n">length</span> <span class="n">total_length</span> <span class="ow">in</span>
+    <span class="n">let</span> <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span> <span class="o">=</span> <span class="n">L</span><span class="o">.</span><span class="n">splitAt</span> <span class="p">(</span><span class="n">L</span><span class="o">.</span><span class="n">length</span> <span class="n">l</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="n">l</span> <span class="ow">in</span>
+    <span class="n">l1</span> <span class="o">=</span> <span class="n">as_list_f</span> <span class="n">b</span> <span class="n">first</span> <span class="n">U32</span><span class="o">.</span><span class="p">(</span><span class="n">length</span> <span class="o">-^</span> <span class="mi">1</span><span class="n">ul</span><span class="p">)</span> <span class="n">total_length</span> <span class="o">/</span>\
+    <span class="n">l2</span> <span class="o">=</span> <span class="p">[</span> <span class="n">e</span> <span class="p">]))</span>
+  <span class="p">(</span><span class="n">decreases</span> <span class="p">(</span><span class="n">U32</span><span class="o">.</span><span class="n">v</span> <span class="n">length</span><span class="p">))</span>
+<span class="o">=</span>
+  <span class="k">if</span> <span class="n">U32</span><span class="o">.</span><span class="p">(</span><span class="n">length</span> <span class="o">=^</span> <span class="mi">1</span><span class="n">ul</span><span class="p">)</span> <span class="n">then</span>
+    <span class="p">()</span>
+  <span class="k">else</span>
+    <span class="n">as_list_minus_one</span> <span class="n">b</span> <span class="n">e</span> <span class="p">(</span><span class="nb">next</span> <span class="n">first</span> <span class="n">total_length</span><span class="p">)</span> <span class="n">U32</span><span class="o">.</span><span class="p">(</span><span class="n">length</span> <span class="o">-^</span> <span class="mi">1</span><span class="n">ul</span><span class="p">)</span> <span class="n">total_length</span>
+</pre></div>
+</div>
 <p>Then, we use the lemma above to specify what it means to pop an element from
 the back: it is equivalent to splitting the list at the last element.</p>
-<pre class="code fstar literal-block"><code>let pop_back (#a: eqtype) (x: t a): Stack a
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span>let pop_back (#a: eqtype) (x: t a): Stack a
   (requires fun h -&gt;
     well_formed h x /\ U32.(deref h x.length &gt;^ 0ul))
   (ensures fun h0 e h1 -&gt;
@@ -446,28 +498,34 @@ the back: it is equivalent to splitting the list at the last element.</p>
   x.length *= U32.(!*x.length -^ 1ul);
   as_list_minus_one (B.as_seq h0 x.b) e
     (deref h0 x.first) (deref h0 x.length) x.total_length;
-  e</code></pre>
+  e
+</pre></div>
+</div>
 <p><code class="docutils literal notranslate"><span class="pre">create</span></code> leverages the <code class="docutils literal notranslate"><span class="pre">StackInline</span></code> effect, and allocates three buffers
 – we encapsulate stack allocation in a separate function, which facilitates
 verification. Relying on KreMLin’s support, <code class="docutils literal notranslate"><span class="pre">create</span></code> will be textually
 inlined at call-site so that the allocations are effectively in the caller’s
 stack frame.</p>
-<pre class="code fstar literal-block"><code>let create (#a: eqtype) (init: a) (len: U32.t): StackInline (t a)
-  (requires (fun _ -&gt; U32.v len &gt; 0))
-  (ensures (fun h0 x h1 -&gt;
-     well_formed h1 x /\ remaining_space h1 x = len))
-=
-  let b = B.alloca init len in
-  { b = b; first = B.alloca 0ul 1ul; length = B.alloca 0ul 1ul; total_length = len }</code></pre>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">create</span> <span class="p">(</span><span class="c1">#a: eqtype) (init: a) (len: U32.t): StackInline (t a)</span>
+  <span class="p">(</span><span class="n">requires</span> <span class="p">(</span><span class="n">fun</span> <span class="n">_</span> <span class="o">-&gt;</span> <span class="n">U32</span><span class="o">.</span><span class="n">v</span> <span class="nb">len</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">))</span>
+  <span class="p">(</span><span class="n">ensures</span> <span class="p">(</span><span class="n">fun</span> <span class="n">h0</span> <span class="n">x</span> <span class="n">h1</span> <span class="o">-&gt;</span>
+     <span class="n">well_formed</span> <span class="n">h1</span> <span class="n">x</span> <span class="o">/</span>\ <span class="n">remaining_space</span> <span class="n">h1</span> <span class="n">x</span> <span class="o">=</span> <span class="nb">len</span><span class="p">))</span>
+<span class="o">=</span>
+  <span class="n">let</span> <span class="n">b</span> <span class="o">=</span> <span class="n">B</span><span class="o">.</span><span class="n">alloca</span> <span class="n">init</span> <span class="nb">len</span> <span class="ow">in</span>
+  <span class="p">{</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span> <span class="n">first</span> <span class="o">=</span> <span class="n">B</span><span class="o">.</span><span class="n">alloca</span> <span class="mi">0</span><span class="n">ul</span> <span class="mi">1</span><span class="n">ul</span><span class="p">;</span> <span class="n">length</span> <span class="o">=</span> <span class="n">B</span><span class="o">.</span><span class="n">alloca</span> <span class="mi">0</span><span class="n">ul</span> <span class="mi">1</span><span class="n">ul</span><span class="p">;</span> <span class="n">total_length</span> <span class="o">=</span> <span class="nb">len</span> <span class="p">}</span>
+</pre></div>
+</div>
 <p>This test is crafted for continuous integration, so that the return value is
 0l, indicating success.</p>
-<pre class="code fstar literal-block"><code>let main (): St Int32.t =
-  push_frame ();
-  let rb = create 1l 32ul in
-  push rb 0l;
-  let r = pop rb in
-  pop_frame ();
-  r</code></pre>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">main</span> <span class="p">():</span> <span class="n">St</span> <span class="n">Int32</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span>
+  <span class="n">push_frame</span> <span class="p">();</span>
+  <span class="n">let</span> <span class="n">rb</span> <span class="o">=</span> <span class="n">create</span> <span class="mi">1</span><span class="n">l</span> <span class="mi">32</span><span class="n">ul</span> <span class="ow">in</span>
+  <span class="n">push</span> <span class="n">rb</span> <span class="mi">0</span><span class="n">l</span><span class="p">;</span>
+  <span class="n">let</span> <span class="n">r</span> <span class="o">=</span> <span class="n">pop</span> <span class="n">rb</span> <span class="ow">in</span>
+  <span class="n">pop_frame</span> <span class="p">();</span>
+  <span class="n">r</span>
+</pre></div>
+</div>
 </div>
 
 
@@ -478,8 +536,10 @@ stack frame.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="ExampleMemCpy.html" class="btn btn-neutral float-right" title="Example: memcpy" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-        <a href="LowStar.html" class="btn btn-neutral float-left" title="The Low* subset of F*" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+        <a href="LinkedList4.html" class="btn btn-neutral float-left" title="Example: linked list" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

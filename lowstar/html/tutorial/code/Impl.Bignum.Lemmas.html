@@ -1,0 +1,318 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Auxiliary implementation lemmas &mdash; The KreMLin user manual  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../../static/jquery.js"></script>
+        <script type="text/javascript" src="../../static/underscore.js"></script>
+        <script type="text/javascript" src="../../static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Main implementation file" href="Impl.Bignum.html" />
+    <link rel="prev" title="Specification test" href="../specs/Spec.Test.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> The KreMLin user manual
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Setup.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Core.html">The Low* subset of F*</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Libraries.html">Core Low* libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../BufferLibraries.html">Extra buffer types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../MoreLibraries.html">Low* system libraries</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../Toy.html">A toy project for learning Low*</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../specs/Spec.Bignum.html">Main specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../specs/Spec.Test.html">Specification test</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Auxiliary implementation lemmas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Impl.Bignum.html">Main implementation file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Impl.Bignum.Intrinsics.html">Linking with the outside world</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../LinkedList4.html">Example: linked list</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RingBuffer.html">Example: RingBuffer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ExampleMemCpy.html">Example: <cite>memcpy</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../AdvancedTips.html">Advanced tips &amp; tricks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../AdvancedTopics.html">Advanced KreMLin topics</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">The KreMLin user manual</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../Toy.html">A toy project for learning Low*</a> &raquo;</li>
+        
+      <li>Auxiliary implementation lemmas</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/tutorial/code/Impl.Bignum.Lemmas.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="auxiliary-implementation-lemmas">
+<h1>Auxiliary implementation lemmas<a class="headerlink" href="#auxiliary-implementation-lemmas" title="Permalink to this headline">¶</a></h1>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">Impl</span><span class="o">.</span><span class="n">Bignum</span><span class="o">.</span><span class="n">Lemmas</span>
+</pre></div>
+</div>
+<p>Let’s move lemmas to a separate module. It’ll be cleaner!</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">B</span> <span class="o">=</span> <span class="n">LowStar</span><span class="o">.</span><span class="n">Buffer</span>
+<span class="n">module</span> <span class="n">ST</span> <span class="o">=</span> <span class="n">FStar</span><span class="o">.</span><span class="n">HyperStack</span><span class="o">.</span><span class="n">ST</span>
+<span class="n">module</span> <span class="n">HS</span> <span class="o">=</span> <span class="n">FStar</span><span class="o">.</span><span class="n">HyperStack</span>
+<span class="n">module</span> <span class="n">S</span> <span class="o">=</span> <span class="n">FStar</span><span class="o">.</span><span class="n">Seq</span>
+
+<span class="n">module</span> <span class="n">U32</span> <span class="o">=</span> <span class="n">FStar</span><span class="o">.</span><span class="n">UInt32</span>
+<span class="n">module</span> <span class="n">U64</span> <span class="o">=</span> <span class="n">FStar</span><span class="o">.</span><span class="n">UInt64</span>
+</pre></div>
+</div>
+<p>I oftentimes use <code class="docutils literal notranslate"><span class="pre">Spec</span></code> to refer to the spec of the current module.</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">Spec</span> <span class="o">=</span> <span class="n">Spec</span><span class="o">.</span><span class="n">Bignum</span>
+</pre></div>
+</div>
+<p>This module only contains operators, and is meant to be opened.</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">open</span> <span class="n">LowStar</span><span class="o">.</span><span class="n">BufferOps</span>
+<span class="nb">open</span> <span class="n">FStar</span><span class="o">.</span><span class="n">HyperStack</span><span class="o">.</span><span class="n">ST</span>
+
+<span class="c1">#set-options &quot;--max_fuel 0 --max_ifuel 0&quot;</span>
+</pre></div>
+</div>
+<p>This is my little library of sequence lemmas that I always carry with me.</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span>let lemma_slice (#a: Type) (s: S.seq a) (i: nat): Lemma
+  (requires (i &lt;= S.length s))
+  (ensures (S.equal (S.append (S.slice s 0 i) (S.slice s i (S.length s))) s))
+=
+  ()
+
+let lemma_slice_ijk (#a: Type) (s: S.seq a) (i j k: nat): Lemma
+  (requires (i &lt;= j /\ j &lt;= k /\ k &lt;= S.length s))
+  (ensures (S.equal (S.append (S.slice s i j) (S.slice s j k)) (S.slice s i k)))
+=
+  ()
+
+#push-options &quot;--fuel 1&quot;
+let v_zero_tail (x: Spec.t): Lemma
+  (requires Spec.v x = 0 /\ S.length x &gt; 0)
+  // Two notes:
+  // i) discrepancy between B.sub that takes a length as its last argument and
+  //    S.slice that takes an index
+  // ii) doing this in terms of slice since the spec of sub is in terms of
+  //     slice; using tail would require lemma_tl all over again
+  (ensures Spec.v (S.slice x 1 (S.length x)) = 0)
+=
+  ()
+
+let rec v_all_zeroes (x: Spec.t): Lemma
+  (requires x `S.equal` S.create (S.length x) 0ul)
+  (ensures Spec.v x == 0)
+  (decreases (S.length x))
+=
+  if S.length x = 0 then
+    ()
+  else
+    v_all_zeroes (S.tail x)
+#pop-options
+
+let lemma_empty #a (x: S.seq a): Lemma
+  (requires S.length x = 0)
+  (ensures x `S.equal` S.empty)
+=
+  ()
+
+let max32 (x y: U32.t): U32.t =
+  if x `U32.gt` y then x else y
+
+let max_fact (z x y: U32.t): Lemma
+  (requires U32.(
+    x &gt;^ 0ul /\ y &gt;^ 0ul /\ z &gt;^ 0ul /\
+    U32.v z == U32.v (max32 x y) + 1))
+  (ensures
+    U32.(v (z -^ 1ul) == U32.v (max32 (x -^ 1ul) (y -^ 1ul)) + 1))
+=
+  ()
+
+let slice_create #a (i: nat) (s: S.seq a): Lemma
+  (requires S.length s &gt; 0 /\ i + 1 &lt; S.length s)
+  (ensures S.slice s i (i + 1) `S.equal` S.create 1 (S.index s i))
+=
+  ()
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Impl.Bignum.html" class="btn btn-neutral float-right" title="Main implementation file" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../specs/Spec.Test.html" class="btn btn-neutral float-left" title="Specification test" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Jonathan Protzenko
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

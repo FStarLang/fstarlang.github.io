@@ -1,0 +1,520 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Example: linked list &mdash; The KreMLin user manual  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="static/jquery.js"></script>
+        <script type="text/javascript" src="static/underscore.js"></script>
+        <script type="text/javascript" src="static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Example: RingBuffer" href="RingBuffer.html" />
+    <link rel="prev" title="Linking with the outside world" href="tutorial/code/Impl.Bignum.Intrinsics.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> The KreMLin user manual
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Setup.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Core.html">The Low* subset of F*</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Libraries.html">Core Low* libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BufferLibraries.html">Extra buffer types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MoreLibraries.html">Low* system libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Toy.html">A toy project for learning Low*</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Example: linked list</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RingBuffer.html">Example: RingBuffer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ExampleMemCpy.html">Example: <cite>memcpy</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="AdvancedTips.html">Advanced tips &amp; tricks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AdvancedTopics.html">Advanced KreMLin topics</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">The KreMLin user manual</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Example: linked list</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/LinkedList4.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="example-linked-list">
+<h1>Example: linked list<a class="headerlink" href="#example-linked-list" title="Permalink to this headline">¶</a></h1>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">LinkedList4</span>
+<span class="nb">open</span> <span class="n">LowStar</span><span class="o">.</span><span class="n">BufferOps</span>
+
+<span class="n">module</span> <span class="n">B</span> <span class="o">=</span> <span class="n">LowStar</span><span class="o">.</span><span class="n">Buffer</span>
+<span class="n">module</span> <span class="n">HS</span> <span class="o">=</span> <span class="n">FStar</span><span class="o">.</span><span class="n">HyperStack</span>
+<span class="n">module</span> <span class="n">G</span> <span class="o">=</span> <span class="n">FStar</span><span class="o">.</span><span class="n">Ghost</span>
+<span class="n">module</span> <span class="n">L</span> <span class="o">=</span> <span class="n">FStar</span><span class="o">.</span><span class="n">List</span><span class="o">.</span><span class="n">Tot</span>
+<span class="n">module</span> <span class="n">U32</span> <span class="o">=</span> <span class="n">FStar</span><span class="o">.</span><span class="n">UInt32</span>
+<span class="n">module</span> <span class="n">MO</span> <span class="o">=</span> <span class="n">LowStar</span><span class="o">.</span><span class="n">Modifies</span>
+
+<span class="nb">open</span> <span class="n">FStar</span><span class="o">.</span><span class="n">HyperStack</span><span class="o">.</span><span class="n">ST</span>
+
+<span class="c1">#set-options &quot;--__no_positivity --use_two_phase_tc true&quot;</span>
+</pre></div>
+</div>
+<p>We revisit the classic example of lists, but in a low-level
+setting, using linked lists. This second version uses
+<cite>B.pointer_or_null</cite>, the type of buffers of length 1 or 0.</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">noeq</span>
+<span class="nb">type</span> <span class="n">t</span> <span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">Type0</span><span class="p">)</span> <span class="o">=</span>
+  <span class="n">B</span><span class="o">.</span><span class="n">pointer_or_null</span> <span class="p">(</span><span class="n">cell</span> <span class="n">a</span><span class="p">)</span>
+
+<span class="ow">and</span> <span class="n">cell</span> <span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">Type0</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nb">next</span><span class="p">:</span> <span class="n">t</span> <span class="n">a</span><span class="p">;</span>
+  <span class="n">data</span><span class="p">:</span> <span class="n">a</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>We enrich lists with a predicate that captures their length.  This
+predicate will be needed for any traversal of the list, in order
+to show termination.  This predicate also encodes the fact that
+all cells of the list are live at the same time.  The absence of
+cycles does not suffice to guarantee termination, as the number of
+buffers in the heap is potentially infinite;</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">rec</span> <span class="n">well_formed</span> <span class="c1">#a (h: HS.mem) (c: t a) (l: G.erased (list a))</span>
+<span class="p">:</span> <span class="n">GTot</span> <span class="n">Type0</span> <span class="p">(</span><span class="n">decreases</span> <span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">reveal</span> <span class="n">l</span><span class="p">))</span>
+<span class="o">=</span> <span class="n">B</span><span class="o">.</span><span class="n">live</span> <span class="n">h</span> <span class="n">c</span> <span class="o">/</span>\ <span class="p">(</span>
+  <span class="n">match</span> <span class="n">G</span><span class="o">.</span><span class="n">reveal</span> <span class="n">l</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="p">[]</span> <span class="o">-&gt;</span>
+    <span class="n">B</span><span class="o">.</span><span class="n">g_is_null</span> <span class="n">c</span>
+  <span class="o">|</span> <span class="n">a</span> <span class="p">::</span> <span class="n">q</span> <span class="o">-&gt;</span>
+    <span class="n">B</span><span class="o">.</span><span class="n">length</span> <span class="n">c</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">/</span>\ <span class="p">(</span>
+    <span class="n">let</span> <span class="p">{</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">;</span> <span class="nb">next</span><span class="o">=</span><span class="nb">next</span> <span class="p">}</span> <span class="o">=</span> <span class="n">B</span><span class="o">.</span><span class="n">get</span> <span class="n">h</span> <span class="n">c</span> <span class="mi">0</span> <span class="ow">in</span>
+    <span class="n">a</span> <span class="o">==</span> <span class="n">data</span> <span class="o">/</span>\
+    <span class="n">well_formed</span> <span class="n">h</span> <span class="nb">next</span> <span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">hide</span> <span class="n">q</span><span class="p">)</span>
+  <span class="p">))</span>
+</pre></div>
+</div>
+<p>Note: all the ghost predicates and functions operate on a length of type
+nat; the Ghost effect guarantees that the length can only be used at
+run-time. Functions called at run-time will, conversely, use a length of
+type <cite>erased nat</cite>, which states that the length is
+computationally-irrelevant and can be safely removed from the resulting C
+code via a combination of F* + KreMLin erasure.</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">rec</span> <span class="n">length_functional</span> <span class="c1">#a (h: HS.mem) (c: t a) (l1 l2: G.erased (list a)):</span>
+  <span class="n">Lemma</span>
+    <span class="p">(</span><span class="n">requires</span> <span class="p">(</span><span class="n">well_formed</span> <span class="n">h</span> <span class="n">c</span> <span class="n">l1</span> <span class="o">/</span>\ <span class="n">well_formed</span> <span class="n">h</span> <span class="n">c</span> <span class="n">l2</span><span class="p">))</span>
+    <span class="p">(</span><span class="n">ensures</span> <span class="p">(</span><span class="n">l1</span> <span class="o">==</span> <span class="n">l2</span><span class="p">))</span>
+    <span class="p">(</span><span class="n">decreases</span> <span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">reveal</span> <span class="n">l1</span><span class="p">))</span>
+    <span class="p">[</span> <span class="n">SMTPat</span> <span class="p">(</span><span class="n">well_formed</span> <span class="n">h</span> <span class="n">c</span> <span class="n">l1</span><span class="p">);</span> <span class="n">SMTPat</span> <span class="p">(</span><span class="n">well_formed</span> <span class="n">h</span> <span class="n">c</span> <span class="n">l2</span><span class="p">)</span> <span class="p">]</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="n">B</span><span class="o">.</span><span class="n">g_is_null</span> <span class="n">c</span>
+  <span class="n">then</span> <span class="p">()</span>
+  <span class="k">else</span>
+    <span class="n">let</span> <span class="p">{</span> <span class="nb">next</span><span class="o">=</span><span class="nb">next</span> <span class="p">}</span> <span class="o">=</span> <span class="n">B</span><span class="o">.</span><span class="n">get</span> <span class="n">h</span> <span class="n">c</span> <span class="mi">0</span> <span class="ow">in</span>
+    <span class="n">length_functional</span> <span class="n">h</span> <span class="nb">next</span> <span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">hide</span> <span class="p">(</span><span class="n">L</span><span class="o">.</span><span class="n">tl</span> <span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">reveal</span> <span class="n">l1</span><span class="p">)))</span> <span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">hide</span> <span class="p">(</span><span class="n">L</span><span class="o">.</span><span class="n">tl</span> <span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">reveal</span> <span class="n">l2</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>As we start proving some degree of functional correctness, we will have to
+reason about non-interference, and state that some operations do not modify
+the footprint of a given list.</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span>#set-options &quot;--max_ifuel 1 --max_fuel 2&quot;
+val footprint: (#a: Type) -&gt; (h: HS.mem) -&gt; (l: t a) -&gt; (n: G.erased (list a)) -&gt; Ghost MO.loc
+  (requires (well_formed h l n))
+  (ensures (fun refs -&gt; True))
+  (decreases (G.reveal n))
+
+let rec footprint #a h l n =
+  if B.g_is_null l
+  then MO.loc_none
+  else
+    let {next = next} = B.get h l 0 in
+    let refs = footprint h next (G.hide (L.tl (G.reveal n))) in
+    MO.loc_union (MO.loc_buffer l) refs
+#reset-options
+
+let rec modifies_disjoint_footprint
+  (#a: Type)
+  (h: HS.mem)
+  (l: t a)
+  (n: G.erased (list a))
+  (r: MO.loc)
+  (h&#39; : HS.mem)
+: Lemma
+  (requires (
+    well_formed h l n /\
+    MO.loc_disjoint r (footprint h l n) /\
+    MO.modifies r h h&#39;
+  ))
+  (ensures (
+    well_formed h&#39; l n /\
+    footprint h&#39; l n == footprint h l n
+  ))
+  (decreases (G.reveal n))
+= if B.g_is_null l
+  then ()
+  else begin
+    let {next = l&#39;} = B.get h l 0 in
+    modifies_disjoint_footprint h l&#39; (G.hide (L.tl (G.reveal n))) r h&#39;
+  end
+
+let rec well_formed_distinct_lengths_disjoint
+  #a
+  (c1: B.pointer (cell a))
+  (c2: B.pointer (cell a))
+  (n1: G.erased (list a))
+  (n2: G.erased (list a))
+  (h: HS.mem)
+: Lemma
+  (requires (
+    well_formed h c1 n1 /\
+    well_formed h c2 n2 /\
+    L.length (G.reveal n1) &lt;&gt; L.length (G.reveal n2)
+  ))
+  (ensures (
+    B.disjoint c1 c2
+  ))
+  (decreases (L.length (G.reveal n1) + L.length (G.reveal n2)))
+= let {next = next1} = B.get h c1 0 in
+  let {next = next2} = B.get h c2 0 in
+  let f () : Lemma (next1 =!= next2) =
+    if B.g_is_null next1 || B.g_is_null next2
+    then ()
+    else
+      well_formed_distinct_lengths_disjoint next1 next2 (G.hide (L.tl (G.reveal n1))) (G.hide (L.tl (G.reveal n2))) h
+  in
+  f ();
+  B.pointer_distinct_sel_disjoint c1 c2 h
+
+let rec well_formed_gt_lengths_disjoint_from_list
+  #a
+  (h: HS.mem)
+  (c1: B.pointer_or_null (cell a))
+  (c2: B.pointer_or_null (cell a))
+  (n1: G.erased (list a))
+  (n2: G.erased (list a))
+: Lemma
+  (requires (well_formed h c1 n1 /\ well_formed h c2 n2 /\ L.length (G.reveal n1) &gt; L.length (G.reveal n2)))
+  (ensures (MO.loc_disjoint (MO.loc_buffer c1) (footprint h c2 n2)))
+  (decreases (G.reveal n2))
+= match G.reveal n2 with
+  | [] -&gt; ()
+  | _ -&gt;
+    well_formed_distinct_lengths_disjoint c1 c2 n1 n2 h;
+    well_formed_gt_lengths_disjoint_from_list h c1 (B.get h c2 0).next n1 (G.hide (L.tl (G.reveal n2)))
+
+let well_formed_head_tail_disjoint
+  (#a: Type)
+  (h: HS.mem)
+  (c: B.pointer (cell a))
+  (n: G.erased (list a))
+: Lemma
+  (requires (well_formed h c n))
+  (ensures (
+    MO.loc_disjoint (MO.loc_buffer c) (footprint h (B.get h c 0).next (G.hide (L.tl (G.reveal n))))
+  ))
+= well_formed_gt_lengths_disjoint_from_list h c (B.get h c 0).next n (G.hide (L.tl (G.reveal n)))
+
+let rec unused_in_well_formed_disjoint_from_list
+  #a #b
+  (h: HS.mem)
+  (r: B.buffer a)
+  (l: B.pointer_or_null (cell b))
+  (n: G.erased (list b))
+: Lemma
+  (requires (r `B.unused_in` h /\ well_formed h l n))
+  (ensures (MO.loc_disjoint (MO.loc_buffer r) (footprint h l n)))
+  (decreases (G.reveal n))
+= match G.reveal n with
+  | [] -&gt; ()
+  | _ -&gt; unused_in_well_formed_disjoint_from_list h r (B.get h l 0).next (G.hide (L.tl (G.reveal n)))
+</pre></div>
+</div>
+<p>Finally, the pop operation. Here we use the classic representation
+using null pointers, which requires the client to pass a pointer
+to a pointer, which is then filled with the address of the next
+cell, or null if this was the last element in the list.</p>
+<p>The code is straightforward and crucially relies on the call to the lemma
+above. Note that at this stage we do not prove full functional correctness
+of our implementation. Rather, we just state that the lengths is as
+expected.</p>
+<p>This version uses an erased integer n; we have to work a little bit to
+hide/reveal the computationally-irrelevant length.</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span>val pop: (#a: Type) -&gt; (#n: G.erased (list a)) -&gt; (pl: B.pointer (t a)) -&gt;
+  Stack a
+  (requires (fun h -&gt;
+    let l = B.get h pl 0 in
+    B.live h pl /\
+    well_formed h l n /\
+    MO.loc_disjoint (MO.loc_buffer pl) (footprint h l n) /\
+    Cons? (G.reveal n)
+  ))
+  (ensures (fun h0 v h1 -&gt;
+    let l = B.get h1 pl 0 in
+    let n&#39; = G.hide (L.tl (G.reveal n)) in
+    B.live h1 pl /\
+    MO.modifies (MO.loc_buffer pl) h0 h1 /\
+    well_formed h1 l n&#39; /\
+    MO.loc_disjoint (MO.loc_buffer pl) (footprint h1 l n&#39;)
+  ))
+
+let pop #a #n pl =
+  let l = !* pl in
+  let lcell = !* l in
+  let h0 = get () in
+  pl *= lcell.next;
+  let h1 = get () in
+  well_formed_head_tail_disjoint h0 l n;
+  modifies_disjoint_footprint h0 l n (MO.loc_buffer pl) h1;
+  lcell.data
+
+val push: (#a: Type) -&gt; (#n: G.erased (list a)) -&gt; (pl: B.pointer (t a)) -&gt; (x: a) -&gt;
+  ST unit
+    (requires (fun h -&gt;
+      let l = B.get h pl 0 in
+      B.live h pl /\
+      well_formed h l n /\
+      MO.loc_disjoint (MO.loc_buffer pl) (footprint h l n)
+    ))
+    (ensures (fun h0 _ h1 -&gt;
+      let n&#39; = G.hide (x :: G.reveal n) in
+      let l = B.get h1 pl 0 in
+      MO.modifies (MO.loc_buffer pl) h0 h1 /\
+      B.live h1 pl /\
+      well_formed h1 l n&#39; /\
+      MO.loc_disjoint (MO.loc_buffer pl) (footprint h1 l n&#39;)
+    ))
+
+let push #a #n pl x =
+  let h0 = get () in
+  let l = !* pl in
+  let c = {
+    data = x;
+    next = l;
+  }
+  in
+  let pc: B.pointer (cell a) = B.malloc HS.root c 1ul in
+  unused_in_well_formed_disjoint_from_list h0 pc l n;
+  let h1 = get () in
+  modifies_disjoint_footprint h0 l n (MO.loc_buffer pc) h1;
+  pl *= pc;
+  let h2 = get () in
+  modifies_disjoint_footprint h1 l n (MO.loc_buffer pl) h2
+</pre></div>
+</div>
+<p>Connecting our predicate <cite>well_formed</cite> to the regular length function.
+Note that this function takes a list whose length is unknown statically,
+because of the existential quantification.</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">length</span> <span class="p">(</span><span class="c1">#a: Type) (gn: G.erased (list a)) (l: t a): Stack UInt32.t</span>
+  <span class="p">(</span><span class="n">requires</span> <span class="p">(</span><span class="n">fun</span> <span class="n">h</span> <span class="o">-&gt;</span> <span class="n">well_formed</span> <span class="n">h</span> <span class="n">l</span> <span class="n">gn</span><span class="p">))</span>
+  <span class="p">(</span><span class="n">ensures</span> <span class="p">(</span><span class="n">fun</span> <span class="n">h0</span> <span class="n">n</span> <span class="n">h1</span> <span class="o">-&gt;</span>
+    <span class="n">h0</span> <span class="o">==</span> <span class="n">h1</span> <span class="o">/</span>\
+    <span class="n">U32</span><span class="o">.</span><span class="n">v</span> <span class="n">n</span> <span class="o">=</span> <span class="n">L</span><span class="o">.</span><span class="n">length</span> <span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">reveal</span> <span class="n">gn</span><span class="p">)</span>
+  <span class="p">))</span>
+</pre></div>
+</div>
+<p>Note that we could have as easily returned an option, but sometimes fatal
+errors are just easier to handle for client code. The <cite>C.String</cite> module
+provides facilities for dealing with constant C string literals. It reveals
+that they are zero-terminated and allows looping over them if one wants to,
+say, copy an immutable constant string into a mutable buffer.</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span>let rec length #a gn l =
+  if B.is_null l
+  then 0ul
+  else
+    let open U32 in
+    let c = !* l in
+    let next = c.next in
+    let n = length (G.hide (L.tail (G.reveal gn))) next in
+    if n = 0xfffffffful then begin
+      C.String.(print !$&quot;Integer overflow while computing length&quot;);
+      C.exit 255l;
+      0ul // dummy return value, this point is unreachable
+    end else
+      n +^ 1ul
+
+val main: unit -&gt; ST (Int32.t) (fun _ -&gt; true) (fun _ _ _ -&gt; true)
+
+let main () =
+  let l: B.pointer_or_null (t Int32.t) = B.malloc HS.root B.null 1ul in
+  push #Int32.t #(G.hide []) l 1l;
+  push #Int32.t #(G.hide [1l]) l 0l;
+  let r = pop #Int32.t #(G.hide [0l; 1l]) l in
+  TestLib.checku32 (length (G.hide [1l]) !*l) 1ul;
+  r
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="RingBuffer.html" class="btn btn-neutral float-right" title="Example: RingBuffer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="tutorial/code/Impl.Bignum.Intrinsics.html" class="btn btn-neutral float-left" title="Linking with the outside world" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Jonathan Protzenko
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

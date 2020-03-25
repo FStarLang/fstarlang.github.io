@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Search &mdash; The KreMLin user manual  documentation</title>
+  <title>Low* system libraries &mdash; The KreMLin user manual  documentation</title>
   
 
   
@@ -35,7 +35,6 @@
         <script type="text/javascript" src="static/underscore.js"></script>
         <script type="text/javascript" src="static/doctools.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/javascript" src="static/searchtools.js"></script>
     
     <script type="text/javascript" src="static/js/theme.js"></script>
 
@@ -45,7 +44,9 @@
   <link rel="stylesheet" href="static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="#" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="A toy project for learning Low*" href="Toy.html" />
+    <link rel="prev" title="Extra buffer types" href="BufferLibraries.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -72,7 +73,7 @@
 
           
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="#" method="get">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -90,13 +91,19 @@
             
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Setup.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Core.html">The Low* subset of F*</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Libraries.html">Core Low* libraries</a></li>
 <li class="toctree-l1"><a class="reference internal" href="BufferLibraries.html">Extra buffer types</a></li>
-<li class="toctree-l1"><a class="reference internal" href="MoreLibraries.html">Low* system libraries</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Low* system libraries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#comments">Comments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#failure">Failure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#string-literals">String literals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#printing">Printing</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="Toy.html">A toy project for learning Low*</a></li>
 <li class="toctree-l1"><a class="reference internal" href="LinkedList4.html">Example: linked list</a></li>
 <li class="toctree-l1"><a class="reference internal" href="RingBuffer.html">Example: RingBuffer</a></li>
@@ -148,12 +155,14 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Search</li>
+      <li>Low* system libraries</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
+            <a href="_sources/MoreLibraries.rst.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
     
@@ -165,24 +174,57 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <noscript>
-  <div id="fallback" class="admonition warning">
-    <p class="last">
-      Please activate JavaScript to enable the search
-      functionality.
-    </p>
-  </div>
-  </noscript>
+  <div class="section" id="low-system-libraries">
+<span id="c-library"></span><h1>Low* system libraries<a class="headerlink" href="#low-system-libraries" title="Permalink to this headline">¶</a></h1>
+<p>KreMLin offers primitive support for a variety of C concepts. All new libraries
+are in F*’s standard library (“ulib”) and are prefixed with <code class="docutils literal notranslate"><span class="pre">LowStar</span></code>. Older
+libraries found in <code class="docutils literal notranslate"><span class="pre">kremlin/kremlib</span></code> are being phased out and should not be
+used.</p>
+<div class="section" id="comments">
+<h2>Comments<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
+<p>Comments can be attached to a top-level definition using F*’s attribute syntax.</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">@</span> <span class="p">(</span><span class="n">Comment</span> <span class="s2">&quot;This comment will be carried to C&quot;</span><span class="p">)</span> <span class="p">]</span>
+<span class="n">let</span> <span class="n">main</span> <span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="n">l</span>
+</pre></div>
+</div>
+<p>For inline comments, look at the two special combinators defined by
+<code class="docutils literal notranslate"><span class="pre">LowStar.Comment</span></code>.</p>
+</div>
+<div class="section" id="failure">
+<h2>Failure<a class="headerlink" href="#failure" title="Permalink to this headline">¶</a></h2>
+<p>In order to abort execution of the program in a way that will always compile in
+C (not trivial if you are in expression position!), look at <code class="docutils literal notranslate"><span class="pre">LowStar.Failure</span></code>
+that will rely on either the <code class="docutils literal notranslate"><span class="pre">KRML_ABORT</span></code> or <code class="docutils literal notranslate"><span class="pre">KRML_EABORT</span></code> macro for
+generating C code that compiles.</p>
+</div>
+<div class="section" id="string-literals">
+<h2>String literals<a class="headerlink" href="#string-literals" title="Permalink to this headline">¶</a></h2>
+<p>See <code class="docutils literal notranslate"><span class="pre">LowStar.Literal</span></code> to convert string literals to immutable, always-live
+buffers of uint8. This is only for dealing with literals and does not provide a
+general-purpose string manipulation library.</p>
+</div>
+<div class="section" id="printing">
+<h2>Printing<a class="headerlink" href="#printing" title="Permalink to this headline">¶</a></h2>
+<p>See <code class="docutils literal notranslate"><span class="pre">LowStar.Printf</span></code> for printing output. The <code class="docutils literal notranslate"><span class="pre">sprintf</span></code> part is only for ML
+code, not for Low*, unless all of the arguments to <code class="docutils literal notranslate"><span class="pre">sprintf</span></code> are constants and
+can be reduced into a constant string by the F* normalizer.</p>
+</div>
+</div>
 
-  
-  <div id="search-results">
-  
-  </div>
 
            </div>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Toy.html" class="btn btn-neutral float-right" title="A toy project for learning Low*" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="BufferLibraries.html" class="btn btn-neutral float-left" title="Extra buffer types" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -215,14 +257,7 @@
   
   
     
-  
-  <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script type="text/javascript" id="searchindexloader"></script>
    
-
 
 </body>
 </html>

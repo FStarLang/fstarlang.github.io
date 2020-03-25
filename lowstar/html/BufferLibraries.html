@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Search &mdash; The KreMLin user manual  documentation</title>
+  <title>Extra buffer types &mdash; The KreMLin user manual  documentation</title>
   
 
   
@@ -35,7 +35,6 @@
         <script type="text/javascript" src="static/underscore.js"></script>
         <script type="text/javascript" src="static/doctools.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/javascript" src="static/searchtools.js"></script>
     
     <script type="text/javascript" src="static/js/theme.js"></script>
 
@@ -45,7 +44,9 @@
   <link rel="stylesheet" href="static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="#" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Low* system libraries" href="MoreLibraries.html" />
+    <link rel="prev" title="Core Low* libraries" href="Libraries.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -72,7 +73,7 @@
 
           
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="#" method="get">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -90,12 +91,18 @@
             
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Setup.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Core.html">The Low* subset of F*</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Libraries.html">Core Low* libraries</a></li>
-<li class="toctree-l1"><a class="reference internal" href="BufferLibraries.html">Extra buffer types</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Extra buffer types</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#immutable-buffers">Immutable buffers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#uninitialized-buffers">Uninitialized buffers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#const-pointers">Const pointers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#resizable-vector-data-structure">Resizable vector data structure</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="MoreLibraries.html">Low* system libraries</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Toy.html">A toy project for learning Low*</a></li>
 <li class="toctree-l1"><a class="reference internal" href="LinkedList4.html">Example: linked list</a></li>
@@ -148,12 +155,14 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Search</li>
+      <li>Extra buffer types</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
+            <a href="_sources/BufferLibraries.rst.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
     
@@ -165,24 +174,57 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <noscript>
-  <div id="fallback" class="admonition warning">
-    <p class="last">
-      Please activate JavaScript to enable the search
-      functionality.
-    </p>
-  </div>
-  </noscript>
+  <div class="section" id="extra-buffer-types">
+<h1>Extra buffer types<a class="headerlink" href="#extra-buffer-types" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="immutable-buffers">
+<h2>Immutable buffers<a class="headerlink" href="#immutable-buffers" title="Permalink to this headline">¶</a></h2>
+<p>Immutable buffers are in <code class="docutils literal notranslate"><span class="pre">LowStar.ImmutableBuffer</span></code> and enjoy a <code class="docutils literal notranslate"><span class="pre">recall</span></code>
+axiom that allows bringing into scope the fact that the buffer still has the
+same contents as when it was created.</p>
+<p>This is particularly useful for top-level constants. There are numerous examples
+of this in HACL*. Note that owing to some design choices, immutable buffers do
+<em>NOT</em> generate a <code class="docutils literal notranslate"><span class="pre">const</span></code> pointer in C.</p>
+</div>
+<div class="section" id="uninitialized-buffers">
+<h2>Uninitialized buffers<a class="headerlink" href="#uninitialized-buffers" title="Permalink to this headline">¶</a></h2>
+<p>In <code class="docutils literal notranslate"><span class="pre">LowStar.UninitializedBuffer</span></code>.</p>
+</div>
+<div class="section" id="const-pointers">
+<h2>Const pointers<a class="headerlink" href="#const-pointers" title="Permalink to this headline">¶</a></h2>
+<p>In order to manipulate const pointers, you can use <code class="docutils literal notranslate"><span class="pre">LowStar.ConstPointer</span></code>. It
+is represented as an abstract type distinct from regular, immutable, or unitialized
+buffers (all instances of the base monotonic buffer type). Having a separate
+abstract type allows identifiying const pointers as a separate, disjoint type at
+extraction, without requiring the built-in Low* checker in KreMLin to insert
+casts.</p>
+<p>Injecting <code class="docutils literal notranslate"><span class="pre">buffer</span></code> or <code class="docutils literal notranslate"><span class="pre">ibuffer</span></code> into a <code class="docutils literal notranslate"><span class="pre">const_buffer</span></code> generates no casts
+in C, as the conversion from <code class="docutils literal notranslate"><span class="pre">t*</span></code> to <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">t*</span></code> is implicit.</p>
+<p>Projecting <code class="docutils literal notranslate"><span class="pre">const_buffer</span></code> to either <code class="docutils literal notranslate"><span class="pre">buffer</span></code> or <code class="docutils literal notranslate"><span class="pre">ibuffer</span></code> generates a
+cast.</p>
+</div>
+<div class="section" id="resizable-vector-data-structure">
+<h2>Resizable vector data structure<a class="headerlink" href="#resizable-vector-data-structure" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">LowStar.RVector</span></code> module offers a high-level abstraction over regular
+mutable buffers that can be resized automatically. This requires the use of a
+manually-encoded typeclass of regional elements for reasoning about things being
+stored in the vector in case they are allocated.</p>
+</div>
+</div>
 
-  
-  <div id="search-results">
-  
-  </div>
 
            </div>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="MoreLibraries.html" class="btn btn-neutral float-right" title="Low* system libraries" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Libraries.html" class="btn btn-neutral float-left" title="Core Low* libraries" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -215,14 +257,7 @@
   
   
     
-  
-  <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script type="text/javascript" id="searchindexloader"></script>
    
-
 
 </body>
 </html>

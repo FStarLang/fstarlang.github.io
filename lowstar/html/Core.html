@@ -1,0 +1,842 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>The Low* subset of F* &mdash; The KreMLin user manual  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="static/jquery.js"></script>
+        <script type="text/javascript" src="static/underscore.js"></script>
+        <script type="text/javascript" src="static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Core Low* libraries" href="Libraries.html" />
+    <link rel="prev" title="Getting started" href="Setup.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> The KreMLin user manual
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Setup.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The Low* subset of F*</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#a-crash-course-on-low">A crash course on Low*</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#base-types">Base types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#control-flow">Control-flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#allocations">Allocations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#struct-types">Struct types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#constants">Constants</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#extensions-to-low">Extensions to Low*</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#equalities-monomorphization">Equalities monomorphization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#inductives-as-tagged-unions-pattern-matching-compilation">Inductives as tagged unions; pattern-matching compilation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#data-type-monomorphization">Data type monomorphization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pattern-matches-compilation">Pattern matches compilation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#function-monomorphization">Function monomorphization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#higher-order-with-functions-pointers">Higher order with functions pointers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#non-constant-globals">Non-constant globals</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#code-quality-improvements">Code quality improvements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#unused-argument-elimination">Unused argument elimination</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#temporary-variable-elimination">Temporary variable elimination</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tuple-elimination">Tuple elimination</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dead-code-elimination">Dead code elimination</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#unused-local-variable-elimination">Unused local variable elimination</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#functional-update-optimization">Functional update optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#some-non-low-code">Some non-Low* code</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Libraries.html">Core Low* libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BufferLibraries.html">Extra buffer types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MoreLibraries.html">Low* system libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Toy.html">A toy project for learning Low*</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LinkedList4.html">Example: linked list</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RingBuffer.html">Example: RingBuffer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ExampleMemCpy.html">Example: <cite>memcpy</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="AdvancedTips.html">Advanced tips &amp; tricks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AdvancedTopics.html">Advanced KreMLin topics</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">The KreMLin user manual</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>The Low* subset of F*</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/Core.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="the-low-subset-of-f">
+<h1>The Low* subset of F*<a class="headerlink" href="#the-low-subset-of-f" title="Permalink to this headline">¶</a></h1>
+<p>Low*, as formalized and presented in this <a class="reference external" href="https://arxiv.org/abs/1703.00053">paper</a>,
+is the first-order lambda calculus. Base types are booleans and
+fixed-width integers. Low* has a primitive notion of <em>arrays</em> (also known as
+buffers, although that terminology is being phased out) and pointer
+arithmetic within buffer bounds. In the formalization, structures are only
+valid when allocated within a buffer.</p>
+<p>This section describes Low* by example, showing valid and invalid
+constructs, to give the reader a good grasp of what syntactic subset of the
+F* language constitutes valid Low*.</p>
+<div class="section" id="a-crash-course-on-low">
+<h2>A crash course on Low*<a class="headerlink" href="#a-crash-course-on-low" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="base-types">
+<h3>Base types<a class="headerlink" href="#base-types" title="Permalink to this headline">¶</a></h3>
+<p>This is only a brief introduction – you should peruse existing bodies of code
+(HACL*, EverCrypt, EverQuic) to get a good grasp of what is supported.</p>
+<p>Low*’s base types are machine integers, booleans, units.</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">square</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">UInt32</span><span class="o">.</span><span class="n">t</span><span class="p">):</span> <span class="n">UInt32</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span>
+  <span class="n">let</span> <span class="nb">open</span> <span class="n">FStar</span><span class="o">.</span><span class="n">UInt32</span> <span class="ow">in</span>
+  <span class="n">x</span> <span class="o">*%^</span> <span class="n">x</span>
+</pre></div>
+</div>
+<p>This, quite unexcitingly, compiles to the following C code:</p>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">uint32_t</span> <span class="n">square</span><span class="p">(</span><span class="n">uint32_t</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="control-flow">
+<h3>Control-flow<a class="headerlink" href="#control-flow" title="Permalink to this headline">¶</a></h3>
+<p>There are no restrictions on control-flow. Recursive functions are supported but
+discouraged as you may be enjoying good performance only using a modern
+compiler. (See further sections for loops.)</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="nb">abs</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Int32</span><span class="o">.</span><span class="n">t</span><span class="p">):</span> <span class="n">Pure</span> <span class="n">Int32</span><span class="o">.</span><span class="n">t</span>
+  <span class="p">(</span><span class="n">requires</span> <span class="n">Int32</span><span class="o">.</span><span class="n">v</span> <span class="n">x</span> <span class="o">&lt;&gt;</span> <span class="n">Int</span><span class="o">.</span><span class="n">min_int</span> <span class="mi">32</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">ensures</span> <span class="n">fun</span> <span class="n">r</span> <span class="o">-&gt;</span> <span class="n">Int32</span><span class="o">.</span><span class="n">v</span> <span class="n">r</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="o">=</span>
+  <span class="n">let</span> <span class="nb">open</span> <span class="n">FStar</span><span class="o">.</span><span class="n">Int32</span> <span class="ow">in</span>
+  <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=^</span> <span class="mi">0</span><span class="n">l</span> <span class="n">then</span>
+    <span class="n">x</span>
+  <span class="k">else</span>
+    <span class="mi">0</span><span class="n">l</span> <span class="o">-^</span> <span class="n">x</span>
+</pre></div>
+</div>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">int32_t</span> <span class="nb">abs</span><span class="p">(</span><span class="n">int32_t</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="n">int32_t</span><span class="p">)</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">;</span>
+  <span class="k">else</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">int32_t</span><span class="p">)</span><span class="mi">0</span> <span class="o">-</span> <span class="n">x</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="allocations">
+<h3>Allocations<a class="headerlink" href="#allocations" title="Permalink to this headline">¶</a></h3>
+<p>Low* models stack allocation, which is covered in <a class="reference internal" href="Libraries.html#buffer-library"><span class="std std-ref">The buffer library</span></a> below.
+For now, you must use explicit push/pop combinators that model as the level of
+the effect system the fact that a new stack frame exists and that all
+allocations should be scoped to the lifetime of that stack frame. The <code class="docutils literal notranslate"><span class="pre">Stack</span></code>
+effect forces you to preserve the structure of the stack.</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">on_the_stack</span> <span class="p">():</span> <span class="n">Stack</span> <span class="n">UInt64</span><span class="o">.</span><span class="n">t</span> <span class="p">(</span><span class="n">fun</span> <span class="n">_</span> <span class="o">-&gt;</span> <span class="kc">True</span><span class="p">)</span> <span class="p">(</span><span class="n">fun</span> <span class="n">_</span> <span class="n">_</span> <span class="n">_</span> <span class="o">-&gt;</span> <span class="kc">True</span><span class="p">)</span> <span class="o">=</span>
+  <span class="n">push_frame</span> <span class="p">();</span>
+  <span class="n">let</span> <span class="n">b</span> <span class="o">=</span> <span class="n">B</span><span class="o">.</span><span class="n">alloca</span> <span class="mi">0</span><span class="n">UL</span> <span class="mi">64</span><span class="n">ul</span> <span class="ow">in</span>
+  <span class="n">b</span><span class="o">.</span><span class="p">(</span><span class="mi">0</span><span class="n">ul</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="mi">32</span><span class="n">UL</span><span class="p">;</span>
+  <span class="n">let</span> <span class="n">r</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="p">(</span><span class="mi">0</span><span class="n">ul</span><span class="p">)</span> <span class="ow">in</span>
+  <span class="n">pop_frame</span> <span class="p">();</span>
+  <span class="n">r</span>
+</pre></div>
+</div>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">uint64_t</span> <span class="n">on_the_stack</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">uint64_t</span> <span class="n">b</span><span class="p">[</span><span class="mi">64</span><span class="n">U</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">0</span><span class="n">U</span> <span class="p">};</span>
+  <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="n">U</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">uint64_t</span><span class="p">)</span><span class="mi">32</span><span class="n">U</span><span class="p">;</span>
+  <span class="n">uint64_t</span> <span class="n">r</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="n">U</span><span class="p">];</span>
+  <span class="k">return</span> <span class="n">r</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Low* supports heap allocation.</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">on_the_heap</span> <span class="p">():</span> <span class="n">St</span> <span class="n">UInt64</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span>
+  <span class="n">let</span> <span class="n">b</span> <span class="o">=</span> <span class="n">B</span><span class="o">.</span><span class="n">malloc</span> <span class="n">HyperStack</span><span class="o">.</span><span class="n">root</span> <span class="mi">0</span><span class="n">UL</span> <span class="mi">64</span><span class="n">ul</span> <span class="ow">in</span>
+  <span class="n">b</span><span class="o">.</span><span class="p">(</span><span class="mi">0</span><span class="n">ul</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="mi">32</span><span class="n">UL</span><span class="p">;</span>
+  <span class="n">let</span> <span class="n">r</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="p">(</span><span class="mi">0</span><span class="n">ul</span><span class="p">)</span> <span class="ow">in</span>
+  <span class="n">B</span><span class="o">.</span><span class="n">free</span> <span class="n">b</span><span class="p">;</span>
+  <span class="n">r</span>
+</pre></div>
+</div>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">uint64_t</span> <span class="n">on_the_heap</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">uint64_t</span> <span class="o">*</span><span class="n">b</span> <span class="o">=</span> <span class="n">KRML_HOST_CALLOC</span><span class="p">((</span><span class="n">uint32_t</span><span class="p">)</span><span class="mi">64</span><span class="n">U</span><span class="p">,</span> <span class="n">sizeof</span> <span class="p">(</span><span class="n">uint64_t</span><span class="p">));</span>
+  <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="n">U</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">uint64_t</span><span class="p">)</span><span class="mi">32</span><span class="n">U</span><span class="p">;</span>
+  <span class="n">uint64_t</span> <span class="n">r</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="n">U</span><span class="p">];</span>
+  <span class="n">KRML_HOST_FREE</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">r</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="struct-types">
+<h3>Struct types<a class="headerlink" href="#struct-types" title="Permalink to this headline">¶</a></h3>
+<p>Flat records are part of the original paper formalization, and are
+translated as regular C <code class="docutils literal notranslate"><span class="pre">struct</span></code>s.</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span> <span class="n">uint128</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">low</span><span class="p">:</span> <span class="n">UInt64</span><span class="o">.</span><span class="n">t</span><span class="p">;</span>
+  <span class="n">high</span><span class="p">:</span> <span class="n">UInt64</span><span class="o">.</span><span class="n">t</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="n">uint128_s</span>
+<span class="p">{</span>
+  <span class="n">uint64_t</span> <span class="n">low</span><span class="p">;</span>
+  <span class="n">uint64_t</span> <span class="n">high</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">uint128</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>In the original paper, structs may be allocated within buffers.</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">uint128_alloc</span> <span class="p">(</span><span class="n">h</span> <span class="n">l</span><span class="p">:</span> <span class="n">UInt64</span><span class="o">.</span><span class="n">t</span><span class="p">):</span> <span class="n">St</span> <span class="p">(</span><span class="n">B</span><span class="o">.</span><span class="n">buffer</span> <span class="n">uint128</span><span class="p">)</span> <span class="o">=</span>
+  <span class="n">B</span><span class="o">.</span><span class="n">malloc</span> <span class="n">HyperStack</span><span class="o">.</span><span class="n">root</span> <span class="p">({</span> <span class="n">low</span> <span class="o">=</span> <span class="n">l</span><span class="p">;</span> <span class="n">high</span> <span class="o">=</span> <span class="n">h</span> <span class="p">})</span> <span class="mi">1</span><span class="n">ul</span>
+</pre></div>
+</div>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">uint128</span> <span class="o">*</span><span class="n">uint128_alloc</span><span class="p">(</span><span class="n">uint64_t</span> <span class="n">h</span><span class="p">,</span> <span class="n">uint64_t</span> <span class="n">l</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">KRML_CHECK_SIZE</span><span class="p">(</span><span class="n">sizeof</span> <span class="p">(</span><span class="n">uint128</span><span class="p">),</span> <span class="p">(</span><span class="n">uint32_t</span><span class="p">)</span><span class="mi">1</span><span class="n">U</span><span class="p">);</span>
+  <span class="n">uint128</span> <span class="o">*</span><span class="n">buf</span> <span class="o">=</span> <span class="n">KRML_HOST_MALLOC</span><span class="p">(</span><span class="n">sizeof</span> <span class="p">(</span><span class="n">uint128</span><span class="p">));</span>
+  <span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="n">U</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="n">uint128</span><span class="p">){</span> <span class="o">.</span><span class="n">low</span> <span class="o">=</span> <span class="n">l</span><span class="p">,</span> <span class="o">.</span><span class="n">high</span> <span class="o">=</span> <span class="n">h</span> <span class="p">});</span>
+  <span class="k">return</span> <span class="n">buf</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Still in the original paper, one may access a buffer index, then select a
+number of fields.</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">uint128_high</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">B</span><span class="o">.</span><span class="n">buffer</span> <span class="n">uint128</span><span class="p">):</span> <span class="n">Stack</span> <span class="n">UInt64</span><span class="o">.</span><span class="n">t</span>
+  <span class="p">(</span><span class="n">requires</span> <span class="n">fun</span> <span class="n">h</span> <span class="o">-&gt;</span> <span class="n">B</span><span class="o">.</span><span class="n">live</span> <span class="n">h</span> <span class="n">x</span> <span class="o">/</span>\ <span class="n">B</span><span class="o">.</span><span class="n">length</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">ensures</span> <span class="n">fun</span> <span class="n">h0</span> <span class="n">_</span> <span class="n">h1</span> <span class="o">-&gt;</span> <span class="n">B</span><span class="o">.</span><span class="n">live</span> <span class="n">h1</span> <span class="n">x</span><span class="p">)</span>
+<span class="o">=</span>
+  <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="p">(</span><span class="mi">0</span><span class="n">ul</span><span class="p">))</span><span class="o">.</span><span class="n">high</span>
+</pre></div>
+</div>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">uint64_t</span> <span class="n">uint128_high</span><span class="p">(</span><span class="n">uint128</span> <span class="o">*</span><span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">x</span><span class="o">-&gt;</span><span class="n">high</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="constants">
+<h3>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h3>
+<p>One may define global constants too, as long as they evaluate to C
+constants. As a rough approximation, arithmetic expressions and addresses of
+other globals are C constants, but as always, the <a class="reference external" href="http://open-std.org/jtc1/SC22/wg14/www/docs/n1548.pdf">C11 standard</a> is the ultimate
+source of truth.</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">min_int32</span> <span class="o">=</span> <span class="n">FStar</span><span class="o">.</span><span class="n">Int32</span><span class="o">.</span><span class="p">(</span><span class="mi">0</span><span class="n">l</span> <span class="o">-^</span> <span class="mh">0x7fffffff</span><span class="n">l</span> <span class="o">-^</span> <span class="mi">1</span><span class="n">l</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Meta</span><span class="o">-</span><span class="n">evaluated</span> <span class="n">by</span> <span class="n">F</span><span class="o">*</span>
+<span class="n">int32_t</span> <span class="n">min_int32</span> <span class="o">=</span> <span class="p">(</span><span class="n">int32_t</span><span class="p">)</span><span class="o">-</span><span class="mi">2147483648</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="extensions-to-low">
+<h2>Extensions to Low*<a class="headerlink" href="#extensions-to-low" title="Permalink to this headline">¶</a></h2>
+<p>KreMLin supports a number of programming patterns beyond the original paper
+formalization, which aim to maximize programmer productivity. We now review
+the main ones.</p>
+<div class="section" id="equalities-monomorphization">
+<h3>Equalities monomorphization<a class="headerlink" href="#equalities-monomorphization" title="Permalink to this headline">¶</a></h3>
+<p>One can rely on KreMLin to compile F*’s structural equality (the <code class="docutils literal notranslate"><span class="pre">(=)</span></code>
+operator) to C functions specialized to each type. Furthermore, the function
+below demonstrates the use of a struct type as a value, which is
+straightforwardly compiled to a C structure passed by value. Be aware that doing
+so has performance implications (see ??).</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">uint128_equal</span> <span class="p">(</span><span class="n">x</span> <span class="n">y</span><span class="p">:</span> <span class="n">uint128</span><span class="p">)</span> <span class="o">=</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="n">y</span>
+</pre></div>
+</div>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">static</span> <span class="nb">bool</span> <span class="n">__eq__LowStar_uint128</span><span class="p">(</span><span class="n">uint128</span> <span class="n">y</span><span class="p">,</span> <span class="n">uint128</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">true</span> <span class="o">&amp;&amp;</span> <span class="n">x</span><span class="o">.</span><span class="n">low</span> <span class="o">==</span> <span class="n">y</span><span class="o">.</span><span class="n">low</span> <span class="o">&amp;&amp;</span> <span class="n">x</span><span class="o">.</span><span class="n">high</span> <span class="o">==</span> <span class="n">y</span><span class="o">.</span><span class="n">high</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nb">bool</span> <span class="n">uint128_equal</span><span class="p">(</span><span class="n">uint128</span> <span class="n">x</span><span class="p">,</span> <span class="n">uint128</span> <span class="n">y</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">__eq__LowStar_uint128</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="inductives-as-tagged-unions-pattern-matching-compilation">
+<h3>Inductives as tagged unions; pattern-matching compilation<a class="headerlink" href="#inductives-as-tagged-unions-pattern-matching-compilation" title="Permalink to this headline">¶</a></h3>
+<p>One may also use F* inductives, knowing that KreMLin will compile them as
+tagged unions. There are currently five different compilation schemes for data
+types that all aim to generate C code that is “as natural” as possible:</p>
+<ul class="simple">
+<li>inductives with a single branch with a single argument are completely
+eliminated (e.g. <code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">t</span> <span class="pre">=</span> <span class="pre">|</span> <span class="pre">Foo:</span> <span class="pre">x:UInt32.t</span> <span class="pre">-&gt;</span> <span class="pre">t</span></code> compiles to <code class="docutils literal notranslate"><span class="pre">uint32_t</span></code>)</li>
+<li>inductives with only constant constructors compile to <code class="docutils literal notranslate"><span class="pre">uint8</span></code> (or a C11 enum
+if <code class="docutils literal notranslate"><span class="pre">-fnoshort-enums</span></code>  is used (e.g. <code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">t</span> <span class="pre">=</span> <span class="pre">|</span> <span class="pre">A</span> <span class="pre">|</span> <span class="pre">B</span></code> compiles to
+<code class="docutils literal notranslate"><span class="pre">uint8</span></code>)</li>
+<li>inductives with a single constructor compile to a C struct without a tag (e.g.
+<code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">t</span> <span class="pre">=</span> <span class="pre">|</span> <span class="pre">Foo:</span> <span class="pre">x:UInt32.t</span> <span class="pre">-&gt;</span> <span class="pre">y:UInt32.t</span> <span class="pre">-&gt;</span> <span class="pre">t</span></code> compiles to <code class="docutils literal notranslate"><span class="pre">typedef</span> <span class="pre">struct</span>
+<span class="pre">{</span> <span class="pre">uint32_t</span> <span class="pre">x;</span> <span class="pre">uint32_t</span> <span class="pre">y</span> <span class="pre">}</span> <span class="pre">t</span></code>)</li>
+<li>inductives with a single non-constant constructor compile to a tagged C struct
+without a union (e.g. <code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">option_int</span> <span class="pre">=</span> <span class="pre">|</span> <span class="pre">None'</span> <span class="pre">|</span> <span class="pre">Some'</span> <span class="pre">of</span> <span class="pre">UInt32.t</span></code>
+compiles to <code class="docutils literal notranslate"><span class="pre">typedef</span> <span class="pre">struct</span> <span class="pre">{</span> <span class="pre">uint8_t</span> <span class="pre">option_int_tag;</span> <span class="pre">uint32_t</span> <span class="pre">x</span> <span class="pre">}</span>
+<span class="pre">option_int</span></code>)</li>
+<li>all other inductives are compiled as tagged unions.</li>
+</ul>
+<p>For instance, the data type below does not enjoy any optimized compilation
+scheme and generates a complete tagged union.</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">noeq</span>
+<span class="nb">type</span> <span class="n">key</span> <span class="o">=</span>
+  <span class="o">|</span> <span class="n">Algorithm1</span><span class="p">:</span> <span class="n">B</span><span class="o">.</span><span class="n">buffer</span> <span class="n">UInt32</span><span class="o">.</span><span class="n">t</span> <span class="o">-&gt;</span> <span class="n">key</span>
+  <span class="o">|</span> <span class="n">Algorithm2</span><span class="p">:</span> <span class="n">B</span><span class="o">.</span><span class="n">buffer</span> <span class="n">UInt64</span><span class="o">.</span><span class="n">t</span> <span class="o">-&gt;</span> <span class="n">key</span>
+</pre></div>
+</div>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">enum</span> <span class="p">{</span> <span class="n">Algorithm1</span><span class="p">,</span> <span class="n">Algorithm2</span> <span class="p">}</span> <span class="n">key_tags</span><span class="p">;</span>
+
+<span class="n">typedef</span> <span class="n">struct</span> <span class="n">key_s</span>
+<span class="p">{</span>
+  <span class="n">key_tags</span> <span class="n">tag</span><span class="p">;</span>
+  <span class="n">union</span> <span class="p">{</span>
+    <span class="n">uint32_t</span> <span class="o">*</span><span class="n">case_Algorithm1</span><span class="p">;</span>
+    <span class="n">uint64_t</span> <span class="o">*</span><span class="n">case_Algorithm2</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="p">;</span>
+<span class="p">}</span>
+<span class="n">key</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="data-type-monomorphization">
+<h3>Data type monomorphization<a class="headerlink" href="#data-type-monomorphization" title="Permalink to this headline">¶</a></h3>
+<p>Generally, KreMLin performs a whole-program monomorphization of
+parameterized data types. The example below demonstrates this, along with a
+“pretty” compilation scheme for the option type that does not involves an
+anonymous union.</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">abs2</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Int32</span><span class="o">.</span><span class="n">t</span><span class="p">):</span> <span class="n">option</span> <span class="n">Int32</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span>
+  <span class="n">let</span> <span class="nb">open</span> <span class="n">FStar</span><span class="o">.</span><span class="n">Int32</span> <span class="ow">in</span>
+  <span class="k">if</span> <span class="n">x</span> <span class="o">=</span> <span class="n">min_int32</span> <span class="n">then</span>
+    <span class="kc">None</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=^</span> <span class="mi">0</span><span class="n">l</span> <span class="n">then</span>
+    <span class="n">Some</span> <span class="n">x</span>
+  <span class="k">else</span>
+    <span class="n">Some</span> <span class="p">(</span><span class="mi">0</span><span class="n">l</span> <span class="o">-^</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">enum</span> <span class="p">{</span> <span class="n">FStar_Pervasives_Native_None</span><span class="p">,</span> <span class="n">FStar_Pervasives_Native_Some</span> <span class="p">}</span>
+<span class="n">FStar_Pervasives_Native_option__int32_t_tags</span><span class="p">;</span>
+
+<span class="n">typedef</span> <span class="n">struct</span> <span class="n">FStar_Pervasives_Native_option__int32_t_s</span>
+<span class="p">{</span>
+  <span class="n">FStar_Pervasives_Native_option__int32_t_tags</span> <span class="n">tag</span><span class="p">;</span>
+  <span class="n">int32_t</span> <span class="n">v</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">FStar_Pervasives_Native_option__int32_t</span><span class="p">;</span>
+
+<span class="n">FStar_Pervasives_Native_option__int32_t</span> <span class="n">abs2</span><span class="p">(</span><span class="n">int32_t</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="n">min_int32</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">((</span><span class="n">FStar_Pervasives_Native_option__int32_t</span><span class="p">){</span> <span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="n">FStar_Pervasives_Native_None</span> <span class="p">});</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="n">int32_t</span><span class="p">)</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span>
+      <span class="p">((</span><span class="n">FStar_Pervasives_Native_option__int32_t</span><span class="p">){</span> <span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="n">FStar_Pervasives_Native_Some</span><span class="p">,</span> <span class="o">.</span><span class="n">v</span> <span class="o">=</span> <span class="n">x</span> <span class="p">});</span>
+  <span class="k">else</span>
+    <span class="k">return</span>
+      <span class="p">(</span>
+        <span class="p">(</span><span class="n">FStar_Pervasives_Native_option__int32_t</span><span class="p">){</span>
+          <span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="n">FStar_Pervasives_Native_Some</span><span class="p">,</span>
+          <span class="o">.</span><span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">int32_t</span><span class="p">)</span><span class="mi">0</span> <span class="o">-</span> <span class="n">x</span>
+        <span class="p">}</span>
+      <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pattern-matches-compilation">
+<h3>Pattern matches compilation<a class="headerlink" href="#pattern-matches-compilation" title="Permalink to this headline">¶</a></h3>
+<p>Inductives are compiled by KreMLin, and so are pattern matches. Note that
+for a series of cascading if-then-elses, KreMLin has to insert a fallback
+else statement, both because the original F* code may be unverified and the
+pattern-matching may be incomplete, but also because the C compiler may
+trigger an error.</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span>let fail_if #a #b (package: a * (a -&gt; option b)): St b =
+  let open C.Failure in
+  let open C.String in
+  let x, f = package in
+  match f x with
+  | None -&gt; failwith !$&quot;invalid argument: fail_if&quot;
+  | Some x -&gt; x
+</pre></div>
+</div>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">int32_t</span>
+<span class="n">fail_if__int32_t_int32_t</span><span class="p">(</span>
+  <span class="n">K___int32_t_int32_t____FStar_Pervasives_Native_option__int32_t</span> <span class="n">package</span>
+<span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">int32_t</span> <span class="n">x</span> <span class="o">=</span> <span class="n">package</span><span class="o">.</span><span class="n">fst</span><span class="p">;</span>
+  <span class="n">FStar_Pervasives_Native_option__int32_t</span> <span class="p">(</span><span class="o">*</span><span class="n">f</span><span class="p">)(</span><span class="n">int32_t</span> <span class="n">x0</span><span class="p">)</span> <span class="o">=</span> <span class="n">package</span><span class="o">.</span><span class="n">snd</span><span class="p">;</span>
+  <span class="n">FStar_Pervasives_Native_option__int32_t</span> <span class="n">scrut</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">scrut</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="n">FStar_Pervasives_Native_None</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">C_Failure_failwith__int32_t</span><span class="p">(</span><span class="s2">&quot;invalid argument: fail_if&quot;</span><span class="p">);</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">scrut</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="n">FStar_Pervasives_Native_Some</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">int32_t</span> <span class="n">x1</span> <span class="o">=</span> <span class="n">scrut</span><span class="o">.</span><span class="n">v</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">x1</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span>
+  <span class="p">{</span>
+    <span class="n">KRML_HOST_PRINTF</span><span class="p">(</span><span class="s2">&quot;KreMLin abort at </span><span class="si">%s</span><span class="s2">:</span><span class="si">%d</span><span class="se">\n</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+      <span class="n">__FILE__</span><span class="p">,</span>
+      <span class="n">__LINE__</span><span class="p">,</span>
+      <span class="s2">&quot;unreachable (pattern matches are exhaustive in F*)&quot;</span><span class="p">);</span>
+    <span class="n">KRML_HOST_EXIT</span><span class="p">(</span><span class="mi">255</span><span class="n">U</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="function-monomorphization">
+<h3>Function monomorphization<a class="headerlink" href="#function-monomorphization" title="Permalink to this headline">¶</a></h3>
+<p>As demonstrated above, functions also get monomorphized based on their
+instances. Note that using a polymorphic type in an <code class="docutils literal notranslate"><span class="pre">assume</span> <span class="pre">val</span></code> is not
+supported.</p>
+</div>
+<div class="section" id="higher-order-with-functions-pointers">
+<h3>Higher order with functions pointers<a class="headerlink" href="#higher-order-with-functions-pointers" title="Permalink to this headline">¶</a></h3>
+<p>Higher order is, to a certain extent, possible (i.e. as long as you don’t use
+closures). The sample above
+demonstrates a block-scope function pointer. The <code class="docutils literal notranslate"><span class="pre">fail_if</span></code> function has
+been specialized on <code class="docutils literal notranslate"><span class="pre">K__int32_t_int32_t</span></code>, which is itself a specialization
+of the polymorphic pair type of F*. Below is a sample caller of
+<code class="docutils literal notranslate"><span class="pre">fail_if__int32_t_int32_t</span></code>, which relies on passing a pair of a function
+pointer and its argument.</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">abs3</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Int32</span><span class="o">.</span><span class="n">t</span><span class="p">):</span> <span class="n">St</span> <span class="n">Int32</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span>
+  <span class="n">fail_if</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">abs2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">int32_t</span> <span class="n">abs3</span><span class="p">(</span><span class="n">int32_t</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span>
+    <span class="n">fail_if__int32_t_int32_t</span><span class="p">((</span>
+        <span class="p">(</span><span class="n">K___int32_t_int32_t____FStar_Pervasives_Native_option__int32_t</span><span class="p">){</span> <span class="o">.</span><span class="n">fst</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="o">.</span><span class="n">snd</span> <span class="o">=</span> <span class="n">abs2</span> <span class="p">}</span>
+      <span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Local closures are not supported, as they do not have a natural compilation
+scheme to C. You can, however, rely on <code class="docutils literal notranslate"><span class="pre">[&#64;inline_let]</span></code> to define local
+helpers.</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">pow4</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">UInt32</span><span class="o">.</span><span class="n">t</span><span class="p">):</span> <span class="n">UInt32</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span>
+  <span class="n">let</span> <span class="nb">open</span> <span class="n">FStar</span><span class="o">.</span><span class="n">UInt32</span> <span class="ow">in</span>
+  <span class="p">[</span><span class="o">@</span> <span class="n">inline_let</span> <span class="p">]</span>
+  <span class="n">let</span> <span class="n">pow2</span> <span class="p">(</span><span class="n">y</span><span class="p">:</span> <span class="n">UInt32</span><span class="o">.</span><span class="n">t</span><span class="p">)</span> <span class="o">=</span> <span class="n">y</span> <span class="o">*%^</span> <span class="n">y</span> <span class="ow">in</span>
+  <span class="n">pow2</span> <span class="p">(</span><span class="n">pow2</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">uint32_t</span> <span class="n">pow4</span><span class="p">(</span><span class="n">uint32_t</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">uint32_t</span> <span class="n">x0</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">x0</span> <span class="o">*</span> <span class="n">x0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If this is not workable, you will have to define the closure state
+yourself, carry it around, and apply the closure to its environment manually.</p>
+</div>
+<div class="section" id="non-constant-globals">
+<h3>Non-constant globals<a class="headerlink" href="#non-constant-globals" title="Permalink to this headline">¶</a></h3>
+<p>In the case that the user defines a global variable that does not compile to
+a C11 constant, KreMLin generates a “static initializer” in the special
+<code class="docutils literal notranslate"><span class="pre">kremlinit_globals</span></code> function. If the program has a <code class="docutils literal notranslate"><span class="pre">main</span></code>, KreMLin
+automatically prepends a call to <code class="docutils literal notranslate"><span class="pre">kremlinit_globals</span></code> in the <code class="docutils literal notranslate"><span class="pre">main</span></code>. If
+the program does not have a <code class="docutils literal notranslate"><span class="pre">main</span></code> and is intended to be used as a
+library, KreMLin emits a warning, which is fatal by default.</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">uint128_zero</span> <span class="p">():</span> <span class="n">Tot</span> <span class="n">uint128</span> <span class="o">=</span>
+  <span class="p">{</span> <span class="n">high</span> <span class="o">=</span> <span class="mi">0</span><span class="n">UL</span><span class="p">;</span> <span class="n">low</span> <span class="o">=</span> <span class="mi">0</span><span class="n">UL</span> <span class="p">}</span>
+
+<span class="n">let</span> <span class="n">zero</span> <span class="o">=</span> <span class="n">uint128_zero</span> <span class="p">()</span>
+</pre></div>
+</div>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ krml -skip-linking -no-prefix LowStar LowStar.fst
+(...)
+Warning 9: : Some globals did not compile to C values and must be
+initialized before starting main(). You did not provide a main function,
+so users of your library MUST MAKE SURE they call kremlinit_globals();
+(see kremlinit.c).
+
+$ cat kremlinit.c
+(...)
+void kremlinit_globals()
+{
+  zero = uint128_zero();
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="code-quality-improvements">
+<h2>Code quality improvements<a class="headerlink" href="#code-quality-improvements" title="Permalink to this headline">¶</a></h2>
+<p>In addition to all the features describe above, KreMLin will go great lengths to
+generate readable code. Here are some of the optimization passes performed.</p>
+<div class="section" id="unused-argument-elimination">
+<h3>Unused argument elimination<a class="headerlink" href="#unused-argument-elimination" title="Permalink to this headline">¶</a></h3>
+<p>There are three unused argument elimination passes.</p>
+<p><em>Type-based</em> argument elimination removes all unit arguments to functions,
+everywhere, always. (This is particularly useful if your functions take
+<code class="docutils literal notranslate"><span class="pre">Ghost.erased</span></code> arguments.)</p>
+<p><em>Usage-based</em> argument elimination removes unused arguments to functions <em>only</em>
+if they are private to the current module and do not appear in the header <em>and</em>
+if they are only used in a first-order setting, i.e. always used as the head of
+a fully applied function call.</p>
+<p><em>Data type</em> argument elimination removes type parameters from types that don’t
+use them; it also removes unit arguments to constructors, i.e. your C type
+declarations should never have a unit field.</p>
+</div>
+<div class="section" id="temporary-variable-elimination">
+<h3>Temporary variable elimination<a class="headerlink" href="#temporary-variable-elimination" title="Permalink to this headline">¶</a></h3>
+<p>F* introduces a significant amount of temporary variables called <code class="docutils literal notranslate"><span class="pre">uu___</span></code>,
+owing to its monadic let semantics. (You can see these variables looking at the
+generated OCaml code.) KreMLin uses two different syntactic criteria to get rid
+of those.</p>
+</div>
+<div class="section" id="tuple-elimination">
+<h3>Tuple elimination<a class="headerlink" href="#tuple-elimination" title="Permalink to this headline">¶</a></h3>
+<p>To avoid allocating too many intermediary values of monomorphized tuple types,
+KreMLin applies the following two rules before data type compilation &amp;
+monomorphization:</p>
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">i</span><span class="p">)</span>   <span class="n">match</span> <span class="p">(</span><span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">)</span> <span class="k">with</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">e</span>  <span class="o">~~~&gt;</span>
+      <span class="n">let</span> <span class="n">x</span> <span class="o">=</span> <span class="n">e1</span> <span class="ow">in</span> <span class="n">let</span> <span class="n">y</span> <span class="o">=</span> <span class="n">e2</span> <span class="ow">in</span> <span class="n">e</span>
+<span class="p">(</span><span class="n">ii</span><span class="p">)</span>  <span class="n">match</span> <span class="n">let</span> <span class="n">x</span> <span class="o">=</span> <span class="n">e0</span> <span class="ow">in</span> <span class="p">(</span><span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">)</span> <span class="k">with</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">e</span>  <span class="o">~~~&gt;</span>
+      <span class="n">let</span> <span class="n">x</span> <span class="o">=</span> <span class="n">e0</span> <span class="ow">in</span> <span class="n">match</span> <span class="p">(</span><span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">)</span> <span class="k">with</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">e</span>
+</pre></div>
+</div>
+<p>This is absolutely crucial to share code between specs and implementations. See
+the toy project for an example in action.</p>
+</div>
+<div class="section" id="dead-code-elimination">
+<h3>Dead code elimination<a class="headerlink" href="#dead-code-elimination" title="Permalink to this headline">¶</a></h3>
+<p>Any code that becomes unreachable after bundling (see advanced topics) is
+automatically removed.</p>
+</div>
+<div class="section" id="unused-local-variable-elimination">
+<h3>Unused local variable elimination<a class="headerlink" href="#unused-local-variable-elimination" title="Permalink to this headline">¶</a></h3>
+<p>Using a syntactic criterion, local variables that have no observable
+side-effects are eliminated.</p>
+</div>
+<div class="section" id="functional-update-optimization">
+<h3>Functional update optimization<a class="headerlink" href="#functional-update-optimization" title="Permalink to this headline">¶</a></h3>
+<p>Code that mutakes a single field of a struct in place compiles to a C mutation.</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="p">{</span> <span class="n">b</span><span class="o">.</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">with</span> <span class="n">f</span> <span class="o">=</span> <span class="n">e</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>gives:</p>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">-&gt;</span><span class="n">f</span> <span class="o">=</span> <span class="n">e</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="some-non-low-code">
+<h2>Some non-Low* code<a class="headerlink" href="#some-non-low-code" title="Permalink to this headline">¶</a></h2>
+<p>We now review some classic programming patterns that are not supported in
+Low*.</p>
+<p>The example below cannot be compiled for the following reasons:</p>
+<ul class="simple">
+<li>local recursive let-bindings are not Low*;</li>
+<li>local closure captures variable in scope (KreMLin does not do closure conversion)</li>
+<li>the list type is not Low*.</li>
+</ul>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">filter_map</span> <span class="c1">#a #b (f: a -&gt; option b) (l: list a): list b =</span>
+  <span class="n">let</span> <span class="n">rec</span> <span class="n">aux</span> <span class="p">(</span><span class="n">acc</span><span class="p">:</span> <span class="nb">list</span> <span class="n">b</span><span class="p">)</span> <span class="p">(</span><span class="n">l</span><span class="p">:</span> <span class="nb">list</span> <span class="n">a</span><span class="p">):</span> <span class="n">Tot</span> <span class="p">(</span><span class="nb">list</span> <span class="n">b</span><span class="p">)</span> <span class="p">(</span><span class="n">decreases</span> <span class="n">l</span><span class="p">)</span> <span class="o">=</span>
+    <span class="n">match</span> <span class="n">l</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="n">hd</span> <span class="p">::</span> <span class="n">tl</span> <span class="o">-&gt;</span>
+        <span class="n">begin</span> <span class="n">match</span> <span class="n">f</span> <span class="n">hd</span> <span class="k">with</span>
+        <span class="o">|</span> <span class="n">Some</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">aux</span> <span class="p">(</span><span class="n">x</span> <span class="p">::</span> <span class="n">acc</span><span class="p">)</span> <span class="n">tl</span>
+        <span class="o">|</span> <span class="kc">None</span> <span class="o">-&gt;</span> <span class="n">aux</span> <span class="n">acc</span> <span class="n">tl</span>
+        <span class="n">end</span>
+    <span class="o">|</span> <span class="p">[]</span> <span class="o">-&gt;</span>
+        <span class="n">List</span><span class="o">.</span><span class="n">rev</span> <span class="n">acc</span>
+  <span class="ow">in</span>
+  <span class="n">aux</span> <span class="p">[]</span> <span class="n">l</span>
+</pre></div>
+</div>
+<p>Trying to compile the snippet above will generate a warning when calling F*
+to generate a <code class="docutils literal notranslate"><span class="pre">.krml</span></code> file.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ krml -skip-compilation -verbose LowStar.fst
+⚙ KreMLin auto-detecting tools.
+(...)
+✔ [F*,extract]
+&lt;dummy&gt;(0,0-0,0): (Warning 250) Error while extracting LowStar.filter_map
+to KreMLin (Failure(&quot;Internal error: name not found aux\n&quot;))
+</pre></div>
+</div>
+<p>To explain why the list type cannot be compiled to C, consider the snippet
+below. Data types are compiled as flat structures in C, meaning that the
+list type would have infinite size in C. This is compiled by KreMLin but
+rejected by the C compiler. See ?? for an example of a linked list.</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span> <span class="n">list_int32</span> <span class="o">=</span>
+<span class="o">|</span> <span class="n">Nil</span><span class="p">:</span> <span class="n">list_int32</span>
+<span class="o">|</span> <span class="n">Cons</span><span class="p">:</span> <span class="n">hd</span><span class="p">:</span><span class="n">Int32</span><span class="o">.</span><span class="n">t</span> <span class="o">-&gt;</span> <span class="n">tl</span><span class="p">:</span><span class="n">list_int32</span> <span class="o">-&gt;</span> <span class="n">list_int32</span>
+
+<span class="n">let</span> <span class="n">mk_list</span> <span class="p">():</span> <span class="n">St</span> <span class="n">list_int32</span> <span class="o">=</span>
+  <span class="n">Cons</span> <span class="mi">0</span><span class="n">l</span> <span class="n">Nil</span>
+</pre></div>
+</div>
+<p>Trying to compile the snippet above will generate an error when calling the
+C compiler to generate a <code class="docutils literal notranslate"><span class="pre">.o</span></code> file.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ krml -skip-linking -verbose LowStar.fst
+⚙ KreMLin auto-detecting tools.
+(...)
+✘ [CC,./LowStar.c]
+In file included from ./LowStar.c:8:0:
+./LowStar.h:95:22: error: field ‘tl’ has incomplete type
+   LowStar_list_int32 tl;
+</pre></div>
+</div>
+<p>Polymorphic assumes are also not compiled. KreMLin could generate one C
+<code class="docutils literal notranslate"><span class="pre">extern</span></code> declaration per monomorphic use, but this would require the user
+to provide a substantial amount of manually-written code, so instead we
+refuse to compile the definition below.</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Cannot</span> <span class="n">be</span> <span class="n">compiled</span><span class="p">:</span> <span class="n">polymorphic</span> <span class="n">assume</span> <span class="n">val</span><span class="p">;</span> <span class="n">solution</span><span class="p">:</span> <span class="n">make</span> <span class="n">the</span> <span class="n">function</span>
+<span class="o">//</span> <span class="n">monomorphic</span><span class="p">,</span> <span class="ow">or</span> <span class="n">provide</span> <span class="n">a</span> <span class="n">C</span> <span class="n">macro</span>
+<span class="n">assume</span> <span class="n">val</span> <span class="n">pair_up</span><span class="p">:</span> <span class="c1">#a:Type -&gt; #b:Type -&gt; a -&gt; b -&gt; a * b</span>
+</pre></div>
+</div>
+<p>Trying to compile the snippet above will generate a warning when calling F*
+to generate a <code class="docutils literal notranslate"><span class="pre">.krml</span></code> file.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ krml -skip-compilation -verbose LowStar.fst
+⚙ KreMLin auto-detecting tools.
+(...)
+✔ [F*,extract]
+Not extracting LowStar.pair_up to KreMLin (polymorphic assumes are not supported)
+</pre></div>
+</div>
+<p>One point worth mentioning is that indexed types are by default not
+supported. See section ?? for an unofficial KreMLin extension that works in
+some very narrow cases, or rewrite your code to make <code class="docutils literal notranslate"><span class="pre">t</span></code> an inductive. KreMLin
+currently does not have support for untagged unions, i.e. automatically
+making <code class="docutils literal notranslate"><span class="pre">t</span></code> a C union.</p>
+<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span> <span class="n">alg</span> <span class="o">=</span> <span class="o">|</span> <span class="n">Alg1</span> <span class="o">|</span> <span class="n">Alg2</span>
+<span class="n">let</span> <span class="n">t</span> <span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">alg</span><span class="p">)</span> <span class="o">=</span>
+  <span class="n">match</span> <span class="n">a</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="n">Alg1</span> <span class="o">-&gt;</span> <span class="n">UInt32</span><span class="o">.</span><span class="n">t</span>
+  <span class="o">|</span> <span class="n">Alg2</span> <span class="o">-&gt;</span> <span class="n">uint128</span>
+
+<span class="n">let</span> <span class="n">default_t</span> <span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">alg</span><span class="p">):</span> <span class="n">t</span> <span class="n">a</span> <span class="o">=</span>
+  <span class="n">match</span> <span class="n">a</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="n">Alg1</span> <span class="o">-&gt;</span> <span class="mi">0</span><span class="n">ul</span>
+  <span class="o">|</span> <span class="n">Alg2</span> <span class="o">-&gt;</span> <span class="n">zero</span>
+</pre></div>
+</div>
+<p>Trying to compile the snippet above will generate invalid C code.</p>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">The</span> <span class="n">void</span><span class="o">*</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">sign</span> <span class="n">that</span> <span class="n">something</span> <span class="n">was</span> <span class="ow">not</span> <span class="nb">type</span><span class="o">-</span><span class="n">able</span> <span class="ow">in</span> <span class="n">Low</span><span class="o">*</span> <span class="ow">and</span> <span class="n">was</span>
+<span class="o">//</span> <span class="n">sent</span> <span class="n">to</span> <span class="n">the</span> <span class="n">Top</span> <span class="nb">type</span><span class="o">.</span>
+<span class="n">void</span> <span class="o">*</span><span class="n">default_t</span><span class="p">(</span><span class="n">alg</span> <span class="n">a</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">switch</span> <span class="p">(</span><span class="n">a</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">case</span> <span class="n">Alg1</span><span class="p">:</span>
+      <span class="p">{</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">void</span> <span class="o">*</span><span class="p">)(</span><span class="n">uint32_t</span><span class="p">)</span><span class="mi">0</span><span class="n">U</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="n">case</span> <span class="n">Alg2</span><span class="p">:</span>
+      <span class="p">{</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">void</span> <span class="o">*</span><span class="p">)</span><span class="n">zero</span>
+      <span class="p">}</span>
+    <span class="n">default</span><span class="p">:</span>
+      <span class="p">{</span>
+        <span class="n">KRML_HOST_PRINTF</span><span class="p">(</span><span class="s2">&quot;KreMLin incomplete match at </span><span class="si">%s</span><span class="s2">:</span><span class="si">%d</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">__FILE__</span><span class="p">,</span> <span class="n">__LINE__</span><span class="p">);</span>
+        <span class="n">KRML_HOST_EXIT</span><span class="p">(</span><span class="mi">253</span><span class="n">U</span><span class="p">);</span>
+      <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If you are lucky, the C compiler may generate an error:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ krml -skip-linking LowStar.fst -add-include &#39;&quot;kremstr.h&quot;&#39; -no-prefix LowStar -warn-error +9
+
+✘ [CC,./LowStar.c]
+./LowStar.c: In function ‘default_t’:
+./LowStar.c:291:9: error: cannot convert to a pointer type
+         return (void *)zero;
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Libraries.html" class="btn btn-neutral float-right" title="Core Low* libraries" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Setup.html" class="btn btn-neutral float-left" title="Getting started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Jonathan Protzenko
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
