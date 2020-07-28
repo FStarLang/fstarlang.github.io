@@ -200,8 +200,16 @@ but not <code class="docutils literal notranslate"><span class="pre">Hacl.Impl.C
 <h3>Bundles for grouping files together<a class="headerlink" href="#bundles-for-grouping-files-together" title="Permalink to this headline">¶</a></h3>
 <p>The first purpose of bundles is to group F* modules into a single C file. All of
 the <code class="docutils literal notranslate"><span class="pre">Nᵢ</span></code> and <code class="docutils literal notranslate"><span class="pre">Mᵢ</span></code> are concatenated into a C single file. The name of the single
-file is <code class="docutils literal notranslate"><span class="pre">N₁_..._Mₙ</span></code>, but can be controlled by appending an optional
+file is <code class="docutils literal notranslate"><span class="pre">N₁_..._Nₙ</span></code>, but can be controlled by appending an optional
 <code class="docutils literal notranslate"><span class="pre">[rename=FooBar]</span></code> argument to the bundle <code class="docutils literal notranslate"><span class="pre">B</span></code>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Bundles do not allow you to duplicate code and have it appear in multiple
+places. This would cause errors with conflicting symbols at link-time, and
+would have a disastrous impact on your code segment size. Bundles do not
+change the fact that a definition only appears in a single place for each
+kremlin invocation.</p>
+</div>
 </div>
 <div class="section" id="bundles-for-hiding-implementation-details">
 <h3>Bundles for hiding implementation details<a class="headerlink" href="#bundles-for-hiding-implementation-details" title="Permalink to this headline">¶</a></h3>
