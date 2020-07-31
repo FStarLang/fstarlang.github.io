@@ -190,7 +190,11 @@
 This is a valid Low* usage and will not trigger a warning. These strings are
 compiled as C literals and as such are zero-terminated.</p>
 <p>You may also use non-allocating functions that operate over strings, such as
-<code class="docutils literal notranslate"><span class="pre">FStar.strlen</span></code>. All other functions, e.g. <code class="docutils literal notranslate"><span class="pre">strcat</span></code>, <code class="docutils literal notranslate"><span class="pre">substring</span></code> are
+<code class="docutils literal notranslate"><span class="pre">FStar.strlen</span></code>, <code class="docutils literal notranslate"><span class="pre">string_of_bool</span></code>, polymorphic equality over strings <code class="docutils literal notranslate"><span class="pre">=</span></code>
+(compiles into <code class="docutils literal notranslate"><span class="pre">strcmp</span></code>), etc. – note that these are not part of the
+“minimal” kremlib and you’ll have to link in
+<code class="docutils literal notranslate"><span class="pre">kremlib/dist/generic/libkremlib.a</span></code>.</p>
+<p>All other functions, e.g. <code class="docutils literal notranslate"><span class="pre">strcat</span></code>, <code class="docutils literal notranslate"><span class="pre">substring</span></code>, <code class="docutils literal notranslate"><span class="pre">string_of_int</span></code> are
 non-Low* and will trigger Warning 15, because they perform unchecked
 allocations.</p>
 <div class="section" id="printing-strings">
