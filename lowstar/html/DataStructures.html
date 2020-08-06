@@ -104,6 +104,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Low* data structure libraries</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#resizable-vector">Resizable vector</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#linked-list">Linked list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#associative-list">Associative List</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="StringManipulation.html">Low* string manipulation</a></li>
@@ -188,10 +189,22 @@
 mutable buffers that can be resized automatically. This requires the use of a
 manually-encoded typeclass of regional elements for reasoning about things being
 stored in the vector in case they are allocated.</p>
+<p><code class="docutils literal notranslate"><span class="pre">LowStar.RVector</span></code> is becoming slightly outdated and does not use the latest
+“reference” style for framing and abstract footprints.</p>
 </div>
 <div class="section" id="linked-list">
 <h2>Linked list<a class="headerlink" href="#linked-list" title="Permalink to this headline">¶</a></h2>
-<p>See the examples section of this manual.</p>
+<p>See <code class="docutils literal notranslate"><span class="pre">kremlib/LowStar.Lib.LinkedList.fst</span></code> and
+<code class="docutils literal notranslate"><span class="pre">kremlib/LowStar.Lib.LinkedList2.fst</span></code> for singly-linked lists. These are
+reference modules that use an established, “reference” style for stateful
+programming; they are heavily commented and are ready for general-purpose use
+except for a few lemmas that could use a judiciously-chosen pattern.</p>
+</div>
+<div class="section" id="associative-list">
+<h2>Associative List<a class="headerlink" href="#associative-list" title="Permalink to this headline">¶</a></h2>
+<p>See <code class="docutils literal notranslate"><span class="pre">kremlib/LowStar.Lib.AssocList.fst</span></code>. Same as above, this is a module
+written in a modern style. It demonstrates how to establish a firm abstraction
+boundary, and uses <code class="docutils literal notranslate"><span class="pre">FStar.Map</span></code> for its functional specification.</p>
 </div>
 </div>
 
