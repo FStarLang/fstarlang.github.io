@@ -1,0 +1,407 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Programming with Proofs in F* &mdash; Programming with Proofs in F*  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="A Short Tutorial Introduction to F*" href="tutorial-overview.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home" alt="Documentation Home"> Programming with Proofs in F*
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial-overview.html">A Short Tutorial Introduction to F*</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sec2/Design-of-fstar-Intro.html">Elements of F*</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PL-pl-foundations.html">Foundations of Programming Languages</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Programming with Proofs in F*</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Programming with Proofs in F*</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+
+           <div itemprop="articleBody">
+            
+  <div class="section" id="programming-with-proofs-in-f">
+<h1>Programming with Proofs in F*<a class="headerlink" href="#programming-with-proofs-in-f" title="Permalink to this headline">¶</a></h1>
+<p>F* is a programming language and proof assistant.</p>
+<p>Part 1: F* Manual</p>
+<ol class="arabic">
+<li><p>F* Quick Start: Online tutorial (chapters 1–6, ported here)</p></li>
+<li><p>The Design of F*</p>
+<p>A Verification-oriented Programming Language and Proof Assistant
+(general context from mumon paper)</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Types</dt><dd><ul>
+<li><p>Dependent refinement types</p></li>
+<li><p>Intensional vs extensional, undecidability etc.</p></li>
+<li><p>Equality: Definitional and provable equality</p></li>
+<li><p>Subtyping</p></li>
+<li><p>Proof irrelevance</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Effects</dt><dd><ul>
+<li><p>Indexed Monads and Effects</p></li>
+<li><p>Subsumption and sub-effecting</p></li>
+<li><p>Effect abstraction, reification and reflecition</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Modules and Interfaces</dt><dd><ul>
+<li></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>A Mental Model of the F* Typechecker</dt><dd><ul>
+<li><p>Type inference based on higher order unification</p></li>
+<li><p>Normalization and proofs by reflection</p></li>
+<li><p>SMT Solving</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Extraction</dt><dd><ul>
+<li><p>Computational irrelevance and erasure (Ghost)</p></li>
+<li><dl class="simple">
+<dt>Normalization for extraction</dt><dd><ul>
+<li><p>inlining, pure subterms, postprocess(fwd to meta)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Scripting F* with Metaprogramming</dt><dd><ul>
+<li><p>Proof states</p></li>
+<li><p>Reflecting on syntax</p></li>
+<li><p>Quotation</p></li>
+<li><p>Scripting extraction</p></li>
+<li><p>Hooks</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</li>
+<li><p>A User’s Guide</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>The Build System</dt><dd><ul>
+<li><p>Dependence Analysis</p></li>
+<li><p>Checked files</p></li>
+<li><p>Sample project</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Using the F* editor</p></li>
+<li><dl class="simple">
+<dt>SMT Proofs</dt><dd><ul>
+<li><p>Quantifiers and Patterns</p></li>
+<li><p>Arithmetic</p></li>
+<li><p>Unsat cores, recording and replaying hints</p></li>
+<li><p>Debugging a failed SMT proofs</p></li>
+<li><p>SMT Profiling</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Proofs by normalization</dt><dd><ul>
+<li><p>Normalization steps</p></li>
+<li><p>Call-by-name vs. call-by-value</p></li>
+<li><p>Native execution and plugins</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Tactics and custom decision procedures</p></li>
+<li><dl class="simple">
+<dt>Common proof patterns</dt><dd><ul>
+<li><p>Classical proofs</p></li>
+<li><p>Constructive proofs</p></li>
+<li><p>Axioms</p></li>
+<li><p>Termination proofs</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Proof Engineering</dt><dd><ul>
+<li><p>Building, maintaining and debugging stable proofs</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Extraction</dt><dd><ul>
+<li><p>OCaml</p></li>
+<li><p>F#</p></li>
+<li><p>Kremlin</p></li>
+<li><p>Partial evaluation</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Command line options</p></li>
+<li><p>Error messages</p></li>
+<li><p>Syntax guide</p></li>
+<li><p>FAQ</p></li>
+</ul>
+</li>
+<li><p>Core libraries</p></li>
+</ol>
+<p id="corelib-prims">Part 2: F* in Action</p>
+<ol class="arabic simple">
+<li><p>Foundations of Programming Languages</p>
+<ol class="loweralpha simple">
+<li><p>Simply Typed Lambda Calculus: Syntatic Type Safety</p></li>
+<li><p>Normalization for STLC
+- Hereditary Substitutions: A Syntactic Normalization Technique
+- Logical Relations</p></li>
+<li><p>Semantics of an Imperative Language</p></li>
+<li><p>Floyd-Hoare Logic
+- Hoare triples
+- Weakest Preconditions</p></li>
+</ol>
+</li>
+<li><p>User-defined Effects</p>
+<ol class="loweralpha simple">
+<li><p>A language with an ML-style heap</p></li>
+<li><p>Monotonic State</p></li>
+<li><p>Exceptions</p></li>
+<li><p>Algebraic Effects</p></li>
+<li><p>Concurrency</p></li>
+</ol>
+</li>
+<li><p>Low*: An Embedded DSL and Hoare Logic for Programming</p>
+<ul class="simple">
+<li><p>Building on 4a and 4b.</p></li>
+<li><p>Integrating / referencing the Kremlin tutorial</p></li>
+</ul>
+</li>
+<li><p>A Verified Embedding of a Verified Assembly Language</p></li>
+<li><p>Modeling and Proving Cryptography Security</p>
+<ul class="simple">
+<li><p>UF-CMA MAC</p></li>
+<li><p>IND-CPA Encryption</p></li>
+<li><p>Authenticated Encryption</p></li>
+</ul>
+</li>
+<li><p>Verified Cryptographic Implementations</p></li>
+<li><p>Steel: An Extensible Concurrent Separation Logic</p></li>
+<li><p>EverParse?
+* Miniparse</p></li>
+<li><p>An End-to-end Verified Low-level App</p></li>
+</ol>
+<p>Part 3: Other resources</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Recorded coding session</p></li>
+<li><p>Talks, presentations</p></li>
+<li><p>Exemplary code</p></li>
+</ul>
+</div></blockquote>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+    <!-- <a href="https://github.com/FStarLang/fstar/"> -->
+    <!--     <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"> -->
+    <!-- </a> -->
+
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tutorial-overview.html" class="btn btn-neutral float-right" title="A Short Tutorial Introduction to F*" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Microsoft Research
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

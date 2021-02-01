@@ -1,0 +1,791 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Elements of F* &mdash; Programming with Proofs in F*  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Foundations of Programming Languages" href="../PL-pl-foundations.html" />
+    <link rel="prev" title="A Short Tutorial Introduction to F*" href="../tutorial-overview.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Programming with Proofs in F*
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../tutorial-overview.html">A Short Tutorial Introduction to F*</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Elements of F*</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#a-capsule-summary-of-f">A Capsule Summary of F*</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#dsls-embedded-in-f">DSLs Embedded in F*</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#core-language">Core Language</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basic-syntactic-structure">Basic syntactic structure</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#classes-of-identifiers">Classes of Identifiers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#comments">Comments</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#primitive-constants">Primitive constants</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#unit">Unit</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#booleans">Booleans</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#integers">Integers</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#functions">Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#user-defined-operators-and-infix-notation">User-defined operators and infix notation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#boolean-refinement-types">Boolean refinement types</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#some-simple-refinement-types">Some simple refinement types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#refinement-subtyping">Refinement subtyping</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#function-types-or-arrows">Function types or arrows</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#total-dependent-functions">Total dependent functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#syntax-of-binders">Syntax of binders</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#type-the-type-of-types">Type: The type of types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#universes">Universes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#decidable-equality-and-eqtype">Decidable equality and <cite>eqtype</cite></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#implicit-arguments">Implicit arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#let-bindings">Let bindings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#inductive-type-definitions">Inductive type definitions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#discriminators">Discriminators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#projectors">Projectors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#equality">Equality</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#positivity">Positivity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#universe-constraints">Universe constraints</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pattern-matching">Pattern matching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#recursive-definitions-and-termination">Recursive definitions and termination</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#refinement-types">Refinement Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#proof-irrelevance-squash-types-and-classical-logic">Proof irrelevance, squash types and classical logic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#misc">Misc</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#evaluation-strategy">Evaluation strategy</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#effects">Effects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#modules-and-interfaces">Modules and Interfaces</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#a-mental-model-of-the-f-typechecker">A Mental Model of the F* Typechecker</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../PL-pl-foundations.html">Foundations of Programming Languages</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Programming with Proofs in F*</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Elements of F*</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+
+           <div itemprop="articleBody">
+            
+  <div class="section" id="elements-of-f">
+<span id="design-of-fstar-intro"></span><h1>Elements of F*<a class="headerlink" href="#elements-of-f" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="../tutorial-overview.html#tutorial-overview"><span class="std std-ref">short tutorial</span></a> should have provided you
+with a basic feel for F*, in particular for how to use F* and its SMT
+solving backend for programming and proving simple functional
+programs.</p>
+<p>In this section, we step back and provide a more comprehensive
+description of F*, starting from short summary of its design goals and
+main technical features. Not all of these concepts may be familiar to
+you at first, but by the end of this section, you should have gained a
+working knowledge of the core design of F* as well as pointers to
+further resources.</p>
+<div class="section" id="a-capsule-summary-of-f">
+<h2>A Capsule Summary of F*<a class="headerlink" href="#a-capsule-summary-of-f" title="Permalink to this headline">¶</a></h2>
+<p>F* is a dependently type programming language that aims to play
+several roles:</p>
+<ul class="simple">
+<li><p>A general purpose programming language, which encourages
+higher-order functional programming with effects, in the tradition
+of the ML family of languages.</p></li>
+<li><p>A compiler, which translates F* programs to OCaml or F# for
+execution.</p></li>
+<li><p>A proof assistant, in which to state and prove properties of
+programs.</p></li>
+<li><p>A program verification engine, leveraging SMT solvers to partially
+automate proofs of programs.</p></li>
+<li><p>A metaprogramming system, supporting the programmatic construction
+of F* programs and proof automation procedures.</p></li>
+</ul>
+<p>To achieve these goals, the design of F* revolves around a few key
+elements.</p>
+<ul class="simple">
+<li><p>A core language of total functions with full dependent types,
+including an extensional form of type conversion, indexed inductive
+types, and pattern matching, recursive functions with semantic
+termination checking, dependent refinement types and subtyping, and
+polymorphism over a predicative hierarchy of universes.</p></li>
+<li><p>A system of user-defined indexed effects, for modeling,
+encapsulating, and statically reasoning about various forms of
+computational effects, including a primitive notion of general
+recursion and divergence, as well as an open system of user-defined
+effects, with examples including state, exceptions, concurrency,
+algebraic effects, and several others.</p></li>
+<li><p>A built-in encoding of a classical fragment of F*’s logic into the
+first order logic of an SMT solver, allowing many proofs to be
+automatically discharged.</p></li>
+<li><p>A reflection within F* of the syntax and proof state of F*, enabling
+Meta-F* programs to manipulate F* syntax and proof goals.</p></li>
+</ul>
+<p>Many other programming languages are closely related to F* and address
+some of these goals, including other dependently typed languages like
+Coq, Agda, Idris and Lean. In comparison with these languages, the
+distinctive features of F* include its extensional type conversion and
+SMT-based proof automation (both of which make typechecking more
+flexible but also undecidable); the use of refinement types (enabling
+a concise form of lightweight specification); and its user-defined
+effect system.</p>
+<div class="section" id="dsls-embedded-in-f">
+<h3>DSLs Embedded in F*<a class="headerlink" href="#dsls-embedded-in-f" title="Permalink to this headline">¶</a></h3>
+<p>In practice, rather than a single language, the F* ecosystem is also a
+collection of domain-specific languages (DSLs). A common use of F* is
+to embed within it programming languages at different levels of
+abstraction or for specific programming tasks, and for the embedded
+language to be engineered with domain-specific reasoning, proof
+automation, and compilaton backends. Some examples include:</p>
+<ul class="simple">
+<li><p>Low*, an shallowly embedded DSL for sequential programming against a
+C-like memory model including explicit memory management on the
+stack and heap; a Hoare logic for partial correctness based on
+implicit dynamic frames; and a custom backend (Kremlin) to compile
+Low* programs to C for further compilation by off-the-shelf C
+compilers.</p></li>
+<li><p>EverParse, a shallow embedding of a DSL (layered on top of the Low*
+DSL) of parser and serializer combinators, for low-level binary
+formats.</p></li>
+<li><p>Vale, a deeply embedded DSL for structured programming in a
+user-defined assembly language, with a Hoare logic for total
+correctness, and a printer to emit verified programs in a assembly
+syntax compatible with various standard assemblers.</p></li>
+<li><p>Steel, a shallow embedding of concurrency as an effect in F*, with
+an extensible concurrent separation logic for partial correctness as
+a core program logic, and proof automation built using a combination
+of Meta-F* tactics, higher-order unification, and SMT.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="core-language">
+<h2>Core Language<a class="headerlink" href="#core-language" title="Permalink to this headline">¶</a></h2>
+<p>The syntax of F*’s core language is summarized by the simplified
+grammar of terms, representing the core abstract syntax of terms used
+by the F* typechecker. Note, this is not the full concrete syntax of
+F* terms, which includes many additional features, including
+parentheses for enforcing precedence, implicit arguments, n-ary
+functions, various forms of syntactic sugar for common constructs like
+tuples and sequencing, etc. However, the essence of F*’s core language
+is distilled below. Understand how all these constructs fit together
+and you should be able to see how the core of F* is simultaneously a
+functional programming language and a logic. The goal of this section
+is to explain all these constructs in detail, down to specifics of the
+various syntactic conventions used in F*.</p>
+<p>Core abstract syntax of F* terms:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Constants c ::= p                                       primitive constant
+              | D                                       user-defined data constructors
+              | T                                       user-defined inductive type constructors
+
+Terms  e, t ::= x                                       variables
+
+              | c                                       constants and constructors
+
+
+              | fun (x:t) -&gt; t&#39;                         functions
+
+              | t t&#39;                                    applications
+
+              | match t with [b1 ... bn]                pattern matching with zero or more cases
+
+              | let x = t in t&#39;                         let bindings
+
+              | let rec f1 (x:t1) : t1&#39; = e1 ...
+                and ... fn (x:tn) : tn&#39; = en            mutually recursive function definitions
+
+              | x:t -&gt; t                                function types (arrows)
+
+              | x:t { t&#39; }                              refinement types
+
+              | Type u#U                                Type of types
+
+              | x u#U1 ... u#Un                         Variable applied to one or more universes
+
+Case     X  ::= `|` P -&gt; t                              Pattern-matching branch
+
+Pattern  P  ::= x                                       Variable
+              | c                                       Constant
+              | D [P1...Pn]                             Constructor applied to zero or more patterns
+
+Universe U  ::= x                                       Universe variable
+              | 0                                       Universe 0
+              | U + 1                                   Successor universe
+              | max U U                                 Maximum of universes
+</pre></div>
+</div>
+<div class="section" id="basic-syntactic-structure">
+<h3>Basic syntactic structure<a class="headerlink" href="#basic-syntactic-structure" title="Permalink to this headline">¶</a></h3>
+<p>An F* program is a collection of <a class="reference internal" href="#modules"><span class="std std-ref">modules</span></a>, with each
+module represented by a single file with the filename extension
+<cite>.fst</cite>. Later, we’ll see that a module’s interface is in a separate
+file.</p>
+<p>A module begins with the module’s name and contains a sequence of
+top-level signatures and definitions.</p>
+<ul class="simple">
+<li><p>Signatures ascribe a type to a definition, e.g., <cite>val f : t</cite>.</p></li>
+</ul>
+<p>Definitions come in several flavors: the two main forms we’ll focus on
+in this section are</p>
+<ul class="simple">
+<li><p>possibly recursive definitions (let bindings, <cite>let [rec] f = e</cite>)</p></li>
+<li><p>and, inductive type definitions (datatypes, <cite>type t = | D1 : t1 | … | Dn : tn</cite>)</p></li>
+</ul>
+<p>In later sections, we’ll see two other kinds of definition:
+user-defined indexed effects and sub-effects.</p>
+<div class="section" id="classes-of-identifiers">
+<h4>Classes of Identifiers<a class="headerlink" href="#classes-of-identifiers" title="Permalink to this headline">¶</a></h4>
+<p>TODO:</p>
+</div>
+<div class="section" id="comments">
+<h4>Comments<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h4>
+<p>Block comments are delimited by <cite>(*</cite> and <cite>*)</cite>. Line comments begin
+with <cite>//</cite>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">*</span> <span class="n">this</span> <span class="ow">is</span> <span class="n">a</span>
+   <span class="n">block</span> <span class="n">comment</span> <span class="o">*</span><span class="p">)</span>
+
+
+<span class="o">//</span><span class="n">This</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">line</span> <span class="n">comment</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="primitive-constants">
+<h3>Primitive constants<a class="headerlink" href="#primitive-constants" title="Permalink to this headline">¶</a></h3>
+<p>Every F* program is checked in the context of some ambient primitive
+definitions taken from the core F* module <a class="reference internal" href="../index.html#corelib-prims"><span class="std std-ref">Prims</span></a>.</p>
+<div class="section" id="unit">
+<h4>Unit<a class="headerlink" href="#unit" title="Permalink to this headline">¶</a></h4>
+<p>The primitive type <cite>unit</cite> has a single element denoted <cite>()</cite>.</p>
+</div>
+<div class="section" id="booleans">
+<h4>Booleans<a class="headerlink" href="#booleans" title="Permalink to this headline">¶</a></h4>
+<p>The primitive type <cite>bool</cite> has two elements, <cite>true</cite> and
+<cite>false</cite>. <cite>Prims</cite> also provides the following primitive boolean
+operators</p>
+<ul class="simple">
+<li><p><cite>&amp;&amp;</cite>: Boolean conjunction (infix)</p></li>
+<li><p><cite>||</cite>: Boolean disjunction (infix)</p></li>
+<li><p><cite>not</cite>: Boolean negation (prefix)</p></li>
+</ul>
+<p>TODO: Precedence</p>
+</div>
+<div class="section" id="integers">
+<h4>Integers<a class="headerlink" href="#integers" title="Permalink to this headline">¶</a></h4>
+<p>The type <cite>int</cite> represents unbounded, primitive mathematical
+integers. Its elements are formed from the literals <cite>0, 1, 2, …</cite>,
+and the following primitive operators:</p>
+<ul class="simple">
+<li><p><cite>-</cite>: Unary negation (prefix)</p></li>
+<li><p><cite>-</cite>: Subtraction (infix)</p></li>
+<li><p><cite>+</cite>: Addition (infix)</p></li>
+<li><p><cite>/</cite>: Euclidean division (infix)</p></li>
+<li><p><cite>%</cite>: Euclidean modulus (infix)</p></li>
+<li><p><cite>op_Multiply</cite>: Unfortunately, the traditional multiplication symbol
+<cite>*</cite> is reserved by default for the <a class="reference internal" href="#tuples"><span class="std std-ref">tuple</span></a> type
+constructor. Use the module <cite>FStar.Mul</cite> to treat <cite>*</cite> as integer
+multiplication—see <a class="reference internal" href="#tuples"><span class="std std-ref">this note</span></a>.</p></li>
+<li><p><cite>&lt;</cite> : Less than (infix)</p></li>
+<li><p><cite>&lt;=</cite>: Less than or equal (infix)</p></li>
+<li><p><cite>&gt;</cite> : Greater than (infix)</p></li>
+<li><p><cite>&gt;=</cite>: Greater than or equal (infix)</p></li>
+</ul>
+<p>TODO: Precedence</p>
+</div>
+</div>
+<div class="section" id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<p>F* provides several forms of syntactic sugar to define functions. The
+syntax is largely inherited from OCaml, and this
+<a class="reference external" href="https://ocaml.org/learn/tutorials/basics.html#Defining-a-function">OCaml tutorial</a>
+provides more details for those unfamiliar with the language.</p>
+<p>The following are synonyms:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">incr</span> <span class="o">=</span> <span class="n">fun</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">let</span> <span class="n">incr</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>You can also let F* infer the type of the parameter <cite>x</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">incr</span> <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>Functions can take several arguments and the result type of a function
+can also be annotated, if desired:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">incr</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">let</span> <span class="n">more_than_twice</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="p">(</span><span class="n">y</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span> <span class="o">+</span> <span class="n">y</span>
+</pre></div>
+</div>
+<p>It’s considered good practice to annotate all the parameters and
+result type of a top-level definition.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The type of any term in F* can be annotated using a <em>type
+ascription</em>, <cite>e &lt;: t</cite>. This form instructs F* to check that the
+term <cite>e</cite> has the type <cite>t</cite>. For example, we could have written:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">incr</span> <span class="o">=</span> <span class="n">fun</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We’ll cover more about type ascriptions in this later
+<a class="reference internal" href="#ascriptions"><span class="std std-ref">section</span></a>.</p>
+</div>
+<div class="section" id="user-defined-operators-and-infix-notation">
+<h4>User-defined operators and infix notation<a class="headerlink" href="#user-defined-operators-and-infix-notation" title="Permalink to this headline">¶</a></h4>
+<p>Most commonly, to call, or “apply”, a function, just place the
+arguments to the right of the function. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>incr 0 // calls `incr` with the argument 0
+more_than_twice 17 8 //calls `more_than_twice` with `17` and `8`
+</pre></div>
+</div>
+<p>You can also immediately apply an unnamed function, or lambda term:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">fun</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>However, functions with two arguments can be applied in infix
+notation, enclosing the function’s name in “backticks”. For example,
+one could write, which can sometimes make code more readable.</p>
+<blockquote>
+<div><p>17 `more_than_twice` 8</p>
+</div></blockquote>
+<p>Functions can also be given names using special operator symbols,
+e.g., one could write:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="p">(</span><span class="o">&gt;&gt;</span><span class="p">)</span> <span class="o">=</span> <span class="n">more_than_twice</span>
+</pre></div>
+</div>
+<p>And then call the function using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">17</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span>
+</pre></div>
+</div>
+<p>This <a class="reference external" href="https://github.com/FStarLang/FStar/wiki/Parsing-and-operator-precedence">wiki page</a>
+provides more details on defining functions with operator symbols.</p>
+</div>
+</div>
+<div class="section" id="boolean-refinement-types">
+<h3>Boolean refinement types<a class="headerlink" href="#boolean-refinement-types" title="Permalink to this headline">¶</a></h3>
+<p>Types are a way to describe collections of terms. For instance, the
+type <cite>int</cite> describes terms which compute integer results, i.e., when
+an <cite>int</cite>-typed term is reduced fully it produces a value in the set
+<cite>{…, -2, -1, 0, 1, 2, …}</cite>. Similarly, the type <cite>bool</cite> is the type
+of terms that compute or evaluate to one of the values in the set
+<cite>{true,false}</cite>.</p>
+<p>One (naive but useful) mental model is to think of a type as
+describing a set of values. With that in mind, and unlike in other
+mainstream programming languages, one can contemplate defining types
+for arbitrary sets of values. We will see a great many ways to define
+such types, starting with boolean refinement types.</p>
+<div class="section" id="some-simple-refinement-types">
+<h4>Some simple refinement types<a class="headerlink" href="#some-simple-refinement-types" title="Permalink to this headline">¶</a></h4>
+<p><a class="reference internal" href="../index.html#corelib-prims"><span class="std std-ref">Prims</span></a> defines the type of natural numbers as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">nat</span> <span class="o">=</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This is an instance of a boolean refinement type, whose general form
+is <cite>x:t { e }</cite> where <cite>t</cite> is a type, and <cite>e</cite> is a <cite>bool</cite>-typed term
+that may refer to the <cite>t</cite>-typed bound variable <cite>x</cite>. The term <cite>e</cite>
+<em>refines</em> the type <cite>t</cite>, in the sense that the set <cite>S</cite> denoted by <cite>t</cite>
+is restricted to those elements <cite>x $in$ S</cite> for which <cite>e</cite> evaluates to
+<cite>true</cite>.</p>
+<p>That is the type <cite>nat</cite> describes the set of terms that evaluate to an
+element of the set <cite>{0, 1, 2, 3, …}</cite>.</p>
+<p>But, there’s nothing particularly special about <cite>nat</cite>. You can define
+arbitrary refinements of your choosing, e.g.,:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>let empty = x:int { false } //one type for the empty set
+let zero = x:int{ x = 0 } //the type containing one element `0`
+let pos = x:int { x &gt; 0 } //the positive numbers
+let neg = x:int { x &lt; 0 } //the negative numbers
+let even = x:int { x % 2 = 0 } //the even numbers
+let odd = x:int { x % 2 = 1 } //the odd numbers
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you’re coming from a language like C or Java where a type
+primarily describes some properties about the representation of
+data in memory, this view of types as describing arbitrary sets of
+values may feel a bit alien. But, let it sink in a bit—types that
+carve out precise sets of values will let you state and check
+invariants about your programs that may otherwise have only been
+implicit in your code.</p>
+<p>Refinement types in F* trace their lineage to <a class="reference external" href="https://www.microsoft.com/en-us/research/project/f7-refinement-types-for-f/">F7</a>,
+a language developed at Microsoft Research c. 2007 – 2011. <a class="reference external" href="https://ucsd-progsys.github.io/liquidhaskell-blog/">Liquid
+Haskell</a> is
+another language with refinement types. Those languages provide
+additional background and resources for learning about refinement
+types.</p>
+<p>Refinement types, in conjunction with dependent function types,
+are, in principle, sufficient to encode many kinds of logics for
+program correctness. However, refinement types are just one among
+several tools in F* for program specification and proof.</p>
+</div>
+</div>
+<div class="section" id="refinement-subtyping">
+<h4>Refinement subtyping<a class="headerlink" href="#refinement-subtyping" title="Permalink to this headline">¶</a></h4>
+<p>We have seen so far how to define a new refinement type, like <cite>nat</cite> or
+<cite>even</cite>. However, to make use of refinement types we need rules that
+allow us to:</p>
+<ol class="arabic simple">
+<li><p>check that a program term has a given refinement type, e.g., to
+check that <cite>0</cite> has type <cite>nat</cite>. This is sometimes called
+<em>introducing</em> a refinement type.</p></li>
+<li><p>make use of a term that has a refinement type, e.g., given <cite>x :
+even</cite> we would like to be write <cite>x + 1</cite>, treating <cite>x</cite> as an <cite>int</cite>
+to add <cite>1</cite> to it. This is sometimes called <em>eliminating</em> a
+refinement type.</p></li>
+</ol>
+<p>The technical mechanism in F* that supports both these features is
+called <em>refinement subtyping</em>.</p>
+<p>If you’re used to a language like Java, C# or some other
+object-oriented language, you’re familiar with the idea of
+subtyping. A type <cite>t</cite> is a subtype of <cite>s</cite> whenever a program term of
+type <cite>t</cite> can be safely treated as an <cite>s</cite>. For example, in Java, all
+object types are subtypes of the type <cite>Object</cite>, the base class of all
+objects.</p>
+<p>For boolean refinement types, the subtyping rules are as follows:</p>
+<ul class="simple">
+<li><p>The type <cite>x:t { p }</cite> is a subtype of <cite>t</cite>. That is, given <cite>e :
+(x:t{p})</cite>, it is always safe to <em>eliminate</em> the refinement and
+consider <cite>e</cite> to also have type <cite>t</cite>.</p></li>
+<li><p>For a term <cite>e</cite> of type <cite>t</cite> (i.e., <cite>e : t</cite>), <cite>t</cite> is a subtype of the
+boolean refinement type <cite>x:t { p }</cite> whenever <cite>p[e / x]</cite> is provably
+equal to <cite>true</cite>. In other words, to <em>introduce</em> <cite>e : t</cite> at the
+boolean refinement type <cite>x:t{ p }</cite>, it suffices to prove that the
+term <cite>p</cite> with <cite>e</cite> substituted for bound variable <cite>x</cite>, evaluates to
+<cite>true</cite>.</p></li>
+</ul>
+<p>The the elimination rule for refinement types (i.e., the first part
+above) is simple—with our intuition of types as sets, the refinement
+type <cite>x:t{ p }</cite> <em>refines</em> the set corresponding to <cite>t</cite> by the
+predicate <cite>p</cite>, i.e., the <cite>x:t{ p }</cite> denotes a subset of <cite>t</cite>, so, of
+course <cite>x:t{ p }</cite> is a subtype of <cite>t</cite>.</p>
+<p>The other direction is a bit more subtle: <cite>x:t{ p }</cite> is only a subtype
+of <cite>p</cite>, for those terms <cite>e</cite> that validate <cite>p</cite>. You’re probably also
+wondering about how to prove that <cite>p[e/x]</cite> evaluates to <cite>true</cite>—this
+<a class="reference internal" href="#tutorial-refinements"><span class="std std-ref">part of the tutorial</span></a> should provide some
+answers. But, the short version is that F*, by default, uses an SMT
+solver to prove such fact, though you can also use tactics and other
+techniques to do so. More information can be found
+<a class="reference internal" href="#mental-model-refinements"><span class="std std-ref">here</span></a>.</p>
+<div class="section" id="an-example">
+<h5>An example<a class="headerlink" href="#an-example" title="Permalink to this headline">¶</a></h5>
+<p>Given <cite>x:even</cite>, consider typechecking <cite>x + 1 : odd</cite>; it takes a few
+steps:</p>
+<ol class="arabic simple">
+<li><p>The operator <cite>+</cite> expects both its arguments to have type <cite>int</cite> and
+returns an <cite>int</cite>.</p></li>
+<li><p>To prove that the first argument <cite>x:even</cite> is a valid argument for
+<cite>+</cite>, we use refinement subtyping to eliminate the refinement and
+obtain <cite>x:int</cite>. The second argument <cite>1:int</cite> already has the
+required type. Thus, <cite>x + 1 : int</cite>.</p></li>
+<li><p>To conclude that <cite>x + 1 : odd</cite>, we need to introduce a refinement
+type, by proving that the refinement predicate of <cite>odd</cite> evaluates
+to true, i.e., <cite>x + 1 % 2 = 1</cite>. This is provable by SMT, since we
+started with the knowledge that <cite>x</cite> is even.</p></li>
+</ol>
+<p>As such, F* applies subtyping repeatedly to introduce and eliminate
+refinement types, applying it multiple times even to check a simple
+term like <cite>x + 1 : odd</cite>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="function-types-or-arrows">
+<h3>Function types or arrows<a class="headerlink" href="#function-types-or-arrows" title="Permalink to this headline">¶</a></h3>
+<p>Functions are the main abstraction facility of any functional language
+and their types are, correspondigly, the main specificational
+construct.</p>
+<div class="section" id="total-dependent-functions">
+<h4>Total dependent functions<a class="headerlink" href="#total-dependent-functions" title="Permalink to this headline">¶</a></h4>
+<p>In its most basic form, function types have the shape:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">:</span><span class="n">t0</span> <span class="o">-&gt;</span> <span class="n">t1</span>
+</pre></div>
+</div>
+<p>This is the type of a function that</p>
+<ol class="arabic simple">
+<li><p>receives an argument <cite>e</cite> of type <cite>t0</cite>, and</p></li>
+<li><p>always returns a value of type <cite>t1[e / x]</cite>, i.e., the type of the
+returned value depends on the argument <cite>e</cite>.</p></li>
+</ol>
+<p>It’s worth emphasizing how this differs from function types in other
+languages.</p>
+<ul class="simple">
+<li><p>F*’s function type are dependent—the type of the result depends on
+the argument. For example, we can write a function that returns a
+<cite>bool</cite> when applied to an even number and returns a <cite>string</cite> when
+applied to an odd number.</p></li>
+<li><p>In F*’s core language, all functions are total, i.e., a function
+call always terminates after consuming a finite but unbounded amount
+of resources.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>That said, on any given computer, it is possible for a function call
+to fail to return due to resource exhaustion, e.g., running out of
+memory.</p>
+</div>
+</div>
+<div class="section" id="syntax-of-binders">
+<h4>Syntax of binders<a class="headerlink" href="#syntax-of-binders" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+<div class="section" id="type-the-type-of-types">
+<h3>Type: The type of types<a class="headerlink" href="#type-the-type-of-types" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="universes">
+<h3>Universes<a class="headerlink" href="#universes" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="decidable-equality-and-eqtype">
+<h3>Decidable equality and <cite>eqtype</cite><a class="headerlink" href="#decidable-equality-and-eqtype" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="implicit-arguments">
+<h3>Implicit arguments<a class="headerlink" href="#implicit-arguments" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="let-bindings">
+<h3>Let bindings<a class="headerlink" href="#let-bindings" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="inductive-type-definitions">
+<h3>Inductive type definitions<a class="headerlink" href="#inductive-type-definitions" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="discriminators">
+<span id="tuples"></span><h4>Discriminators<a class="headerlink" href="#discriminators" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="projectors">
+<h4>Projectors<a class="headerlink" href="#projectors" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="equality">
+<h4>Equality<a class="headerlink" href="#equality" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="positivity">
+<h4>Positivity<a class="headerlink" href="#positivity" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="universe-constraints">
+<h4>Universe constraints<a class="headerlink" href="#universe-constraints" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+<div class="section" id="pattern-matching">
+<h3>Pattern matching<a class="headerlink" href="#pattern-matching" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="recursive-definitions-and-termination">
+<h3>Recursive definitions and termination<a class="headerlink" href="#recursive-definitions-and-termination" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="refinement-types">
+<h3>Refinement Types<a class="headerlink" href="#refinement-types" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="proof-irrelevance-squash-types-and-classical-logic">
+<h3>Proof irrelevance, squash types and classical logic<a class="headerlink" href="#proof-irrelevance-squash-types-and-classical-logic" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="misc">
+<h3>Misc<a class="headerlink" href="#misc" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="evaluation-strategy">
+<h4>Evaluation strategy<a class="headerlink" href="#evaluation-strategy" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+</div>
+<div class="section" id="effects">
+<span id="ascriptions"></span><h2>Effects<a class="headerlink" href="#effects" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="modules-and-interfaces">
+<h2>Modules and Interfaces<a class="headerlink" href="#modules-and-interfaces" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound" id="modules">
+</div>
+</div>
+<div class="section" id="a-mental-model-of-the-f-typechecker">
+<h2>A Mental Model of the F* Typechecker<a class="headerlink" href="#a-mental-model-of-the-f-typechecker" title="Permalink to this headline">¶</a></h2>
+<p id="mental-model-refinements">Dangling</p>
+<span class="target" id="tutorial-refinements"></span></div>
+</div>
+
+
+           </div>
+           
+          </div>
+    <!-- <a href="https://github.com/FStarLang/fstar/"> -->
+    <!--     <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"> -->
+    <!-- </a> -->
+
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../PL-pl-foundations.html" class="btn btn-neutral float-right" title="Foundations of Programming Languages" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../tutorial-overview.html" class="btn btn-neutral float-left" title="A Short Tutorial Introduction to F*" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Microsoft Research
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
