@@ -497,30 +497,210 @@ languages.
 
 .. note::
 
-  That said, on any given computer, it is possible for a function call
-  to fail to return due to resource exhaustion, e.g., running out of
-  memory.
+   That said, on any given computer, it is possible for a function
+   call to fail to return due to resource exhaustion, e.g., running
+   out of memory. Later, as we look at :ref:`effects <effects>`, we
+   will see that F* also supports writing non-terminating functions.
 
+Some examples and common notation
++++++++++++++++++++++++++++++++++
+
+1. Functions are *curried*. Functions that take multiple arguments are
+   written as functions that take the first argument and return a
+   function that takes the next argument and so on. For instance, the
+   type of integer addition is::
+
+     val (+) : x:int -> y:int -> int
+
+2. Not all functions are dependent and the name of the argument can be
+   omitted when it is not needed. For example, here's a more concise
+   way to write the type of `(+)`::
+
+     val (+) : int -> int -> int
+
+3. Function types can be mixed with refinement types. For instance,
+   here's the type of integer division---the refinement on the divisor
+   forbids division-by-zero errors::
+
+     val (/) : int -> (divisor:int { divisor <> 0 }) -> int
+
+4. Dependence between the arguments and the result type can be used to
+   state relationships among them. For instance, there are several
+   types for the function `let incr = (fun (x:int) -> x + 1)`::
+
+     val incr : int -> int
+     val incr : x:int -> y:int{y > x}
+     val incr : x:int -> y:int{y = x + 1}
+
+   The first type `(int -> int)` is its traditional type in languages
+   like OCaml.
+
+   The second type `(x:int -> y:int{y > x})` states that the returned
+   value `y` is greater than the argument `x`.
+
+   The third type is the most precise: `(x:int -> y:int{y = x + 1})`
+   states that the result `y` is exactly the increment of the argument
+   `x`.
+
+5. It's often convenient to add refinements on arguments in a
+   dependent function type. For instance::
+
+     val f : x:(x:int{ x >= 1 }) -> y:(y:int{ y > x }) -> z:int{ z > x + y }
+
+   Since this style is so common, and it is inconvenient to have to
+   bind two names for the parameters `x` and `y`, F* allows (and
+   encourages) you to write::
+
+     val f : x:int{ x >= 1 } -> y:int{ y > x } -> z:int{ z > x + y }
+
+6. To emphasize that functions in F*'s core are total functions (i.e.,
+   they always return a result), we sometimes annotate the result type
+   with the effect label "`Tot`". This label is optional, but
+   especially as we learn about :ref:`effects <effects>`, emphasizing
+   that some functions have no effects via the `Tot` label is
+   useful. For example, one might typically write::
+
+     val f : x:int{ x >= 1 } -> y:int{ y > x } -> Tot (z:int{ z > x + y })
+
+   adding a `Tot` annotation on the last arrow, to indicate that the
+   function has no side effects. One could also write::
+
+     val f : x:int{ x >= 1 } -> Tot (y:int{ y > x } -> Tot (z:int{ z > x + y }))
+
+   adding an annotation on the intermediate arrow, though this is not
+   customary.
+
+Please refer to the section on :ref:`Implicit Arguments <implicits>`,
+where we explain the full syntax of binders, in function abstractions
+and types.
+
+Type: The type of types
+.........................
+
+One characteristic of F* (and many other dependently typed languages)
+is that it treats programs and their types uniformly, all within a
+single syntactic class. A type system in this style is sometimes
+called a *Pure Type System* or `PTS
+<https://en.wikipedia.org/wiki/Pure_type_system>`_.
+
+In F* (as in other PTSs) types have types too, functions can take
+types as arguments and return types as results, etc. In particular,
+the type of a type is `Type`, e.g., `bool : Type`, `int : Type`, `int
+-> int : Type` etc. In fact, even `Type` has a type---as we'll see in
+the subsection on :ref:`universes <universes>`.
+
+Parametric polymorphism or generics
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Most modern typed languages provide a way to write programs with
+generic types. For instance, C# and Java provide generics, C++ has
+templates, and languages like OCaml and Haskell have several kinds of
+polymorphic types.
+
+In F*, writing functions that are generic or polymorphic in types
+arises naturally as a special case of dependent function types. For
+example, here's a polymorphic identity function::
+
+  let id : a:Type -> a -> a = fun a x -> x
+
+There are a several things to note here:
+
+* The type of `id` is a dependent function type, with two
+  arguments. The first argument is `a : Type`; the second argument is
+  a term of type `a`; and the result also has the same type `a`.
+
+* The definition of `id` is a lambda term with two arguments `a :
+  Type` (corresponding to the first argument type) and `x : a`. The
+  function returns `x`---it's an identity function on the second
+  argument.
+
+Here are some equivalent ways to write it::
+
+  let id = fun (a:Type) (x:a) -> x <: a
+  let id (a:Type) (x:a) : a = x
+
+To call `id`, one can apply and check its type as shown::
+
+  id bool true : bool
+  id bool false : bool
+  id int (-1) : int
+  id nat 17 : nat
+  id string "hello" : string
+  id (int -> int) (fun x -> x) 0 : int
+
+.. note::
+
+   Exercises
+
+
+   Try completing the following programs::
+
+     let apply : a:Type -> b:Type -> (a -> b) -> a -> b = <fill me in>
+     let compose : a:Type -> b:Type -> c:Type -> (b -> c) -> (a -> b) -> a -> c = <fill me in>
+     let twice : <fill me in> = fun a f x -> compose a a a f f x
+
+It's a bit tedious to have to explicitly provide that first type
+argument to `id`. Next, we'll see how to use implicits in F* and
+instruct F* to automatically infer their instantiations.
+
+
+Implicit arguments
+..................
+
+.. _implicits:
 
 
 Syntax of binders
 ^^^^^^^^^^^^^^^^^
 
-
-Type: The type of types
-.........................
+..
+   \fstar syntax is
+   roughly modeled on OCaml (\ls$val$, \ls$let$, \ls$match$ etc.)
+   although there are many differences to account for the additional
+   typing features.
+   %
+   Binding occurrences \ls$b$ of variables take the form \ls$x:t$, declaring
+   a variable \ls$x$ at type \ls$t$; or \ls$#x:t$ indicating that the
+   binding is for an implicit argument.
+   %
+   The syntax
+   %
+   \ls@fun (b$_1$) ... (b$_n$) -> t@ introduces a lambda abstraction, whereas
+   %
+   \ls@b$_1$ -> ... -> b$_n$ -> c@ is the shape of a curried function type.
+   Refinement types are written \ls$b{t}$,
+   e.g., \ls$x:int{x>=0}$ is the type of non-negative integers
+   (i.e., \ls$nat$).
+   %
+   As usual, a bound variable is in scope to the right of its binding; we
+   omit the type in a binding when it can be inferred; and for
+   non-dependent function types, we omit the variable name.
+   %
+   For example, the type of the
+   pure append function on vectors is written
+   %
+   \ls$#a:Type -> #m:nat -> #n:nat -> vec a m -> vec a n -> vec a (m + n)$,
+   %
+   with the two explicit arguments and the return type depending on the
+   three implicit arguments marked with `\ls$#$'. The type of pairs in \fstar is
+   represented by \ls`a & b`
+   with \ls`a` and \ls`b` as the types of the first
+   and second components respectively. In contrast, dependent tuple types are
+   written as \ls`x:a & b` where \ls`x`
+   is bound in \ls`b`. A dependent pair value is
+   written \ls`(| e, f |)` and we
+   use \ls`x._1` and \ls`x._2` for the first and second dependent
+   projection maps.
 
 
 Universes
 .........
+.. _universes:
 
 
 Decidable equality and `eqtype`
 ...............................
 
-
-Implicit arguments
-..................
 
 
 Let bindings
@@ -574,6 +754,7 @@ Evaluation strategy
 
 Effects
 -------
+.. _effects:
 
 
 Modules and Interfaces

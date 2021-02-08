@@ -113,13 +113,18 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#function-types-or-arrows">Function types or arrows</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#total-dependent-functions">Total dependent functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#type-the-type-of-types">Type: The type of types</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#parametric-polymorphism-or-generics">Parametric polymorphism or generics</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#implicit-arguments">Implicit arguments</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#syntax-of-binders">Syntax of binders</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#type-the-type-of-types">Type: The type of types</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#universes">Universes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#decidable-equality-and-eqtype">Decidable equality and <cite>eqtype</cite></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#implicit-arguments">Implicit arguments</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#let-bindings">Let bindings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#inductive-type-definitions">Inductive type definitions</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#discriminators">Discriminators</a></li>
@@ -653,26 +658,161 @@ of resources.</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>That said, on any given computer, it is possible for a function call
-to fail to return due to resource exhaustion, e.g., running out of
-memory.</p>
+<p>That said, on any given computer, it is possible for a function
+call to fail to return due to resource exhaustion, e.g., running
+out of memory. Later, as we look at <a class="reference internal" href="#id2"><span class="std std-ref">effects</span></a>, we
+will see that F* also supports writing non-terminating functions.</p>
 </div>
+<div class="section" id="some-examples-and-common-notation">
+<h5>Some examples and common notation<a class="headerlink" href="#some-examples-and-common-notation" title="Permalink to this headline">¶</a></h5>
+<ol class="arabic">
+<li><p>Functions are <em>curried</em>. Functions that take multiple arguments are
+written as functions that take the first argument and return a
+function that takes the next argument and so on. For instance, the
+type of integer addition is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="p">:</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span> <span class="o">-&gt;</span> <span class="n">y</span><span class="p">:</span><span class="nb">int</span> <span class="o">-&gt;</span> <span class="nb">int</span>
+</pre></div>
 </div>
-<div class="section" id="syntax-of-binders">
-<h4>Syntax of binders<a class="headerlink" href="#syntax-of-binders" title="Permalink to this headline">¶</a></h4>
+</li>
+<li><p>Not all functions are dependent and the name of the argument can be
+omitted when it is not needed. For example, here’s a more concise
+way to write the type of <cite>(+)</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="p">:</span> <span class="nb">int</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">-&gt;</span> <span class="nb">int</span>
+</pre></div>
+</div>
+</li>
+<li><p>Function types can be mixed with refinement types. For instance,
+here’s the type of integer division—the refinement on the divisor
+forbids division-by-zero errors:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="p">(</span><span class="o">/</span><span class="p">)</span> <span class="p">:</span> <span class="nb">int</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">divisor</span><span class="p">:</span><span class="nb">int</span> <span class="p">{</span> <span class="n">divisor</span> <span class="o">&lt;&gt;</span> <span class="mi">0</span> <span class="p">})</span> <span class="o">-&gt;</span> <span class="nb">int</span>
+</pre></div>
+</div>
+</li>
+<li><p>Dependence between the arguments and the result type can be used to
+state relationships among them. For instance, there are several
+types for the function <cite>let incr = (fun (x:int) -&gt; x + 1)</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">incr</span> <span class="p">:</span> <span class="nb">int</span> <span class="o">-&gt;</span> <span class="nb">int</span>
+<span class="n">val</span> <span class="n">incr</span> <span class="p">:</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span> <span class="o">-&gt;</span> <span class="n">y</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span><span class="n">y</span> <span class="o">&gt;</span> <span class="n">x</span><span class="p">}</span>
+<span class="n">val</span> <span class="n">incr</span> <span class="p">:</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span> <span class="o">-&gt;</span> <span class="n">y</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span><span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The first type <cite>(int -&gt; int)</cite> is its traditional type in languages
+like OCaml.</p>
+<p>The second type <cite>(x:int -&gt; y:int{y &gt; x})</cite> states that the returned
+value <cite>y</cite> is greater than the argument <cite>x</cite>.</p>
+<p>The third type is the most precise: <cite>(x:int -&gt; y:int{y = x + 1})</cite>
+states that the result <cite>y</cite> is exactly the increment of the argument
+<cite>x</cite>.</p>
+</li>
+<li><p>It’s often convenient to add refinements on arguments in a
+dependent function type. For instance:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">f</span> <span class="p">:</span> <span class="n">x</span><span class="p">:(</span><span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="p">})</span> <span class="o">-&gt;</span> <span class="n">y</span><span class="p">:(</span><span class="n">y</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">y</span> <span class="o">&gt;</span> <span class="n">x</span> <span class="p">})</span> <span class="o">-&gt;</span> <span class="n">z</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">z</span> <span class="o">&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>Since this style is so common, and it is inconvenient to have to
+bind two names for the parameters <cite>x</cite> and <cite>y</cite>, F* allows (and
+encourages) you to write:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">f</span> <span class="p">:</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="p">}</span> <span class="o">-&gt;</span> <span class="n">y</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">y</span> <span class="o">&gt;</span> <span class="n">x</span> <span class="p">}</span> <span class="o">-&gt;</span> <span class="n">z</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">z</span> <span class="o">&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>To emphasize that functions in F*’s core are total functions (i.e.,
+they always return a result), we sometimes annotate the result type
+with the effect label “<cite>Tot</cite>”. This label is optional, but
+especially as we learn about <a class="reference internal" href="#id2"><span class="std std-ref">effects</span></a>, emphasizing
+that some functions have no effects via the <cite>Tot</cite> label is
+useful. For example, one might typically write:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">f</span> <span class="p">:</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="p">}</span> <span class="o">-&gt;</span> <span class="n">y</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">y</span> <span class="o">&gt;</span> <span class="n">x</span> <span class="p">}</span> <span class="o">-&gt;</span> <span class="n">Tot</span> <span class="p">(</span><span class="n">z</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">z</span> <span class="o">&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="p">})</span>
+</pre></div>
+</div>
+<p>adding a <cite>Tot</cite> annotation on the last arrow, to indicate that the
+function has no side effects. One could also write:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">f</span> <span class="p">:</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="p">}</span> <span class="o">-&gt;</span> <span class="n">Tot</span> <span class="p">(</span><span class="n">y</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">y</span> <span class="o">&gt;</span> <span class="n">x</span> <span class="p">}</span> <span class="o">-&gt;</span> <span class="n">Tot</span> <span class="p">(</span><span class="n">z</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">z</span> <span class="o">&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="p">}))</span>
+</pre></div>
+</div>
+<p>adding an annotation on the intermediate arrow, though this is not
+customary.</p>
+</li>
+</ol>
+<p>Please refer to the section on <a class="reference internal" href="#implicits"><span class="std std-ref">Implicit Arguments</span></a>,
+where we explain the full syntax of binders, in function abstractions
+and types.</p>
+</div>
 </div>
 </div>
 <div class="section" id="type-the-type-of-types">
 <h3>Type: The type of types<a class="headerlink" href="#type-the-type-of-types" title="Permalink to this headline">¶</a></h3>
+<p>One characteristic of F* (and many other dependently typed languages)
+is that it treats programs and their types uniformly, all within a
+single syntactic class. A type system in this style is sometimes
+called a <em>Pure Type System</em> or <a class="reference external" href="https://en.wikipedia.org/wiki/Pure_type_system">PTS</a>.</p>
+<p>In F* (as in other PTSs) types have types too, functions can take
+types as arguments and return types as results, etc. In particular,
+the type of a type is <cite>Type</cite>, e.g., <cite>bool : Type</cite>, <cite>int : Type</cite>, <cite>int
+-&gt; int : Type</cite> etc. In fact, even <cite>Type</cite> has a type—as we’ll see in
+the subsection on <a class="reference internal" href="#id1"><span class="std std-ref">universes</span></a>.</p>
+<div class="section" id="parametric-polymorphism-or-generics">
+<h4>Parametric polymorphism or generics<a class="headerlink" href="#parametric-polymorphism-or-generics" title="Permalink to this headline">¶</a></h4>
+<p>Most modern typed languages provide a way to write programs with
+generic types. For instance, C# and Java provide generics, C++ has
+templates, and languages like OCaml and Haskell have several kinds of
+polymorphic types.</p>
+<p>In F*, writing functions that are generic or polymorphic in types
+arises naturally as a special case of dependent function types. For
+example, here’s a polymorphic identity function:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="nb">id</span> <span class="p">:</span> <span class="n">a</span><span class="p">:</span><span class="n">Type</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">fun</span> <span class="n">a</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">x</span>
+</pre></div>
+</div>
+<p>There are a several things to note here:</p>
+<ul class="simple">
+<li><p>The type of <cite>id</cite> is a dependent function type, with two
+arguments. The first argument is <cite>a : Type</cite>; the second argument is
+a term of type <cite>a</cite>; and the result also has the same type <cite>a</cite>.</p></li>
+<li><p>The definition of <cite>id</cite> is a lambda term with two arguments <cite>a :
+Type</cite> (corresponding to the first argument type) and <cite>x : a</cite>. The
+function returns <cite>x</cite>—it’s an identity function on the second
+argument.</p></li>
+</ul>
+<p>Here are some equivalent ways to write it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="nb">id</span> <span class="o">=</span> <span class="n">fun</span> <span class="p">(</span><span class="n">a</span><span class="p">:</span><span class="n">Type</span><span class="p">)</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="n">a</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">x</span> <span class="o">&lt;</span><span class="p">:</span> <span class="n">a</span>
+<span class="n">let</span> <span class="nb">id</span> <span class="p">(</span><span class="n">a</span><span class="p">:</span><span class="n">Type</span><span class="p">)</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="n">a</span><span class="p">)</span> <span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="n">x</span>
+</pre></div>
+</div>
+<p>To call <cite>id</cite>, one can apply and check its type as shown:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">id</span> <span class="nb">bool</span> <span class="n">true</span> <span class="p">:</span> <span class="nb">bool</span>
+<span class="nb">id</span> <span class="nb">bool</span> <span class="n">false</span> <span class="p">:</span> <span class="nb">bool</span>
+<span class="nb">id</span> <span class="nb">int</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">:</span> <span class="nb">int</span>
+<span class="nb">id</span> <span class="n">nat</span> <span class="mi">17</span> <span class="p">:</span> <span class="n">nat</span>
+<span class="nb">id</span> <span class="n">string</span> <span class="s2">&quot;hello&quot;</span> <span class="p">:</span> <span class="n">string</span>
+<span class="nb">id</span> <span class="p">(</span><span class="nb">int</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">)</span> <span class="p">(</span><span class="n">fun</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">x</span><span class="p">)</span> <span class="mi">0</span> <span class="p">:</span> <span class="nb">int</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Exercises</p>
+<p>Try completing the following programs:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">apply</span> <span class="p">:</span> <span class="n">a</span><span class="p">:</span><span class="n">Type</span> <span class="o">-&gt;</span> <span class="n">b</span><span class="p">:</span><span class="n">Type</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="o">-&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">fill</span> <span class="n">me</span> <span class="ow">in</span><span class="o">&gt;</span>
+<span class="n">let</span> <span class="n">compose</span> <span class="p">:</span> <span class="n">a</span><span class="p">:</span><span class="n">Type</span> <span class="o">-&gt;</span> <span class="n">b</span><span class="p">:</span><span class="n">Type</span> <span class="o">-&gt;</span> <span class="n">c</span><span class="p">:</span><span class="n">Type</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">b</span> <span class="o">-&gt;</span> <span class="n">c</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="o">-&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">fill</span> <span class="n">me</span> <span class="ow">in</span><span class="o">&gt;</span>
+<span class="n">let</span> <span class="n">twice</span> <span class="p">:</span> <span class="o">&lt;</span><span class="n">fill</span> <span class="n">me</span> <span class="ow">in</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">fun</span> <span class="n">a</span> <span class="n">f</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">compose</span> <span class="n">a</span> <span class="n">a</span> <span class="n">a</span> <span class="n">f</span> <span class="n">f</span> <span class="n">x</span>
+</pre></div>
+</div>
+</div>
+<p>It’s a bit tedious to have to explicitly provide that first type
+argument to <cite>id</cite>. Next, we’ll see how to use implicits in F* and
+instruct F* to automatically infer their instantiations.</p>
+</div>
+</div>
+<div class="section" id="implicit-arguments">
+<h3>Implicit arguments<a class="headerlink" href="#implicit-arguments" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="syntax-of-binders">
+<span id="implicits"></span><h4>Syntax of binders<a class="headerlink" href="#syntax-of-binders" title="Permalink to this headline">¶</a></h4>
+</div>
 </div>
 <div class="section" id="universes">
 <h3>Universes<a class="headerlink" href="#universes" title="Permalink to this headline">¶</a></h3>
 </div>
 <div class="section" id="decidable-equality-and-eqtype">
-<h3>Decidable equality and <cite>eqtype</cite><a class="headerlink" href="#decidable-equality-and-eqtype" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="implicit-arguments">
-<h3>Implicit arguments<a class="headerlink" href="#implicit-arguments" title="Permalink to this headline">¶</a></h3>
+<span id="id1"></span><h3>Decidable equality and <cite>eqtype</cite><a class="headerlink" href="#decidable-equality-and-eqtype" title="Permalink to this headline">¶</a></h3>
 </div>
 <div class="section" id="let-bindings">
 <h3>Let bindings<a class="headerlink" href="#let-bindings" title="Permalink to this headline">¶</a></h3>
@@ -718,7 +858,7 @@ memory.</p>
 <span id="ascriptions"></span><h2>Effects<a class="headerlink" href="#effects" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="modules-and-interfaces">
-<h2>Modules and Interfaces<a class="headerlink" href="#modules-and-interfaces" title="Permalink to this headline">¶</a></h2>
+<span id="id2"></span><h2>Modules and Interfaces<a class="headerlink" href="#modules-and-interfaces" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound" id="modules">
 </div>
 </div>
