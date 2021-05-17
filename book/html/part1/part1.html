@@ -1,0 +1,260 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Programming and Proving with Total Functions &mdash; Proof-Oriented Programming in F*  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../static/custom.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../static/documentation_options.js"></script>
+        <script src="../static/jquery.js"></script>
+        <script src="../static/underscore.js"></script>
+        <script src="../static/doctools.js"></script>
+        <script src="../static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Getting off the ground" href="part1_ch1.html" />
+    <link rel="prev" title="Proof-Oriented Programming in F*" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Proof-Oriented Programming in F*
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Programming and Proving with Total Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="part1_ch1.html">Getting off the ground</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Proof-Oriented Programming in F*</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Programming and Proving with Total Functions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+
+           <div itemprop="articleBody">
+            
+  <div class="section" id="programming-and-proving-with-total-functions">
+<span id="part1"></span><h1>Programming and Proving with Total Functions<a class="headerlink" href="#programming-and-proving-with-total-functions" title="Permalink to this headline">¶</a></h1>
+<p>The core design philosophy of F* is that the type of a term (a program
+fragment) is a specification of its runtime behavior. We write <code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">:</span>
+<span class="pre">t</span></code> to mean that a term <code class="docutils literal notranslate"><span class="pre">e</span></code> has type <code class="docutils literal notranslate"><span class="pre">t</span></code>. Many terms can have the
+same type and the same term can have many types.</p>
+<p>One (naive but useful) mental model is to think of a type as
+describing a set of values. For instance, the type <code class="docutils literal notranslate"><span class="pre">int</span></code> describes
+the set of terms which compute integer results, i.e., when you have
+<code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">:</span> <span class="pre">int</span></code>, then when <code class="docutils literal notranslate"><span class="pre">e</span></code> is reduced fully it produces a value in
+the set <code class="docutils literal notranslate"><span class="pre">{...,</span> <span class="pre">-2,</span> <span class="pre">-1,</span> <span class="pre">0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">...}</span></code>. Similarly, the type <code class="docutils literal notranslate"><span class="pre">bool</span></code>
+is the type of terms that compute or evaluate to one of the values in
+the set <code class="docutils literal notranslate"><span class="pre">{true,false}</span></code>. Unlike many other languages, F* allows
+defining types that describe arbitrary sets of values, e.g., the type
+that contains only the number <code class="docutils literal notranslate"><span class="pre">17</span></code>, or the type of functions that
+factor a number into its primes.</p>
+<p>When proving a program <code class="docutils literal notranslate"><span class="pre">e</span></code> correct, one starts by specifying the
+properties one is interested in as a type <code class="docutils literal notranslate"><span class="pre">t</span></code> and then trying to
+convince F* that <code class="docutils literal notranslate"><span class="pre">e</span></code> has type <code class="docutils literal notranslate"><span class="pre">t</span></code>, i.e., deriving <code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">:</span> <span class="pre">t</span></code>.</p>
+<p>The idea of using a type to specify properties of a program has deep
+roots in the connections between logic and computation. You may find
+it interesting to read about <a class="reference external" href="https://cacm.acm.org/magazines/2015/12/194626-propositions-as-types/fulltext">proposition as types</a>,
+a concept with many deep mathematical and philosophical
+implications. For now, it suffices to think of a type <code class="docutils literal notranslate"><span class="pre">t</span></code> as a
+specification, or a statement of a theorem, and <code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">:</span> <span class="pre">t</span></code> as
+computer-checkable claim that the term <code class="docutils literal notranslate"><span class="pre">e</span></code> is a proof of the theorem
+<code class="docutils literal notranslate"><span class="pre">t</span></code>.</p>
+<p>In the next few chapters we’ll learn about how to program total
+functions and prove then correct.</p>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+    <!-- <a href="https://github.com/FStarLang/fstar/"> -->
+    <!--     <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"> -->
+    <!-- </a> -->
+
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="part1_ch1.html" class="btn btn-neutral float-right" title="Getting off the ground" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral float-left" title="Proof-Oriented Programming in F*" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Microsoft Research
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

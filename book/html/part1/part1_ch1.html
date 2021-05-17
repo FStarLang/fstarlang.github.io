@@ -1,0 +1,868 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Getting off the ground &mdash; Proof-Oriented Programming in F*  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../static/custom.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../static/documentation_options.js"></script>
+        <script src="../static/jquery.js"></script>
+        <script src="../static/underscore.js"></script>
+        <script src="../static/doctools.js"></script>
+        <script src="../static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Programming and Proving with Total Functions" href="part1.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Proof-Oriented Programming in F*
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="part1.html">Programming and Proving with Total Functions</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Getting off the ground</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basic-syntactic-structure">Basic syntactic structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#comments">Comments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#primitives">Primitives</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#false">False</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#unit">Unit</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#booleans">Booleans</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#integers">Integers</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#boolean-refinement-types">Boolean refinement types</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#refinement-subtyping">Refinement subtyping</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#an-example">An example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#functions">Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#lambda-terms">Lambda terms</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#named-functions">Named functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#recursive-functions">Recursive functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#arrow-types">Arrow types</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#some-examples-and-common-notation">Some examples and common notation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#exercises">Exercises</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#many-types-for-incr">Many types for <code class="docutils literal notranslate"><span class="pre">incr</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#computing-the-maximum-of-two-integers">Computing the maximum of two integers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#more-types-for-factorial">More types for factorial</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#fibonacci">Fibonacci</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Proof-Oriented Programming in F*</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="part1.html">Programming and Proving with Total Functions</a> &raquo;</li>
+        
+      <li>Getting off the ground</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+
+           <div itemprop="articleBody">
+            
+  <div class="section" id="getting-off-the-ground">
+<span id="part1-ch1"></span><h1>Getting off the ground<a class="headerlink" href="#getting-off-the-ground" title="Permalink to this headline">¶</a></h1>
+<p>To start writing some F* programs, we’ll need to learn some basics
+about the syntax of the language and some core concepts of types and
+functions.</p>
+<div class="section" id="basic-syntactic-structure">
+<h2>Basic syntactic structure<a class="headerlink" href="#basic-syntactic-structure" title="Permalink to this headline">¶</a></h2>
+<p>An F* program is a collection of <a class="reference internal" href="../index.html#modules"><span class="std std-ref">modules</span></a>, with each
+module represented by a single file with the filename extension
+<code class="docutils literal notranslate"><span class="pre">.fst</span></code>. Later, we’ll see that a module’s interface is in a separate
+<code class="docutils literal notranslate"><span class="pre">.fsti</span></code> file and allows hiding details of a module’s implementation
+from a client module.</p>
+<p>A module begins with the module’s name (which must match the name of
+its file, i.e., <code class="docutils literal notranslate"><span class="pre">module</span> <span class="pre">A</span></code> is in <code class="docutils literal notranslate"><span class="pre">A.fst</span></code>) and contains a sequence
+of top-level signatures and definitions.</p>
+<ul class="simple">
+<li><p>Signatures ascribe a type to a definition, e.g., <code class="docutils literal notranslate"><span class="pre">val</span> <span class="pre">f</span> <span class="pre">:</span> <span class="pre">t</span></code>.</p></li>
+</ul>
+<p>Definitions come in several flavors: the two main forms we’ll focus on
+when programming with total functions are</p>
+<ul class="simple">
+<li><p>possibly recursive definitions (let bindings, <code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">[rec]</span> <span class="pre">f</span> <span class="pre">=</span> <span class="pre">e</span></code>)</p></li>
+<li><p>and, inductive type definitions (datatypes, <code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">t</span> <span class="pre">=</span> <span class="pre">|</span> <span class="pre">D1</span> <span class="pre">:</span> <span class="pre">t1</span> <span class="pre">|</span> <span class="pre">...</span> <span class="pre">|</span> <span class="pre">Dn</span> <span class="pre">:</span> <span class="pre">tn</span></code>)</p></li>
+</ul>
+<p>In later sections, we’ll see two other kinds of definition:
+user-defined indexed effects and sub-effects.</p>
+</div>
+<div class="section" id="comments">
+<h2>Comments<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
+<p>Block comments are delimited by <code class="docutils literal notranslate"><span class="pre">(*</span></code> and <code class="docutils literal notranslate"><span class="pre">*)</span></code>. Line comments begin
+with <code class="docutils literal notranslate"><span class="pre">//</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">*</span> <span class="n">this</span> <span class="ow">is</span> <span class="n">a</span>
+   <span class="n">block</span> <span class="n">comment</span> <span class="o">*</span><span class="p">)</span>
+
+
+<span class="o">//</span><span class="n">This</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">line</span> <span class="n">comment</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="primitives">
+<h2>Primitives<a class="headerlink" href="#primitives" title="Permalink to this headline">¶</a></h2>
+<p>Every F* program is checked in the context of some ambient primitive
+definitions taken from the core F* module <a class="reference internal" href="../index.html#corelib-prims"><span class="std std-ref">Prims</span></a>.</p>
+<div class="section" id="false">
+<h3>False<a class="headerlink" href="#false" title="Permalink to this headline">¶</a></h3>
+<p>The type <code class="docutils literal notranslate"><span class="pre">False</span></code> has no elements. Since there are no terms that
+satisfy <code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">:</span> <span class="pre">False</span></code>, the type <code class="docutils literal notranslate"><span class="pre">False</span></code> is the type of unprovable
+propositions.</p>
+</div>
+<div class="section" id="unit">
+<h3>Unit<a class="headerlink" href="#unit" title="Permalink to this headline">¶</a></h3>
+<p>The type <code class="docutils literal notranslate"><span class="pre">unit</span></code> has a single element denoted <code class="docutils literal notranslate"><span class="pre">()</span></code>, i.e., <code class="docutils literal notranslate"><span class="pre">()</span> <span class="pre">:</span>
+<span class="pre">unit</span></code>.</p>
+</div>
+<div class="section" id="booleans">
+<h3>Booleans<a class="headerlink" href="#booleans" title="Permalink to this headline">¶</a></h3>
+<p>The type <code class="docutils literal notranslate"><span class="pre">bool</span></code> has two elements, <code class="docutils literal notranslate"><span class="pre">true</span></code> and <code class="docutils literal notranslate"><span class="pre">false</span></code>. Note, the
+lowercase <code class="docutils literal notranslate"><span class="pre">false</span></code> is a boolean constant, distinct from the uppercase
+<code class="docutils literal notranslate"><span class="pre">False</span></code> type.</p>
+<p>The following primitive boolean operators are available, in decreasing
+order of precedence.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">not</span></code>: Boolean negation (unary, prefix)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&amp;&amp;</span></code>: Boolean conjunction (binary, infix)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">||</span></code>: Boolean disjunction (binary, infix)</p></li>
+</ul>
+<div class="section" id="conditionals">
+<h4>Conditionals<a class="headerlink" href="#conditionals" title="Permalink to this headline">¶</a></h4>
+<p>You can, of course, branch on a boolean with <code class="docutils literal notranslate"><span class="pre">if/then/else</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">b</span> <span class="n">then</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span>
+
+<span class="k">if</span> <span class="n">b1</span> <span class="o">&amp;&amp;</span> <span class="n">b2</span> <span class="o">||</span> <span class="n">b3</span>
+<span class="n">then</span> <span class="mi">17</span>
+<span class="k">else</span> <span class="mi">42</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="integers">
+<h3>Integers<a class="headerlink" href="#integers" title="Permalink to this headline">¶</a></h3>
+<p>The type <code class="docutils literal notranslate"><span class="pre">int</span></code> represents unbounded, primitive mathematical
+integers. Its elements are formed from the literals <code class="docutils literal notranslate"><span class="pre">0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">...</span></code>,
+and the following primitive operators, in decreasing order of
+precedence.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-</span></code>: Unary negation (prefix)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-</span></code>: Subtraction (infix)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">+</span></code>: Addition (infix)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/</span></code>: Euclidean division (infix)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%</span></code>: Euclidean modulus (infix)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">op_Multiply</span></code>: Unfortunately, the traditional multiplication
+symbol <code class="docutils literal notranslate"><span class="pre">*</span></code> is reserved by default for the tuple type
+constructor. Use the module <code class="docutils literal notranslate"><span class="pre">FStar.Mul</span></code> to treat <code class="docutils literal notranslate"><span class="pre">*</span></code> as integer
+multiplication.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;</span></code> : Less than (infix)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;=</span></code>: Less than or equal (infix)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&gt;</span></code> : Greater than (infix)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&gt;=</span></code>: Greater than or equal (infix)</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="boolean-refinement-types">
+<h2>Boolean refinement types<a class="headerlink" href="#boolean-refinement-types" title="Permalink to this headline">¶</a></h2>
+<p>The F* core library, <a class="reference internal" href="../index.html#corelib-prims"><span class="std std-ref">Prims</span></a>, defines the type of
+natural numbers as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">nat</span> <span class="o">=</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This is an instance of a boolean refinement type, whose general form
+is <code class="docutils literal notranslate"><span class="pre">x:t</span> <span class="pre">{</span> <span class="pre">e</span> <span class="pre">}</span></code> where <code class="docutils literal notranslate"><span class="pre">t</span></code> is a type, and <code class="docutils literal notranslate"><span class="pre">e</span></code> is a <code class="docutils literal notranslate"><span class="pre">bool</span></code>-typed term
+that may refer to the <code class="docutils literal notranslate"><span class="pre">t</span></code>-typed bound variable <code class="docutils literal notranslate"><span class="pre">x</span></code>. The term <code class="docutils literal notranslate"><span class="pre">e</span></code>
+<em>refines</em> the type <code class="docutils literal notranslate"><span class="pre">t</span></code>, in the sense that the set <code class="docutils literal notranslate"><span class="pre">S</span></code> denoted by <code class="docutils literal notranslate"><span class="pre">t</span></code>
+is restricted to those elements <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">∈</span> <span class="pre">S</span></code>  for which <code class="docutils literal notranslate"><span class="pre">e</span></code> evaluates to
+<code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
+<p>That is the type <code class="docutils literal notranslate"><span class="pre">nat</span></code> describes the set of terms that evaluate to an
+element of the set <code class="docutils literal notranslate"><span class="pre">{0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">...}</span></code>.</p>
+<p>But, there’s nothing particularly special about <code class="docutils literal notranslate"><span class="pre">nat</span></code>. You can define
+arbitrary refinements of your choosing, e.g.,:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>let empty = x:int { false } //the empty set
+let zero = x:int{ x = 0 } //the type containing one element `0`
+let pos = x:int { x &gt; 0 } //the positive numbers
+let neg = x:int { x &lt; 0 } //the negative numbers
+let even = x:int { x % 2 = 0 } //the even numbers
+let odd = x:int { x % 2 = 1 } //the odd numbers
+</pre></div>
+</div>
+<p>If you’re coming from a language like C or Java where a type primarily
+describes some properties about the representation of data in memory,
+this view of types as describing arbitrary sets of values may feel a
+bit alien. But, let it sink in a bit—types that carve out precise
+sets of values will let you state and check invariants about your
+programs that may otherwise have only been implicit in your code.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Refinement types in F* trace their lineage to <a class="reference external" href="https://www.microsoft.com/en-us/research/project/f7-refinement-types-for-f/">F7</a>,
+a language developed at Microsoft Research c. 2007 – 2011. <a class="reference external" href="https://ucsd-progsys.github.io/liquidhaskell-blog/">Liquid
+Haskell</a> is
+another language with refinement types. Those languages provide
+additional background and resources for learning about refinement
+types.</p>
+<p>Boolean refinements are a special case of a more powerful form of
+propositional refinement type in F*. Refinement types, in
+conjunction with dependent function types, are, in principle,
+sufficient to encode many kinds of logics for program
+correctness. However, refinement types are just one among several
+tools in F* for program specification and proof.</p>
+</div>
+<div class="section" id="refinement-subtyping">
+<h3>Refinement subtyping<a class="headerlink" href="#refinement-subtyping" title="Permalink to this headline">¶</a></h3>
+<p>We have seen so far how to define a new refinement type, like <code class="docutils literal notranslate"><span class="pre">nat</span></code> or
+<code class="docutils literal notranslate"><span class="pre">even</span></code>. However, to make use of refinement types we need rules that
+allow us to:</p>
+<ol class="arabic simple">
+<li><p>check that a program term has a given refinement type, e.g., to
+check that <code class="docutils literal notranslate"><span class="pre">0</span></code> has type <code class="docutils literal notranslate"><span class="pre">nat</span></code>. This is sometimes called
+<em>introducing</em> a refinement type.</p></li>
+<li><p>make use of a term that has a refinement type, e.g., given <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">:</span>
+<span class="pre">even</span></code> we would like to be write <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></code>, treating <code class="docutils literal notranslate"><span class="pre">x</span></code> as an
+<code class="docutils literal notranslate"><span class="pre">int</span></code> to add <code class="docutils literal notranslate"><span class="pre">1</span></code> to it. This is sometimes called <em>eliminating</em>
+a refinement type.</p></li>
+</ol>
+<p>The technical mechanism in F* that supports both these features is
+called <em>refinement subtyping</em>.</p>
+<p>If you’re used to a language like Java, C# or some other
+object-oriented language, you’re familiar with the idea of
+subtyping. A type <code class="docutils literal notranslate"><span class="pre">t</span></code> is a subtype of <code class="docutils literal notranslate"><span class="pre">s</span></code> whenever a program term
+of type <code class="docutils literal notranslate"><span class="pre">t</span></code> can be safely treated as an <code class="docutils literal notranslate"><span class="pre">s</span></code>. For example, in Java,
+all object types are subtypes of the type <code class="docutils literal notranslate"><span class="pre">Object</span></code>, the base class
+of all objects.</p>
+<p>For boolean refinement types, the subtyping rules are as follows:</p>
+<ul class="simple">
+<li><p>The type <code class="docutils literal notranslate"><span class="pre">x:t</span> <span class="pre">{</span> <span class="pre">p</span> <span class="pre">}</span></code> is a subtype of <code class="docutils literal notranslate"><span class="pre">t</span></code>. That is, given <code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">:</span>
+<span class="pre">(x:t{p})</span></code>, it is always safe to <em>eliminate</em> the refinement and
+consider <code class="docutils literal notranslate"><span class="pre">e</span></code> to also have type <code class="docutils literal notranslate"><span class="pre">t</span></code>.</p></li>
+<li><p>For a term <code class="docutils literal notranslate"><span class="pre">e</span></code> of type <code class="docutils literal notranslate"><span class="pre">t</span></code> (i.e., <code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">:</span> <span class="pre">t</span></code>), <code class="docutils literal notranslate"><span class="pre">t</span></code> is a subtype
+of the boolean refinement type <code class="docutils literal notranslate"><span class="pre">x:t</span> <span class="pre">{</span> <span class="pre">p</span> <span class="pre">}</span></code> whenever <code class="docutils literal notranslate"><span class="pre">p[e</span> <span class="pre">/</span> <span class="pre">x]</span></code>
+(<code class="docutils literal notranslate"><span class="pre">p[e/x]</span></code> is notation for the term <code class="docutils literal notranslate"><span class="pre">p</span></code> with the variable <code class="docutils literal notranslate"><span class="pre">x</span></code>
+replaced by <code class="docutils literal notranslate"><span class="pre">e</span></code>), is provably equal to <code class="docutils literal notranslate"><span class="pre">true</span></code>. In other words,
+to <em>introduce</em> <code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">:</span> <span class="pre">t</span></code> at the boolean refinement type <code class="docutils literal notranslate"><span class="pre">x:t{</span> <span class="pre">p</span>
+<span class="pre">}</span></code>, it suffices to prove that the term <code class="docutils literal notranslate"><span class="pre">p</span></code> with <code class="docutils literal notranslate"><span class="pre">e</span></code> substituted
+for bound variable <code class="docutils literal notranslate"><span class="pre">x</span></code>, evaluates to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p></li>
+</ul>
+<p>The elimination rule for refinement types (i.e., the first part above)
+is simple—with our intuition of types as sets, the refinement type
+<code class="docutils literal notranslate"><span class="pre">x:t{</span> <span class="pre">p</span> <span class="pre">}</span></code> <em>refines</em> the set corresponding to <code class="docutils literal notranslate"><span class="pre">t</span></code> by the predicate
+<code class="docutils literal notranslate"><span class="pre">p</span></code>, i.e., the <code class="docutils literal notranslate"><span class="pre">x:t{</span> <span class="pre">p</span> <span class="pre">}</span></code> denotes a subset of <code class="docutils literal notranslate"><span class="pre">t</span></code>, so, of course
+<code class="docutils literal notranslate"><span class="pre">x:t{</span> <span class="pre">p</span> <span class="pre">}</span></code> is a subtype of <code class="docutils literal notranslate"><span class="pre">t</span></code>.</p>
+<p>The other direction is a bit more subtle: <code class="docutils literal notranslate"><span class="pre">x:t{</span> <span class="pre">p</span> <span class="pre">}</span></code> is only a
+subtype of <code class="docutils literal notranslate"><span class="pre">p</span></code>, for those terms <code class="docutils literal notranslate"><span class="pre">e</span></code> that validate <code class="docutils literal notranslate"><span class="pre">p</span></code>. You’re
+probably also wondering about how to prove that <code class="docutils literal notranslate"><span class="pre">p[e/x]</span></code> evaluates
+to <code class="docutils literal notranslate"><span class="pre">true</span></code>—we will look at this in detail later. But, the short
+version is that F*, by default, uses an SMT solver to prove such fact,
+though you can also use tactics and other techniques to do so.</p>
+</div>
+<div class="section" id="an-example">
+<h3>An example<a class="headerlink" href="#an-example" title="Permalink to this headline">¶</a></h3>
+<p>Given <code class="docutils literal notranslate"><span class="pre">x:even</span></code>, consider proving <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span> <span class="pre">:</span> <span class="pre">odd</span></code>; it takes a few
+steps:</p>
+<ol class="arabic simple">
+<li><p>The operator <code class="docutils literal notranslate"><span class="pre">+</span></code> is defined in F*’s library. It expects both its
+arguments to have type <code class="docutils literal notranslate"><span class="pre">int</span></code> and returns an <code class="docutils literal notranslate"><span class="pre">int</span></code>.</p></li>
+<li><p>To prove that the first argument <code class="docutils literal notranslate"><span class="pre">x:even</span></code> is a valid argument for
+<code class="docutils literal notranslate"><span class="pre">+</span></code>, we use refinement subtyping to eliminate the refinement and
+obtain <code class="docutils literal notranslate"><span class="pre">x:int</span></code>. The second argument <code class="docutils literal notranslate"><span class="pre">1:int</span></code> already has the
+required type. Thus, <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span> <span class="pre">:</span> <span class="pre">int</span></code>.</p></li>
+<li><p>To conclude that <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span> <span class="pre">:</span> <span class="pre">odd</span></code>, we need to introduce a refinement
+type, by proving that the refinement predicate of <code class="docutils literal notranslate"><span class="pre">odd</span></code> evaluates
+to true, i.e., <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span> <span class="pre">%</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">1</span></code>. This is provable by SMT, since we
+started with the knowledge that <code class="docutils literal notranslate"><span class="pre">x</span></code> is even.</p></li>
+</ol>
+<p>As such, F* applies subtyping repeatedly to introduce and eliminate
+refinement types, applying it multiple times even to check a simple
+term like <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span> <span class="pre">:</span> <span class="pre">odd</span></code>.</p>
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<p>To start writing interesting programs, we need a way to define
+functions. In the core of F*, functions behave like functions in
+math. In other words, they are defined on their entire domain (i.e.,
+they are total functions and always return a result) and their only
+observable behavior is the result they return (i.e., they don’t have
+any side effect, like looping forever, or printing a message etc.).</p>
+<p>Functions are first-class values in F*, e.g., they can be passed as
+arguments to other functions and returned as results. While F*
+provides several ways to define functions, the most basic form is the
+λ term, also called a function literal, an anonymous function, or a
+simply a <em>lambda</em>. The syntax is largely inherited from OCaml, and
+this <a class="reference external" href="https://ocaml.org/learn/tutorials/basics.html#Defining-a-function">OCaml tutorial</a>
+provides more details for those unfamiliar with the language. We’ll
+assume a basic familiarity with OCaml-like syntax.x</p>
+<div class="section" id="lambda-terms">
+<h3>Lambda terms<a class="headerlink" href="#lambda-terms" title="Permalink to this headline">¶</a></h3>
+<p>The term <code class="docutils literal notranslate"><span class="pre">fun</span> <span class="pre">(x:int)</span> <span class="pre">-&gt;</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></code> defines a function,
+a lambda term, which adds 1 to its integer-typed parameter <code class="docutils literal notranslate"><span class="pre">x</span></code>. You
+can also let F* infer the type of the parameter and write <code class="docutils literal notranslate"><span class="pre">fun</span> <span class="pre">x</span> <span class="pre">-&gt;</span>
+<span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></code> instead.</p>
+</div>
+<div class="section" id="named-functions">
+<h3>Named functions<a class="headerlink" href="#named-functions" title="Permalink to this headline">¶</a></h3>
+<p>Any term in F* can be given a name using a <code class="docutils literal notranslate"><span class="pre">let</span></code> binding. We’ll
+want this to define a function once and to call it many times. For
+example, all of the following are synonyms and bind the lambda term
+<code class="docutils literal notranslate"><span class="pre">fun</span> <span class="pre">x</span> <span class="pre">-&gt;</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></code> to the name <code class="docutils literal notranslate"><span class="pre">incr</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">incr</span> <span class="o">=</span> <span class="n">fun</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">let</span> <span class="n">incr</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">let</span> <span class="n">incr</span> <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>Functions can take several arguments and the result type of a function
+can also be annotated, if desired:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">incr</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">let</span> <span class="n">more_than_twice</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="p">(</span><span class="n">y</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span> <span class="o">+</span> <span class="n">y</span>
+</pre></div>
+</div>
+<p>It’s considered good practice to annotate all the parameters and
+result type of a named function definition.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In addition to decorating the types of parameters and the results
+of function, F* allows annotating any term <code class="docutils literal notranslate"><span class="pre">e</span></code> with its expected
+type <code class="docutils literal notranslate"><span class="pre">t</span></code> by writing <code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">&lt;:</span> <span class="pre">t</span></code>. This is called a <em>type
+ascription</em>. An ascription instructs F* to check that the
+term <code class="docutils literal notranslate"><span class="pre">e</span></code> has the type <code class="docutils literal notranslate"><span class="pre">t</span></code>. For example, we could have written:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">incr</span> <span class="o">=</span> <span class="n">fun</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="recursive-functions">
+<h3>Recursive functions<a class="headerlink" href="#recursive-functions" title="Permalink to this headline">¶</a></h3>
+<p>Recursive functions in F* are always named. To define them, one uses
+the <code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">rec</span></code> syntax, as shown below.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> FStar.Mul
+<span class="k">let</span> <span class="k">rec</span> factorial (n:nat)
+  : nat
+  = <span class="k">if</span> n = <span class="m">0</span>
+    <span class="k">then</span> <span class="m">1</span>
+    <span class="k">else</span> n * factorial (n - <span class="m">1</span>)
+</pre></div>
+</div>
+<p>This syntax defines a function names <code class="docutils literal notranslate"><span class="pre">factorial</span></code> with a single
+parameter <code class="docutils literal notranslate"><span class="pre">n:nat</span></code>, returning a <code class="docutils literal notranslate"><span class="pre">nat</span></code>. The definiton of factorial
+is allowed to use the <code class="docutils literal notranslate"><span class="pre">factorial</span></code> recursively—as we’ll see in a
+later chapter, ensuring that the recursion is well-founded (i.e., all
+recursive calls terminate) is key to F*’s soundness. However, in this
+case, the proof of termination is automatic.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Notice the use of <cite>open FStar.Mul</cite> in the example above. This
+brings the module <cite>FStar.Mul</cite> into scope and resolves the symbol
+<code class="docutils literal notranslate"><span class="pre">*</span></code> to integer multiplication.</p>
+</div>
+<p>F* also supports mutual recursion. We’ll see that later.</p>
+</div>
+</div>
+<div class="section" id="arrow-types">
+<h2>Arrow types<a class="headerlink" href="#arrow-types" title="Permalink to this headline">¶</a></h2>
+<p>Functions are the main abstraction facility of any functional language
+and their types are pervasive in F*. In its most basic form, function
+types, or arrows, have the shape:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">:</span><span class="n">t0</span> <span class="o">-&gt;</span> <span class="n">t1</span>
+</pre></div>
+</div>
+<p>This is the type of a function that</p>
+<ol class="arabic simple">
+<li><p>receives an argument <code class="docutils literal notranslate"><span class="pre">e</span></code> of type <code class="docutils literal notranslate"><span class="pre">t0</span></code>, and</p></li>
+<li><p>always returns a value of type <code class="docutils literal notranslate"><span class="pre">t1[e</span> <span class="pre">/</span> <span class="pre">x]</span></code>, i.e., the type of the
+returned value depends on the argument <code class="docutils literal notranslate"><span class="pre">e</span></code>.</p></li>
+</ol>
+<p>It’s worth emphasizing how this differs from function types in other
+languages.</p>
+<ul class="simple">
+<li><p>F*’s arrows are dependent—the type of the result depends on the
+argument. For example, we can write a function that returns a
+<code class="docutils literal notranslate"><span class="pre">bool</span></code> when applied to an even number and returns a <code class="docutils literal notranslate"><span class="pre">string</span></code>
+when applied to an odd number. Or, more commonly, a function that
+whose result is one greater than its argument.</p></li>
+<li><p>In F*’s core language, all functions are total, i.e., a function
+call always terminates after consuming a finite but unbounded amount
+of resources.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>That said, on any given computer, it is possible for a function
+call to fail to return due to resource exhaustion, e.g., running
+out of memory. Later, as we look at <a class="reference internal" href="../index.html#effects"><span class="std std-ref">effects</span></a>, we
+will see that F* also supports writing non-terminating functions.</p>
+</div>
+<div class="section" id="some-examples-and-common-notation">
+<h3>Some examples and common notation<a class="headerlink" href="#some-examples-and-common-notation" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p>Functions are <em>curried</em>. Functions that take multiple arguments are
+written as functions that take the first argument and return a
+function that takes the next argument and so on. For instance, the
+type of integer addition is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="p">:</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span> <span class="o">-&gt;</span> <span class="n">y</span><span class="p">:</span><span class="nb">int</span> <span class="o">-&gt;</span> <span class="nb">int</span>
+</pre></div>
+</div>
+</li>
+<li><p>Not all functions are dependent and the name of the argument can be
+omitted when it is not needed. For example, here’s a more concise
+way to write the type of <code class="docutils literal notranslate"><span class="pre">(+)</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="p">:</span> <span class="nb">int</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">-&gt;</span> <span class="nb">int</span>
+</pre></div>
+</div>
+</li>
+<li><p>Function types can be mixed with refinement types. For instance,
+here’s the type of integer division—the refinement on the divisor
+forbids division-by-zero errors:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="p">(</span><span class="o">/</span><span class="p">)</span> <span class="p">:</span> <span class="nb">int</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">divisor</span><span class="p">:</span><span class="nb">int</span> <span class="p">{</span> <span class="n">divisor</span> <span class="o">&lt;&gt;</span> <span class="mi">0</span> <span class="p">})</span> <span class="o">-&gt;</span> <span class="nb">int</span>
+</pre></div>
+</div>
+</li>
+<li><p>Dependence between the arguments and the result type can be used to
+state relationships among them. For instance, there are several
+types for the function <code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">incr</span> <span class="pre">=</span> <span class="pre">(fun</span> <span class="pre">(x:int)</span> <span class="pre">-&gt;</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">1)</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">incr</span> <span class="p">:</span> <span class="nb">int</span> <span class="o">-&gt;</span> <span class="nb">int</span>
+<span class="n">val</span> <span class="n">incr</span> <span class="p">:</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span> <span class="o">-&gt;</span> <span class="n">y</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span><span class="n">y</span> <span class="o">&gt;</span> <span class="n">x</span><span class="p">}</span>
+<span class="n">val</span> <span class="n">incr</span> <span class="p">:</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span> <span class="o">-&gt;</span> <span class="n">y</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span><span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The first type <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">-&gt;</span> <span class="pre">int</span></code> is its traditional type in languages
+like OCaml.</p>
+<p>The second type <code class="docutils literal notranslate"><span class="pre">x:int</span> <span class="pre">-&gt;</span> <span class="pre">y:int{y</span> <span class="pre">&gt;</span> <span class="pre">x}</span></code> states that the returned
+value <code class="docutils literal notranslate"><span class="pre">y</span></code> is greater than the argument <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p>
+<p>The third type is the most precise: <code class="docutils literal notranslate"><span class="pre">x:int</span> <span class="pre">-&gt;</span> <span class="pre">y:int{y</span> <span class="pre">=</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">1}</span></code>
+states that the result <code class="docutils literal notranslate"><span class="pre">y</span></code> is exactly the increment of the
+argument <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p>
+</li>
+<li><p>It’s often convenient to add refinements on arguments in a
+dependent function type. For instance:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">f</span> <span class="p">:</span> <span class="n">x</span><span class="p">:(</span><span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="p">})</span> <span class="o">-&gt;</span> <span class="n">y</span><span class="p">:(</span><span class="n">y</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">y</span> <span class="o">&gt;</span> <span class="n">x</span> <span class="p">})</span> <span class="o">-&gt;</span> <span class="n">z</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">z</span> <span class="o">&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>Since this style is so common, and it is inconvenient to have to
+bind two names for the parameters <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>, F* allows (and
+encourages) you to write:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">f</span> <span class="p">:</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="p">}</span> <span class="o">-&gt;</span> <span class="n">y</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">y</span> <span class="o">&gt;</span> <span class="n">x</span> <span class="p">}</span> <span class="o">-&gt;</span> <span class="n">z</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">z</span> <span class="o">&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>To emphasize that functions in F*’s core are total functions (i.e.,
+they always return a result), we sometimes annotate the result type
+with the effect label “<code class="docutils literal notranslate"><span class="pre">Tot</span></code>”. This label is optional, but
+especially as we learn about <a class="reference internal" href="../index.html#effects"><span class="std std-ref">effects</span></a>, emphasizing
+that some functions have no effects via the <code class="docutils literal notranslate"><span class="pre">Tot</span></code> label is
+useful. For example, one might sometimes write:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">f</span> <span class="p">:</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="p">}</span> <span class="o">-&gt;</span> <span class="n">y</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">y</span> <span class="o">&gt;</span> <span class="n">x</span> <span class="p">}</span> <span class="o">-&gt;</span> <span class="n">Tot</span> <span class="p">(</span><span class="n">z</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">z</span> <span class="o">&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="p">})</span>
+</pre></div>
+</div>
+<p>adding a <code class="docutils literal notranslate"><span class="pre">Tot</span></code> annotation on the last arrow, to indicate that the
+function has no side effects. One could also write:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">f</span> <span class="p">:</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="p">}</span> <span class="o">-&gt;</span> <span class="n">Tot</span> <span class="p">(</span><span class="n">y</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">y</span> <span class="o">&gt;</span> <span class="n">x</span> <span class="p">}</span> <span class="o">-&gt;</span> <span class="n">Tot</span> <span class="p">(</span><span class="n">z</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">z</span> <span class="o">&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="p">}))</span>
+</pre></div>
+</div>
+<p>adding an annotation on the intermediate arrow, though this is not
+customary.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<p>To try these examples, you should have a working installation of the
+F* toolchain, downloadable from <a class="reference external" href="https://github.com/FStarLang/FStar/releases">here</a>.</p>
+<p>This first example is just to show you how to run the tool and
+interpret its output.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> Sample
+
+<span class="k">let</span> incr (x:int) : int = x + <span class="m">1</span>
+</pre></div>
+</div>
+<p>Notice that the program begins with a <code class="docutils literal notranslate"><span class="pre">module</span></code> declaration. It
+contains a single definition named <code class="docutils literal notranslate"><span class="pre">incr</span></code>. Definitions that appear
+at the scope of a module are called “top-level” definitions.</p>
+<p><strong>F* in batch mode</strong></p>
+<p>To check the program, we can run the <code class="docutils literal notranslate"><span class="pre">fstar</span></code> at the command line,
+like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ fstar Sample.fst
+</pre></div>
+</div>
+<p>In response <code class="docutils literal notranslate"><span class="pre">fstar</span></code> should output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Verified</span> <span class="n">module</span><span class="p">:</span> <span class="n">Sample</span>
+<span class="n">All</span> <span class="n">verification</span> <span class="n">conditions</span> <span class="n">discharged</span> <span class="n">successfully</span>
+</pre></div>
+</div>
+<p>This means that F* attempted to verify the module named <code class="docutils literal notranslate"><span class="pre">Sample</span></code>. In
+doing so, it generated a some “verification conditions”, or proof
+obligations, necessary to prove that the module is type correct, and
+that is dischared, or proved, all of them successfully.</p>
+<p><strong>F* in emacs</strong></p>
+<p>Rather than running <code class="docutils literal notranslate"><span class="pre">fstar</span></code> in batch mode from the command line, F*
+programmers using the <a class="reference external" href="https://www.gnu.org/software/emacs/">emacs</a>
+editor often use <a class="reference external" href="https://github.com/FStarLang/fstar-mode.el">fstar-mode.el</a>, an editor plugin that
+allows interactively checking an F* program. If you plan to use F* in
+any serious way, this is strongly recommended.</p>
+<div class="section" id="many-types-for-incr">
+<h3>Many types for <code class="docutils literal notranslate"><span class="pre">incr</span></code><a class="headerlink" href="#many-types-for-incr" title="Permalink to this headline">¶</a></h3>
+<p>Here are some types for <code class="docutils literal notranslate"><span class="pre">incr</span></code>, including some types that are valid
+and some others that are not.</p>
+<p>This type claims that <code class="docutils literal notranslate"><span class="pre">incr</span></code> result is
+greater than its argument and F* agrees—remember, the <code class="docutils literal notranslate"><span class="pre">int</span></code> type is
+unbounded, so there’s no danger of the addition overflowing.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> incr<span class="m">1</span> (x:int) : y:int{y &gt; x} = x + <span class="m">1</span>
+</pre></div>
+</div>
+<p>This type claims that <code class="docutils literal notranslate"><span class="pre">incr</span></code> always returns a natural number, but it
+isn’t true, since incrementing a negative number doesn’t always
+produce a non-negative number.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> incr<span class="m">2</span> (x:int) : nat = x + <span class="m">1</span>
+</pre></div>
+</div>
+<p>F* produces the following error message:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Sample</span><span class="o">.</span><span class="n">fst</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="mi">26</span><span class="o">-</span><span class="mi">11</span><span class="p">,</span><span class="mi">31</span><span class="p">):</span> <span class="p">(</span><span class="n">Error</span> <span class="mi">19</span><span class="p">)</span> <span class="n">Subtyping</span> <span class="n">check</span> <span class="n">failed</span><span class="p">;</span> <span class="n">expected</span> <span class="nb">type</span>
+<span class="n">Prims</span><span class="o">.</span><span class="n">nat</span><span class="p">;</span> <span class="n">got</span> <span class="nb">type</span> <span class="n">Prims</span><span class="o">.</span><span class="n">int</span><span class="p">;</span> <span class="n">The</span> <span class="n">SMT</span> <span class="n">solver</span> <span class="n">could</span> <span class="ow">not</span> <span class="n">prove</span> <span class="n">the</span> <span class="n">query</span><span class="p">,</span> <span class="k">try</span> <span class="n">to</span>
+<span class="n">spell</span> <span class="n">your</span> <span class="n">proof</span> <span class="ow">in</span> <span class="n">more</span> <span class="n">detail</span> <span class="ow">or</span> <span class="n">increase</span> <span class="n">fuel</span><span class="o">/</span><span class="n">ifuel</span> <span class="p">(</span><span class="n">see</span> <span class="n">also</span> <span class="n">prims</span><span class="o">.</span><span class="n">fst</span><span class="p">(</span><span class="mi">626</span><span class="p">,</span>
+<span class="mi">18</span><span class="o">-</span><span class="mi">626</span><span class="p">,</span><span class="mi">24</span><span class="p">))</span>
+<span class="n">Verified</span> <span class="n">module</span><span class="p">:</span> <span class="n">Sample</span>
+<span class="mi">1</span> <span class="n">error</span> <span class="n">was</span> <span class="n">reported</span> <span class="p">(</span><span class="n">see</span> <span class="n">above</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Source location</strong></p>
+<p>The error message points to <code class="docutils literal notranslate"><span class="pre">Sample.fst(11,26-11,31)</span></code>, a source
+range mentioned the file name, a starting position (line, column), and
+an ending position (line, column). In this case, it highlights the
+<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></code> term.</p>
+<p><strong>Severity and error code</strong></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">(Error</span> <span class="pre">19)</span></code> mentions a severity (i.e., <code class="docutils literal notranslate"><span class="pre">Error</span></code>, as opposed
+to, say, <code class="docutils literal notranslate"><span class="pre">Warning</span></code>), and an error code (<code class="docutils literal notranslate"><span class="pre">19</span></code>).</p>
+<p><strong>Error message</strong></p>
+<p>The first part of the message stated what you might expect:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Subtyping</span> <span class="n">check</span> <span class="n">failed</span><span class="p">;</span> <span class="n">expected</span> <span class="nb">type</span> <span class="n">Prims</span><span class="o">.</span><span class="n">nat</span><span class="p">;</span> <span class="n">got</span> <span class="nb">type</span> <span class="n">Prims</span><span class="o">.</span><span class="n">int</span>
+</pre></div>
+</div>
+<p>The rest of the message provides more details, which we’ll ignore for
+now, until we’ve had a chance to explain more about how F* interacts
+with the SMT solver. However, one part of the error message is worth
+pointing out now:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">see</span> <span class="n">also</span> <span class="n">prims</span><span class="o">.</span><span class="n">fst</span><span class="p">(</span><span class="mi">626</span><span class="p">,</span><span class="mi">18</span><span class="o">-</span><span class="mi">626</span><span class="p">,</span><span class="mi">24</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Error messages sometimes mention an auxiliary source location in a
+“see also” parenthetical. This source location can provide some more
+information about why F* rejected a program—in this case, it points to
+the constraint <code class="docutils literal notranslate"><span class="pre">x&gt;=0</span></code> in the definition of <code class="docutils literal notranslate"><span class="pre">nat</span></code> in <code class="docutils literal notranslate"><span class="pre">prims.fst</span></code>,
+i.e., this is the particular constraint that F* was not able to prove.</p>
+<p>So, let’s try again. Here’s another type for <code class="docutils literal notranslate"><span class="pre">incr</span></code>, claiming that
+if its argument is a natural number then so is its result. This time
+F* is happy.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> incr<span class="m">3</span> (x:nat) : nat = x + <span class="m">1</span>
+</pre></div>
+</div>
+<p>Sometimes, it is convenient to provide a type signature independently
+of a definition. Below, the <code class="docutils literal notranslate"><span class="pre">val</span> <span class="pre">incr4</span></code> provides only the signature
+and the subsequent <code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">incr4</span></code> provides the definition—F* checks
+that the definitions is compatible with the signature.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">val</span> incr<span class="m">4</span> (x:int) : int
+<span class="k">let</span> incr<span class="m">4</span> x = x + <span class="m">1</span>
+</pre></div>
+</div>
+<p>Try writing some more types for <code class="docutils literal notranslate"><span class="pre">incr</span></code>.</p>
+<div class="toggle docutils container">
+<div class="header docutils container">
+<p><strong>Some answers</strong></p>
+</div>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> incr<span class="m">5</span> (x:int) : y:int{y = x + <span class="m">1</span>} = x + <span class="m">1</span>
+<span class="k">let</span> incr<span class="m">6</span> (x:int) : y:int{x = y - <span class="m">1</span>} = x + <span class="m">1</span>
+<span class="k">let</span> incr<span class="m">7</span> (x:int) : y:int{<span class="k">if</span> x%<span class="m">2</span> = <span class="m">0</span> <span class="k">then</span> y%<span class="m">2</span> = <span class="m">1</span> <span class="k">else</span> y%<span class="m">2</span> = <span class="m">0</span>} = x + <span class="m">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="computing-the-maximum-of-two-integers">
+<h3>Computing the maximum of two integers<a class="headerlink" href="#computing-the-maximum-of-two-integers" title="Permalink to this headline">¶</a></h3>
+<p>Provide an implementation of the following signature:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="nb">max</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="p">(</span><span class="n">y</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="p">:</span> <span class="nb">int</span>
+</pre></div>
+</div>
+<p>There are many possible implemenations that satisfy this signature,
+including trivial ones like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="nb">max</span> <span class="n">x</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>Provide an implementation of <code class="docutils literal notranslate"><span class="pre">max</span></code> coupled with a type that is
+precise enough to rule out definitions that do not correctly return
+the maximum of <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p>
+<div class="toggle docutils container">
+<div class="header docutils container">
+<p><strong>Some answers</strong></p>
+</div>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">val</span> max (x:int) (y:int) : int
+<span class="k">let</span> max x y = <span class="k">if</span> x &gt;= y <span class="k">then</span> x <span class="k">else</span> y
+
+<span class="k">val</span> max<span class="m">1</span> (x:int) (y:int)
+  : z:int{ z &gt;= x &amp;&amp; z &gt;= y &amp;&amp; (z = x || z = y)}
+<span class="k">let</span> max<span class="m">1</span> x y = <span class="k">if</span> x &gt;= y <span class="k">then</span> x <span class="k">else</span> y
+
+<span class="k">let</span> max<span class="m">2</span> (x:int) (y:int)
+  : z:int{ z = max x y }
+  = <span class="k">if</span> x &gt; y
+    <span class="k">then</span> x
+    <span class="k">else</span> y
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="more-types-for-factorial">
+<h3>More types for factorial<a class="headerlink" href="#more-types-for-factorial" title="Permalink to this headline">¶</a></h3>
+<p>Recall the definition of <code class="docutils literal notranslate"><span class="pre">factorial</span></code> from earlier.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> FStar.Mul
+<span class="k">let</span> <span class="k">rec</span> factorial (n:nat)
+  : nat
+  = <span class="k">if</span> n = <span class="m">0</span>
+    <span class="k">then</span> <span class="m">1</span>
+    <span class="k">else</span> n * factorial (n - <span class="m">1</span>)
+</pre></div>
+</div>
+<p>Can you write down some more types for factorial?</p>
+<div class="toggle docutils container">
+<div class="header docutils container">
+<p><strong>Some answers</strong></p>
+</div>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> factorial<span class="m">1</span> (n:nat)
+  : int
+  = <span class="k">if</span> n = <span class="m">0</span>
+    <span class="k">then</span> <span class="m">1</span>
+    <span class="k">else</span> n * factorial<span class="m">1</span> (n - <span class="m">1</span>)
+
+<span class="k">let</span> <span class="k">rec</span> factorial<span class="m">2</span> (n:nat)
+  : y:int{y&gt;=<span class="m">1</span>}
+  = <span class="k">if</span> n = <span class="m">0</span>
+    <span class="k">then</span> <span class="m">1</span>
+    <span class="k">else</span> n * factorial<span class="m">2</span> (n - <span class="m">1</span>)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="fibonacci">
+<h3>Fibonacci<a class="headerlink" href="#fibonacci" title="Permalink to this headline">¶</a></h3>
+<p>Here’s a doubly recursive function:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">literalinclude</span><span class="p">::</span> <span class="n">exercises</span><span class="o">/</span><span class="n">Sample</span><span class="o">.</span><span class="n">fst</span>
+ <span class="p">:</span><span class="n">language</span><span class="p">:</span> <span class="n">fstar</span>
+ <span class="p">:</span><span class="n">start</span><span class="o">-</span><span class="n">after</span><span class="p">:</span> <span class="n">SNIPPET_START</span><span class="p">:</span> <span class="n">fibonacci</span>
+ <span class="p">:</span><span class="n">end</span><span class="o">-</span><span class="n">before</span><span class="p">:</span> <span class="n">SNIPPET_END</span><span class="p">:</span> <span class="n">fibonacci</span>
+</pre></div>
+</div>
+<p>What other types can you give to it?</p>
+<div class="toggle docutils container">
+<div class="header docutils container">
+<p><strong>Some answers</strong></p>
+</div>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">val</span> fibonacci_<span class="m">1</span> : x:int -&gt; y:int{y &gt;= <span class="m">1</span> /\ y &gt;= x /\ (<span class="k">if</span> x&gt;=<span class="m">3</span> <span class="k">then</span> y &gt;= <span class="m">2</span> <span class="k">else</span> <span class="k">true</span>)}
+<span class="k">let</span> <span class="k">rec</span> fibonacci_<span class="m">1</span> n =
+  <span class="k">if</span> n &lt;= <span class="m">1</span> <span class="k">then</span> <span class="m">1</span> <span class="k">else</span> fibonacci_<span class="m">1</span> (n - <span class="m">1</span>) + fibonacci_<span class="m">1</span> (n - <span class="m">2</span>)
+
+<span class="c">(* Try these other types too *)</span>
+<span class="c">(* val fibonacci_1 : int -&gt; int *)</span>
+<span class="c">(* val fibonacci_1 : int -&gt; nat *)</span>
+<span class="c">(* val fibonacci_1 : int -&gt; y:int{y&gt;=1} *)</span>
+<span class="c">(* val fibonacci_1 : x:int -&gt; y:int{y&gt;=1 /\ y &gt;= x} *)</span>
+<span class="c">(* val fibonacci_1 : int -&gt; Tot (x:nat{x&gt;0}) *)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+    <!-- <a href="https://github.com/FStarLang/fstar/"> -->
+    <!--     <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"> -->
+    <!-- </a> -->
+
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="part1.html" class="btn btn-neutral float-left" title="Programming and Proving with Total Functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Microsoft Research
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>
