@@ -7,12 +7,13 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Elements of F* &mdash; Programming with Proofs in F*  documentation</title>
+  <title>Elements of F* &mdash; Proof-Oriented Programming in F*  documentation</title>
   
 
   
-  <link rel="stylesheet" href="../static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
 
   
   
@@ -21,23 +22,23 @@
 
   
   <!--[if lt IE 9]>
-    <script src="../static/js/html5shiv.min.js"></script>
+    <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../static/documentation_options.js"></script>
-        <script src="../static/jquery.js"></script>
-        <script src="../static/underscore.js"></script>
-        <script src="../static/doctools.js"></script>
-        <script src="../static/language_data.js"></script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
     
-    <script type="text/javascript" src="../static/js/theme.js"></script>
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Foundations of Programming Languages" href="../PL-pl-foundations.html" />
-    <link rel="prev" title="A Short Tutorial Introduction to F*" href="../tutorial-overview.html" /> 
+    <link rel="prev" title="Getting off the ground" href="../part1/part1_ch1.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -51,7 +52,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Programming with Proofs in F*
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Proof-Oriented Programming in F*
           
 
           
@@ -84,12 +85,8 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../tutorial-overview.html">A Short Tutorial Introduction to F*</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part1/part1.html">Programming and Proving with Total Functions</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Elements of F*</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#a-capsule-summary-of-f">A Capsule Summary of F*</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#dsls-embedded-in-f">DSLs Embedded in F*</a></li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="#core-language">Core Language</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#basic-syntactic-structure">Basic syntactic structure</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#classes-of-identifiers">Classes of Identifiers</a></li>
@@ -97,6 +94,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#primitive-constants">Primitive constants</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#false">False</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#unit">Unit</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#booleans">Booleans</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#integers">Integers</a></li>
@@ -119,11 +117,12 @@
 <li class="toctree-l4"><a class="reference internal" href="#parametric-polymorphism-or-generics">Parametric polymorphism or generics</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#implicit-arguments">Implicit arguments</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#syntax-of-binders">Syntax of binders</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#type-inference-basics">Type inference: Basics</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#implicit-arguments">Implicit arguments</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#universes">Universes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#syntax-of-binders">Syntax of binders</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#decidable-equality-and-eqtype">Decidable equality and <cite>eqtype</cite></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#let-bindings">Let bindings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#inductive-type-definitions">Inductive type definitions</a><ul>
@@ -167,7 +166,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Programming with Proofs in F*</a>
+          <a href="../index.html">Proof-Oriented Programming in F*</a>
         
       </nav>
 
@@ -218,7 +217,7 @@
             
   <div class="section" id="elements-of-f">
 <span id="design-of-fstar-intro"></span><h1>Elements of F*<a class="headerlink" href="#elements-of-f" title="Permalink to this headline">¶</a></h1>
-<p>The <a class="reference internal" href="../tutorial-overview.html#tutorial-overview"><span class="std std-ref">short tutorial</span></a> should have provided you
+<p>The short tutorial should have provided you
 with a basic feel for F*, in particular for how to use F* and its SMT
 solving backend for programming and proving simple functional
 programs.</p>
@@ -228,80 +227,6 @@ main technical features. Not all of these concepts may be familiar to
 you at first, but by the end of this section, you should have gained a
 working knowledge of the core design of F* as well as pointers to
 further resources.</p>
-<div class="section" id="a-capsule-summary-of-f">
-<h2>A Capsule Summary of F*<a class="headerlink" href="#a-capsule-summary-of-f" title="Permalink to this headline">¶</a></h2>
-<p>F* is a dependently type programming language that aims to play
-several roles:</p>
-<ul class="simple">
-<li><p>A general purpose programming language, which encourages
-higher-order functional programming with effects, in the tradition
-of the ML family of languages.</p></li>
-<li><p>A compiler, which translates F* programs to OCaml or F# for
-execution.</p></li>
-<li><p>A proof assistant, in which to state and prove properties of
-programs.</p></li>
-<li><p>A program verification engine, leveraging SMT solvers to partially
-automate proofs of programs.</p></li>
-<li><p>A metaprogramming system, supporting the programmatic construction
-of F* programs and proof automation procedures.</p></li>
-</ul>
-<p>To achieve these goals, the design of F* revolves around a few key
-elements.</p>
-<ul class="simple">
-<li><p>A core language of total functions with full dependent types,
-including an extensional form of type conversion, indexed inductive
-types, and pattern matching, recursive functions with semantic
-termination checking, dependent refinement types and subtyping, and
-polymorphism over a predicative hierarchy of universes.</p></li>
-<li><p>A system of user-defined indexed effects, for modeling,
-encapsulating, and statically reasoning about various forms of
-computational effects, including a primitive notion of general
-recursion and divergence, as well as an open system of user-defined
-effects, with examples including state, exceptions, concurrency,
-algebraic effects, and several others.</p></li>
-<li><p>A built-in encoding of a classical fragment of F*’s logic into the
-first order logic of an SMT solver, allowing many proofs to be
-automatically discharged.</p></li>
-<li><p>A reflection within F* of the syntax and proof state of F*, enabling
-Meta-F* programs to manipulate F* syntax and proof goals.</p></li>
-</ul>
-<p>Many other programming languages are closely related to F* and address
-some of these goals, including other dependently typed languages like
-Coq, Agda, Idris and Lean. In comparison with these languages, the
-distinctive features of F* include its extensional type conversion and
-SMT-based proof automation (both of which make typechecking more
-flexible but also undecidable); the use of refinement types (enabling
-a concise form of lightweight specification); and its user-defined
-effect system.</p>
-<div class="section" id="dsls-embedded-in-f">
-<h3>DSLs Embedded in F*<a class="headerlink" href="#dsls-embedded-in-f" title="Permalink to this headline">¶</a></h3>
-<p>In practice, rather than a single language, the F* ecosystem is also a
-collection of domain-specific languages (DSLs). A common use of F* is
-to embed within it programming languages at different levels of
-abstraction or for specific programming tasks, and for the embedded
-language to be engineered with domain-specific reasoning, proof
-automation, and compilaton backends. Some examples include:</p>
-<ul class="simple">
-<li><p>Low*, an shallowly embedded DSL for sequential programming against a
-C-like memory model including explicit memory management on the
-stack and heap; a Hoare logic for partial correctness based on
-implicit dynamic frames; and a custom backend (Kremlin) to compile
-Low* programs to C for further compilation by off-the-shelf C
-compilers.</p></li>
-<li><p>EverParse, a shallow embedding of a DSL (layered on top of the Low*
-DSL) of parser and serializer combinators, for low-level binary
-formats.</p></li>
-<li><p>Vale, a deeply embedded DSL for structured programming in a
-user-defined assembly language, with a Hoare logic for total
-correctness, and a printer to emit verified programs in a assembly
-syntax compatible with various standard assemblers.</p></li>
-<li><p>Steel, a shallow embedding of concurrency as an effect in F*, with
-an extensible concurrent separation logic for partial correctness as
-a core program logic, and proof automation built using a combination
-of Meta-F* tactics, higher-order unification, and SMT.</p></li>
-</ul>
-</div>
-</div>
 <div class="section" id="core-language">
 <h2>Core Language<a class="headerlink" href="#core-language" title="Permalink to this headline">¶</a></h2>
 <p>The syntax of F*’s core language is summarized by the simplified
@@ -361,18 +286,18 @@ Universe U  ::= x                                       Universe variable
 <h3>Basic syntactic structure<a class="headerlink" href="#basic-syntactic-structure" title="Permalink to this headline">¶</a></h3>
 <p>An F* program is a collection of <a class="reference internal" href="#modules"><span class="std std-ref">modules</span></a>, with each
 module represented by a single file with the filename extension
-<cite>.fst</cite>. Later, we’ll see that a module’s interface is in a separate
+<code class="docutils literal notranslate"><span class="pre">.fst</span></code>. Later, we’ll see that a module’s interface is in a separate
 file.</p>
 <p>A module begins with the module’s name and contains a sequence of
 top-level signatures and definitions.</p>
 <ul class="simple">
-<li><p>Signatures ascribe a type to a definition, e.g., <cite>val f : t</cite>.</p></li>
+<li><p>Signatures ascribe a type to a definition, e.g., <code class="docutils literal notranslate"><span class="pre">val</span> <span class="pre">f</span> <span class="pre">:</span> <span class="pre">t</span></code>.</p></li>
 </ul>
 <p>Definitions come in several flavors: the two main forms we’ll focus on
 in this section are</p>
 <ul class="simple">
-<li><p>possibly recursive definitions (let bindings, <cite>let [rec] f = e</cite>)</p></li>
-<li><p>and, inductive type definitions (datatypes, <cite>type t = | D1 : t1 | … | Dn : tn</cite>)</p></li>
+<li><p>possibly recursive definitions (let bindings, <code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">[rec]</span> <span class="pre">f</span> <span class="pre">=</span> <span class="pre">e</span></code>)</p></li>
+<li><p>and, inductive type definitions (datatypes, <code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">t</span> <span class="pre">=</span> <span class="pre">|</span> <span class="pre">D1</span> <span class="pre">:</span> <span class="pre">t1</span> <span class="pre">|</span> <span class="pre">...</span> <span class="pre">|</span> <span class="pre">Dn</span> <span class="pre">:</span> <span class="pre">tn</span></code>)</p></li>
 </ul>
 <p>In later sections, we’ll see two other kinds of definition:
 user-defined indexed effects and sub-effects.</p>
@@ -382,8 +307,8 @@ user-defined indexed effects and sub-effects.</p>
 </div>
 <div class="section" id="comments">
 <h4>Comments<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h4>
-<p>Block comments are delimited by <cite>(*</cite> and <cite>*)</cite>. Line comments begin
-with <cite>//</cite>.</p>
+<p>Block comments are delimited by <code class="docutils literal notranslate"><span class="pre">(*</span></code> and <code class="docutils literal notranslate"><span class="pre">*)</span></code>. Line comments begin
+with <code class="docutils literal notranslate"><span class="pre">//</span></code>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">*</span> <span class="n">this</span> <span class="ow">is</span> <span class="n">a</span>
    <span class="n">block</span> <span class="n">comment</span> <span class="o">*</span><span class="p">)</span>
 
@@ -397,41 +322,46 @@ with <cite>//</cite>.</p>
 <h3>Primitive constants<a class="headerlink" href="#primitive-constants" title="Permalink to this headline">¶</a></h3>
 <p>Every F* program is checked in the context of some ambient primitive
 definitions taken from the core F* module <a class="reference internal" href="../index.html#corelib-prims"><span class="std std-ref">Prims</span></a>.</p>
+<div class="section" id="false">
+<h4>False<a class="headerlink" href="#false" title="Permalink to this headline">¶</a></h4>
+<p>The type <code class="docutils literal notranslate"><span class="pre">False</span></code> has no elements. It represents a logical
+falsehood in F*—</p>
+</div>
 <div class="section" id="unit">
 <h4>Unit<a class="headerlink" href="#unit" title="Permalink to this headline">¶</a></h4>
-<p>The primitive type <cite>unit</cite> has a single element denoted <cite>()</cite>.</p>
+<p>The type <code class="docutils literal notranslate"><span class="pre">unit</span></code> has a single element denoted <code class="docutils literal notranslate"><span class="pre">()</span></code>.</p>
 </div>
 <div class="section" id="booleans">
 <h4>Booleans<a class="headerlink" href="#booleans" title="Permalink to this headline">¶</a></h4>
-<p>The primitive type <cite>bool</cite> has two elements, <cite>true</cite> and
-<cite>false</cite>. <cite>Prims</cite> also provides the following primitive boolean
+<p>The primitive type <code class="docutils literal notranslate"><span class="pre">bool</span></code> has two elements, <code class="docutils literal notranslate"><span class="pre">true</span></code> and
+<code class="docutils literal notranslate"><span class="pre">false</span></code>. <code class="docutils literal notranslate"><span class="pre">Prims</span></code> also provides the following primitive boolean
 operators</p>
 <ul class="simple">
-<li><p><cite>&amp;&amp;</cite>: Boolean conjunction (infix)</p></li>
-<li><p><cite>||</cite>: Boolean disjunction (infix)</p></li>
-<li><p><cite>not</cite>: Boolean negation (prefix)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&amp;&amp;</span></code>: Boolean conjunction (infix)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">||</span></code>: Boolean disjunction (infix)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">not</span></code>: Boolean negation (prefix)</p></li>
 </ul>
 <p>TODO: Precedence</p>
 </div>
 <div class="section" id="integers">
 <h4>Integers<a class="headerlink" href="#integers" title="Permalink to this headline">¶</a></h4>
-<p>The type <cite>int</cite> represents unbounded, primitive mathematical
-integers. Its elements are formed from the literals <cite>0, 1, 2, …</cite>,
+<p>The type <code class="docutils literal notranslate"><span class="pre">int</span></code> represents unbounded, primitive mathematical
+integers. Its elements are formed from the literals <code class="docutils literal notranslate"><span class="pre">0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">...</span></code>,
 and the following primitive operators:</p>
 <ul class="simple">
-<li><p><cite>-</cite>: Unary negation (prefix)</p></li>
-<li><p><cite>-</cite>: Subtraction (infix)</p></li>
-<li><p><cite>+</cite>: Addition (infix)</p></li>
-<li><p><cite>/</cite>: Euclidean division (infix)</p></li>
-<li><p><cite>%</cite>: Euclidean modulus (infix)</p></li>
-<li><p><cite>op_Multiply</cite>: Unfortunately, the traditional multiplication symbol
-<cite>*</cite> is reserved by default for the <a class="reference internal" href="#tuples"><span class="std std-ref">tuple</span></a> type
-constructor. Use the module <cite>FStar.Mul</cite> to treat <cite>*</cite> as integer
+<li><p><code class="docutils literal notranslate"><span class="pre">-</span></code>: Unary negation (prefix)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-</span></code>: Subtraction (infix)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">+</span></code>: Addition (infix)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/</span></code>: Euclidean division (infix)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%</span></code>: Euclidean modulus (infix)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">op_Multiply</span></code>: Unfortunately, the traditional multiplication symbol
+<code class="docutils literal notranslate"><span class="pre">*</span></code> is reserved by default for the <a class="reference internal" href="#tuples"><span class="std std-ref">tuple</span></a> type
+constructor. Use the module <code class="docutils literal notranslate"><span class="pre">FStar.Mul</span></code> to treat <code class="docutils literal notranslate"><span class="pre">*</span></code> as integer
 multiplication—see <a class="reference internal" href="#tuples"><span class="std std-ref">this note</span></a>.</p></li>
-<li><p><cite>&lt;</cite> : Less than (infix)</p></li>
-<li><p><cite>&lt;=</cite>: Less than or equal (infix)</p></li>
-<li><p><cite>&gt;</cite> : Greater than (infix)</p></li>
-<li><p><cite>&gt;=</cite>: Greater than or equal (infix)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;</span></code> : Less than (infix)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;=</span></code>: Less than or equal (infix)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&gt;</span></code> : Greater than (infix)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&gt;=</span></code>: Greater than or equal (infix)</p></li>
 </ul>
 <p>TODO: Precedence</p>
 </div>
@@ -447,7 +377,7 @@ provides more details for those unfamiliar with the language.</p>
 <span class="n">let</span> <span class="n">incr</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
 </pre></div>
 </div>
-<p>You can also let F* infer the type of the parameter <cite>x</cite>:</p>
+<p>You can also let F* infer the type of the parameter <code class="docutils literal notranslate"><span class="pre">x</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">incr</span> <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
 </pre></div>
 </div>
@@ -462,8 +392,8 @@ result type of a top-level definition.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The type of any term in F* can be annotated using a <em>type
-ascription</em>, <cite>e &lt;: t</cite>. This form instructs F* to check that the
-term <cite>e</cite> has the type <cite>t</cite>. For example, we could have written:</p>
+ascription</em>, <code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">&lt;:</span> <span class="pre">t</span></code>. This form instructs F* to check that the
+term <code class="docutils literal notranslate"><span class="pre">e</span></code> has the type <code class="docutils literal notranslate"><span class="pre">t</span></code>. For example, we could have written:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">incr</span> <span class="o">=</span> <span class="n">fun</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -474,8 +404,8 @@ term <cite>e</cite> has the type <cite>t</cite>. For example, we could have writ
 <h4>User-defined operators and infix notation<a class="headerlink" href="#user-defined-operators-and-infix-notation" title="Permalink to this headline">¶</a></h4>
 <p>Most commonly, to call, or “apply”, a function, just place the
 arguments to the right of the function. For example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>incr 0 // calls `incr` with the argument 0
-more_than_twice 17 8 //calls `more_than_twice` with `17` and `8`
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>incr 0 // calls ``incr`` with the argument 0
+more_than_twice 17 8 //calls ``more_than_twice`` with ``17`` and ``8``
 </pre></div>
 </div>
 <p>You can also immediately apply an unnamed function, or lambda term:</p>
@@ -504,11 +434,11 @@ provides more details on defining functions with operator symbols.</p>
 <div class="section" id="boolean-refinement-types">
 <h3>Boolean refinement types<a class="headerlink" href="#boolean-refinement-types" title="Permalink to this headline">¶</a></h3>
 <p>Types are a way to describe collections of terms. For instance, the
-type <cite>int</cite> describes terms which compute integer results, i.e., when
-an <cite>int</cite>-typed term is reduced fully it produces a value in the set
-<cite>{…, -2, -1, 0, 1, 2, …}</cite>. Similarly, the type <cite>bool</cite> is the type
+type <code class="docutils literal notranslate"><span class="pre">int</span></code> describes terms which compute integer results, i.e., when
+an <code class="docutils literal notranslate"><span class="pre">int</span></code>-typed term is reduced fully it produces a value in the set
+<code class="docutils literal notranslate"><span class="pre">{...,</span> <span class="pre">-2,</span> <span class="pre">-1,</span> <span class="pre">0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">...}</span></code>. Similarly, the type <code class="docutils literal notranslate"><span class="pre">bool</span></code> is the type
 of terms that compute or evaluate to one of the values in the set
-<cite>{true,false}</cite>.</p>
+<code class="docutils literal notranslate"><span class="pre">{true,false}</span></code>.</p>
 <p>One (naive but useful) mental model is to think of a type as
 describing a set of values. With that in mind, and unlike in other
 mainstream programming languages, one can contemplate defining types
@@ -521,14 +451,14 @@ such types, starting with boolean refinement types.</p>
 </pre></div>
 </div>
 <p>This is an instance of a boolean refinement type, whose general form
-is <cite>x:t { e }</cite> where <cite>t</cite> is a type, and <cite>e</cite> is a <cite>bool</cite>-typed term
-that may refer to the <cite>t</cite>-typed bound variable <cite>x</cite>. The term <cite>e</cite>
-<em>refines</em> the type <cite>t</cite>, in the sense that the set <cite>S</cite> denoted by <cite>t</cite>
-is restricted to those elements <cite>x $in$ S</cite> for which <cite>e</cite> evaluates to
-<cite>true</cite>.</p>
-<p>That is the type <cite>nat</cite> describes the set of terms that evaluate to an
-element of the set <cite>{0, 1, 2, 3, …}</cite>.</p>
-<p>But, there’s nothing particularly special about <cite>nat</cite>. You can define
+is <code class="docutils literal notranslate"><span class="pre">x:t</span> <span class="pre">{</span> <span class="pre">e</span> <span class="pre">}</span></code> where <code class="docutils literal notranslate"><span class="pre">t</span></code> is a type, and <code class="docutils literal notranslate"><span class="pre">e</span></code> is a <code class="docutils literal notranslate"><span class="pre">bool</span></code>-typed term
+that may refer to the <code class="docutils literal notranslate"><span class="pre">t</span></code>-typed bound variable <code class="docutils literal notranslate"><span class="pre">x</span></code>. The term <code class="docutils literal notranslate"><span class="pre">e</span></code>
+<em>refines</em> the type <code class="docutils literal notranslate"><span class="pre">t</span></code>, in the sense that the set <code class="docutils literal notranslate"><span class="pre">S</span></code> denoted by <code class="docutils literal notranslate"><span class="pre">t</span></code>
+is restricted to those elements <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">$\in$</span> <span class="pre">S</span></code> for which <code class="docutils literal notranslate"><span class="pre">e</span></code> evaluates to
+<code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
+<p>That is the type <code class="docutils literal notranslate"><span class="pre">nat</span></code> describes the set of terms that evaluate to an
+element of the set <code class="docutils literal notranslate"><span class="pre">{0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">...}</span></code>.</p>
+<p>But, there’s nothing particularly special about <code class="docutils literal notranslate"><span class="pre">nat</span></code>. You can define
 arbitrary refinements of your choosing, e.g.,:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>let empty = x:int { false } //one type for the empty set
 let zero = x:int{ x = 0 } //the type containing one element `0`
@@ -540,13 +470,6 @@ let odd = x:int { x % 2 = 1 } //the odd numbers
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you’re coming from a language like C or Java where a type
-primarily describes some properties about the representation of
-data in memory, this view of types as describing arbitrary sets of
-values may feel a bit alien. But, let it sink in a bit—types that
-carve out precise sets of values will let you state and check
-invariants about your programs that may otherwise have only been
-implicit in your code.</p>
 <p>Refinement types in F* trace their lineage to <a class="reference external" href="https://www.microsoft.com/en-us/research/project/f7-refinement-types-for-f/">F7</a>,
 a language developed at Microsoft Research c. 2007 – 2011. <a class="reference external" href="https://ucsd-progsys.github.io/liquidhaskell-blog/">Liquid
 Haskell</a> is
@@ -561,46 +484,46 @@ several tools in F* for program specification and proof.</p>
 </div>
 <div class="section" id="refinement-subtyping">
 <h4>Refinement subtyping<a class="headerlink" href="#refinement-subtyping" title="Permalink to this headline">¶</a></h4>
-<p>We have seen so far how to define a new refinement type, like <cite>nat</cite> or
-<cite>even</cite>. However, to make use of refinement types we need rules that
+<p>We have seen so far how to define a new refinement type, like <code class="docutils literal notranslate"><span class="pre">nat</span></code> or
+<code class="docutils literal notranslate"><span class="pre">even</span></code>. However, to make use of refinement types we need rules that
 allow us to:</p>
 <ol class="arabic simple">
 <li><p>check that a program term has a given refinement type, e.g., to
-check that <cite>0</cite> has type <cite>nat</cite>. This is sometimes called
+check that <code class="docutils literal notranslate"><span class="pre">0</span></code> has type <code class="docutils literal notranslate"><span class="pre">nat</span></code>. This is sometimes called
 <em>introducing</em> a refinement type.</p></li>
-<li><p>make use of a term that has a refinement type, e.g., given <cite>x :
-even</cite> we would like to be write <cite>x + 1</cite>, treating <cite>x</cite> as an <cite>int</cite>
-to add <cite>1</cite> to it. This is sometimes called <em>eliminating</em> a
+<li><p>make use of a term that has a refinement type, e.g., given <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">:</span>
+<span class="pre">even</span></code> we would like to be write <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></code>, treating <code class="docutils literal notranslate"><span class="pre">x</span></code> as an <code class="docutils literal notranslate"><span class="pre">int</span></code>
+to add <code class="docutils literal notranslate"><span class="pre">1</span></code> to it. This is sometimes called <em>eliminating</em> a
 refinement type.</p></li>
 </ol>
 <p>The technical mechanism in F* that supports both these features is
 called <em>refinement subtyping</em>.</p>
 <p>If you’re used to a language like Java, C# or some other
 object-oriented language, you’re familiar with the idea of
-subtyping. A type <cite>t</cite> is a subtype of <cite>s</cite> whenever a program term of
-type <cite>t</cite> can be safely treated as an <cite>s</cite>. For example, in Java, all
-object types are subtypes of the type <cite>Object</cite>, the base class of all
+subtyping. A type <code class="docutils literal notranslate"><span class="pre">t</span></code> is a subtype of <code class="docutils literal notranslate"><span class="pre">s</span></code> whenever a program term of
+type <code class="docutils literal notranslate"><span class="pre">t</span></code> can be safely treated as an <code class="docutils literal notranslate"><span class="pre">s</span></code>. For example, in Java, all
+object types are subtypes of the type <code class="docutils literal notranslate"><span class="pre">Object</span></code>, the base class of all
 objects.</p>
 <p>For boolean refinement types, the subtyping rules are as follows:</p>
 <ul class="simple">
-<li><p>The type <cite>x:t { p }</cite> is a subtype of <cite>t</cite>. That is, given <cite>e :
-(x:t{p})</cite>, it is always safe to <em>eliminate</em> the refinement and
-consider <cite>e</cite> to also have type <cite>t</cite>.</p></li>
-<li><p>For a term <cite>e</cite> of type <cite>t</cite> (i.e., <cite>e : t</cite>), <cite>t</cite> is a subtype of the
-boolean refinement type <cite>x:t { p }</cite> whenever <cite>p[e / x]</cite> is provably
-equal to <cite>true</cite>. In other words, to <em>introduce</em> <cite>e : t</cite> at the
-boolean refinement type <cite>x:t{ p }</cite>, it suffices to prove that the
-term <cite>p</cite> with <cite>e</cite> substituted for bound variable <cite>x</cite>, evaluates to
-<cite>true</cite>.</p></li>
+<li><p>The type <code class="docutils literal notranslate"><span class="pre">x:t</span> <span class="pre">{</span> <span class="pre">p</span> <span class="pre">}</span></code> is a subtype of <code class="docutils literal notranslate"><span class="pre">t</span></code>. That is, given <code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">:</span>
+<span class="pre">(x:t{p})</span></code>, it is always safe to <em>eliminate</em> the refinement and
+consider <code class="docutils literal notranslate"><span class="pre">e</span></code> to also have type <code class="docutils literal notranslate"><span class="pre">t</span></code>.</p></li>
+<li><p>For a term <code class="docutils literal notranslate"><span class="pre">e</span></code> of type <code class="docutils literal notranslate"><span class="pre">t</span></code> (i.e., <code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">:</span> <span class="pre">t</span></code>), <code class="docutils literal notranslate"><span class="pre">t</span></code> is a subtype of the
+boolean refinement type <code class="docutils literal notranslate"><span class="pre">x:t</span> <span class="pre">{</span> <span class="pre">p</span> <span class="pre">}</span></code> whenever <code class="docutils literal notranslate"><span class="pre">p[e</span> <span class="pre">/</span> <span class="pre">x]</span></code> is provably
+equal to <code class="docutils literal notranslate"><span class="pre">true</span></code>. In other words, to <em>introduce</em> <code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">:</span> <span class="pre">t</span></code> at the
+boolean refinement type <code class="docutils literal notranslate"><span class="pre">x:t{</span> <span class="pre">p</span> <span class="pre">}</span></code>, it suffices to prove that the
+term <code class="docutils literal notranslate"><span class="pre">p</span></code> with <code class="docutils literal notranslate"><span class="pre">e</span></code> substituted for bound variable <code class="docutils literal notranslate"><span class="pre">x</span></code>, evaluates to
+<code class="docutils literal notranslate"><span class="pre">true</span></code>.</p></li>
 </ul>
 <p>The the elimination rule for refinement types (i.e., the first part
 above) is simple—with our intuition of types as sets, the refinement
-type <cite>x:t{ p }</cite> <em>refines</em> the set corresponding to <cite>t</cite> by the
-predicate <cite>p</cite>, i.e., the <cite>x:t{ p }</cite> denotes a subset of <cite>t</cite>, so, of
-course <cite>x:t{ p }</cite> is a subtype of <cite>t</cite>.</p>
-<p>The other direction is a bit more subtle: <cite>x:t{ p }</cite> is only a subtype
-of <cite>p</cite>, for those terms <cite>e</cite> that validate <cite>p</cite>. You’re probably also
-wondering about how to prove that <cite>p[e/x]</cite> evaluates to <cite>true</cite>—this
+type <code class="docutils literal notranslate"><span class="pre">x:t{</span> <span class="pre">p</span> <span class="pre">}</span></code> <em>refines</em> the set corresponding to <code class="docutils literal notranslate"><span class="pre">t</span></code> by the
+predicate <code class="docutils literal notranslate"><span class="pre">p</span></code>, i.e., the <code class="docutils literal notranslate"><span class="pre">x:t{</span> <span class="pre">p</span> <span class="pre">}</span></code> denotes a subset of <code class="docutils literal notranslate"><span class="pre">t</span></code>, so, of
+course <code class="docutils literal notranslate"><span class="pre">x:t{</span> <span class="pre">p</span> <span class="pre">}</span></code> is a subtype of <code class="docutils literal notranslate"><span class="pre">t</span></code>.</p>
+<p>The other direction is a bit more subtle: <code class="docutils literal notranslate"><span class="pre">x:t{</span> <span class="pre">p</span> <span class="pre">}</span></code> is only a subtype
+of <code class="docutils literal notranslate"><span class="pre">p</span></code>, for those terms <code class="docutils literal notranslate"><span class="pre">e</span></code> that validate <code class="docutils literal notranslate"><span class="pre">p</span></code>. You’re probably also
+wondering about how to prove that <code class="docutils literal notranslate"><span class="pre">p[e/x]</span></code> evaluates to <code class="docutils literal notranslate"><span class="pre">true</span></code>—this
 <a class="reference internal" href="#tutorial-refinements"><span class="std std-ref">part of the tutorial</span></a> should provide some
 answers. But, the short version is that F*, by default, uses an SMT
 solver to prove such fact, though you can also use tactics and other
@@ -608,23 +531,23 @@ techniques to do so. More information can be found
 <a class="reference internal" href="#mental-model-refinements"><span class="std std-ref">here</span></a>.</p>
 <div class="section" id="an-example">
 <h5>An example<a class="headerlink" href="#an-example" title="Permalink to this headline">¶</a></h5>
-<p>Given <cite>x:even</cite>, consider typechecking <cite>x + 1 : odd</cite>; it takes a few
+<p>Given <code class="docutils literal notranslate"><span class="pre">x:even</span></code>, consider typechecking <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span> <span class="pre">:</span> <span class="pre">odd</span></code>; it takes a few
 steps:</p>
 <ol class="arabic simple">
-<li><p>The operator <cite>+</cite> expects both its arguments to have type <cite>int</cite> and
-returns an <cite>int</cite>.</p></li>
-<li><p>To prove that the first argument <cite>x:even</cite> is a valid argument for
-<cite>+</cite>, we use refinement subtyping to eliminate the refinement and
-obtain <cite>x:int</cite>. The second argument <cite>1:int</cite> already has the
-required type. Thus, <cite>x + 1 : int</cite>.</p></li>
-<li><p>To conclude that <cite>x + 1 : odd</cite>, we need to introduce a refinement
-type, by proving that the refinement predicate of <cite>odd</cite> evaluates
-to true, i.e., <cite>x + 1 % 2 = 1</cite>. This is provable by SMT, since we
-started with the knowledge that <cite>x</cite> is even.</p></li>
+<li><p>The operator <code class="docutils literal notranslate"><span class="pre">+</span></code> expects both its arguments to have type <code class="docutils literal notranslate"><span class="pre">int</span></code> and
+returns an <code class="docutils literal notranslate"><span class="pre">int</span></code>.</p></li>
+<li><p>To prove that the first argument <code class="docutils literal notranslate"><span class="pre">x:even</span></code> is a valid argument for
+<code class="docutils literal notranslate"><span class="pre">+</span></code>, we use refinement subtyping to eliminate the refinement and
+obtain <code class="docutils literal notranslate"><span class="pre">x:int</span></code>. The second argument <code class="docutils literal notranslate"><span class="pre">1:int</span></code> already has the
+required type. Thus, <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span> <span class="pre">:</span> <span class="pre">int</span></code>.</p></li>
+<li><p>To conclude that <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span> <span class="pre">:</span> <span class="pre">odd</span></code>, we need to introduce a refinement
+type, by proving that the refinement predicate of <code class="docutils literal notranslate"><span class="pre">odd</span></code> evaluates
+to true, i.e., <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span> <span class="pre">%</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">1</span></code>. This is provable by SMT, since we
+started with the knowledge that <code class="docutils literal notranslate"><span class="pre">x</span></code> is even.</p></li>
 </ol>
 <p>As such, F* applies subtyping repeatedly to introduce and eliminate
 refinement types, applying it multiple times even to check a simple
-term like <cite>x + 1 : odd</cite>.</p>
+term like <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span> <span class="pre">:</span> <span class="pre">odd</span></code>.</p>
 </div>
 </div>
 </div>
@@ -641,16 +564,16 @@ construct.</p>
 </div>
 <p>This is the type of a function that</p>
 <ol class="arabic simple">
-<li><p>receives an argument <cite>e</cite> of type <cite>t0</cite>, and</p></li>
-<li><p>always returns a value of type <cite>t1[e / x]</cite>, i.e., the type of the
-returned value depends on the argument <cite>e</cite>.</p></li>
+<li><p>receives an argument <code class="docutils literal notranslate"><span class="pre">e</span></code> of type <code class="docutils literal notranslate"><span class="pre">t0</span></code>, and</p></li>
+<li><p>always returns a value of type <code class="docutils literal notranslate"><span class="pre">t1[e</span> <span class="pre">/</span> <span class="pre">x]</span></code>, i.e., the type of the
+returned value depends on the argument <code class="docutils literal notranslate"><span class="pre">e</span></code>.</p></li>
 </ol>
 <p>It’s worth emphasizing how this differs from function types in other
 languages.</p>
 <ul class="simple">
 <li><p>F*’s function type are dependent—the type of the result depends on
 the argument. For example, we can write a function that returns a
-<cite>bool</cite> when applied to an even number and returns a <cite>string</cite> when
+<code class="docutils literal notranslate"><span class="pre">bool</span></code> when applied to an even number and returns a <code class="docutils literal notranslate"><span class="pre">string</span></code> when
 applied to an odd number.</p></li>
 <li><p>In F*’s core language, all functions are total, i.e., a function
 call always terminates after consuming a finite but unbounded amount
@@ -676,7 +599,7 @@ type of integer addition is:</p>
 </li>
 <li><p>Not all functions are dependent and the name of the argument can be
 omitted when it is not needed. For example, here’s a more concise
-way to write the type of <cite>(+)</cite>:</p>
+way to write the type of <code class="docutils literal notranslate"><span class="pre">(+)</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="p">:</span> <span class="nb">int</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">-&gt;</span> <span class="nb">int</span>
 </pre></div>
 </div>
@@ -690,19 +613,19 @@ forbids division-by-zero errors:</p>
 </li>
 <li><p>Dependence between the arguments and the result type can be used to
 state relationships among them. For instance, there are several
-types for the function <cite>let incr = (fun (x:int) -&gt; x + 1)</cite>:</p>
+types for the function <code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">incr</span> <span class="pre">=</span> <span class="pre">(fun</span> <span class="pre">(x:int)</span> <span class="pre">-&gt;</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">1)</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">incr</span> <span class="p">:</span> <span class="nb">int</span> <span class="o">-&gt;</span> <span class="nb">int</span>
 <span class="n">val</span> <span class="n">incr</span> <span class="p">:</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span> <span class="o">-&gt;</span> <span class="n">y</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span><span class="n">y</span> <span class="o">&gt;</span> <span class="n">x</span><span class="p">}</span>
 <span class="n">val</span> <span class="n">incr</span> <span class="p">:</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span> <span class="o">-&gt;</span> <span class="n">y</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span><span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">}</span>
 </pre></div>
 </div>
-<p>The first type <cite>(int -&gt; int)</cite> is its traditional type in languages
+<p>The first type <code class="docutils literal notranslate"><span class="pre">(int</span> <span class="pre">-&gt;</span> <span class="pre">int)</span></code> is its traditional type in languages
 like OCaml.</p>
-<p>The second type <cite>(x:int -&gt; y:int{y &gt; x})</cite> states that the returned
-value <cite>y</cite> is greater than the argument <cite>x</cite>.</p>
-<p>The third type is the most precise: <cite>(x:int -&gt; y:int{y = x + 1})</cite>
-states that the result <cite>y</cite> is exactly the increment of the argument
-<cite>x</cite>.</p>
+<p>The second type <code class="docutils literal notranslate"><span class="pre">(x:int</span> <span class="pre">-&gt;</span> <span class="pre">y:int{y</span> <span class="pre">&gt;</span> <span class="pre">x})</span></code> states that the returned
+value <code class="docutils literal notranslate"><span class="pre">y</span></code> is greater than the argument <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p>
+<p>The third type is the most precise: <code class="docutils literal notranslate"><span class="pre">(x:int</span> <span class="pre">-&gt;</span> <span class="pre">y:int{y</span> <span class="pre">=</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">1})</span></code>
+states that the result <code class="docutils literal notranslate"><span class="pre">y</span></code> is exactly the increment of the argument
+<code class="docutils literal notranslate"><span class="pre">x</span></code>.</p>
 </li>
 <li><p>It’s often convenient to add refinements on arguments in a
 dependent function type. For instance:</p>
@@ -710,7 +633,7 @@ dependent function type. For instance:</p>
 </pre></div>
 </div>
 <p>Since this style is so common, and it is inconvenient to have to
-bind two names for the parameters <cite>x</cite> and <cite>y</cite>, F* allows (and
+bind two names for the parameters <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>, F* allows (and
 encourages) you to write:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">f</span> <span class="p">:</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="p">}</span> <span class="o">-&gt;</span> <span class="n">y</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">y</span> <span class="o">&gt;</span> <span class="n">x</span> <span class="p">}</span> <span class="o">-&gt;</span> <span class="n">z</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">z</span> <span class="o">&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="p">}</span>
 </pre></div>
@@ -718,14 +641,14 @@ encourages) you to write:</p>
 </li>
 <li><p>To emphasize that functions in F*’s core are total functions (i.e.,
 they always return a result), we sometimes annotate the result type
-with the effect label “<cite>Tot</cite>”. This label is optional, but
+with the effect label “<code class="docutils literal notranslate"><span class="pre">Tot</span></code>”. This label is optional, but
 especially as we learn about <a class="reference internal" href="#id2"><span class="std std-ref">effects</span></a>, emphasizing
-that some functions have no effects via the <cite>Tot</cite> label is
+that some functions have no effects via the <code class="docutils literal notranslate"><span class="pre">Tot</span></code> label is
 useful. For example, one might typically write:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">f</span> <span class="p">:</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="p">}</span> <span class="o">-&gt;</span> <span class="n">y</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">y</span> <span class="o">&gt;</span> <span class="n">x</span> <span class="p">}</span> <span class="o">-&gt;</span> <span class="n">Tot</span> <span class="p">(</span><span class="n">z</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">z</span> <span class="o">&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="p">})</span>
 </pre></div>
 </div>
-<p>adding a <cite>Tot</cite> annotation on the last arrow, to indicate that the
+<p>adding a <code class="docutils literal notranslate"><span class="pre">Tot</span></code> annotation on the last arrow, to indicate that the
 function has no side effects. One could also write:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">f</span> <span class="p">:</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="p">}</span> <span class="o">-&gt;</span> <span class="n">Tot</span> <span class="p">(</span><span class="n">y</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">y</span> <span class="o">&gt;</span> <span class="n">x</span> <span class="p">}</span> <span class="o">-&gt;</span> <span class="n">Tot</span> <span class="p">(</span><span class="n">z</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span> <span class="n">z</span> <span class="o">&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="p">}))</span>
 </pre></div>
@@ -748,8 +671,8 @@ single syntactic class. A type system in this style is sometimes
 called a <em>Pure Type System</em> or <a class="reference external" href="https://en.wikipedia.org/wiki/Pure_type_system">PTS</a>.</p>
 <p>In F* (as in other PTSs) types have types too, functions can take
 types as arguments and return types as results, etc. In particular,
-the type of a type is <cite>Type</cite>, e.g., <cite>bool : Type</cite>, <cite>int : Type</cite>, <cite>int
--&gt; int : Type</cite> etc. In fact, even <cite>Type</cite> has a type—as we’ll see in
+the type of a type is <code class="docutils literal notranslate"><span class="pre">Type</span></code>, e.g., <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">:</span> <span class="pre">Type</span></code>, <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">:</span> <span class="pre">Type</span></code>, <code class="docutils literal notranslate"><span class="pre">int</span>
+<span class="pre">-&gt;</span> <span class="pre">int</span> <span class="pre">:</span> <span class="pre">Type</span></code> etc. In fact, even <code class="docutils literal notranslate"><span class="pre">Type</span></code> has a type—as we’ll see in
 the subsection on <a class="reference internal" href="#id1"><span class="std std-ref">universes</span></a>.</p>
 <div class="section" id="parametric-polymorphism-or-generics">
 <h4>Parametric polymorphism or generics<a class="headerlink" href="#parametric-polymorphism-or-generics" title="Permalink to this headline">¶</a></h4>
@@ -765,12 +688,12 @@ example, here’s a polymorphic identity function:</p>
 </div>
 <p>There are a several things to note here:</p>
 <ul class="simple">
-<li><p>The type of <cite>id</cite> is a dependent function type, with two
-arguments. The first argument is <cite>a : Type</cite>; the second argument is
-a term of type <cite>a</cite>; and the result also has the same type <cite>a</cite>.</p></li>
-<li><p>The definition of <cite>id</cite> is a lambda term with two arguments <cite>a :
-Type</cite> (corresponding to the first argument type) and <cite>x : a</cite>. The
-function returns <cite>x</cite>—it’s an identity function on the second
+<li><p>The type of <code class="docutils literal notranslate"><span class="pre">id</span></code> is a dependent function type, with two
+arguments. The first argument is <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">:</span> <span class="pre">Type</span></code>; the second argument is
+a term of type <code class="docutils literal notranslate"><span class="pre">a</span></code>; and the result also has the same type <code class="docutils literal notranslate"><span class="pre">a</span></code>.</p></li>
+<li><p>The definition of <code class="docutils literal notranslate"><span class="pre">id</span></code> is a lambda term with two arguments <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">:</span>
+<span class="pre">Type</span></code> (corresponding to the first argument type) and <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">:</span> <span class="pre">a</span></code>. The
+function returns <code class="docutils literal notranslate"><span class="pre">x</span></code>—it’s an identity function on the second
 argument.</p></li>
 </ul>
 <p>Here are some equivalent ways to write it:</p>
@@ -778,7 +701,7 @@ argument.</p></li>
 <span class="n">let</span> <span class="nb">id</span> <span class="p">(</span><span class="n">a</span><span class="p">:</span><span class="n">Type</span><span class="p">)</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="n">a</span><span class="p">)</span> <span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="n">x</span>
 </pre></div>
 </div>
-<p>To call <cite>id</cite>, one can apply and check its type as shown:</p>
+<p>To call <code class="docutils literal notranslate"><span class="pre">id</span></code>, one can apply and check its type as shown:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">id</span> <span class="nb">bool</span> <span class="n">true</span> <span class="p">:</span> <span class="nb">bool</span>
 <span class="nb">id</span> <span class="nb">bool</span> <span class="n">false</span> <span class="p">:</span> <span class="nb">bool</span>
 <span class="nb">id</span> <span class="nb">int</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">:</span> <span class="nb">int</span>
@@ -797,22 +720,143 @@ argument.</p></li>
 </pre></div>
 </div>
 </div>
-<p>It’s a bit tedious to have to explicitly provide that first type
-argument to <cite>id</cite>. Next, we’ll see how to use implicits in F* and
-instruct F* to automatically infer their instantiations.</p>
+<p>It’s quite tedious to have to explicitly provide that first type
+argument to <code class="docutils literal notranslate"><span class="pre">id</span></code>. Implicit arguments and type inference will help, as
+we’ll see in <a class="reference internal" href="#inference"><span class="std std-ref">a later section</span></a>.</p>
 </div>
+</div>
+<div class="section" id="type-inference-basics">
+<h3>Type inference: Basics<a class="headerlink" href="#type-inference-basics" title="Permalink to this headline">¶</a></h3>
+<p id="inference">Like many other languages in the tradition of
+<a class="reference external" href="https://en.wikipedia.org/wiki/ML_%28programming_language%29">Milner’s ML</a>,
+type inference is a central component in F*’s design.</p>
+<p>You may be used to type inference in other languages, where one can
+leave out type annotations (e.g., on variables, or when using
+type-polymorphic (aka generic) functions) and the compiler determines
+an appropriate type based on the surrounding program context. F*’s
+type inference certainly includes such a feature, but is considerably
+more powerful. Like in other dependently typed language, F*’s
+inference engine is based on <a class="reference external" href="https://en.wikipedia.org/wiki/Unification_(computer_science)#Higher-order_unification">higher-order unification</a>
+and can be used to infer arbitrary fragments of program text, not just
+type annotations on variables.</p>
+<p>Let’s consider our simple example of the definition and use of the
+identity function again:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="nb">id</span> <span class="p">(</span><span class="n">a</span><span class="p">:</span><span class="n">Type</span><span class="p">)</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="n">a</span><span class="p">)</span> <span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="n">x</span>
+
+<span class="nb">id</span> <span class="nb">bool</span> <span class="n">true</span> <span class="p">:</span> <span class="nb">bool</span>
+<span class="nb">id</span> <span class="nb">bool</span> <span class="n">false</span> <span class="p">:</span> <span class="nb">bool</span>
+<span class="nb">id</span> <span class="nb">int</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">:</span> <span class="nb">int</span>
+<span class="nb">id</span> <span class="n">nat</span> <span class="mi">17</span> <span class="p">:</span> <span class="n">nat</span>
+<span class="nb">id</span> <span class="n">string</span> <span class="s2">&quot;hello&quot;</span> <span class="p">:</span> <span class="n">string</span>
+<span class="nb">id</span> <span class="p">(</span><span class="nb">int</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">)</span> <span class="p">(</span><span class="n">fun</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">x</span><span class="p">)</span> <span class="mi">0</span> <span class="p">:</span> <span class="nb">int</span>
+</pre></div>
+</div>
+<p>Instead of explicitly providing that first type argument when applying
+<code class="docutils literal notranslate"><span class="pre">id</span></code>, one could write it as follows, replacing the type arguments with
+an underscore <code class="docutils literal notranslate"><span class="pre">_</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">id</span> <span class="n">_</span> <span class="n">true</span> <span class="p">:</span> <span class="nb">bool</span>
+<span class="nb">id</span> <span class="n">_</span> <span class="n">false</span> <span class="p">:</span> <span class="nb">bool</span>
+<span class="nb">id</span> <span class="n">_</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">:</span> <span class="nb">int</span>
+<span class="nb">id</span> <span class="n">_</span> <span class="mi">17</span> <span class="p">:</span> <span class="n">nat</span>
+<span class="nb">id</span> <span class="n">_</span> <span class="s2">&quot;hello&quot;</span> <span class="p">:</span> <span class="n">string</span>
+<span class="nb">id</span> <span class="n">_</span> <span class="p">(</span><span class="n">fun</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">x</span><span class="p">)</span> <span class="mi">0</span> <span class="p">:</span> <span class="nb">int</span>
+</pre></div>
+</div>
+<p>The underscore symbols is a wildcard, or a hole in program, and it’s
+the job of the F* typechecker to fill in the hole.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Program holes are a very powerful concept and form the basis of
+Meta-F*, the metaprogramming and tactics framework embedded in
+F*—we’ll see more about holes in a <a class="reference internal" href="../index.html#metafstar"><span class="std std-ref">later
+section</span></a>.</p>
 </div>
 <div class="section" id="implicit-arguments">
-<h3>Implicit arguments<a class="headerlink" href="#implicit-arguments" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="syntax-of-binders">
-<span id="implicits"></span><h4>Syntax of binders<a class="headerlink" href="#syntax-of-binders" title="Permalink to this headline">¶</a></h4>
+<h4>Implicit arguments<a class="headerlink" href="#implicit-arguments" title="Permalink to this headline">¶</a></h4>
+<p id="implicits">Since it’s tedious to write an <code class="docutils literal notranslate"><span class="pre">_</span></code> everywhere, F* has a notion of
+<em>implicit arguments</em>. That is, when defining a function, one can add
+annotations to indicate that certain arguments can be omitted at call
+sites and left for the typechecker to infer automatically.</p>
+<p>For example, one could write:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="nb">id</span> <span class="p">(</span><span class="c1">#a:Type) (x:a) : a = x</span>
+</pre></div>
+</div>
+<p>decorating the first argument <code class="docutils literal notranslate"><span class="pre">a</span></code> with a <code class="docutils literal notranslate"><span class="pre">#</span></code>, to indicate that it is
+an implicit argument. Then at call sites, one can simply write:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">id</span> <span class="n">true</span>
+<span class="nb">id</span> <span class="mi">0</span>
+<span class="nb">id</span> <span class="p">(</span><span class="n">fun</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">x</span><span class="p">)</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>And F* will figure out instantiations for the missing first argument
+to <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
+<p>In some cases, it may be useful to actually provide an implicit
+argument explicitly, rather than relying on the F* to pick one. For
+example, one could write the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">id</span> <span class="c1">#nat 0</span>
+<span class="nb">id</span> <span class="c1">#(x:int{x == 0}) 0</span>
+<span class="nb">id</span> <span class="c1">#(x:int{x &lt;&gt; 1}) 0</span>
+</pre></div>
+</div>
+<p>In each case, we provide the first argument of <code class="docutils literal notranslate"><span class="pre">id</span></code> explicitly, by
+preceding it with a <code class="docutils literal notranslate"><span class="pre">#</span></code> sign, which instructs F* to take the user’s
+term rather than generating a hole and trying to fill it.</p>
 </div>
 </div>
 <div class="section" id="universes">
 <h3>Universes<a class="headerlink" href="#universes" title="Permalink to this headline">¶</a></h3>
+<p id="id1">As mentioned before, every well-typed term in F* has a type, and this
+is true of the type <code class="docutils literal notranslate"><span class="pre">Type</span></code> itself. In some languages that are
+designed only for programming rather than both programs and proofs,
+the type of <code class="docutils literal notranslate"><span class="pre">Type</span></code> is itself <code class="docutils literal notranslate"><span class="pre">Type</span></code>, a kind of circularity known
+as <a class="reference external" href="https://en.wikipedia.org/wiki/Impredicativity">impredicativity</a>. This circularity
+leads to paradoxes and can make a logic inconsistent.</p>
+<p>As such, F*, like many other dependently typed systems, employ a
+system of <em>universes</em>. The type <code class="docutils literal notranslate"><span class="pre">Type</span></code> actually comes in (countably)
+infinite variants, written <code class="docutils literal notranslate"><span class="pre">Type</span> <span class="pre">u#0</span></code>, <code class="docutils literal notranslate"><span class="pre">Type</span> <span class="pre">u#1</span></code>, <code class="docutils literal notranslate"><span class="pre">Type</span> <span class="pre">u#2</span></code>,
+etc. The <code class="docutils literal notranslate"><span class="pre">u#i</span></code> annotation following the <code class="docutils literal notranslate"><span class="pre">Type</span></code> is called a
+<em>universe level</em>, where <code class="docutils literal notranslate"><span class="pre">Type</span> <span class="pre">u#i</span></code> has type <code class="docutils literal notranslate"><span class="pre">Type</span> <span class="pre">u#(i</span> <span class="pre">+</span> <span class="pre">1)</span></code>. One
+way to think of it is the each universe level contains an entire copy
+of <code class="docutils literal notranslate"><span class="pre">F*</span></code>’s type system, with higher universes being large enough to
+accommodate copies of the systems available at all lower levels.</p>
+<p>This may seem a bit mind-bending at first. And, indeed, the universe
+system of F* can often be ignored, since F* will infer universes
+levels, e.g., one can just write <code class="docutils literal notranslate"><span class="pre">Type</span></code> instead of picking a
+specific universe level. That said, occasionally, the universe
+constraints will make themselves known and preventy you from doing
+certain things that can break consistency. Nevertheless, universes are
+a crucial feature that allow F* programs to abstract over nearly all
+elements of the language (e.g., one can write functions from types to
+types, or store types within data structures) while remaining
+logically consistent.</p>
+<p>F*’s type system is universe polymorphic, meaning that by default, a defin</p>
+</div>
+<div class="section" id="syntax-of-binders">
+<h3>Syntax of binders<a class="headerlink" href="#syntax-of-binders" title="Permalink to this headline">¶</a></h3>
+<p>Having informally introduced implicit arguments, we can now present a
+first take at the syntax of binders in F*.</p>
+<p><strong>Binding occurrences</strong>: A binding occurence <cite>b</cite> of a variable
+introduces a variable in a scope and is associated with one of several
+language constructs, including a lambda abstraction, a refinement
+type, a let binding, etc. Each binding occurrence is in one of several
+forms:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>The form <code class="docutils literal notranslate"><span class="pre">x:t</span></code>, declaring a variable <code class="docutils literal notranslate"><span class="pre">x</span></code> at type <code class="docutils literal notranslate"><span class="pre">t</span></code></p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">#x:t</span></code>, indicating that the binding is for an implicit
+argument <code class="docutils literal notranslate"><span class="pre">x</span></code> of type <code class="docutils literal notranslate"><span class="pre">t</span></code>.</p></li>
+</ol>
+</div></blockquote>
+<p>In many cases the type annotation on a binder can be omitted,</p>
+<p>Later, we will see additional forms of binding occurrences, including
+versions that associate attributes with binders and others with
+various forms of type-inference hints.</p>
+<p><strong>Introducing binders</strong>: The syntax <code class="docutils literal notranslate"><span class="pre">fun</span> <span class="pre">(b1)</span> <span class="pre">...</span> <span class="pre">(bn)</span> <span class="pre">-&gt;</span> <span class="pre">t</span></code>
+introduces a lambda abstraction, whereas <code class="docutils literal notranslate"><span class="pre">b1</span> <span class="pre">-&gt;</span> <span class="pre">..</span> <span class="pre">bn</span> <span class="pre">-&gt;</span> <span class="pre">t</span></code> is the
+shape of a function type.</p>
 </div>
 <div class="section" id="decidable-equality-and-eqtype">
-<span id="id1"></span><h3>Decidable equality and <cite>eqtype</cite><a class="headerlink" href="#decidable-equality-and-eqtype" title="Permalink to this headline">¶</a></h3>
+<h3>Decidable equality and <cite>eqtype</cite><a class="headerlink" href="#decidable-equality-and-eqtype" title="Permalink to this headline">¶</a></h3>
 </div>
 <div class="section" id="let-bindings">
 <h3>Let bindings<a class="headerlink" href="#let-bindings" title="Permalink to this headline">¶</a></h3>
@@ -883,7 +927,7 @@ instruct F* to automatically infer their instantiations.</p>
         <a href="../PL-pl-foundations.html" class="btn btn-neutral float-right" title="Foundations of Programming Languages" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../tutorial-overview.html" class="btn btn-neutral float-left" title="A Short Tutorial Introduction to F*" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../part1/part1_ch1.html" class="btn btn-neutral float-left" title="Getting off the ground" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -925,7 +969,18 @@ instruct F* to automatically infer their instantiations.</p>
   
   
     
-   
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
 
 </body>
 </html>

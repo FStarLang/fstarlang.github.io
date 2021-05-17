@@ -7,12 +7,13 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Formalizing a Simple Imperative Language &mdash; Programming with Proofs in F*  documentation</title>
+  <title>Formalizing a Simple Imperative Language &mdash; Proof-Oriented Programming in F*  documentation</title>
   
 
   
-  <link rel="stylesheet" href="static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
 
   
   
@@ -21,17 +22,17 @@
 
   
   <!--[if lt IE 9]>
-    <script src="static/js/html5shiv.min.js"></script>
+    <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="static/documentation_options.js"></script>
-        <script src="static/jquery.js"></script>
-        <script src="static/underscore.js"></script>
-        <script src="static/doctools.js"></script>
-        <script src="static/language_data.js"></script>
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
     
-    <script type="text/javascript" src="static/js/theme.js"></script>
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
     <link rel="index" title="Index" href="genindex.html" />
@@ -51,7 +52,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Programming with Proofs in F*
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Proof-Oriented Programming in F*
           
 
           
@@ -84,7 +85,7 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="tutorial-overview.html">A Short Tutorial Introduction to F*</a></li>
+<li class="toctree-l1"><a class="reference internal" href="part1/part1.html">Programming and Proving with Total Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sec2/Design-of-fstar-Intro.html">Elements of F*</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="PL-pl-foundations.html">Foundations of Programming Languages</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="PL-stlc.html">Syntactic Type Soundness for the Simply Typed Lambda Calculus</a></li>
@@ -108,7 +109,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Programming with Proofs in F*</a>
+          <a href="index.html">Proof-Oriented Programming in F*</a>
         
       </nav>
 
@@ -220,7 +221,18 @@
   
   
     
-   
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
 
 </body>
 </html>

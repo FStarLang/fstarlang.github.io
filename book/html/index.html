@@ -7,12 +7,13 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Programming with Proofs in F* &mdash; Programming with Proofs in F*  documentation</title>
+  <title>Proof-Oriented Programming in F* &mdash; Proof-Oriented Programming in F*  documentation</title>
   
 
   
-  <link rel="stylesheet" href="static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
 
   
   
@@ -21,22 +22,22 @@
 
   
   <!--[if lt IE 9]>
-    <script src="static/js/html5shiv.min.js"></script>
+    <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="static/documentation_options.js"></script>
-        <script src="static/jquery.js"></script>
-        <script src="static/underscore.js"></script>
-        <script src="static/doctools.js"></script>
-        <script src="static/language_data.js"></script>
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
     
-    <script type="text/javascript" src="static/js/theme.js"></script>
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="A Short Tutorial Introduction to F*" href="tutorial-overview.html" /> 
+    <link rel="next" title="Programming and Proving with Total Functions" href="part1/part1.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -50,7 +51,7 @@
           
 
           
-            <a href="#" class="icon icon-home" alt="Documentation Home"> Programming with Proofs in F*
+            <a href="#" class="icon icon-home" alt="Documentation Home"> Proof-Oriented Programming in F*
           
 
           
@@ -83,9 +84,7 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="tutorial-overview.html">A Short Tutorial Introduction to F*</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sec2/Design-of-fstar-Intro.html">Elements of F*</a></li>
-<li class="toctree-l1"><a class="reference internal" href="PL-pl-foundations.html">Foundations of Programming Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="part1/part1.html">Programming and Proving with Total Functions</a></li>
 </ul>
 
             
@@ -101,7 +100,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">Programming with Proofs in F*</a>
+          <a href="#">Proof-Oriented Programming in F*</a>
         
       </nav>
 
@@ -132,7 +131,7 @@
     
       <li><a href="#" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Programming with Proofs in F*</li>
+      <li>Proof-Oriented Programming in F*</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -150,81 +149,501 @@
 
            <div itemprop="articleBody">
             
-  <div class="section" id="programming-with-proofs-in-f">
-<h1>Programming with Proofs in F*<a class="headerlink" href="#programming-with-proofs-in-f" title="Permalink to this headline">¶</a></h1>
-<p>F* is a programming language and proof assistant.</p>
-<p>Part 1: F* Manual</p>
-<ol class="arabic">
-<li><p>F* Quick Start: Online tutorial (chapters 1–6, ported here)</p></li>
-<li><p>The Design of F*</p>
-<p>A Verification-oriented Programming Language and Proof Assistant
-(general context from mumon paper)</p>
+  <div class="section" id="proof-oriented-programming-in-f">
+<h1>Proof-Oriented Programming in F*<a class="headerlink" href="#proof-oriented-programming-in-f" title="Permalink to this headline">¶</a></h1>
+<p>F* is a dependently typed programming language and proof
+assistant. This book describes how to use F* for <em>proof-oriented
+programming</em>, a paradigm in which one co-designs programs and proofs
+to provide mathematical guarantees about various aspects of a
+program’s behavior, including properties like functional correctness
+(precisely characterizing the input/output behavior of a program),
+security properties (e.g., ensuring that a program never leaks certain
+secrets), and bounds on resource usage.</p>
+<div class="section" id="a-capsule-summary-of-f">
+<h2>A Capsule Summary of F*<a class="headerlink" href="#a-capsule-summary-of-f" title="Permalink to this headline">¶</a></h2>
+<p>F* is a dependently type programming language that aims to play
+several roles:</p>
 <ul class="simple">
-<li><dl class="simple">
-<dt>Types</dt><dd><ul>
-<li><p>Dependent refinement types</p></li>
-<li><p>Intensional vs extensional, undecidability etc.</p></li>
-<li><p>Equality: Definitional and provable equality</p></li>
-<li><p>Subtyping</p></li>
-<li><p>Proof irrelevance</p></li>
+<li><p>A general purpose programming language, which encourages
+higher-order functional programming with effects, in the tradition
+of the ML family of languages.</p></li>
+<li><p>A compiler, which translates F* programs to OCaml or F#, and even C
+or Wasm, for execution.</p></li>
+<li><p>A proof assistant, in which to state and prove properties of
+programs.</p></li>
+<li><p>A program verification engine, leveraging SMT solvers to partially
+automate proofs of programs.</p></li>
+<li><p>A metaprogramming system, supporting the programmatic construction
+of F* programs and proof automation procedures.</p></li>
 </ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Effects</dt><dd><ul>
-<li><p>Indexed Monads and Effects</p></li>
-<li><p>Subsumption and sub-effecting</p></li>
-<li><p>Effect abstraction, reification and reflecition</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Modules and Interfaces</dt><dd><ul>
-<li></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>A Mental Model of the F* Typechecker</dt><dd><ul>
-<li><p>Type inference based on higher order unification</p></li>
-<li><p>Normalization and proofs by reflection</p></li>
-<li><p>SMT Solving</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Extraction</dt><dd><ul>
-<li><p>Computational irrelevance and erasure (Ghost)</p></li>
-<li><dl class="simple">
-<dt>Normalization for extraction</dt><dd><ul>
-<li><p>inlining, pure subterms, postprocess(fwd to meta)</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Scripting F* with Metaprogramming</dt><dd><ul>
-<li><p>Proof states</p></li>
-<li><p>Reflecting on syntax</p></li>
-<li><p>Quotation</p></li>
-<li><p>Scripting extraction</p></li>
-<li><p>Hooks</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</li>
-<li><p>A User’s Guide</p>
+<p>To achieve these goals, the design of F* revolves around a few key
+elements.</p>
 <ul class="simple">
+<li><p>A core language of total functions with full dependent types,
+including an extensional form of type conversion, indexed inductive
+types, and pattern matching, recursive functions with semantic
+termination checking, dependent refinement types and subtyping, and
+polymorphism over a predicative hierarchy of universes.</p></li>
+<li><p>A system of user-defined indexed effects, for modeling,
+encapsulating, and statically reasoning about various forms of
+computational effects, including a primitive notion of general
+recursion and divergence, as well as an open system of user-defined
+effects, with examples including state, exceptions, concurrency,
+algebraic effects, and several others.</p></li>
+<li><p>A built-in encoding of a classical fragment of F*’s logic into the
+first order logic of an SMT solver, allowing many proofs to be
+automatically discharged.</p></li>
+<li><p>A reflection within F* of the syntax and proof state of F*, enabling
+Meta-F* programs to manipulate F* syntax and proof goals and for
+users to build proofs interactively with tactics.</p></li>
+</ul>
+<div class="section" id="dsls-embedded-in-f">
+<h3>DSLs Embedded in F*<a class="headerlink" href="#dsls-embedded-in-f" title="Permalink to this headline">¶</a></h3>
+<p>In practice, rather than a single language, the F* ecosystem is also a
+collection of domain-specific languages (DSLs). A common use of F* is
+to embed within it programming languages at different levels of
+abstraction or for specific programming tasks, and for the embedded
+language to be engineered with domain-specific reasoning, proof
+automation, and compilaton backends. Some examples include:</p>
+<ul class="simple">
+<li><p>Low*, an shallowly embedded DSL for sequential programming against a
+C-like memory model including explicit memory management on the
+stack and heap; a Hoare logic for partial correctness based on
+implicit dynamic frames; and a custom backend (Kremlin) to compile
+Low* programs to C for further compilation by off-the-shelf C
+compilers.</p></li>
+<li><p>EverParse, a shallow embedding of a DSL (layered on top of the Low*
+DSL) of parser and serializer combinators, for low-level binary
+formats.</p></li>
+<li><p>Vale, a deeply embedded DSL for structured programming in a
+user-defined assembly language, with a Hoare logic for total
+correctness, and a printer to emit verified programs in a assembly
+syntax compatible with various standard assemblers.</p></li>
+<li><p>Steel, a shallow embedding of concurrency as an effect in F*, with
+an extensible concurrent separation logic for partial correctness as
+a core program logic, and proof automation built using a combination
+of Meta-F* tactics, higher-order unification, and SMT.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="f-in-action">
+<span id="intro-vec"></span><h2>F* in Action<a class="headerlink" href="#f-in-action" title="Permalink to this headline">¶</a></h2>
+<p>To get a taste of F*, let’s dive right in with some examples.</p>
+<div class="section" id="f-is-a-dependently-typed-language">
+<h3>F* is a dependently typed language<a class="headerlink" href="#f-is-a-dependently-typed-language" title="Permalink to this headline">¶</a></h3>
+<p>Dependently typed programming enables one to more precisely capture
+properties and invariants of a program using types. Here’s a classic
+example: the type <code class="docutils literal notranslate"><span class="pre">vec</span> <span class="pre">a</span> <span class="pre">n</span></code> represents an <code class="docutils literal notranslate"><span class="pre">n</span></code>-dimensional vector
+of <code class="docutils literal notranslate"><span class="pre">a</span></code>-typed elements; or, more simply, a list of <code class="docutils literal notranslate"><span class="pre">n</span></code> values each
+of type <code class="docutils literal notranslate"><span class="pre">a</span></code>. Like other dependently typed languages, F* supports
+inductively defined definitions of types.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> vec a : nat -&gt; Type =
+  | Nil : vec a <span class="m">0</span>
+  | Cons : #n:nat -&gt; hd:a -&gt; tl:vec a n -&gt; vec a (n + <span class="m">1</span>)
+</pre></div>
+</div>
+<p>Operations on a vectors can be given types that describe their
+behavior in terms of vector lengths.</p>
+<p>For example, here’s a recursive function <code class="docutils literal notranslate"><span class="pre">append</span></code> to concatenate two
+vectors. Its type shows that the resulting vector has a length that is
+the sum of the lengths of the input vectors.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> append #a #n #m (v<span class="m">1</span>:vec a n) (v<span class="m">2</span>:vec a m)
+  : vec a (n + m)
+  = <span class="k">match</span> v<span class="m">1</span> <span class="k">with</span>
+    | Nil -&gt; v<span class="m">2</span>
+    | Cons hd tl -&gt; Cons hd (append tl v<span class="m">2</span>)
+</pre></div>
+</div>
+<p>Of course, once a function like <code class="docutils literal notranslate"><span class="pre">append</span></code> is defined, it can be used
+to define other operations and its type helps in proving further
+properties. For example, it’s easy to show that reversing a vector
+does not change its length.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> reverse #a #n (v:vec a n)
+  : vec a n
+  = <span class="k">match</span> v <span class="k">with</span>
+    | Nil -&gt; Nil
+    | Cons hd tl -&gt; append (reverse tl) (Cons hd Nil)
+</pre></div>
+</div>
+<p>Finally, to get an element from a vector, one can program a selector
+whose type also includes a <a class="reference internal" href="#refinements"><span class="std std-ref">*refinement type*</span></a> to specify that the index
+<code class="docutils literal notranslate"><span class="pre">i</span></code> is less than the length of the vector.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> get #a #n (i:nat{i &lt; n}) (v:vec a n)
+  : a
+  = <span class="k">let</span> Cons hd tl = v <span class="k">in</span>
+    <span class="k">if</span> i = <span class="m">0</span> <span class="k">then</span> hd
+    <span class="k">else</span> get (i - <span class="m">1</span>) tl
+</pre></div>
+</div>
+<p>While examples like this can be programmed in other dependently typed
+languages, they can often be tedious, due to various technical
+restrictions. F* provides a core logic with a more flexible notion of
+equality to make programming and proving easier. For now, a takeaway
+is that dependently typed programming patterns that are <a class="reference external" href="http://adam.chlipala.net/cpdt/html/Cpdt.DataStruct.html">quite
+technical in other languages</a> are often
+fairly natural in F*. You’ll learn more about this in <a class="reference internal" href="#typeconversion"><span class="std std-ref">a later
+chapter</span></a>.</p>
+</div>
+<div class="section" id="f-supports-user-defined-effectful-programming">
+<h3>F* supports user-defined effectful programming<a class="headerlink" href="#f-supports-user-defined-effectful-programming" title="Permalink to this headline">¶</a></h3>
+<p>While functional programming is at the heart of the language, F* is
+about more than just pure functions. In fact, F* is a Turing complete
+language. That this is even worth mentioning may come as a surprise to
+readers coming from general-purpose programming languages like C# or
+Scala, but not all dependently typed languages are Turing complete,
+since nontermination can break soundness. However, F* supports general
+recursive functions and non-termination in a safe manner, without
+compromsing soundness.</p>
+<p>Beyond nontermination, F* supports a system of user-defined
+computational effects which can be used to model a variety of
+programming idioms, including things like mutable state, exceptions,
+concurrency, IO, etc.</p>
+<p>Here below is some code in an F* dialect called <a class="reference internal" href="#lowstar"><span class="std std-ref">Low*</span></a>
+which provides a sequential, imperative C-like programming model with
+mutable memory. The function <code class="docutils literal notranslate"><span class="pre">alloc_copy_free</span></code> allocates an array
+<code class="docutils literal notranslate"><span class="pre">dest</span></code>, copies the contents of an array of bytes <code class="docutils literal notranslate"><span class="pre">src</span></code> into a
+<code class="docutils literal notranslate"><span class="pre">dest</span></code>, deallocates, <code class="docutils literal notranslate"><span class="pre">src</span></code> and returns <code class="docutils literal notranslate"><span class="pre">dest</span></code>.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> alloc_copy_free 
+        (len:uint<span class="m">32</span>)
+        (src:lbuffer len uint<span class="m">8</span>)
+  : ST (lbuffer len uint<span class="m">8</span>)
+       (<span class="k">requires</span> <span class="k">fun</span> h -&gt; 
+         live h src)
+       (<span class="k">ensures</span> <span class="k">fun</span> h<span class="m">0</span> dest h<span class="m">1</span> -&gt; 
+         live h<span class="m">1</span> dest /\
+         equal h<span class="m">0</span> src h<span class="m">1</span> dest)
+  = <span class="k">let</span> dest = alloc len <span class="m">0</span>uy <span class="k">in</span>
+    memcpy len src dest;
+    free src;
+    dest
+</pre></div>
+</div>
+<p>It’ll take us until <a class="reference internal" href="#lowstar"><span class="std std-ref">much later</span></a> to explain this code in
+full detail, but here are two main points to take away:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The type signature of the procedure claims that under specific
+constraints on a caller, <code class="docutils literal notranslate"><span class="pre">alloc_copy_free</span></code> is <em>safe</em> to execute
+(e.g., it does not read outside the bounds of allocated memory)
+and that it is <em>correct</em> (i.e., that it successfully copies
+<code class="docutils literal notranslate"><span class="pre">src</span></code> to <code class="docutils literal notranslate"><span class="pre">dest</span></code> without modifying any other memory)</p></li>
+<li><p>Given the implementation of a procedure F* actually builds a
+mathematical proof that it is safe and correct with respect to its
+signature.</p></li>
+</ul>
+</div></blockquote>
+<p>While other program verifiers offer features similar to what we’ve
+used here, a notable thing about F* is that the semantics of programs
+with side effects (like reading and writing memory) is entirely
+encoded within F*’s logic using a system of user-defined effects.</p>
+<p>Whereas <code class="docutils literal notranslate"><span class="pre">alloc_copy_free</span></code> is programmed in Low* and specified using
+a particular kind of <a class="reference external" href="https://en.wikipedia.org/wiki/Hoare_logic">Floyd-Hoare logic</a>, there’s nothing
+particularly special about it in F*.</p>
+<p>Here, for example, is a concurrent program in another user-defined F*
+dialect called <a class="reference internal" href="#steel"><span class="std std-ref">Steel</span></a>. It increments two heap-allocated
+references in parallel and is specified for safety and correctness in
+<a class="reference external" href="https://en.wikipedia.org/wiki/Separation_logic">concurrent separation logic</a>, a different kind
+of Floyd-Hoare logic than the one we used for <code class="docutils literal notranslate"><span class="pre">memcpy</span></code>.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> par_incr (#v<span class="m">0</span> #v<span class="m">1</span>:erased int) (r<span class="m">0</span> r<span class="m">1</span>:ref int)
+  : SteelT <span class="k">_</span> (pts_to r<span class="m">0</span> v<span class="m">0</span> `star` pts_to r<span class="m">1</span> v<span class="m">1</span>)
+             (<span class="k">fun</span> <span class="k">_</span> -&gt; pts_to r<span class="m">0</span> (v<span class="m">0</span> + <span class="m">1</span>) `star` pts_to r<span class="m">1</span> (v<span class="m">1</span> + <span class="m">1</span>))
+  = par (incr r<span class="m">0</span>) (incr r<span class="m">1</span>)
+</pre></div>
+</div>
+<p>As an F* user, you can choose a programming model and a suite of
+program proof abstractions to match your needs. You’ll learn more
+about this in the section on <a class="reference internal" href="#effects"><span class="std std-ref">user-defined effects</span></a>.</p>
+</div>
+<div class="section" id="f-proofs-use-smt-solving-symbolic-computation-and-tactics">
+<h3>F* proofs use SMT solving, symbolic computation and tactics<a class="headerlink" href="#f-proofs-use-smt-solving-symbolic-computation-and-tactics" title="Permalink to this headline">¶</a></h3>
+<p>Stating a theorem or lemma in F* amounts to declaring a type signature
+and a doing a proof corresponds to providing an implementation of that
+signature. Proving theorems can take a fair bit of work by a human and
+F* seeks to reduce that burden, using a variety of techniques.</p>
+<p><strong>SMT Solving</strong></p>
+<p>Proving even a simple program often involves proving dozens or
+hundreds of small facts, e.g., proving that bounded arithmetic doesn’t
+overflow, or that ill-defined operations like divisions by zero never
+occur. All these little proofs can can quickly overwhelm a user.</p>
+<p>The main workhorse for proofs in F* is an automated theorem prover,
+known as a <em>Satisfiability Modulo Theories</em>, or SMT, solver. The F*
+toolchain integrates the <a class="reference external" href="https://www.microsoft.com/en-us/research/blog/the-inner-magic-behind-the-z3-theorem-prover/">Z3 SMT Solver</a>,
+which it Z3 SMT solver, which is integrated with the F* toolchain.</p>
+<p>By default, the F* typechecker collects all the facts that must be
+proven in a program and encodes them to the SMT solver, an engine that
+is capable of solving problems in various combinations of mathematical
+logics—F* encodes problems to Z3 in a combination of first-order
+logic, with uninterpreted functions and integer arithmetic.</p>
+<p>Z3 is remarkably effective at solving the kinds of problems that F*
+generates for it. The result is that some F* programs enjoy a high
+level of automation, e.g., in <code class="docutils literal notranslate"><span class="pre">memcpy</span></code>, we specified a pre- and
+postcondition and a loop invariant, and the system took care of all
+the remaining proofs.</p>
+<p>You’ll learn more about how to use leverage Z3 to prove theorems in F*
+in <a class="reference internal" href="#smtproofs"><span class="std std-ref">this chapter</span></a>.</p>
+<p>That said, Z3 cannot solve all problems that F* feeds to it. As such,
+F* offers several other mechanisms with varying levels of user
+control.</p>
+<p><strong>Symbolic computation</strong></p>
+<p>SMT solvers are great at proofs that involve equational rewriting, but
+many proofs can be done simply by computation. In fact, proofs by
+computation are a distinctive feature of many dependently typed
+languages and F* is no exception.</p>
+<p>As a very simple example, consider proving that <code class="docutils literal notranslate"><span class="pre">pow2</span> <span class="pre">12</span> <span class="pre">==</span> <span class="pre">4096</span></code>,
+where <code class="docutils literal notranslate"><span class="pre">pow2</span></code> is the recursive function shown below.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> pow<span class="m">2</span> (n:nat) : nat =
+  <span class="k">if</span> n = <span class="m">0</span> <span class="k">then</span> <span class="m">1</span>
+  <span class="k">else</span> <span class="m">2</span> * pow<span class="m">2</span> (n - <span class="m">1</span>)
+
+<span class="k">let</span> proof_by_normalization ()
+  : Lemma (pow<span class="m">2</span> <span class="m">12</span> == <span class="m">4096</span>)
+  = normalize_term_spec (pow<span class="m">2</span> <span class="m">12</span>)
+</pre></div>
+</div>
+<p>An easy way to convince F* of this fact is to ask it (using
+<code class="docutils literal notranslate"><span class="pre">normalize_term_spec</span></code>) to simply compute the result of <code class="docutils literal notranslate"><span class="pre">pow2</span> <span class="pre">12</span></code>
+on an interpreter that’s part of the F* toolchain, which it can do
+instantly, rather than relying on an SMT solvers expensive equational
+machinery to encode the reduction of a recursive function.</p>
+<p>This reduction machinery (called the <em>normalizer</em>) is capable not only
+of fully computing terms like <code class="docutils literal notranslate"><span class="pre">pow2</span> <span class="pre">12</span></code> to a result, but it can also
+partially reduce symbolic F* terms, as shown in the proof below.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> partially_reduce_fold_right f more
+  : (fold_right f ([<span class="m">1</span>;<span class="m">2</span>;<span class="m">3</span>]@more) <span class="m">0</span> == f <span class="m">1</span> (f <span class="m">2</span> (f <span class="m">3</span> (fold_right f more <span class="m">0</span>))))
+  =  <span class="k">_</span> <span class="k">by</span> (T.trefl())
+</pre></div>
+</div>
+<p>The proof invokes the F* normalizer from a tactic called <code class="docutils literal notranslate"><span class="pre">T.trefl</span></code>,
+another F* feature that we’ll review quickly, next.</p>
+<p><strong>Tactics and Metaprogramming</strong></p>
+<p>Finally, for complete control over a proof, F* includes a powerful
+tactic and metaprogramming system.</p>
+<p>Here’s a simple example of an interactive proof of a simple fact about
+propositions using F* tactics.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> a_very_explicit_tactic_proof (a b : prop) : (a ==&gt; b ==&gt; b /\ a)
+  = <span class="k">_</span> <span class="k">by</span>
+       (<span class="k">let</span> ha = implies_intro () <span class="k">in</span>
+        <span class="k">let</span> hb = implies_intro () <span class="k">in</span>
+        split ();
+        hyp hb;
+        hyp ha;
+        qed ())
+</pre></div>
+</div>
+<p>This style of proof is similar to what you might find in systems like
+Coq or Lean. An F* tactic is just an F* program that can manipulate F*
+proof states. In this case, to prove the theorem
+<code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">==&gt;</span> <span class="pre">b</span> <span class="pre">==&gt;</span> <span class="pre">(b</span> <span class="pre">/\</span> <span class="pre">a)</span></code>, we apply commands to transform the proof
+state by applying the rules of propositional logic, building of
+proof of the theorem.</p>
+<p>Tactics are an instance of a more general metaprogramming system in
+F*, which allows an F* program to generate other F* programs. You’ll
+learn more about tactics and metaprograming in <a class="reference internal" href="#metafstar"><span class="std std-ref">this chapter</span></a>.</p>
+</div>
+<div class="section" id="f-programs-compile-to-ocaml-and-f-c-and-wasm">
+<h3>F* programs compile to OCaml and F#, C and Wasm<a class="headerlink" href="#f-programs-compile-to-ocaml-and-f-c-and-wasm" title="Permalink to this headline">¶</a></h3>
+<p>Of course, you’ll want a way to actually execute the programs you
+write. For this, F* provides several ways to compile a program to
+other languages for execution, including support to compile programs
+to OCaml, F#, C and Wasm.</p>
+<p>As such, a common way to use F* is to develop critical components of
+larger software systems in it, use its proof-oriented facilities to
+obtain assurances about those components, and then to integrate those
+formally proven components into a larger system by compiling the F*
+program to C, OCaml, or F# and linking the pieces together.</p>
+<p>In this case, using a tool called <a class="reference external" href="https://github.com/FStarLang/kremlin">KReMLin</a>, a compiler used with F*, we
+can produce the following C code for <code class="docutils literal notranslate"><span class="pre">memcpy</span></code>.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">alloc_copy_free</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">//TODO</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Notice that the code we get contains no additional runtime checks: the
+detailed requires and ensures clauses are all gone and what’s left is
+just a plain C code. Later we’ll see how to actually write loops, so
+that you’re not left with recursive functions in C. The point is that
+all the proof and specification effort is done before the program is
+compiled, imposing no runtime overhead at all.</p>
+</div>
+</div>
+<div class="section" id="to-f-or-not-to-f">
+<h2>To F*, or not to F*?<a class="headerlink" href="#to-f-or-not-to-f" title="Permalink to this headline">¶</a></h2>
+<p>We’ve quickly seen a bit of what F* has to offer—that may have been
+bit overwhelming, if you’re new to program proofs. So, you may be
+wondering now about whether it’s worth learning F* or not. Here are
+some things to consider.</p>
+<p>If you like programming and want to get better at it, no matter what
+your level is, learning about program proofs will help. Proving a
+program, or even just writing down a specification for it, forces you
+to think about aspects of your program that you may never have
+considered before. There are many excellent resources available to
+learn about program proofs, using a variety of other tools, including
+some of the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://softwarefoundations.cis.upenn.edu/">Software Foundations</a>: A comprehensive
+overview of programming language semantics and formal proofs in
+the Coq proof assistant.</p></li>
+<li><p><a class="reference external" href="https://isabelle.in.tum.de/doc/tutorial.pdf">A Proof Assistant for Higher-Order Logic</a>: A tutorial on the
+Isabelle/HOL proof assistant.</p></li>
+<li><p><a class="reference external" href="http://adam.chlipala.net/cpdt/">Certified Programming with Dependent Types</a>: Provides an introduction to
+proof engineering in Coq.</p></li>
+<li><p><a class="reference external" href="https://www.manning.com/books/type-driven-development-with-idris">Type-driven Development</a>:
+Introduces using dependent types to developing programs corretly
+in Idris.</p></li>
+<li><p><a class="reference external" href="https://leanprover.github.io/theorem_proving_in_lean/">Theorem Proving in Lean</a>: This is
+the standard reference for learning abou the Lean theorem prover,
+though there are several other <a class="reference external" href="https://leanprover-community.github.io/learn.html">resources</a> too.</p></li>
+<li><p><a class="reference external" href="https://github.com/dafny-lang/dafny#read-more">Dafny resources</a>: A different
+flavor than all of the above, Dafny is an SMT powered program
+verifier for imperative programs.</p></li>
+<li><p><a class="reference external" href="http://ucsd-progsys.github.io/liquidhaskell-tutorial/">Liquid Haskell</a>: This
+tutorial showcases proving programs with refinement types.</p></li>
+</ul>
+</div></blockquote>
+<p>All of these are excellent resources and each tool has unique
+offerings. This book about F* offers a few unique things too. We
+discuss a few pros and cons, next.</p>
+<p><strong>Dependent Types and Extensionality</strong></p>
+<p>F*’s dependent types are similar in expressiveness to Coq, Lean, Agda,
+or Idris, i.e., the expressive power allows formalizing nearly all
+kinds of mathematics. What sets F* apart from these other languages
+(and more like Nuprl) is its extensional notion of type equality,
+making many programming patterns significantly smoother in F* (cf. the
+<a class="reference internal" href="#intro-vec"><span class="std std-ref">vector</span></a> example). However, this design also makes
+typechecking in F* undedicable. The practical consequences of this are
+that F* typechecker can time-out and refuse to accept your
+program. Other dependently typed languages have decidable
+typechecking, though they can, in principle, take arbitrarily long to
+decide whether or not your program is type correct.</p>
+<p><strong>A Variety of Proof Automation Tools</strong></p>
+<p>F*’s use of an SMT solver for proof automation is unique among
+languages with dependent types, though in return, one needs to also
+trust the combination of F* and Z3 to believe in the validity of an F*
+proof. Isabelle/HOL provides similar SMT-assisted automation (in its
+Sledgehammer tool), for the weaker logic provided by HOL, though
+Sledghammer’s design ensures that the SMT solver need not be
+trusted. F*’s use of SMT is also similar to what program verifiers
+like Dafny and Liquid Haskell offer. However, unlike their SMT-only
+proof strategies, F*, like Coq and Lean, also provides symbolic
+reduction, tactics, and metaprogramming. That said, F*’s tactic and
+metaprogramming engines are less mature than other systems where
+tactics are the primary way of conducting proofs.</p>
+<p><strong>A Focus on Programming</strong></p>
+<p>Other dependently typed languages shine in their usage in formalizing
+mathematics—Lean’s <a class="reference external" href="https://github.com/leanprover-community/mathlib">mathlib</a> and Coq’s
+<a class="reference external" href="https://math-comp.github.io/">Mathematical Components</a> are two
+great examples. In comparison, to date, relatively little pure
+mathematics has been formalized in F*. Rather, F*, with its focus on
+effectful programming and compilation to mainstream languages like C,
+has been used to it produce industrial-grade high-assurance software,
+deployed in settings like the <a class="reference external" href="https://www.microsoft.com/en-us/research/blog/everparse-hardening-critical-attack-surfaces-with-formally-proven-message-parsers/">Windows</a>
+and <a class="reference external" href="https://lwn.net/Articles/770750/">Linux</a> kernels, among <a class="reference external" href="https://project-everest.github.io">many
+others</a>.</p>
+<p><strong>Maturity and Community</strong></p>
+<p>Isabelle/HOL and Coq are mature tools that have been developed and
+maintained for many decades, have strong user communities in academia,
+and many sources of documentation. Lean’s community is growing fast
+and also has a strong community and excellent tools and
+documentation. F* is less mature, its design has been the subject of
+several research papers, making it somewhat more experimental. The F*
+community is also smaller, its documentation is more sparse, and F*
+users are usually in relatively close proximity to the F* development
+team. However, F* developments also have a good and growing track
+record of industrial adoption.</p>
+</div>
+<div class="section" id="a-bit-of-f-history">
+<h2>A Bit of F* History<a class="headerlink" href="#a-bit-of-f-history" title="Permalink to this headline">¶</a></h2>
+<p>F* is an open source project at <a class="reference external" href="https://github.com/FStarLang/FStar">GitHub</a> by researchers at a number of
+institutions, including <a class="reference external" href="http://research.microsoft.com/en-us">Microsoft Research</a>, <a class="reference external" href="http://www.msr-inria.fr/">MSR-Inria</a>, <a class="reference external" href="https://www.inria.fr/">Inria</a>,
+<a class="reference external" href="https://www.cifasis-conicet.gov.ar/en/">Rosario</a>, <a class="reference external" href="https://www.cs.cmu.edu/">Carnegie-Mellon</a>.</p>
+<p><strong>The name</strong> The F in F* is a homage to System F
+(<a class="reference external" href="https://en.wikipedia.org/wiki/System_F">https://en.wikipedia.org/wiki/System_F</a>) which was the base calculus
+of an early version of F*. We’ve moved beyond it for some years now,
+however. The F part of the name is also derived from several prior
+languages that many authors of F* worked on, including <a class="reference external" href="https://ieeexplore.ieee.org/document/4531165">Fable</a>, <a class="reference external" href="https://www.microsoft.com/en-us/research/project/f7-refinement-types-for-f/">F7</a>,
+<a class="reference external" href="https://link.springer.com/chapter/10.1007/978-3-642-11957-6_28">F9</a>,
+<a class="reference external" href="https://prosecco.gforge.inria.fr/personal/hritcu/publications/rcf-and-or-coq-tosca2011-post.pdf">F5</a>,
+<a class="reference external" href="https://www.microsoft.com/en-us/research/wp-content/uploads/2011/01/plpv11k-borgstrom.pdf">FX</a>,
+and even <a class="reference external" href="https://fsharp.org">F#</a>.</p>
+<p>The “*” was meant as a kind of fixpoint operator, and F* was meant to
+be a sort of fixpoint of all those languages. The first version of F*
+also had affine types and part of the intention then was to use affine
+types to encode separation logic—so the “*” was also meant to evoke
+the separation logic “*”. But, the early affine versions of F* never
+really did have separation logic in that version. It took until almost
+a decade later to have a separation logic embedded in F* (see Steel),
+though without relying on affine types.</p>
+</div>
+<div class="section" id="structure-of-this-book">
+<span id="steel"></span><span id="lowstar"></span><h2>Structure of this book<a class="headerlink" href="#structure-of-this-book" title="Permalink to this headline">¶</a></h2>
+<p>The first four parts of this book explain the main features of the
+language using a variety of examples. You should read them
+sequentially, following along with the associated code samples and
+exercises. These first four parts are arranged in increasing order of
+complexity—you can stop after any of them and have a working
+knowledge of useful fragments of F*.</p>
+<p>The remaining parts of the book are more loosely connected and either
+provide a reference guide to the compiler and libraries, or develop
+case studies that the reader can choose depending on their
+interest. Of course, some of those case studies come with
+prerequisites, e.g., you must have read about effects before tackling
+the case study on parsers and formatters.</p>
+<div class="section" id="part-1-basic-f">
+<span id="refinements"></span><span id="smtproofs"></span><h3>Part 1: Basic F*<a class="headerlink" href="#part-1-basic-f" title="Permalink to this headline">¶</a></h3>
+<p>The first part of this book provides a basic introduction to
+programming with pure total functions, refinement types, and SMT-based
+proofs. This part of the book is also available as an online tutorial
+and is targeted at an audience familiar with programming though with
+no background in formal proofs. Even if you are familiar with program
+proofs and dependent types, it will be useful to quickly go through
+this part, since it some elements are quite specific to F*.</p>
+</div>
+<div class="section" id="part-2-purely-functional-programs-and-proofs-in-f">
+<h3>Part 2: Purely Functional Programs and Proofs in F*<a class="headerlink" href="#part-2-purely-functional-programs-and-proofs-in-f" title="Permalink to this headline">¶</a></h3>
+<blockquote id="typeconversion">
+<div><ul class="simple">
+<li><p>Working with indexed data structures
+- Vectors
+- Red-black trees
+- Merkle trees</p></li>
+<li><p>Indexed types for proofs
+- Type soundness for the simply typed lambda calculus</p></li>
+<li><p>Proof irrelevance and classical logic: prop and squash</p></li>
+<li><p>More termination proofs
+- Infinitely branching trees and ordinal numbers
+- Lexicographic orderings and unification</p></li>
+<li><p>Calculational Proofs</p></li>
+<li><p>Generic programming
+- Printf
+- Integer overloading</p></li>
+<li><p>Typeclasses</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="part-3-effects">
+<span id="effects"></span><h3>Part 3: Effects<a class="headerlink" href="#part-3-effects" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p>Ghost: An Effect for Erasable Computations</p></li>
+<li><p>Nontermination: The Effect of Divergence</p></li>
+<li><p>State</p></li>
+<li><p>Exceptions</p></li>
+<li><p>Concurrency</p></li>
+<li><p>Algebraic Effects</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="part-4-tactics-and-metaprogramming">
+<span id="metafstar"></span><h3>Part 4: Tactics and Metaprogramming<a class="headerlink" href="#part-4-tactics-and-metaprogramming" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="part-5-f-libraries">
+<span id="corelib-prims"></span><h3>Part 5: F* Libraries<a class="headerlink" href="#part-5-f-libraries" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="part-6-a-user-s-guide-to-structuring-and-maintaining-f-developments">
+<span id="modules"></span><h3>Part 6: A User’s Guide to Structuring and Maintaining F* Developments<a class="headerlink" href="#part-6-a-user-s-guide-to-structuring-and-maintaining-f-developments" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
 <li><dl class="simple">
 <dt>The Build System</dt><dd><ul>
 <li><p>Dependence Analysis</p></li>
@@ -288,61 +707,22 @@
 <li><p>Syntax guide</p></li>
 <li><p>FAQ</p></li>
 </ul>
-</li>
-<li><p>Core libraries</p></li>
-</ol>
-<p id="corelib-prims">Part 2: F* in Action</p>
-<ol class="arabic simple">
-<li><p>Foundations of Programming Languages</p>
-<ol class="loweralpha simple">
-<li><p>Simply Typed Lambda Calculus: Syntatic Type Safety</p></li>
-<li><p>Normalization for STLC
-- Hereditary Substitutions: A Syntactic Normalization Technique
-- Logical Relations</p></li>
-<li><p>Semantics of an Imperative Language</p></li>
-<li><p>Floyd-Hoare Logic
-- Hoare triples
-- Weakest Preconditions</p></li>
-</ol>
-</li>
-<li><p>User-defined Effects</p>
-<ol class="loweralpha simple">
-<li><p>A language with an ML-style heap</p></li>
-<li><p>Monotonic State</p></li>
-<li><p>Exceptions</p></li>
-<li><p>Algebraic Effects</p></li>
-<li><p>Concurrency</p></li>
-</ol>
-</li>
-<li><p>Low*: An Embedded DSL and Hoare Logic for Programming</p>
-<ul class="simple">
-<li><p>Building on 4a and 4b.</p></li>
-<li><p>Integrating / referencing the Kremlin tutorial</p></li>
-</ul>
-</li>
-<li><p>A Verified Embedding of a Verified Assembly Language</p></li>
-<li><p>Modeling and Proving Cryptography Security</p>
-<ul class="simple">
-<li><p>UF-CMA MAC</p></li>
-<li><p>IND-CPA Encryption</p></li>
-<li><p>Authenticated Encryption</p></li>
-</ul>
-</li>
-<li><p>Verified Cryptographic Implementations</p></li>
-<li><p>Steel: An Extensible Concurrent Separation Logic</p></li>
-<li><p>EverParse?
-* Miniparse</p></li>
-<li><p>An End-to-end Verified Low-level App</p></li>
-</ol>
-<p>Part 3: Other resources</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>Recorded coding session</p></li>
-<li><p>Talks, presentations</p></li>
-<li><p>Exemplary code</p></li>
-</ul>
 </div></blockquote>
+</div>
+<div class="section" id="part-7-application-to-high-assurance-cryptography">
+<h3>Part 7: Application to High-assurance Cryptography<a class="headerlink" href="#part-7-application-to-high-assurance-cryptography" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="part-8-application-to-programming-language-semantics">
+<h3>Part 8: Application to Programming Language Semantics<a class="headerlink" href="#part-8-application-to-programming-language-semantics" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="part-9-application-to-parsers-and-formatters">
+<h3>Part 9: Application to Parsers and Formatters<a class="headerlink" href="#part-9-application-to-parsers-and-formatters" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="part-10-an-end-to-end-system-with-formal-proofs">
+<h3>Part 10: An End-to-end System with Formal Proofs<a class="headerlink" href="#part-10-an-end-to-end-system-with-formal-proofs" title="Permalink to this headline">¶</a></h3>
 <div class="toctree-wrapper compound">
+</div>
+</div>
 </div>
 </div>
 
@@ -358,7 +738,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="tutorial-overview.html" class="btn btn-neutral float-right" title="A Short Tutorial Introduction to F*" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="part1/part1.html" class="btn btn-neutral float-right" title="Programming and Proving with Total Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>
@@ -401,7 +781,18 @@
   
   
     
-   
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
 
 </body>
 </html>
