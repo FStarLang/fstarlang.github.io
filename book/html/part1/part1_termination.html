@@ -1,0 +1,645 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Proofs of termination &mdash; Proof-Oriented Programming in F*  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../static/custom.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../static/documentation_options.js"></script>
+        <script src="../static/jquery.js"></script>
+        <script src="../static/underscore.js"></script>
+        <script src="../static/doctools.js"></script>
+        <script src="../static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Lemmas and proofs by induction" href="part1_lemmas.html" />
+    <link rel="prev" title="Inductive types and pattern matching" href="part1_inductives.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Proof-Oriented Programming in F*
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">A Capsule Summary of F*</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="part1.html">Programming and Proving with Total Functions</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="part1_getting_off_the_ground.html">Getting off the ground</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part1_polymorphism.html">Polymorphism and type inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part1_prop_assertions.html">Interfacing with an SMT solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part1_inductives.html">Inductive types and pattern matching</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Proofs of termination</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#a-well-founded-partial-order-on-terms">A well-founded partial order on terms</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#the-precedes-relation">The precedes relation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#why-length-terminates">Why <code class="docutils literal notranslate"><span class="pre">length</span></code> terminates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lexicographic-orderings">Lexicographic orderings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#defaults-measures">Defaults measures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mutual-recursion">Mutual recursion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-termination-check-precisely">The termination check, precisely</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-fibonacci-in-linear-time">Exercise: Fibonacci in linear time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-tail-recursive-reversal">Exercise: Tail-recursive reversal</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="part1_lemmas.html">Lemmas and proofs by induction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part1_quicksort.html">Case Study: Quicksort</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Proof-Oriented Programming in F*</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="part1.html">Programming and Proving with Total Functions</a> &raquo;</li>
+        
+      <li>Proofs of termination</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+
+           <div itemprop="articleBody">
+            
+  <div class="section" id="proofs-of-termination">
+<span id="part1-ch4"></span><h1>Proofs of termination<a class="headerlink" href="#proofs-of-termination" title="Permalink to this headline">¶</a></h1>
+<p>It’s absolutely crucial to the soundness of F*’s core logic that all
+functions terminate. Otherwise, one could non-terminating write
+functions like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">rec</span> <span class="n">loop</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="n">unit</span><span class="p">)</span> <span class="p">:</span> <span class="kc">False</span> <span class="o">=</span> <span class="n">loop</span> <span class="n">x</span>
+</pre></div>
+</div>
+<p>and show that <code class="docutils literal notranslate"><span class="pre">loop</span> <span class="pre">()</span> <span class="pre">:</span> <span class="pre">False</span></code>, i.e., we’d have a proof term for
+<code class="docutils literal notranslate"><span class="pre">False</span></code> and the logic would collapse.</p>
+<p>In the previous chapter, we just saw how to define recursive functions
+to <a class="reference internal" href="part1_inductives.html#part1-inductives-length"><span class="std std-ref">compute the length of list</span></a> and to
+<a class="reference internal" href="part1_inductives.html#part1-inductives-append"><span class="std std-ref">append two lists</span></a>. We also said
+<a class="reference internal" href="part1_getting_off_the_ground.html#part1-ch1-arrows"><span class="std std-ref">earlier</span></a> that all functions in F*’s core are
+<em>total</em>, i.e., they always return in a finite amount of time. So, you
+may be wondering, what is it that guarantees that recursive function
+like <code class="docutils literal notranslate"><span class="pre">length</span></code> and <code class="docutils literal notranslate"><span class="pre">append</span></code> actually terminate on all inputs?</p>
+<p>The full details of how F* ensures termination of all functions in its
+core involves several elements, including positivity restrictions on
+datatype definitions and universe constraints. However, the main thing
+that you’ll need to understand at this stage is that F* includes a
+termination check that applies to the recursive definitions of total
+functions. The check is a semantic check, not a syntactic criterion,
+like in some other dependently typed languages.</p>
+<p>We quickly sketch the basic structure of the F* termination check on
+recursive functions—you’ll need to understand a bit of this in order
+to write more interesting programs.</p>
+<div class="section" id="a-well-founded-partial-order-on-terms">
+<h2>A well-founded partial order on terms<a class="headerlink" href="#a-well-founded-partial-order-on-terms" title="Permalink to this headline">¶</a></h2>
+<p>In order to prove a function terminating in F* one provides a
+<em>measure</em>: a pure expression depending on the function’s
+arguments. F* checks that this measure strictly decreases on each
+recursive call.  The measure for the arguments of the call is compared
+to the measure for the previous call according to a well-founded
+partial order on F* terms. We write <cite>v1 &lt;&lt; v2</cite> when <cite>v1</cite> _precedes_
+<cite>v2</cite> in this order.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A relation <cite>R</cite> is a well-founded partial order on a set <cite>S</cite> if, and
+only if, <cite>R</cite> is a partial order on <cite>S</cite> and there are no infinite
+descending chains in <cite>S</cite> related by <cite>R</cite>. For example, taking <cite>S</cite> to
+be <cite>nat</cite>, the set of natural numbers, the integer ordering <cite>&lt;</cite> is a
+well-founded partial order (in fact, it is a total order).</p>
+</div>
+<p>Since the measure strictly decreases on each recursive call, and there
+are no infinite descending chains, this guarantees that the function
+eventually stops making recursive calls, i.e., it terminates.</p>
+<div class="section" id="the-precedes-relation">
+<h3>The precedes relation<a class="headerlink" href="#the-precedes-relation" title="Permalink to this headline">¶</a></h3>
+<p>Given two terms <code class="docutils literal notranslate"><span class="pre">v₁:t₁</span></code> and <code class="docutils literal notranslate"><span class="pre">v₂:t₂</span></code>, we can prove <code class="docutils literal notranslate"><span class="pre">v₁</span> <span class="pre">&lt;&lt;</span> <span class="pre">v₂</span></code>
+if any of the following are true:</p>
+<ol class="arabic">
+<li><p><strong>The ordering on integers</strong>:</p>
+<p><code class="docutils literal notranslate"><span class="pre">t₁</span> <span class="pre">=</span> <span class="pre">nat</span></code> and <code class="docutils literal notranslate"><span class="pre">t₂</span> <span class="pre">=</span> <span class="pre">nat</span></code> and <code class="docutils literal notranslate"><span class="pre">v₁</span> <span class="pre">&lt;</span> <span class="pre">v₂</span></code></p>
+<p>Negative integers are not related by the <cite>&lt;&lt;</cite> relation, which is
+only a _partial_ order.</p>
+</li>
+<li><p><strong>The sub-term ordering on inductive types</strong></p>
+<blockquote>
+<div><p>If <code class="docutils literal notranslate"><span class="pre">v₂</span> <span class="pre">=</span> <span class="pre">D</span> <span class="pre">u₁</span> <span class="pre">...</span> <span class="pre">uₙ</span></code>, where <code class="docutils literal notranslate"><span class="pre">D</span></code> is a constructor of an
+inductive type fully applied to arguments <code class="docutils literal notranslate"><span class="pre">uₙ</span></code> to <code class="docutils literal notranslate"><span class="pre">uₙ</span></code>, then
+<code class="docutils literal notranslate"><span class="pre">v1</span> <span class="pre">&lt;&lt;</span> <span class="pre">v2</span></code> if either</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">v₁</span> <span class="pre">=</span> <span class="pre">uᵢ</span></code> for some <code class="docutils literal notranslate"><span class="pre">i</span></code>, i.e., <code class="docutils literal notranslate"><span class="pre">v₁</span></code> is a sub-term of <code class="docutils literal notranslate"><span class="pre">v₂</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">v₁</span> <span class="pre">=</span> <span class="pre">uᵢ</span> <span class="pre">x</span></code> for some <code class="docutils literal notranslate"><span class="pre">i</span></code> and <code class="docutils literal notranslate"><span class="pre">x</span></code>, i.e., <code class="docutils literal notranslate"><span class="pre">v₁</span></code> is the
+result of applying a sub-term of <code class="docutils literal notranslate"><span class="pre">v₂</span></code> to some argument <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="why-length-terminates">
+<h2>Why <code class="docutils literal notranslate"><span class="pre">length</span></code> terminates<a class="headerlink" href="#why-length-terminates" title="Permalink to this headline">¶</a></h2>
+<p>Let’s look again at the definition of <code class="docutils literal notranslate"><span class="pre">length</span></code> and see how F* checks
+that it terminates, i.e.,</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> length #a (l:list a)
+  : nat
+  = <span class="k">match</span> l <span class="k">with</span>
+    | [] -&gt; <span class="m">0</span>
+    | <span class="k">_</span> :: tl -&gt; <span class="m">1</span> + length tl
+</pre></div>
+</div>
+<p>First off, the definition of <code class="docutils literal notranslate"><span class="pre">length</span></code> above makes use of various
+syntactic shorthands to hide some details. If we were to write it out
+fully, it would be as shown below:</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> length #a (l:list a)
+  : Tot nat (<span class="k">decreases</span> l)
+  = <span class="k">match</span> l <span class="k">with</span>
+    | [] -&gt; <span class="m">0</span>
+    | <span class="k">_</span> :: tl -&gt; length tl
+</pre></div>
+</div>
+<p>The main difference is on the second line. As opposed to just writing
+the result type of <code class="docutils literal notranslate"><span class="pre">length</span></code>, in full detail, we write
+<code class="docutils literal notranslate"><span class="pre">Tot</span> <span class="pre">nat</span> <span class="pre">(decreases</span> <span class="pre">l)</span></code>. This states two things</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Tot</span> <span class="pre">nat</span></code> part states that <code class="docutils literal notranslate"><span class="pre">length</span></code> is a total function
+returning a <code class="docutils literal notranslate"><span class="pre">nat</span></code>, just as the <code class="docutils literal notranslate"><span class="pre">nat</span></code> did before.</p></li>
+<li><p>The additional <code class="docutils literal notranslate"><span class="pre">(decreases</span> <span class="pre">l)</span></code> specifying a <em>measure</em>, i.e., the
+quantity that decreases at each recursive call according the
+well-founded relation <code class="docutils literal notranslate"><span class="pre">&lt;&lt;</span></code>.</p></li>
+</ul>
+<p>To check the definition, F* gives the recursively bound name
+(<code class="docutils literal notranslate"><span class="pre">length</span></code> in this case) a type that’s guarded by the measure. I.e.,
+for the body of the function, <code class="docutils literal notranslate"><span class="pre">length</span></code> has the following type:</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span>#a:Type -&gt; m:list a{ m &lt;&lt; l } -&gt; nat
+</pre></div>
+</div>
+<p>This is to say that when using <code class="docutils literal notranslate"><span class="pre">length</span></code> to make a recursive call, we
+can only apply it to an argument <code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">&lt;&lt;</span> <span class="pre">l</span></code>, i.e., the recursive call
+can only be made on an argument <code class="docutils literal notranslate"><span class="pre">m</span></code> that precedes the current
+argument <code class="docutils literal notranslate"><span class="pre">l</span></code>. This is enough to ensure that the recursive calls will
+eventually bottom out, since there are no infinite descending chains
+related by <code class="docutils literal notranslate"><span class="pre">&lt;&lt;</span></code>.</p>
+<p>In the case of <code class="docutils literal notranslate"><span class="pre">length</span></code>, we need to prove at the recursive call
+<code class="docutils literal notranslate"><span class="pre">length</span> <span class="pre">tl</span></code> that <code class="docutils literal notranslate"><span class="pre">tl</span> <span class="pre">:</span> <span class="pre">(m</span> <span class="pre">:</span> <span class="pre">list</span> <span class="pre">a</span> <span class="pre">{</span> <span class="pre">m</span> <span class="pre">&lt;&lt;</span> <span class="pre">l</span> <span class="pre">}</span></code>, or, equivalently
+that <code class="docutils literal notranslate"><span class="pre">tl</span> <span class="pre">&lt;&lt;</span> <span class="pre">l</span></code> is valid. But, from the sub-term ordering on
+inductive types, <code class="docutils literal notranslate"><span class="pre">l</span> <span class="pre">=</span> <span class="pre">Cons</span> <span class="pre">_</span> <span class="pre">tl</span></code>, so <code class="docutils literal notranslate"><span class="pre">tl</span> <span class="pre">&lt;&lt;</span> <span class="pre">l</span></code> is indeed provable
+and everything checks out.</p>
+</div>
+<div class="section" id="lexicographic-orderings">
+<h2>Lexicographic orderings<a class="headerlink" href="#lexicographic-orderings" title="Permalink to this headline">¶</a></h2>
+<p>F* also provides a convenience to enhane the well-founded ordering
+<code class="docutils literal notranslate"><span class="pre">&lt;&lt;</span></code> to lexicographic combinations of <code class="docutils literal notranslate"><span class="pre">&lt;&lt;</span></code>. That is, given two
+lists of terms <code class="docutils literal notranslate"><span class="pre">v₁,</span> <span class="pre">...,</span> <span class="pre">vₙ</span></code> and <code class="docutils literal notranslate"><span class="pre">u₁,</span> <span class="pre">...,</span> <span class="pre">uₙ</span></code>, F* accepts that
+the following lexicographic ordering:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>v₁ &lt;&lt; u₁ ‌‌\/ (v₁ == u₁ /\ (v₂ &lt;&lt; u₂ ‌‌\/ (v₂ == u₂ /\ ( ... vₙ &lt;&lt; uₙ))))
+</pre></div>
+</div>
+<p>is also well-founded. In fact, it is possible to prove in F* that this
+ordering is well-founded, provided <code class="docutils literal notranslate"><span class="pre">&lt;&lt;</span></code> is itself well-founded.</p>
+<p>Lexicographic ordering are common enough that F* provides special
+support to make it convenient to use them. In particular, the
+notation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%[v₁; v₂; ...; vₙ] &lt;&lt; %[u₁; u₂; ...; uₙ]
+</pre></div>
+</div>
+<p>is shorthand for:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>v₁ &lt;&lt; u₁ ‌‌\/ (v₁ == u₁ /\ (v₂ &lt;&lt; u₂ ‌‌\/ (v₂ == u₂ /\ ( ... vₙ &lt;&lt; uₙ))))
+</pre></div>
+</div>
+<p>Let’s have a look at lexicographic orderings at work in proving that
+the classic <code class="docutils literal notranslate"><span class="pre">ackermann</span></code> function terminates on all inputs.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> ackermann (m n:nat)
+  : Tot nat (<span class="k">decreases</span> %[m;n])
+  = <span class="k">if</span> m=<span class="m">0</span> <span class="k">then</span> n + <span class="m">1</span>
+    <span class="k">else</span> <span class="k">if</span> n = <span class="m">0</span> <span class="k">then</span> ackermann (m - <span class="m">1</span>) <span class="m">1</span>
+    <span class="k">else</span> ackermann (m - <span class="m">1</span>) (ackermann m (n - <span class="m">1</span>))
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">decreases</span> <span class="pre">%[m;n]</span></code> syntax tells F* to use the lexicographic
+ordering on the pair of arguments <code class="docutils literal notranslate"><span class="pre">m,</span> <span class="pre">n</span></code> as the measure to prove
+this function terminating.</p>
+<p>When defining <code class="docutils literal notranslate"><span class="pre">ackermann</span> <span class="pre">m</span> <span class="pre">n</span></code>, for each recursive call of the form
+<code class="docutils literal notranslate"><span class="pre">ackermann</span> <span class="pre">m'</span> <span class="pre">n'</span></code>, F* checks that <code class="docutils literal notranslate"><span class="pre">%[m';n']</span> <span class="pre">&lt;&lt;</span> <span class="pre">%[m;n]</span></code>, i.e., F*
+checks that either</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">m'</span> <span class="pre">&lt;&lt;</span> <span class="pre">m</span></code>, or</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">m'</span> <span class="pre">=</span> <span class="pre">m</span></code> and <code class="docutils literal notranslate"><span class="pre">n'</span> <span class="pre">&lt;&lt;</span> <span class="pre">n</span></code></p></li>
+</ul>
+<p>There are three recursive calls to consider:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ackermann</span> <span class="pre">(m</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">1</span></code>: In this case, since we know that <code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">&gt;</span>
+<span class="pre">0</span></code>, we have <code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">-</span> <span class="pre">1</span> <span class="pre">&lt;&lt;</span> <span class="pre">m</span></code>, due to the ordering on natural
+numbers. Since the ordering is lexicographic, the second argument
+is irrelevant for termination.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ackermann</span> <span class="pre">m</span> <span class="pre">(n</span> <span class="pre">-</span> <span class="pre">1)</span></code>: In this case, the first argument remained
+the same (i.e., it’s still <code class="docutils literal notranslate"><span class="pre">m</span></code>), but we know that <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">&gt;</span> <span class="pre">0</span></code> so
+<code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">-</span> <span class="pre">1</span> <span class="pre">&lt;&lt;</span> <span class="pre">n</span></code> by the natural number ordering.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ackermann</span> <span class="pre">(m</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">(ackermann</span> <span class="pre">m</span> <span class="pre">(n</span> <span class="pre">-</span> <span class="pre">1))</span></code>: Again, like in the
+first case, the first argument <code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">-</span> <span class="pre">1</span> <span class="pre">&lt;&lt;</span> <span class="pre">m</span></code>, and the second is
+irrelevant for termination.</p></li>
+</ol>
+</div>
+<div class="section" id="defaults-measures">
+<h2>Defaults measures<a class="headerlink" href="#defaults-measures" title="Permalink to this headline">¶</a></h2>
+<p>As we saw earlier, F* allows you to write the following code, with no
+<code class="docutils literal notranslate"><span class="pre">decreases</span></code> clause, and it still accepts it.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> length #a (l:list a)
+  : nat
+  = <span class="k">match</span> l <span class="k">with</span>
+    | [] -&gt; <span class="m">0</span>
+    | <span class="k">_</span> :: tl -&gt; <span class="m">1</span> + length tl
+</pre></div>
+</div>
+<p>For that matter, you can leave out the <code class="docutils literal notranslate"><span class="pre">decreases</span></code> clause in
+<code class="docutils literal notranslate"><span class="pre">ackermann</span></code> and F* is okay with it.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> ackermann (m n:nat)
+  : nat
+  = <span class="k">if</span> m=<span class="m">0</span> <span class="k">then</span> n + <span class="m">1</span>
+    <span class="k">else</span> <span class="k">if</span> n = <span class="m">0</span> <span class="k">then</span> ackermann (m - <span class="m">1</span>) <span class="m">1</span>
+    <span class="k">else</span> ackermann (m - <span class="m">1</span>) (ackermann m (n - <span class="m">1</span>))
+</pre></div>
+</div>
+<p>This is because F* uses a simple heuristic to choose the decreases
+clause, if the user didn’t provide one.</p>
+<p>The <em>default</em> decreases clause for a total, recursive function is the
+lexicographic ordering of all the non-function-typed arguments, taken
+in order from left to right.</p>
+<p>That is, the default decreases clause for <code class="docutils literal notranslate"><span class="pre">ackermann</span></code> is exactly
+<code class="docutils literal notranslate"><span class="pre">decreases</span> <span class="pre">%[m;</span> <span class="pre">n]</span></code>; and the default for <code class="docutils literal notranslate"><span class="pre">length</span></code> is just
+<code class="docutils literal notranslate"><span class="pre">decreases</span> <span class="pre">%[a;</span> <span class="pre">l]</span></code> (which is equivalent to <code class="docutils literal notranslate"><span class="pre">decreases</span> <span class="pre">l</span></code>). So, you
+needn’t write it.</p>
+<p>On the other hand, it you were to flip the order of arguments to
+<code class="docutils literal notranslate"><span class="pre">ackermann</span></code>, then the default choise of the measure would not be
+correct—so, you’ll have to write it explicitly, as shown below.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> ackermann_flip (n m:nat)
+  : Tot nat (<span class="k">decreases</span> %[m;n])
+  = <span class="k">if</span> m=<span class="m">0</span> <span class="k">then</span> n + <span class="m">1</span>
+    <span class="k">else</span> <span class="k">if</span> n = <span class="m">0</span> <span class="k">then</span> ackermann_flip <span class="m">1</span> (m - <span class="m">1</span>)
+    <span class="k">else</span> ackermann_flip (ackermann (n - <span class="m">1</span>) m) (m - <span class="m">1</span>)
+</pre></div>
+</div>
+</div>
+<div class="section" id="mutual-recursion">
+<h2>Mutual recursion<a class="headerlink" href="#mutual-recursion" title="Permalink to this headline">¶</a></h2>
+<p>F* also supports mutual recursion and the same check of proving that a
+measure of the arguments decreases on each (mutually) recursive call
+applies.</p>
+<p>For example, one can write the following code to define a binary
+<code class="docutils literal notranslate"><span class="pre">tree</span></code> that stores an integer at each internal node—the keyword
+<code class="docutils literal notranslate"><span class="pre">and</span></code> allows defining several types that depend mutually on each
+other.</p>
+<p>To increment all the integers in the tree, we can write the mutually
+recursive functions, again using <code class="docutils literal notranslate"><span class="pre">and</span></code> to define <code class="docutils literal notranslate"><span class="pre">incr_tree</span></code> and
+<code class="docutils literal notranslate"><span class="pre">incr_node</span></code> to depend mutually on each other. F* is able to prove
+that these functions terminate, just by using the default measure as
+usual.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> tree =
+  | Terminal : tree
+  | Internal : node -&gt; tree
+
+<span class="k">and</span> node = {
+  left : tree;
+  data : int;
+  right : tree
+}
+
+<span class="k">let</span> <span class="k">rec</span> incr_tree (x:tree)
+  : tree
+  = <span class="k">match</span> x <span class="k">with</span>
+    | Terminal -&gt; Terminal
+    | Internal node -&gt; Internal (incr_node node)
+
+<span class="k">and</span> incr_node (n:node)
+  : node
+  = {
+      left = incr_tree n.left;
+      data = n.data + <span class="m">1</span>;
+      right = incr_tree n.right
+    }
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Sometimes, a little trick with lexicographic orderings can help
+prove mutually recursive functions correct. We include it here as a
+tip, you can probably skip it on a first read.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> foo (l:list int)
+  : Tot int (<span class="k">decreases</span> %[l;<span class="m">0</span>])
+  = <span class="k">match</span> l <span class="k">with</span>
+    | [] -&gt; <span class="m">0</span>
+    | x :: xs -&gt; bar xs
+<span class="k">and</span> bar (l:list int)
+  : Tot int (<span class="k">decreases</span> %[l;<span class="m">1</span>])
+  = foo l
+</pre></div>
+</div>
+<p>What’s happening here is that when <code class="docutils literal notranslate"><span class="pre">foo</span> <span class="pre">l</span></code> calls <code class="docutils literal notranslate"><span class="pre">bar</span></code>, the
+argument <code class="docutils literal notranslate"><span class="pre">xs</span></code> is legitimately a sub-term of <code class="docutils literal notranslate"><span class="pre">l</span></code>. However, <code class="docutils literal notranslate"><span class="pre">bar</span>
+<span class="pre">l</span></code> simply calls back <code class="docutils literal notranslate"><span class="pre">foo</span> <span class="pre">l</span></code>, without decreasing the
+argument. The reason this terminates, however, is that <code class="docutils literal notranslate"><span class="pre">bar</span></code> can
+freely call back <code class="docutils literal notranslate"><span class="pre">foo</span></code>, since <code class="docutils literal notranslate"><span class="pre">foo</span></code> will only ever call <code class="docutils literal notranslate"><span class="pre">bar</span></code>
+again with a smaller argument. You can convince F* of this by
+writing the decreases clauses shown, i.e., when <code class="docutils literal notranslate"><span class="pre">bar</span></code> calls
+<code class="docutils literal notranslate"><span class="pre">foo</span></code>, <code class="docutils literal notranslate"><span class="pre">l</span></code> doesn’t change, but the second component of the
+lexicographic rdering does decrease, i.e., <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;&lt;</span> <span class="pre">1</span></code>.</p>
+</div>
+</div>
+<div class="section" id="the-termination-check-precisely">
+<h2>The termination check, precisely<a class="headerlink" href="#the-termination-check-precisely" title="Permalink to this headline">¶</a></h2>
+<p>Having seen a few examples at work, we can now describe how the
+termination check works in general.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We use a slightly more mathematical notation here, so that we can
+be precise. If it feels unfamiliar, you needn’t understand this
+completely at first. Continue with the examples and refer back to
+this section, if and when you feel like a precise description would
+be helpful.</p>
+</div>
+<p>When defining a recursive function</p>
+<div class="math notranslate nohighlight">
+\[\mathsf{f~(\overline{x:t})~:~Tot~r~(decreases~m)~=~e}\]</div>
+<p>i.e., <span class="math notranslate nohighlight">\(\mathsf{f}\)</span> is a function with several arguments
+<span class="math notranslate nohighlight">\(\mathsf{x₁:t₁}, ..., \mathsf{xₙ:tₙ}\)</span>, returning
+<span class="math notranslate nohighlight">\(\mathsf{r}\)</span> with measure <span class="math notranslate nohighlight">\(\mathsf{m}\)</span>, mutually
+recursively with other functions of several arguments at type:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathsf{f₁~(\overline{x₁:t₁})~:~Tot~r₁~(decreases~m₁)} \\
+\ldots \\
+\mathsf{fₙ~(\overline{xₙ:tₙ})~:~Tot~rₙ~(decreases~mₙ)} \\\end{split}\]</div>
+<p>we check the definition of the function body of <span class="math notranslate nohighlight">\(\mathsf{f}\)</span>
+(i.e., <span class="math notranslate nohighlight">\(\mathsf{e}\)</span>) with all the mutually recursive functions
+in scope, but at types that restrict their domain, in the following
+sense:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathsf{f~:~(\overline{y:t}\{~m[\overline{y}/\overline{x}]~≪~m~\}~→~r[\overline{y}/\overline{x}])} \\
+\mathsf{f₁~:~(\overline{x₁:t₁}\{~m₁~≪~m~\}~→~r₁)} \\
+\ldots \\
+\mathsf{fₙ~:~(\overline{xₙ:tₙ}\{~mₙ~≪~m~\}~→~rₙ)} \\\end{split}\]</div>
+<p>That is, each function in the mutually recursive group can only be
+applied to arguments that are precede the current formal parameters of
+<span class="math notranslate nohighlight">\(\mathsf{f}\)</span> according to the annotated measures of each
+function.</p>
+</div>
+<div class="section" id="exercise-fibonacci-in-linear-time">
+<span id="part1-termination-fibonacci"></span><h2>Exercise: Fibonacci in linear time<a class="headerlink" href="#exercise-fibonacci-in-linear-time" title="Permalink to this headline">¶</a></h2>
+<p>Here’s a function to compute the <span class="math notranslate nohighlight">\(n\)</span>-th Fibonacci number.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> fibonacci (n:nat)
+  : nat
+  = <span class="k">if</span> n &lt;= <span class="m">1</span>
+    <span class="k">then</span> <span class="m">1</span>
+    <span class="k">else</span> fibonacci (n - <span class="m">1</span>) + fibonacci (n - <span class="m">2</span>)
+</pre></div>
+</div>
+<p>Here’s a more efficient, tail-recursive, linear-time variant.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> fib a b n =
+   <span class="k">match</span> n <span class="k">with</span>
+   | <span class="m">0</span> -&gt; a
+   | <span class="k">_</span> -&gt; fib b (a+b) (n-<span class="m">1</span>)
+
+<span class="k">let</span> fibonacci n = fib <span class="m">1</span> <span class="m">1</span> n
+</pre></div>
+</div>
+<p>Add annotations to the functions to get F* to accept them, in
+particular, proving that <code class="docutils literal notranslate"><span class="pre">fib</span></code> terminates.</p>
+<div class="toggle docutils container">
+<div class="header docutils container">
+<p><strong>Answer</strong></p>
+</div>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> fib (a b n:nat)
+  : Tot nat (<span class="k">decreases</span> n)
+  = <span class="k">match</span> n <span class="k">with</span>
+    | <span class="m">0</span> -&gt; a
+    | <span class="k">_</span> -&gt; fib b (a+b) (n-<span class="m">1</span>)
+
+<span class="k">let</span> fibonacci (n:nat) : nat = fib <span class="m">1</span> <span class="m">1</span> n
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="exercise-tail-recursive-reversal">
+<span id="part1-termination-reverse"></span><h2>Exercise: Tail-recursive reversal<a class="headerlink" href="#exercise-tail-recursive-reversal" title="Permalink to this headline">¶</a></h2>
+<p>Here is a function to reverse a list:</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> rev #a (l:list a)
+  : list a
+  = <span class="k">match</span> l <span class="k">with</span>
+    | [] -&gt; []
+    | hd::tl -&gt; append (rev tl) hd
+</pre></div>
+</div>
+<p>But, it is not very efficient, since it is not tail recursive and,
+worse, it is quadratic, it traverses the reversed tail of the list
+each time to add the first element to the end of it.</p>
+<p>This version is more efficient, because it is tail recursive and
+linear.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> rev_aux l<span class="m">1</span> l<span class="m">2</span> =
+  <span class="k">match</span> l<span class="m">2</span> <span class="k">with</span>
+  | []     -&gt; l<span class="m">1</span>
+  | hd :: tl -&gt; rev_aux (hd :: l<span class="m">1</span>) tl
+
+<span class="k">let</span> rev l = rev_aux [] l
+</pre></div>
+</div>
+<p>Add type annotations to <code class="docutils literal notranslate"><span class="pre">rev_aux</span></code> and <code class="docutils literal notranslate"><span class="pre">rev</span></code>, proving, in
+particular, that <code class="docutils literal notranslate"><span class="pre">rev_aux</span></code> terminates.</p>
+<div class="toggle docutils container">
+<div class="header docutils container">
+<p><strong>Answer</strong></p>
+</div>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> rev_aux #a (l<span class="m">1</span> l<span class="m">2</span>:list a)
+  : Tot (list a) (<span class="k">decreases</span> l<span class="m">2</span>)
+  = <span class="k">match</span> l<span class="m">2</span> <span class="k">with</span>
+    | []     -&gt; l<span class="m">1</span>
+    | hd :: tl -&gt; rev_aux (hd :: l<span class="m">1</span>) tl
+
+<span class="k">let</span> rev #a (l:list a) : list a = rev_aux [] l
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+    <!-- <a href="https://github.com/FStarLang/fstar/"> -->
+    <!--     <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"> -->
+    <!-- </a> -->
+
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="part1_lemmas.html" class="btn btn-neutral float-right" title="Lemmas and proofs by induction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="part1_inductives.html" class="btn btn-neutral float-left" title="Inductive types and pattern matching" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Microsoft Research
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

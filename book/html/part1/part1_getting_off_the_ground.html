@@ -31,12 +31,14 @@
         <script src="../static/underscore.js"></script>
         <script src="../static/doctools.js"></script>
         <script src="../static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../static/js/theme.js"></script>
 
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Polymorphism and type inference" href="part1_polymorphism.html" />
     <link rel="prev" title="Programming and Proving with Total Functions" href="part1.html" /> 
 </head>
 
@@ -84,6 +86,7 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">A Capsule Summary of F*</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="part1.html">Programming and Proving with Total Functions</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Getting off the ground</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#basic-syntactic-structure">Basic syntactic structure</a></li>
@@ -119,6 +122,12 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="part1_polymorphism.html">Polymorphism and type inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part1_prop_assertions.html">Interfacing with an SMT solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part1_inductives.html">Inductive types and pattern matching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part1_termination.html">Proofs of termination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part1_lemmas.html">Lemmas and proofs by induction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part1_quicksort.html">Case Study: Quicksort</a></li>
 </ul>
 </li>
 </ul>
@@ -289,7 +298,7 @@ multiplication.</p></li>
 </div>
 </div>
 <div class="section" id="boolean-refinement-types">
-<h2>Boolean refinement types<a class="headerlink" href="#boolean-refinement-types" title="Permalink to this headline">¶</a></h2>
+<span id="part1-ch1-boolean-refinements"></span><h2>Boolean refinement types<a class="headerlink" href="#boolean-refinement-types" title="Permalink to this headline">¶</a></h2>
 <p>The F* core library, <a class="reference internal" href="../index.html#corelib-prims"><span class="std std-ref">Prims</span></a>, defines the type of
 natural numbers as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">nat</span> <span class="o">=</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">{</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">}</span>
@@ -484,7 +493,7 @@ brings the module <cite>FStar.Mul</cite> into scope and resolves the symbol
 </div>
 </div>
 <div class="section" id="arrow-types">
-<h2>Arrow types<a class="headerlink" href="#arrow-types" title="Permalink to this headline">¶</a></h2>
+<span id="part1-ch1-arrows"></span><h2>Arrow types<a class="headerlink" href="#arrow-types" title="Permalink to this headline">¶</a></h2>
 <p>Functions are the main abstraction facility of any functional language
 and their types are pervasive in F*. In its most basic form, function
 types, or arrows, have the shape:</p>
@@ -591,8 +600,9 @@ customary.</p>
 </div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
-<p>To try these examples, you should have a working installation of the
-F* toolchain, downloadable from <a class="reference external" href="https://github.com/FStarLang/FStar/releases">here</a>.</p>
+<p>To try the <a class="reference external" href="/book/code/exercises/Part1.GettingOffTheGround.fst">exercises associated with this chapter</a>, you should
+have a working installation of the F* toolchain, <a class="reference external" href="https://github.com/FStarLang/FStar/releases">downloadable from
+here</a>.</p>
 <p>This first example is just to show you how to run the tool and
 interpret its output.</p>
 <div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> Sample
@@ -624,6 +634,12 @@ programmers using the <a class="reference external" href="https://www.gnu.org/so
 editor often use <a class="reference external" href="https://github.com/FStarLang/fstar-mode.el">fstar-mode.el</a>, an editor plugin that
 allows interactively checking an F* program. If you plan to use F* in
 any serious way, this is strongly recommended.</p>
+<p><strong>F* online</strong></p>
+<p>For casual experiments, the easiest way to get a working F* instance
+is from your browser at <a class="reference external" href="http://fstar-lang.org/run.php">http://fstar-lang.org/run.php</a>. This provides a bare-bones editor
+communicating with F* running in the cloud. The online version is
+probably fine for trying out small examples, such as the exercises
+here.</p>
 <div class="section" id="many-types-for-incr">
 <h3>Many types for <code class="docutils literal notranslate"><span class="pre">incr</span></code><a class="headerlink" href="#many-types-for-incr" title="Permalink to this headline">¶</a></h3>
 <p>Here are some types for <code class="docutils literal notranslate"><span class="pre">incr</span></code>, including some types that are valid
@@ -767,13 +783,16 @@ the maximum of <code class="docutils literal notranslate"><span class="pre">x</s
 </div>
 <div class="section" id="fibonacci">
 <h3>Fibonacci<a class="headerlink" href="#fibonacci" title="Permalink to this headline">¶</a></h3>
-<p>Here’s a doubly recursive function:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">literalinclude</span><span class="p">::</span> <span class="n">exercises</span><span class="o">/</span><span class="n">Sample</span><span class="o">.</span><span class="n">fst</span>
- <span class="p">:</span><span class="n">language</span><span class="p">:</span> <span class="n">fstar</span>
- <span class="p">:</span><span class="n">start</span><span class="o">-</span><span class="n">after</span><span class="p">:</span> <span class="n">SNIPPET_START</span><span class="p">:</span> <span class="n">fibonacci</span>
- <span class="p">:</span><span class="n">end</span><span class="o">-</span><span class="n">before</span><span class="p">:</span> <span class="n">SNIPPET_END</span><span class="p">:</span> <span class="n">fibonacci</span>
+<p>Here’s a doubly recursive function</p>
+<blockquote>
+<div><div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> fibonacci (n:nat)
+  : nat
+  = <span class="k">if</span> n &lt;= <span class="m">1</span>
+    <span class="k">then</span> <span class="m">1</span>
+    <span class="k">else</span> fibonacci (n - <span class="m">1</span>) + fibonacci (n - <span class="m">2</span>)
 </pre></div>
 </div>
+</div></blockquote>
 <p>What other types can you give to it?</p>
 <div class="toggle docutils container">
 <div class="header docutils container">
@@ -807,6 +826,8 @@ the maximum of <code class="docutils literal notranslate"><span class="pre">x</s
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="part1_polymorphism.html" class="btn btn-neutral float-right" title="Polymorphism and type inference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="part1.html" class="btn btn-neutral float-left" title="Programming and Proving with Total Functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

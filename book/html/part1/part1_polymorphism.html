@@ -1,0 +1,417 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Polymorphism and type inference &mdash; Proof-Oriented Programming in F*  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../static/custom.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../static/documentation_options.js"></script>
+        <script src="../static/jquery.js"></script>
+        <script src="../static/underscore.js"></script>
+        <script src="../static/doctools.js"></script>
+        <script src="../static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Interfacing with an SMT solver" href="part1_prop_assertions.html" />
+    <link rel="prev" title="Getting off the ground" href="part1_getting_off_the_ground.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Proof-Oriented Programming in F*
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">A Capsule Summary of F*</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="part1.html">Programming and Proving with Total Functions</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="part1_getting_off_the_ground.html">Getting off the ground</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Polymorphism and type inference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#type-the-type-of-types">Type: The type of types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#parametric-polymorphism-or-generics">Parametric polymorphism or generics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercises">Exercises</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#type-inference-basics">Type inference: Basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#implicit-arguments">Implicit arguments</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="part1_prop_assertions.html">Interfacing with an SMT solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part1_inductives.html">Inductive types and pattern matching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part1_termination.html">Proofs of termination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part1_lemmas.html">Lemmas and proofs by induction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part1_quicksort.html">Case Study: Quicksort</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Proof-Oriented Programming in F*</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="part1.html">Programming and Proving with Total Functions</a> &raquo;</li>
+        
+      <li>Polymorphism and type inference</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+
+           <div itemprop="articleBody">
+            
+  <div class="section" id="polymorphism-and-type-inference">
+<span id="part1-polymorphism-and-inference"></span><h1>Polymorphism and type inference<a class="headerlink" href="#polymorphism-and-type-inference" title="Permalink to this headline">¶</a></h1>
+<p>In this chapter, we’ll learn about defining type polymorphic
+functions, or how to work with generic types.</p>
+<div class="section" id="type-the-type-of-types">
+<h2>Type: The type of types<a class="headerlink" href="#type-the-type-of-types" title="Permalink to this headline">¶</a></h2>
+<p>One characteristic of F* (and many other dependently typed languages)
+is that it treats programs and their types uniformly, all within a
+single syntactic class. A type system in this style is sometimes
+called a <em>Pure Type System</em> or <a class="reference external" href="https://en.wikipedia.org/wiki/Pure_type_system">PTS</a>.</p>
+<p>In F* (as in other PTSs) types have types too, functions can take
+types as arguments and return types as results, etc. In particular,
+the type of a type is <code class="docutils literal notranslate"><span class="pre">Type</span></code>, e.g., <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">:</span> <span class="pre">Type</span></code>, <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">:</span> <span class="pre">Type</span></code>,
+<code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">-&gt;</span> <span class="pre">int</span> <span class="pre">:</span> <span class="pre">Type</span></code> etc. In fact, even <code class="docutils literal notranslate"><span class="pre">Type</span></code> has a type—as
+we’ll see in the subsection on <a class="reference internal" href="../index.html#universes"><span class="std std-ref">universes</span></a>.</p>
+</div>
+<div class="section" id="parametric-polymorphism-or-generics">
+<h2>Parametric polymorphism or generics<a class="headerlink" href="#parametric-polymorphism-or-generics" title="Permalink to this headline">¶</a></h2>
+<p>Most modern typed languages provide a way to write programs with
+generic types. For instance, C# and Java provide generics, C++ has
+templates, and languages like OCaml and Haskell have several kinds of
+polymorphic types.</p>
+<p>In F*, writing functions that are generic or polymorphic in types
+arises naturally as a special case of the <a class="reference internal" href="part1_getting_off_the_ground.html#part1-ch1-arrows"><span class="std std-ref">arrow types</span></a> that we have already learned about. For example,
+here’s a polymorphic identity function:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="nb">id</span> <span class="p">:</span> <span class="n">a</span><span class="p">:</span><span class="n">Type</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">fun</span> <span class="n">a</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">x</span>
+</pre></div>
+</div>
+<p>There are a several things to note here:</p>
+<ul class="simple">
+<li><p>The type of <code class="docutils literal notranslate"><span class="pre">id</span></code> is an arrow type, with two arguments. The first
+argument is <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">:</span> <span class="pre">Type</span></code>; the second argument is a term of type
+<code class="docutils literal notranslate"><span class="pre">a</span></code>; and the result also has the same type <code class="docutils literal notranslate"><span class="pre">a</span></code>.</p></li>
+<li><p>The definition of <code class="docutils literal notranslate"><span class="pre">id</span></code> is a lambda term with two arguments <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">:</span>
+<span class="pre">Type</span></code> (corresponding to the first argument type) and <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">:</span> <span class="pre">a</span></code>. The
+function returns <code class="docutils literal notranslate"><span class="pre">x</span></code>—it’s an identity function on the second
+argument.</p></li>
+</ul>
+<p>Just as with any function, you can write it instead like this:</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> id (a:Type) (x:a) : a = x
+</pre></div>
+</div>
+<p>To call <code class="docutils literal notranslate"><span class="pre">id</span></code>, one can apply it first to a type and then to a value of that type, as shown below.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">_</span> : bool = id bool <span class="k">true</span>
+<span class="k">let</span> <span class="k">_</span> : bool = id bool <span class="k">false</span>
+<span class="k">let</span> <span class="k">_</span> : int = id int (-<span class="m">1</span>)
+<span class="k">let</span> <span class="k">_</span> : nat = id nat <span class="m">17</span>
+<span class="k">let</span> <span class="k">_</span> : string = id string &quot;hello&quot;
+<span class="k">let</span> <span class="k">_</span> : int -&gt; int = id (int -&gt; int) (id int)
+</pre></div>
+</div>
+<p>We’ve defined a function that can be applied to a value <code class="docutils literal notranslate"><span class="pre">x:a</span></code> for
+any type <code class="docutils literal notranslate"><span class="pre">a</span></code>. The last line there maybe requires a second read: we
+instantiated <code class="docutils literal notranslate"><span class="pre">id</span></code> to <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">-&gt;</span> <span class="pre">int</span></code> and then applied it to <code class="docutils literal notranslate"><span class="pre">id</span></code>
+instantiated to <code class="docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</div>
+<div class="section" id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<p>Let’s try a few simple exercises.</p>
+<p>Try defining functions with the following signatures:</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">val</span> apply (a b:Type) (f:a -&gt; b) : a -&gt; b
+<span class="k">val</span> compose (a b c:Type) (f: b -&gt; c) (g : a -&gt; b) : a -&gt; c
+</pre></div>
+</div>
+<div class="toggle docutils container">
+<div class="header docutils container">
+<p><strong>Answer</strong></p>
+</div>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> apply a b f = <span class="k">fun</span> x -&gt; f x
+<span class="k">let</span> compose a b c f g = <span class="k">fun</span> x -&gt; f (g x)
+</pre></div>
+</div>
+</div>
+<p>How about writing down a signature for <code class="docutils literal notranslate"><span class="pre">twice</span></code>:</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> twice a f x = compose a a a f f x
+</pre></div>
+</div>
+<div class="toggle docutils container">
+<div class="header docutils container">
+<p><strong>Answer</strong></p>
+</div>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">val</span> twice (a:Type) (f: a -&gt; a) (x:a) : a
+</pre></div>
+</div>
+</div>
+<p>It’s quite tedious to have to explicitly provide that first type
+argument to <code class="docutils literal notranslate"><span class="pre">id</span></code>. Implicit arguments and type inference will help,
+as we’ll see, next.</p>
+</div>
+<div class="section" id="type-inference-basics">
+<h2>Type inference: Basics<a class="headerlink" href="#type-inference-basics" title="Permalink to this headline">¶</a></h2>
+<p id="inference">Like many other languages in the tradition of
+<a class="reference external" href="https://en.wikipedia.org/wiki/ML_%28programming_language%29">Milner’s ML</a>,
+type inference is a central component in F*’s design.</p>
+<p>You may be used to type inference in other languages, where one can
+leave out type annotations (e.g., on variables, or when using
+type-polymorphic (aka generic) functions) and the compiler determines
+an appropriate type based on the surrounding program context. F*’s
+type inference includes such a feature, but is considerably more
+powerful. Like in other dependently typed language, F*’s inference
+engine is based on <a class="reference external" href="https://en.wikipedia.org/wiki/Unification_(computer_science)#Higher-order_unification">higher-order unification</a>
+and can be used to infer arbitrary fragments of program text, not just
+type annotations on variables.</p>
+<p>Let’s consider our simple example of the definition and use of the
+identity function again</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> id (a:Type) (x:a) : a = x
+</pre></div>
+</div>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">_</span> : bool = id bool <span class="k">true</span>
+<span class="k">let</span> <span class="k">_</span> : bool = id bool <span class="k">false</span>
+<span class="k">let</span> <span class="k">_</span> : int = id int (-<span class="m">1</span>)
+<span class="k">let</span> <span class="k">_</span> : nat = id nat <span class="m">17</span>
+<span class="k">let</span> <span class="k">_</span> : string = id string &quot;hello&quot;
+<span class="k">let</span> <span class="k">_</span> : int -&gt; int = id (int -&gt; int) (id int)
+</pre></div>
+</div>
+<p>Instead of explicitly providing that first type argument when applying
+<code class="docutils literal notranslate"><span class="pre">id</span></code>, one could write it as follows, replacing the type arguments
+with an underscore <code class="docutils literal notranslate"><span class="pre">_</span></code>.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">_</span> : bool = id <span class="k">_</span> <span class="k">true</span>
+<span class="k">let</span> <span class="k">_</span> : bool = id <span class="k">_</span> <span class="k">false</span>
+<span class="k">let</span> <span class="k">_</span> : int = id <span class="k">_</span> (-<span class="m">1</span>)
+<span class="k">let</span> <span class="k">_</span> : nat = id <span class="k">_</span> <span class="m">17</span>
+<span class="k">let</span> <span class="k">_</span> : string = id <span class="k">_</span> &quot;hello&quot;
+<span class="k">let</span> <span class="k">_</span> : int -&gt; int = id <span class="k">_</span> (id <span class="k">_</span>)
+</pre></div>
+</div>
+<p>The underscore symbols is a wildcard, or a hole in program, and it’s
+the job of the F* typechecker to fill in the hole.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Program holes are a very powerful concept and form the basis of
+Meta-F*, the metaprogramming and tactics framework embedded in
+F*—we’ll see more about holes in a <a class="reference internal" href="../index.html#metafstar"><span class="std std-ref">later
+section</span></a>.</p>
+</div>
+</div>
+<div class="section" id="implicit-arguments">
+<h2>Implicit arguments<a class="headerlink" href="#implicit-arguments" title="Permalink to this headline">¶</a></h2>
+<p>Since it’s tedious to write an <code class="docutils literal notranslate"><span class="pre">_</span></code> everywhere, F* has a notion of
+<em>implicit arguments</em>. That is, when defining a function, one can add
+annotations to indicate that certain arguments can be omitted at call
+sites and left for the typechecker to infer automatically.</p>
+<p>For example, one could write</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> id (#a:Type) (x:a) : a = x
+</pre></div>
+</div>
+<p>decorating the first argument <code class="docutils literal notranslate"><span class="pre">a</span></code> with a <code class="docutils literal notranslate"><span class="pre">#</span></code>, to indicate that it is
+an implicit argument. Then at call sites, one can simply write:</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">_</span> : bool = id <span class="k">true</span>
+<span class="k">let</span> <span class="k">_</span> : bool = id <span class="k">false</span>
+<span class="k">let</span> <span class="k">_</span> : int = id (-<span class="m">1</span>)
+<span class="k">let</span> <span class="k">_</span> : nat = id <span class="m">17</span>
+<span class="k">let</span> <span class="k">_</span> : string = id &quot;hello&quot;
+<span class="k">let</span> <span class="k">_</span> : int -&gt; int = id id
+</pre></div>
+</div>
+<p>And F* will figure out instantiations for the missing first argument
+to <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
+<p>In some cases, it may be useful to actually provide an implicit
+argument explicitly, rather than relying on the F* to pick one. For
+example, one could write the following:</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">_</span> = id #nat <span class="m">0</span>
+<span class="k">let</span> <span class="k">_</span> = id #(x:int{x == <span class="m">0</span>}) <span class="m">0</span>
+<span class="k">let</span> <span class="k">_</span> = id #(x:int{x &lt;&gt; <span class="m">1</span>}) <span class="m">0</span>
+</pre></div>
+</div>
+<p>In each case, we provide the first argument of <code class="docutils literal notranslate"><span class="pre">id</span></code> explicitly, by
+preceding it with a <code class="docutils literal notranslate"><span class="pre">#</span></code> sign, which instructs F* to take the user’s
+term rather than generating a hole and trying to fill it.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+    <!-- <a href="https://github.com/FStarLang/fstar/"> -->
+    <!--     <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"> -->
+    <!-- </a> -->
+
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="part1_prop_assertions.html" class="btn btn-neutral float-right" title="Interfacing with an SMT solver" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="part1_getting_off_the_ground.html" class="btn btn-neutral float-left" title="Getting off the ground" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Microsoft Research
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

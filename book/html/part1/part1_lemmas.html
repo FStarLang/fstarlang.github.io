@@ -1,0 +1,887 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Lemmas and proofs by induction &mdash; Proof-Oriented Programming in F*  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../static/custom.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../static/documentation_options.js"></script>
+        <script src="../static/jquery.js"></script>
+        <script src="../static/underscore.js"></script>
+        <script src="../static/doctools.js"></script>
+        <script src="../static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Case Study: Quicksort" href="part1_quicksort.html" />
+    <link rel="prev" title="Proofs of termination" href="part1_termination.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Proof-Oriented Programming in F*
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">A Capsule Summary of F*</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="part1.html">Programming and Proving with Total Functions</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="part1_getting_off_the_ground.html">Getting off the ground</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part1_polymorphism.html">Polymorphism and type inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part1_prop_assertions.html">Interfacing with an SMT solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part1_inductives.html">Inductive types and pattern matching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part1_termination.html">Proofs of termination</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Lemmas and proofs by induction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#introducing-lemmas">Introducing lemmas</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#some-syntactic-shorthands-for-lemmas">Some syntactic shorthands for Lemmas</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#a-proof-by-induction-explained-in-detail">A proof by induction, explained in detail</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#exercises-lemmas-about-integer-functions">Exercises: Lemmas about integer functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#exercise-1">Exercise 1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#exercise-2">Exercise 2</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-a-lemma-about-append">Exercise: A lemma about append</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#intrinsic-vs-extrinsic-proofs">Intrinsic vs extrinsic proofs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#exercises-reverse-is-injective">Exercises: Reverse is injective</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#exercise-optimizing-reverse">Exercise: Optimizing reverse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#exercise-optimizing-fibonacci">Exercise: Optimizing Fibonacci</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#higher-order-functions">Higher-order functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#exercise-finding-a-list-element">Exercise: Finding a list element</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#exercise-fold-left">Exercise: fold_left</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="part1_quicksort.html">Case Study: Quicksort</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Proof-Oriented Programming in F*</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="part1.html">Programming and Proving with Total Functions</a> &raquo;</li>
+        
+      <li>Lemmas and proofs by induction</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+
+           <div itemprop="articleBody">
+            
+  <div class="section" id="lemmas-and-proofs-by-induction">
+<span id="part1-lemmas"></span><h1>Lemmas and proofs by induction<a class="headerlink" href="#lemmas-and-proofs-by-induction" title="Permalink to this headline">¶</a></h1>
+<p>Let’s say you wrote the <code class="docutils literal notranslate"><span class="pre">factorial</span></code> function and gave it the type
+<code class="docutils literal notranslate"><span class="pre">nat</span> <span class="pre">-&gt;</span> <span class="pre">nat</span></code>. Later, you care about some other property about
+<code class="docutils literal notranslate"><span class="pre">factorial</span></code>, e.g., that if <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&gt;</span> <span class="pre">2</span></code> then <code class="docutils literal notranslate"><span class="pre">factorial</span> <span class="pre">x</span> <span class="pre">&gt;</span> <span class="pre">x</span></code>. One
+option is to revise the type you wrote for <code class="docutils literal notranslate"><span class="pre">factorial</span></code> and get F*
+to reprove that it has this type. But this isn’t always feasible. What
+if you also wanted to prove that if <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&gt;</span> <span class="pre">3</span></code> then <code class="docutils literal notranslate"><span class="pre">factorial</span> <span class="pre">x</span> <span class="pre">&gt;</span> <span class="pre">2</span> <span class="pre">*</span>
+<span class="pre">x</span></code>. Clearly, polluting the type of <code class="docutils literal notranslate"><span class="pre">factorial</span></code> with all these
+properties that you may or may not care about is impractical.</p>
+<p>You could write assertions to ask F* to check these properties, e.g.,</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">_</span> = <span class="k">assert</span> (<span class="k">forall</span> (x:nat). x &gt; <span class="m">2</span> ==&gt; factorial x &gt; <span class="m">2</span>)
+</pre></div>
+</div>
+<p>But, F* complains saying that it couldn’t prove this fact. That’s not
+because the fact isn’t true—recall, checking the validity of
+assertions in F* is undecidable. So, there are facts that are true
+that F* may not be able to prove, at least not without some help.</p>
+<p>In this case, proving this property about <code class="docutils literal notranslate"><span class="pre">factorial</span></code> requires a
+proof by induction. F* and Z3 cannot do proofs by induction
+automatically—you will have to help F* here by writing a <em>lemma</em>.</p>
+<div class="section" id="introducing-lemmas">
+<h2>Introducing lemmas<a class="headerlink" href="#introducing-lemmas" title="Permalink to this headline">¶</a></h2>
+<p>A lemma is a function in F* that always returns the <code class="docutils literal notranslate"><span class="pre">():unit</span></code>
+value. However, the type of lemma carries useful information about
+which facts are provable.</p>
+<p>Here’s our first lemma:</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> factorial_is_positive (x:nat)
+  : u:unit{factorial x &gt; <span class="m">0</span>}
+  = <span class="k">if</span> x = <span class="m">0</span> <span class="k">then</span> ()
+    <span class="k">else</span> factorial_is_positive (x - <span class="m">1</span>)
+</pre></div>
+</div>
+<p>There’s a lot of information condensed in that definition. Let’s spell
+it out in detail:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">factorial_is_positive</span></code> is a recursive function with a parameter <code class="docutils literal notranslate"><span class="pre">x:nat</span></code></p></li>
+<li><p>The return type of <code class="docutils literal notranslate"><span class="pre">factorial_is_positive</span></code> is a refinement of
+unit, namely <code class="docutils literal notranslate"><span class="pre">u:unit{factorial</span> <span class="pre">x</span> <span class="pre">&gt;</span> <span class="pre">0}</span></code>.  That says that the
+function always returns <code class="docutils literal notranslate"><span class="pre">()</span></code>, but, additionally, when
+<code class="docutils literal notranslate"><span class="pre">factorial_is_postive</span> <span class="pre">x</span></code> returns (which it always does, since it
+is a total function) it is safe to conclude that <code class="docutils literal notranslate"><span class="pre">factorial</span> <span class="pre">x</span> <span class="pre">&gt;</span>
+<span class="pre">0</span></code>.</p></li>
+<li><p>The next three lines prove the lemma using a proof by induction on
+<code class="docutils literal notranslate"><span class="pre">x</span></code>. The basic concept here is that by programming total
+functions, we can write proofs about other pure expressions. We’ll
+discuss such proofs in detail in the remainder of this section.</p></li>
+</ul>
+<div class="section" id="some-syntactic-shorthands-for-lemmas">
+<h3>Some syntactic shorthands for Lemmas<a class="headerlink" href="#some-syntactic-shorthands-for-lemmas" title="Permalink to this headline">¶</a></h3>
+<p>Lemmas are so common in F* that it’s convenient to have special syntax
+for them. Here’s another take at our proof by <code class="docutils literal notranslate"><span class="pre">factorial</span> <span class="pre">x</span> <span class="pre">&gt;</span> <span class="pre">0</span></code></p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> factorial_is_pos (x:int)
+  : Lemma (<span class="k">requires</span> x &gt;= <span class="m">0</span>)
+          (<span class="k">ensures</span> factorial x &gt; <span class="m">0</span>)
+  = <span class="k">if</span> x = <span class="m">0</span> <span class="k">then</span> ()
+    <span class="k">else</span> factorial_is_pos (x - <span class="m">1</span>)
+</pre></div>
+</div>
+<p>The type <code class="docutils literal notranslate"><span class="pre">x:t</span> <span class="pre">-&gt;</span> <span class="pre">Lemma</span> <span class="pre">(requires</span> <span class="pre">pre)</span> <span class="pre">(ensures</span> <span class="pre">post)</span></code> is the type of
+a function</p>
+<ul class="simple">
+<li><p>that can be called with an argument <code class="docutils literal notranslate"><span class="pre">v:t</span></code></p></li>
+<li><p>the argument must satisfies the precondition <code class="docutils literal notranslate"><span class="pre">pre[v/x]</span></code></p></li>
+<li><p>the function always returns a <code class="docutils literal notranslate"><span class="pre">unit</span></code></p></li>
+<li><p>and ensures that the postcondition <code class="docutils literal notranslate"><span class="pre">post[v/x]</span></code> is valid</p></li>
+</ul>
+<p>The type is equivalent to <code class="docutils literal notranslate"><span class="pre">x:t{pre}</span> <span class="pre">-&gt;</span> <span class="pre">u:unit{post}</span></code>.</p>
+<p>When the precondition <code class="docutils literal notranslate"><span class="pre">pre</span></code> is trivial, it can be omitted. One can
+just write:</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span>Lemma (<span class="k">ensures</span> post)
+</pre></div>
+</div>
+<p>or even</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span>Lemma post
+</pre></div>
+</div>
+</div>
+<div class="section" id="a-proof-by-induction-explained-in-detail">
+<h3>A proof by induction, explained in detail<a class="headerlink" href="#a-proof-by-induction-explained-in-detail" title="Permalink to this headline">¶</a></h3>
+<p>Let’s look at this lemma in detail again—why does it convince F* that
+<code class="docutils literal notranslate"><span class="pre">factorial</span> <span class="pre">x</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>?</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> factorial_is_pos (x:int)
+  : Lemma (<span class="k">requires</span> x &gt;= <span class="m">0</span>)
+          (<span class="k">ensures</span> factorial x &gt; <span class="m">0</span>)
+  = <span class="k">if</span> x = <span class="m">0</span> <span class="k">then</span> ()
+    <span class="k">else</span> factorial_is_pos (x - <span class="m">1</span>)
+</pre></div>
+</div>
+<ul>
+<li><p>It is a proof by induction on <code class="docutils literal notranslate"><span class="pre">x</span></code>. Proofs by induction in F* are
+represented by total recursive functions. The fact that it is total
+is extremely important—it ensures that the inductive argument is
+well-founded, i.e., that the induction hypothesis is only applied
+correctly on strictly smaller arguments.</p></li>
+<li><p>The base case of the induction is when <code class="docutils literal notranslate"><span class="pre">x=0</span></code>. In this case, F* +
+Z3 can easily prove that <code class="docutils literal notranslate"><span class="pre">factorial</span> <span class="pre">0</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>, since this just
+requires computing <code class="docutils literal notranslate"><span class="pre">factorial</span> <span class="pre">0</span></code> to <code class="docutils literal notranslate"><span class="pre">1</span></code> and checking <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>.</p></li>
+<li><p>What remains is the case where <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>.</p></li>
+<li><p>In the inductive case, the type of the recursively bound
+<code class="docutils literal notranslate"><span class="pre">factorial_is_pos</span></code> represents the induction hypothesis. In this
+case, its type is</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span>y:int {y &lt; x} -&gt; Lemma (<span class="k">requires</span> y &gt;= <span class="m">0</span>) (<span class="k">ensures</span> factorial y &gt; <span class="m">0</span>)
+</pre></div>
+</div>
+<p>In other words, the type of recursive function tells us that for all
+<code class="docutils literal notranslate"><span class="pre">y</span></code> that are smaller than that current argument <code class="docutils literal notranslate"><span class="pre">x</span></code> and
+non-negative , it is safe to assume that <code class="docutils literal notranslate"><span class="pre">factorial</span> <span class="pre">y</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>.</p>
+</li>
+<li><p>By making a recursive call on <code class="docutils literal notranslate"><span class="pre">x-1</span></code>, F* can conclude that
+<code class="docutils literal notranslate"><span class="pre">factorial</span> <span class="pre">(x</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>.</p></li>
+<li><p>Finally, to prove that <code class="docutils literal notranslate"><span class="pre">factorial</span> <span class="pre">x</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>, the solver figures out
+that <code class="docutils literal notranslate"><span class="pre">factorial</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">x</span> <span class="pre">*</span> <span class="pre">factorial</span> <span class="pre">(x</span> <span class="pre">-</span> <span class="pre">1)</span></code>. From the recursive
+lemma invocation, we know that <code class="docutils literal notranslate"><span class="pre">factorial</span> <span class="pre">(x</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>, and since
+we’re in the case where <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>, the solver can prove that the
+product of two positive numbers must be positive.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="exercises-lemmas-about-integer-functions">
+<h2>Exercises: Lemmas about integer functions<a class="headerlink" href="#exercises-lemmas-about-integer-functions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
+<p>Try proving the following lemmas about <code class="docutils literal notranslate"><span class="pre">factorial</span></code>:</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">val</span> factorial_is_greater_than_arg (x:int)
+  : Lemma (<span class="k">requires</span> x &gt; <span class="m">2</span>)
+          (<span class="k">ensures</span> factorial x &gt; x)
+</pre></div>
+</div>
+<div class="toggle docutils container">
+<div class="header docutils container">
+<p><strong>Answer</strong></p>
+</div>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> factorial_is_greater_than_arg (x:int)
+  : Lemma (<span class="k">requires</span> x &gt; <span class="m">2</span>)
+          (<span class="k">ensures</span> factorial x &gt; x)
+  = <span class="k">if</span> x = <span class="m">3</span> <span class="k">then</span> ()
+    <span class="k">else</span> factorial_is_greater_than_arg (x - <span class="m">1</span>)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="exercise-2">
+<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h3>
+<p>Try proving the following lemmas about <code class="docutils literal notranslate"><span class="pre">fibonacci</span></code>:</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> fibonacci (n:nat)
+  : nat
+  = <span class="k">if</span> n &lt;= <span class="m">1</span>
+    <span class="k">then</span> <span class="m">1</span>
+    <span class="k">else</span> fibonacci (n - <span class="m">1</span>) + fibonacci (n - <span class="m">2</span>)
+
+<span class="k">val</span> fibonacci_greater_than_arg (n:nat{n &gt;= <span class="m">2</span>})
+  : Lemma (fibonacci n &gt;= n)
+</pre></div>
+</div>
+<div class="toggle docutils container">
+<div class="header docutils container">
+<p><strong>Answer</strong> (Includes two proofs and detailed explanations)</p>
+</div>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> fibonacci_greater_than_arg (n:nat{n &gt;= <span class="m">2</span>})
+  : Lemma (fibonacci n &gt;= n)
+  = <span class="k">if</span> n &lt;= <span class="m">3</span> <span class="k">then</span> ()
+    <span class="k">else</span> (
+      fibonacci_greater_than_arg (n - <span class="m">1</span>);
+      fibonacci_greater_than_arg (n - <span class="m">2</span>)
+    )
+</pre></div>
+</div>
+<p>Let’s have a look at that proof in some detail. It’s much like the
+proof by induction we discussed in detail earlier, except now we
+have two uses of the induction hypothesis.</p>
+<ul>
+<li><p>It’s a proof by induction on <code class="docutils literal notranslate"><span class="pre">n:nat{n</span> <span class="pre">&gt;=</span> <span class="pre">2}</span></code>, as you can tell from the
+<code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">rec</span></code>.</p></li>
+<li><p>The base cases are when <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">2</span></code> and <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">3</span></code>. In both these
+cases, the solver can simply compute <code class="docutils literal notranslate"><span class="pre">fibonacci</span> <span class="pre">n</span></code> and check
+that it is greater than <code class="docutils literal notranslate"><span class="pre">n</span></code>.</p></li>
+<li><p>Otherwise, in the inductive case, we have <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">&gt;=</span> <span class="pre">4</span></code> and the
+induction hypothesis is the type of the recursive function:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="p">:</span><span class="n">nat</span><span class="p">{</span><span class="n">m</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="o">/</span>\ <span class="n">m</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">}</span> <span class="o">-&gt;</span> <span class="n">Lemma</span> <span class="p">(</span><span class="n">fibonacci</span> <span class="n">m</span> <span class="o">&gt;=</span> <span class="n">m</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>We call the induction hypothesis twice and get:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fibonacci</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="n">fibonacci</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</li>
+<li><p>To conclude, we show:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fibonacci</span> <span class="n">n</span> <span class="o">=</span> <span class="o">//</span><span class="n">by</span> <span class="n">definition</span>
+<span class="n">fibonacci</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibonacci</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="o">//</span><span class="kn">from</span> <span class="nn">the</span> <span class="n">facts</span> <span class="n">above</span>
+<span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="o">//</span><span class="n">rearrange</span>
+<span class="mi">2</span><span class="o">*</span><span class="n">n</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">&gt;=</span>  <span class="o">//</span><span class="n">when</span> <span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">4</span>
+<span class="n">n</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>As you can see, once you set up the induction, the SMT solver does
+a lot of the work.</p>
+<p>Sometimes, the SMT solver can even find proofs that you might not
+write yourself. Consider this alternative proof of <code class="docutils literal notranslate"><span class="pre">fibonacci</span> <span class="pre">n</span>
+<span class="pre">&gt;=</span> <span class="pre">n</span></code>.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> fib_greater_than_arg (n:nat{n &gt;= <span class="m">2</span>})
+  : Lemma (fibonacci n &gt;= n)
+  = <span class="k">if</span> n = <span class="m">2</span> <span class="k">then</span> ()
+    <span class="k">else</span> (
+      fib_greater_than_arg (n - <span class="m">1</span>)
+    )
+</pre></div>
+</div>
+<p>This proof works with just a single use of the induction
+hypothesis. How come? Let’s look at it in detail.</p>
+<ol class="arabic">
+<li><p>It’s a proof by induction on <code class="docutils literal notranslate"><span class="pre">n:nat{n</span> <span class="pre">&gt;=</span> <span class="pre">2}</span></code>.</p></li>
+<li><p>The base case is when <code class="docutils literal notranslate"><span class="pre">n=2</span></code>. It’s easy to compute <code class="docutils literal notranslate"><span class="pre">fibonacci</span> <span class="pre">2</span></code>
+and check that it’s greater than or equal to 2.</p></li>
+<li><p>In the inductive case, we have:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">3</span>
+</pre></div>
+</div>
+</li>
+<li><p>The induction hypothesis is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="p">:</span><span class="n">nat</span><span class="p">{</span><span class="n">m</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="o">/</span>\ <span class="n">m</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">}</span> <span class="o">-&gt;</span> <span class="n">Lemma</span> <span class="p">(</span><span class="n">fibonacci</span> <span class="n">m</span> <span class="o">&gt;=</span> <span class="n">m</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>We apply the induction hypothesis to <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">-</span> <span class="pre">1</span></code> and get</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fibonacci</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</li>
+<li><p>We have:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fibonacci</span> <span class="n">n</span> <span class="o">=</span> <span class="o">//</span><span class="n">definition</span>
+<span class="n">fibonacci</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibonacci</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="o">//</span><span class="kn">from</span> <span class="mi">5</span>
+<span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibonacci</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>So, our goal is now:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibonacci</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">n</span>
+</pre></div>
+</div>
+</li>
+<li><p>It suffices if we can show <code class="docutils literal notranslate"><span class="pre">fibonacci</span> <span class="pre">(n</span> <span class="pre">-</span> <span class="pre">2)</span> <span class="pre">&gt;=</span> <span class="pre">1</span></code></p></li>
+<li><p>From (2) and the definition of <code class="docutils literal notranslate"><span class="pre">fibonacci</span></code> we have:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fibonacci</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="o">//</span><span class="n">definition</span>
+<span class="n">fibonacci</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibonacci</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="o">//</span><span class="kn">from</span> <span class="mi">5</span>
+<span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="o">//</span> <span class="kn">from</span> <span class="mi">3</span>
+<span class="mi">2</span>
+</pre></div>
+</div>
+</li>
+<li><p>Now, suppose for contradiction, that <code class="docutils literal notranslate"><span class="pre">fibonacci</span> <span class="pre">(n</span> <span class="pre">-</span> <span class="pre">2)</span> <span class="pre">=</span> <span class="pre">0</span></code>.</p>
+<p>10.1. Then, from step 9, we have <code class="docutils literal notranslate"><span class="pre">fibonacci</span> <span class="pre">(n-3)</span> <span class="pre">&gt;=</span> <span class="pre">2</span></code></p>
+<p>10.2  If <code class="docutils literal notranslate"><span class="pre">n=3</span></code>, then <code class="docutils literal notranslate"><span class="pre">fibonacci</span> <span class="pre">0</span> <span class="pre">=</span> <span class="pre">1</span></code>, so we have a contradiction.</p>
+<p>10.3  If <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">&gt;</span> <span class="pre">3</span></code>, then</p>
+<blockquote>
+<div><p>10.3.1. <code class="docutils literal notranslate"><span class="pre">fibonacci</span> <span class="pre">(n-2)</span> <span class="pre">=</span> <span class="pre">fibonacci</span> <span class="pre">(n-3)</span> <span class="pre">+</span> <span class="pre">fibonacci</span> <span class="pre">(n-4)</span></code>, by definition</p>
+<p>10.3.2. <code class="docutils literal notranslate"><span class="pre">fibonacci</span> <span class="pre">(n-3)</span> <span class="pre">+</span> <span class="pre">fibonacci</span> <span class="pre">(n-4)</span> <span class="pre">&gt;=</span> <span class="pre">fibonacci</span> <span class="pre">(n-3)</span></code>, since <code class="docutils literal notranslate"><span class="pre">fibonacci</span> <span class="pre">(n-4)</span> <span class="pre">:</span> <span class="pre">nat</span></code>.</p>
+<p>10.3.3. <code class="docutils literal notranslate"><span class="pre">fibonacci</span> <span class="pre">(n-2)</span> <span class="pre">&gt;=</span> <span class="pre">fibonacci</span> <span class="pre">(n-3)</span></code>, using 10.3.1 and 10.3.2</p>
+<p>10.3.4. <code class="docutils literal notranslate"><span class="pre">fibonacci</span> <span class="pre">(n-2)</span> <span class="pre">&gt;=</span> <span class="pre">2</span></code>, using 10.1</p>
+<p>10.3.5. But, 10.3.4 contradicts 10; so the proof is complete.</p>
+</div></blockquote>
+</li>
+</ol>
+<p>You probably wouldn’t have come up with this proof yourself, and
+indeed, it took us some puzzling to figure out how the SMT solver
+was able to prove this lemma with just one use of the induction
+hypothesis. But, there you have it. All of which is to say that
+the SMT solver is quite powerful!</p>
+</div>
+</div>
+</div>
+<div class="section" id="exercise-a-lemma-about-append">
+<h2>Exercise: A lemma about append<a class="headerlink" href="#exercise-a-lemma-about-append" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="part1_inductives.html#part1-inductives-append"><span class="std std-ref">Earlier</span></a>, we saw a definition of
+<code class="docutils literal notranslate"><span class="pre">append</span></code> with the following type:</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">val</span> append (#a:Type) (l<span class="m">1</span> l<span class="m">2</span>:list a)
+  : l:list a{length l = length l<span class="m">1</span> + length l<span class="m">2</span>}
+</pre></div>
+</div>
+<p>Now, suppose we were to define <cite>app`</cite>, a version of <code class="docutils literal notranslate"><span class="pre">append</span></code> with a
+weaker type, as shown below.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> app #a (l<span class="m">1</span> l<span class="m">2</span>:list a)
+  : list a
+  = <span class="k">match</span> l<span class="m">1</span> <span class="k">with</span>
+    | [] -&gt; l<span class="m">2</span>
+    | hd :: tl -&gt; hd :: app tl l<span class="m">2</span>
+</pre></div>
+</div>
+<p>Can you prove the following lemma?</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">val</span> app_length (#a:Type) (l<span class="m">1</span> l<span class="m">2</span>:list a)
+  : Lemma (length (app l<span class="m">1</span> l<span class="m">2</span>) = length l<span class="m">1</span> + length l<span class="m">2</span>)
+</pre></div>
+</div>
+<div class="toggle docutils container">
+<div class="header docutils container">
+<p><strong>Answer</strong></p>
+</div>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> app_length #a l<span class="m">1</span> l<span class="m">2</span>
+  = <span class="k">match</span> l<span class="m">1</span> <span class="k">with</span>
+    | [] -&gt; ()
+    | <span class="k">_</span> :: tl -&gt; app_length tl l<span class="m">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="intrinsic-vs-extrinsic-proofs">
+<h2>Intrinsic vs extrinsic proofs<a class="headerlink" href="#intrinsic-vs-extrinsic-proofs" title="Permalink to this headline">¶</a></h2>
+<p>As the previous exercise illustrates, you can prove properties either
+by enriching the type of a function or by writing a separate lemma
+about it—we call these the ‘intrinsic’ and ‘extrinsic’ styles,
+respectively. Which style to prefer is a matter of taste and
+convenience: generally useful properties are often good candidates for
+intrinsic specification (e.g, that <code class="docutils literal notranslate"><span class="pre">length</span></code> returns a <code class="docutils literal notranslate"><span class="pre">nat</span></code>); more
+specific properties are better stated and proven as lemmas. However,
+in some cases, as in the following example, it may be impossible to
+prove a property of a function directly in its type—you must resort
+to a lemma.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> reverse #a (l:list a)
+  : list a
+  = <span class="k">match</span> l <span class="k">with</span>
+    | [] -&gt; []
+    | hd :: tl -&gt; append (reverse tl) [hd]
+</pre></div>
+</div>
+<p>Let’s try proving that reversing a list twice is the identity
+function.  It’s possible to <em>specify</em> this property in the type of
+<code class="docutils literal notranslate"><span class="pre">reverse</span></code> using a refinement type.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">val</span> reverse (#a:Type) : f:(list a -&gt; list a){<span class="k">forall</span> l. l == f (f l)}
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A subtle point: the refinemnt on <code class="docutils literal notranslate"><span class="pre">reverse</span></code> above uses a
+<a class="reference internal" href="part1_prop_assertions.html#part1-ch2-propositional-equality"><span class="std std-ref">propositional equality</span></a>. That’s because equality on
+lists of arbitrary types is not decidable, e.g., consider <code class="docutils literal notranslate"><span class="pre">list</span>
+<span class="pre">(int</span> <span class="pre">-&gt;</span> <span class="pre">int)</span></code>.  All the proofs below will rely on propositional
+equality.</p>
+</div>
+<p>However, F* refuses to accept this as a valid type for <code class="docutils literal notranslate"><span class="pre">reverse</span></code>:
+proving this property requires two separate inductions, neither of
+which F* can perform automatically.</p>
+<p>Instead, one can use two lemmas to prove the property we care
+about. Here it is:</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="c">(* snoc is &quot;cons&quot; backwards --- it adds an element to the end of a list *)</span>
+<span class="k">let</span> snoc l h = append l [h]
+
+<span class="k">let</span> <span class="k">rec</span> snoc_cons #a (l:list a) (h:a)
+  : Lemma (reverse (snoc l h) == h :: reverse l)
+  = <span class="k">match</span> l <span class="k">with</span>
+    | [] -&gt; ()
+    | hd :: tl -&gt; snoc_cons tl h
+
+<span class="k">let</span> <span class="k">rec</span> rev_involutive #a (l:list a)
+  : Lemma (reverse (reverse l) == l)
+  = <span class="k">match</span> l <span class="k">with</span>
+    | [] -&gt; ()
+    | hd :: tl -&gt;
+      <span class="c">// (1) [reverse (reverse tl) == tl]</span>
+      rev_involutive tl;
+      <span class="c">// (2) [reverse (append (reverse tl) [hd]) == h :: reverse (reverse tl)]</span>
+      snoc_cons (reverse tl) hd
+      <span class="c">// These two facts are enough for Z3 to prove the lemma:</span>
+      <span class="c">//   reverse (reverse (hd :: tl))</span>
+      <span class="c">//   =def= reverse (append (reverse tl) [hd])</span>
+      <span class="c">//   =(2)= hd :: reverse (reverse tl)</span>
+      <span class="c">//   =(1)= hd :: tl</span>
+      <span class="c">//   =def= l</span>
+</pre></div>
+</div>
+<p>In the <code class="docutils literal notranslate"><span class="pre">hd</span> <span class="pre">::</span> <span class="pre">tl</span></code> case of <code class="docutils literal notranslate"><span class="pre">rev_involutive</span></code> we are explicitly
+applying not just the induction hypothesis but also the <code class="docutils literal notranslate"><span class="pre">snoc_cons</span></code>
+auxiliary lemma also proven there.</p>
+<div class="section" id="exercises-reverse-is-injective">
+<h3>Exercises: Reverse is injective<a class="headerlink" href="#exercises-reverse-is-injective" title="Permalink to this headline">¶</a></h3>
+<p>Prove that reverse is injective, i.e., prove the following lemma.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">val</span> rev_injective (#a:Type) (l<span class="m">1</span> l<span class="m">2</span>:list a)
+  : Lemma (<span class="k">requires</span> reverse l<span class="m">1</span> == reverse l<span class="m">2</span>)
+          (<span class="k">ensures</span>  l<span class="m">1</span> == l<span class="m">2</span>)
+</pre></div>
+</div>
+<div class="toggle docutils container">
+<div class="header docutils container">
+<p><strong>Answer</strong></p>
+</div>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> snoc_injective (#a:Type) (l<span class="m">1</span>:list a) (h<span class="m">1</span>:a) (l<span class="m">2</span>:list a) (h<span class="m">2</span>:a)
+  : Lemma (<span class="k">requires</span> snoc l<span class="m">1</span> h<span class="m">1</span> == snoc l<span class="m">2</span> h<span class="m">2</span>)
+          (<span class="k">ensures</span> l<span class="m">1</span> == l<span class="m">2</span> /\ h<span class="m">1</span> == h<span class="m">2</span>)
+  = <span class="k">match</span> l<span class="m">1</span>, l<span class="m">2</span> <span class="k">with</span>
+    | <span class="k">_</span> :: tl<span class="m">1</span>, <span class="k">_</span> :: tl<span class="m">2</span> -&gt; snoc_injective tl<span class="m">1</span> h<span class="m">1</span> tl<span class="m">2</span> h<span class="m">2</span>
+    | <span class="k">_</span> -&gt; ()
+
+
+<span class="k">let</span> <span class="k">rec</span> rev_injective l<span class="m">1</span> l<span class="m">2</span> =
+  <span class="k">match</span> l<span class="m">1</span>,l<span class="m">2</span> <span class="k">with</span>
+  | h<span class="m">1</span>::t<span class="m">1</span>, h<span class="m">2</span>::t<span class="m">2</span> -&gt;
+      <span class="c">// assert(reverse (h1::t1) = reverse (h2::t2));</span>
+      <span class="c">// assert(snoc (reverse t1) h1  = snoc (reverse t2) h2);</span>
+      snoc_injective (reverse t<span class="m">1</span>) h<span class="m">1</span> (reverse t<span class="m">2</span>) h<span class="m">2</span>;
+      <span class="c">// assert(reverse t1 = reverse t2 /\ h1 = h2);</span>
+      rev_injective t<span class="m">1</span> t<span class="m">2</span>
+      <span class="c">// assert(t1 = t2 /\ h1::t1 = h2::t2)</span>
+  | <span class="k">_</span>, <span class="k">_</span> -&gt; ()
+</pre></div>
+</div>
+<p>That’s quite a tedious proof, isn’t it. Here’s a simpler proof.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> rev_injective_alt (#a:Type) (l<span class="m">1</span> l<span class="m">2</span>:list a)
+  : Lemma (<span class="k">requires</span> reverse l<span class="m">1</span> == reverse l<span class="m">2</span>)
+          (<span class="k">ensures</span>  l<span class="m">1</span> == l<span class="m">2</span>)
+  = rev_involutive l<span class="m">1</span>; rev_involutive l<span class="m">2</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">rev_injective_alt</span></code> proof is based on the idea that every
+invertible function is injective. We’ve already proven that
+<code class="docutils literal notranslate"><span class="pre">reverse</span></code> is involutive, i.e., it is its own inverse. So, we
+invoke our lemma, once for <code class="docutils literal notranslate"><span class="pre">l1</span></code> and once for <code class="docutils literal notranslate"><span class="pre">l2</span></code>.  This gives
+to the SMT solver the information that <code class="docutils literal notranslate"><span class="pre">reverse</span> <span class="pre">(reverse</span> <span class="pre">l1)</span> <span class="pre">=</span>
+<span class="pre">l1</span></code> and <code class="docutils literal notranslate"><span class="pre">reverse</span> <span class="pre">(reverse</span> <span class="pre">l2)</span> <span class="pre">=</span> <span class="pre">l2</span></code>, which suffices to complete
+the proof. As usual, when structuring proofs, lemmas are your
+friends!</p>
+</div>
+</div>
+<div class="section" id="exercise-optimizing-reverse">
+<h3>Exercise: Optimizing reverse<a class="headerlink" href="#exercise-optimizing-reverse" title="Permalink to this headline">¶</a></h3>
+<p>Earlier, we saw how to implement <a class="reference internal" href="part1_termination.html#part1-termination-reverse"><span class="std std-ref">a tail-recursive variant</span></a> of <code class="docutils literal notranslate"><span class="pre">reverse</span></code>.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> rev_aux #a (l<span class="m">1</span> l<span class="m">2</span>:list a)
+  : Tot (list a) (<span class="k">decreases</span> l<span class="m">2</span>)
+  = <span class="k">match</span> l<span class="m">2</span> <span class="k">with</span>
+    | []     -&gt; l<span class="m">1</span>
+    | hd :: tl -&gt; rev_aux (hd :: l<span class="m">1</span>) tl
+
+<span class="k">let</span> rev #a (l:list a) : list a = rev_aux [] l
+</pre></div>
+</div>
+<p>Prove the following lemma to show that it is equivalent to the
+previous non-tail-recursive implementation, i.e.,</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">val</span> rev_is_ok (#a:<span class="k">_</span>) (l:list a) Lemma (rev [] l == reverse l)
+</pre></div>
+</div>
+<div class="toggle docutils container">
+<div class="header docutils container">
+<p><strong>Answer</strong></p>
+</div>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> rev_is_ok_aux #a (l<span class="m">1</span> l<span class="m">2</span>:list a)
+  : Lemma (<span class="k">ensures</span> (rev_aux l<span class="m">1</span> l<span class="m">2</span> == append (reverse l<span class="m">2</span>) l<span class="m">1</span>))
+          (<span class="k">decreases</span> l<span class="m">2</span>)
+  = <span class="k">match</span> l<span class="m">2</span> <span class="k">with</span>
+    | [] -&gt; ()
+    | hd :: tl  -&gt; rev_is_ok_aux (hd :: l<span class="m">1</span>) tl;
+                 append_assoc (reverse tl) [hd] l<span class="m">1</span>
+
+<span class="k">let</span> rev_is_ok #a (l:list a)
+  : Lemma (rev l == reverse l)
+  = rev_is_ok_aux [] l;
+    append_right_unit (reverse l)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="exercise-optimizing-fibonacci">
+<h3>Exercise: Optimizing Fibonacci<a class="headerlink" href="#exercise-optimizing-fibonacci" title="Permalink to this headline">¶</a></h3>
+<p>Earlier, we saw how to implement <a class="reference internal" href="part1_termination.html#part1-termination-fibonacci"><span class="std std-ref">a tail-recursive variant</span></a> of <code class="docutils literal notranslate"><span class="pre">fibonacci</span></code>.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> fib (a b n:nat)
+  : Tot nat (<span class="k">decreases</span> n)
+  = <span class="k">match</span> n <span class="k">with</span>
+    | <span class="m">0</span> -&gt; a
+    | <span class="k">_</span> -&gt; fib b (a+b) (n-<span class="m">1</span>)
+
+<span class="k">let</span> fibonacci (n:nat) : nat = fib <span class="m">1</span> <span class="m">1</span> n
+</pre></div>
+</div>
+<p>Prove the following lemma to show that it is equivalent to the
+previous non-tail-recursive implementation, i.e.,</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> slow_fib (n:nat)
+  : nat
+  = <span class="k">if</span> n &lt;= <span class="m">1</span>
+    <span class="k">then</span> <span class="m">1</span>
+    <span class="k">else</span> slow_fib (n - <span class="m">1</span>) + slow_fib (n - <span class="m">2</span>)
+
+<span class="k">val</span> fib_is_ok (n:nat) : Lemma (fibonacci n = slow_fib b)
+</pre></div>
+</div>
+<div class="toggle docutils container">
+<div class="header docutils container">
+<p><strong>Answer</strong></p>
+</div>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> fib_is_ok_aux (n: nat) (k: nat)
+  : Lemma (fib_aux (fibonacci k)
+                   (fibonacci (k + <span class="m">1</span>)) n == fibonacci (k + n))
+  = <span class="k">if</span> n = <span class="m">0</span> <span class="k">then</span> () <span class="k">else</span> fib_is_ok_aux (n - <span class="m">1</span>) (k + <span class="m">1</span>)
+
+<span class="k">let</span> fib_is_ok (n:nat)
+  : Lemma (fibonacci n == fib n)
+  = fib_is_ok_aux n <span class="m">0</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="higher-order-functions">
+<h2>Higher-order functions<a class="headerlink" href="#higher-order-functions" title="Permalink to this headline">¶</a></h2>
+<p>Functions are first-class values—they can be passed to other functions
+and returned as results. We’ve already seen some examples in the
+section on <a class="reference internal" href="part1_polymorphism.html#part1-polymorphism-and-inference"><span class="std std-ref">polymorphism</span></a>. Here are some more, starting with
+the <code class="docutils literal notranslate"><span class="pre">map</span></code> function on lists.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> map #a #b (f: a -&gt; b) (l:list a)
+  : list b
+  = <span class="k">match</span> l <span class="k">with</span>
+    | [] -&gt; []
+    | hd::tl -&gt; f hd :: map f tl
+</pre></div>
+</div>
+<p>It takes a function <code class="docutils literal notranslate"><span class="pre">f</span></code> and a list <code class="docutils literal notranslate"><span class="pre">l</span></code> and it applies <code class="docutils literal notranslate"><span class="pre">f</span></code> to
+each element in <code class="docutils literal notranslate"><span class="pre">l</span></code> producing a new list. More precisely <code class="docutils literal notranslate"><span class="pre">map</span> <span class="pre">f</span>
+<span class="pre">[v₁;</span> <span class="pre">...;</span> <span class="pre">vₙ]</span></code> produces the list <code class="docutils literal notranslate"><span class="pre">[f</span> <span class="pre">v₁;</span> <span class="pre">...;</span> <span class="pre">f</span> <span class="pre">vₙ]</span></code>. For example:</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span>map (<span class="k">fun</span> x -&gt; x + <span class="m">1</span>) [<span class="m">0</span>; <span class="m">1</span>; <span class="m">2</span>] = [<span class="m">1</span>; <span class="m">2</span>; <span class="m">3</span>]
+</pre></div>
+</div>
+<div class="section" id="exercise-finding-a-list-element">
+<h3>Exercise: Finding a list element<a class="headerlink" href="#exercise-finding-a-list-element" title="Permalink to this headline">¶</a></h3>
+<p>Here’s a function called <code class="docutils literal notranslate"><span class="pre">find</span></code> that given a boolean function <code class="docutils literal notranslate"><span class="pre">f</span></code>
+and a list <code class="docutils literal notranslate"><span class="pre">l</span></code> returns the first element in <code class="docutils literal notranslate"><span class="pre">l</span></code> for which <code class="docutils literal notranslate"><span class="pre">f</span></code>
+holds. If no element is found <code class="docutils literal notranslate"><span class="pre">find</span></code> returns <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> find f l =
+  <span class="k">match</span> l <span class="k">with</span>
+  | [] -&gt; None
+  | hd :: tl -&gt; <span class="k">if</span> f hd <span class="k">then</span> Some hd <span class="k">else</span> find f tl
+</pre></div>
+</div>
+<p>Prove that if <code class="docutils literal notranslate"><span class="pre">find</span></code> returns <code class="docutils literal notranslate"><span class="pre">Some</span> <span class="pre">x</span></code> then <code class="docutils literal notranslate"><span class="pre">f</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">true</span></code>. Is it
+better to do this intrinsically or extrinsically? Do it both ways.</p>
+<div class="toggle docutils container">
+<div class="header docutils container">
+<p><strong>Answer</strong></p>
+</div>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">val</span> find (#a:Type) (f: a -&gt; bool) (l:list a)
+  : o:option a{ Some? o ==&gt; f (Some?.v o)}
+</pre></div>
+</div>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> find_alt f l =
+  <span class="k">match</span> l <span class="k">with</span>
+  | [] -&gt; None
+  | hd :: tl -&gt; <span class="k">if</span> f hd <span class="k">then</span> Some hd <span class="k">else</span> find_alt f tl
+
+<span class="k">let</span> <span class="k">rec</span> find_alt_ok #a (f:a -&gt; bool) (l:list a)
+  : Lemma (<span class="k">match</span> find_alt f l <span class="k">with</span>
+           | Some x -&gt; f x
+           | <span class="k">_</span> -&gt; <span class="k">true</span>)
+  = <span class="k">match</span> l <span class="k">with</span>
+    | [] -&gt; ()
+    | <span class="k">_</span> :: tl -&gt; find_alt_ok f tl
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="exercise-fold-left">
+<h3>Exercise: fold_left<a class="headerlink" href="#exercise-fold-left" title="Permalink to this headline">¶</a></h3>
+<p>Here is a function <code class="docutils literal notranslate"><span class="pre">fold_left</span></code>, where:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fold_left</span> <span class="n">f</span> <span class="p">[</span><span class="n">b1</span><span class="p">;</span> <span class="o">...</span><span class="p">;</span> <span class="n">bn</span><span class="p">]</span> <span class="n">a</span> <span class="o">=</span> <span class="n">f</span> <span class="p">(</span><span class="n">bn</span><span class="p">,</span> <span class="o">...</span> <span class="p">(</span><span class="n">f</span> <span class="n">b2</span> <span class="p">(</span><span class="n">f</span> <span class="n">b1</span> <span class="n">a</span><span class="p">)))</span>
+</pre></div>
+</div>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> fold_left #a #b (f: b -&gt; a -&gt; a) (l: list b) (acc:a)
+  : a
+  = <span class="k">match</span> l <span class="k">with</span>
+    | [] -&gt; acc
+    | hd :: tl -&gt; fold_left f tl (f hd acc)
+</pre></div>
+</div>
+<p>Prove the following lemma:</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">val</span> fold_left_Cons_is_rev (#a:Type) (l:list a)
+  : Lemma (fold_left Cons l [] == reverse l)
+</pre></div>
+</div>
+<div class="toggle docutils container">
+<div class="header docutils container">
+<dl class="simple">
+<dt>Hint: This proof is a level harder from what we’ve done so far.</dt><dd><p>You will need to strengthen the induction hypothesis, and
+possibly to prove that <code class="docutils literal notranslate"><span class="pre">append</span></code> is associative and that
+<code class="docutils literal notranslate"><span class="pre">append</span> <span class="pre">l</span> <span class="pre">[]</span> <span class="pre">==</span> <span class="pre">l</span></code>.</p>
+</dd>
+</dl>
+<p><strong>Answer</strong></p>
+</div>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> append_assoc #a (l<span class="m">1</span> l<span class="m">2</span> l<span class="m">3</span> : list a)
+  : Lemma (append l<span class="m">1</span> (append l<span class="m">2</span> l<span class="m">3</span>) == append (append l<span class="m">1</span> l<span class="m">2</span>) l<span class="m">3</span>)
+  = <span class="k">match</span> l<span class="m">1</span> <span class="k">with</span>
+    | [] -&gt; ()
+    | h<span class="m">1</span> :: t<span class="m">1</span> -&gt; append_assoc t<span class="m">1</span> l<span class="m">2</span> l<span class="m">3</span>
+
+<span class="k">let</span> <span class="k">rec</span> fold_left_Cons_is_rev_stronger #a (l<span class="m">1</span> l<span class="m">2</span>: list a)
+  : Lemma (fold_left Cons l<span class="m">1</span> l<span class="m">2</span> == append (reverse l<span class="m">1</span>) l<span class="m">2</span>)
+  = <span class="k">match</span> l<span class="m">1</span> <span class="k">with</span>
+    | [] -&gt; ()
+    | h<span class="m">1</span> :: t<span class="m">1</span> -&gt;
+      <span class="c">// (1) [append (append (reverse t1) [h1]) l2</span>
+      <span class="c">//      == append (reverse t1) (append [h1] l2)]</span>
+      append_assoc (reverse t<span class="m">1</span>) [h<span class="m">1</span>] l<span class="m">2</span>;
+      <span class="c">// (2) [fold_left Cons t1 (h1 :: l2) = append (reverse t1) (h1 :: l2)]</span>
+      fold_left_Cons_is_rev_stronger t<span class="m">1</span> (h<span class="m">1</span> :: l<span class="m">2</span>)
+      <span class="c">// append (reverse l1) l2</span>
+      <span class="c">// =def= append (append (reverse t1) [h1]) l2</span>
+      <span class="c">// =(1)= append (reverse t1) (append [h1] l2)</span>
+      <span class="c">// =def= append (reverse t1) (h1 :: l2)</span>
+      <span class="c">// =(2)= fold_left Cons t1 (h1 :: l2)</span>
+      <span class="c">// =def= fold_left Cons l1 l2</span>
+
+<span class="k">let</span> <span class="k">rec</span> append_right_unit #a (l<span class="m">1</span>:list a)
+  : Lemma (append l<span class="m">1</span> [] == l<span class="m">1</span>)
+  = <span class="k">match</span> l<span class="m">1</span> <span class="k">with</span>
+    | [] -&gt; ()
+    | <span class="k">_</span> :: tl -&gt; append_right_unit tl
+
+<span class="k">let</span> fold_left_Cons_is_rev #a (l:list a)
+  : Lemma (fold_left Cons l [] == reverse l)
+  = fold_left_Cons_is_rev_stronger l [];
+    append_right_unit (reverse l)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+    <!-- <a href="https://github.com/FStarLang/fstar/"> -->
+    <!--     <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"> -->
+    <!-- </a> -->
+
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="part1_quicksort.html" class="btn btn-neutral float-right" title="Case Study: Quicksort" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="part1_termination.html" class="btn btn-neutral float-left" title="Proofs of termination" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Microsoft Research
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

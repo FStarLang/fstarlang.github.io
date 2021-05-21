@@ -1,0 +1,552 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Interfacing with an SMT solver &mdash; Proof-Oriented Programming in F*  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../static/custom.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../static/documentation_options.js"></script>
+        <script src="../static/jquery.js"></script>
+        <script src="../static/underscore.js"></script>
+        <script src="../static/doctools.js"></script>
+        <script src="../static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Inductive types and pattern matching" href="part1_inductives.html" />
+    <link rel="prev" title="Polymorphism and type inference" href="part1_polymorphism.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Proof-Oriented Programming in F*
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">A Capsule Summary of F*</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="part1.html">Programming and Proving with Total Functions</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="part1_getting_off_the_ground.html">Getting off the ground</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part1_polymorphism.html">Polymorphism and type inference</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Interfacing with an SMT solver</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#propositions">Propositions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#propositional-connectives">Propositional connectives</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#quantifiers">Quantifiers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#conjunction-disjunction-negation-implication">Conjunction, Disjunction, Negation, Implication</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#atomic-propositions">Atomic propositions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#propositional-equality">Propositional equality</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#type-vs-prop"><code class="docutils literal notranslate"><span class="pre">Type</span></code> vs. <code class="docutils literal notranslate"><span class="pre">prop</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#assertions">Assertions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#assumptions">Assumptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="part1_inductives.html">Inductive types and pattern matching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part1_termination.html">Proofs of termination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part1_lemmas.html">Lemmas and proofs by induction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part1_quicksort.html">Case Study: Quicksort</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Proof-Oriented Programming in F*</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="part1.html">Programming and Proving with Total Functions</a> &raquo;</li>
+        
+      <li>Interfacing with an SMT solver</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+
+           <div itemprop="articleBody">
+            
+  <div class="section" id="interfacing-with-an-smt-solver">
+<span id="part1-ch2"></span><h1>Interfacing with an SMT solver<a class="headerlink" href="#interfacing-with-an-smt-solver" title="Permalink to this headline">¶</a></h1>
+<p>As mentioned <a class="reference internal" href="part1.html#part1"><span class="std std-ref">at the start of this section</span></a>, a type <code class="docutils literal notranslate"><span class="pre">t</span></code>
+represents a propostion and a term <code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">:</span> <span class="pre">t</span></code> is a proof of <code class="docutils literal notranslate"><span class="pre">t</span></code>. In
+many other dependently typed languages, exhibiting a term <code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">:</span> <span class="pre">t</span></code> is
+the only way to prove that <code class="docutils literal notranslate"><span class="pre">t</span></code> is valid. In F*, while one can do
+such proofs, it is not the only way to prove a theorem.</p>
+<p>By way of illustration, let’s think about <a class="reference internal" href="part1_getting_off_the_ground.html#part1-ch1-boolean-refinements"><span class="std std-ref">Boolean refinement
+types</span></a>. As we’ve seen already, it is
+easy to prove <code class="docutils literal notranslate"><span class="pre">17</span> <span class="pre">:</span> <span class="pre">x:int{x</span> <span class="pre">&gt;=</span> <span class="pre">0}</span></code> in F*. Under the covers, F*
+proves that <code class="docutils literal notranslate"><span class="pre">(x</span> <span class="pre">&gt;=</span> <span class="pre">0)</span> <span class="pre">[17/x]</span></code> reduces to <code class="docutils literal notranslate"><span class="pre">true</span></code>, yet no explicit
+term is given to prove this fact. Instead, F* encodes facts about a
+program (including things like the semantics of arithmetic operators
+like <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code>) to the classical logic of an SMT solver and asks it (Z3
+typically) to prove whether the formula <code class="docutils literal notranslate"><span class="pre">17</span> <span class="pre">&gt;=</span> <span class="pre">0</span></code> is valid in a
+context including all encoded facts about a program. If Z3 is able to
+prove it valid, F* accepts the formula as true, without ever
+constructing a term representing a proof of <code class="docutils literal notranslate"><span class="pre">17</span> <span class="pre">&gt;=</span> <span class="pre">0</span></code>.</p>
+<p>This design has many important consequences, including, briefly:</p>
+<ul class="simple">
+<li><p>Trust: F* implicitly trusts its encoding to SMT logic and the
+correctess of the Z3 solver.</p></li>
+<li><p>Proof irrelevance: Since no proof term is constructed for proofs
+done by SMT, a program cannot distinguish between different proofs
+of a fact proven by SMT.</p></li>
+<li><p>Subtyping: Since no proof term is constructed, a term like <code class="docutils literal notranslate"><span class="pre">17</span></code>
+can have many types, <code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">nat</span></code>, <code class="docutils literal notranslate"><span class="pre">x:int{x</span> <span class="pre">=</span> <span class="pre">17}</span></code>, etc. As
+mentioned <a class="reference internal" href="part1_getting_off_the_ground.html#part1-ch1-boolean-refinements"><span class="std std-ref">earlier</span></a>, F*
+leverages this to support refinement subtyping.</p></li>
+<li><p>Undecidability: Since Z3 can check the validity of formulas in the
+entirety of its logic, including things like quantifying universally
+and existentially over infinite ranges, F* does not restrict the the
+formulas checked for validity by Z3 to be boolean, or even
+decidable. Yes, typechecking in F* is undecidable.</p></li>
+</ul>
+<p>In this chapter, we’ll learn about the the classical logic parts of
+F*, i.e., the parts that allow it to interface with an SMT solver.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The beginning of this chapter is a little technical, even though
+we’re not telling the full story behind F*’s classical logic
+yet. If parts of it are hard to understand right now, here’s what
+you need to know to before you <a class="reference internal" href="#part1-ch2-assertions"><span class="std std-ref">jump ahead</span></a>.</p>
+<p>F* let’s you write quantified formulas, called propositions, like
+so</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">forall</span> (x₁:t₁) ... (xₙ:tₙ). p
+<span class="k">exists</span> (x₁:t₁) ... (xₙ:tₙ). p
+</pre></div>
+</div>
+<p>You can build propositions from booleans and conjunctions (<code class="docutils literal notranslate"><span class="pre">/̀\</span></code>),
+disjunctions (<code class="docutils literal notranslate"><span class="pre">\/</span></code>), negations (<code class="docutils literal notranslate"><span class="pre">~</span></code>), implications (<code class="docutils literal notranslate"><span class="pre">==&gt;</span></code>),
+and bi-implications (<code class="docutils literal notranslate"><span class="pre">&lt;==&gt;</span></code>) etc.</p>
+<p>For example, one can say (as shown below) that for all natural
+numbers <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>, if the modulus <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">%</span> <span class="pre">y</span></code> is <code class="docutils literal notranslate"><span class="pre">0</span></code>, then
+there exists a natural number <code class="docutils literal notranslate"><span class="pre">z</span></code> such that <code class="docutils literal notranslate"><span class="pre">x</span></code> is <code class="docutils literal notranslate"><span class="pre">z</span> <span class="pre">*</span> <span class="pre">y</span></code>.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">forall</span> (x:nat) (y:nat). x % y = <span class="m">0</span> ==&gt; (<span class="k">exists</span> (z:nat). x = z * y)
+</pre></div>
+</div>
+<p>F* also has a notion of propositional equality, written <code class="docutils literal notranslate"><span class="pre">==</span></code>,
+that can be used to state that two terms of any type are equal. In
+contrast, the boolean equality <code class="docutils literal notranslate"><span class="pre">=</span></code> can only be used on types that
+support decidable equality. For instance, for <code class="docutils literal notranslate"><span class="pre">f₁,</span> <span class="pre">f₂</span> <span class="pre">:</span> <span class="pre">int</span> <span class="pre">-&gt;</span>
+<span class="pre">int</span></code>, you can write <code class="docutils literal notranslate"><span class="pre">f₁</span> <span class="pre">==</span> <span class="pre">f₂</span></code> but you cannot write <code class="docutils literal notranslate"><span class="pre">f₁</span> <span class="pre">=</span> <span class="pre">f₂</span></code>,
+since two functions cannot be decidably compared for equality.</p>
+</div>
+<div class="section" id="propositions">
+<h2>Propositions<a class="headerlink" href="#propositions" title="Permalink to this headline">¶</a></h2>
+<p>The type <code class="docutils literal notranslate"><span class="pre">prop</span></code> defined in <code class="docutils literal notranslate"><span class="pre">Prims</span></code> is F*’s type of
+proof-irrelevant propositions. More informally, <code class="docutils literal notranslate"><span class="pre">prop</span></code> is the type
+given to facts that are provable using the SMT solver’s classical
+logic.</p>
+<p>Propositions defined in <code class="docutils literal notranslate"><span class="pre">prop</span></code> need not be decidable. For example,
+for a Turing machine <code class="docutils literal notranslate"><span class="pre">tm</span></code>, the fact <code class="docutils literal notranslate"><span class="pre">halts</span> <span class="pre">tm</span></code> can be defined as a
+<code class="docutils literal notranslate"><span class="pre">prop</span></code>, although it is impossible to decide for an arbitrary <code class="docutils literal notranslate"><span class="pre">tm</span></code>
+whether <code class="docutils literal notranslate"><span class="pre">tm</span></code> halts on all inputs. This is contrast with <code class="docutils literal notranslate"><span class="pre">bool</span></code>,
+the type of booleans <code class="docutils literal notranslate"><span class="pre">{true,</span> <span class="pre">false}</span></code>. Clearly, one could not defined
+<code class="docutils literal notranslate"><span class="pre">halts</span> <span class="pre">tm</span></code> as a <code class="docutils literal notranslate"><span class="pre">bool</span></code>, since one would be claiming that for
+<code class="docutils literal notranslate"><span class="pre">halts</span></code> is function that for any <code class="docutils literal notranslate"><span class="pre">tm</span></code> can decide (by returning
+true or false) whether or not <code class="docutils literal notranslate"><span class="pre">tm</span></code> halts on all inputs.</p>
+<p>F* will implicitly convert a <code class="docutils literal notranslate"><span class="pre">bool</span></code> to a <code class="docutils literal notranslate"><span class="pre">prop</span></code> when needed, since
+a decidable fact can be turned into a fact that may be
+undecidable. But, when using propositions, one can define things that
+cannot be defined in <code class="docutils literal notranslate"><span class="pre">bool</span></code>, including quantified formulae, as we’ll
+see next.</p>
+</div>
+<div class="section" id="propositional-connectives">
+<h2>Propositional connectives<a class="headerlink" href="#propositional-connectives" title="Permalink to this headline">¶</a></h2>
+<p>Consider stating that <code class="docutils literal notranslate"><span class="pre">factorial</span> <span class="pre">n</span></code> always returns a positive
+number, when <code class="docutils literal notranslate"><span class="pre">n:nat</span></code>. In the <a class="reference internal" href="part1_getting_off_the_ground.html#part1-ch1"><span class="std std-ref">previous section</span></a> we
+learned that one way to this is to give <code class="docutils literal notranslate"><span class="pre">factorial</span></code> a type like so.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">val</span> factorial (n:nat) : x:nat{x &gt; <span class="m">0</span>}
+</pre></div>
+</div>
+<p>Here’s another way to state it:</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">forall</span> (n:nat). factorial n &gt; <span class="m">0</span>
+</pre></div>
+</div>
+<p>What about stating that <code class="docutils literal notranslate"><span class="pre">factorial</span> <span class="pre">n</span></code> can sometimes return a value
+that’s greater than <code class="docutils literal notranslate"><span class="pre">n²</span></code>?</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">exists</span> (n:nat). factorial n &gt; n * n
+</pre></div>
+</div>
+<p>We’ve just seen our first use of universal and existential
+quantifiers.</p>
+<div class="section" id="quantifiers">
+<h3>Quantifiers<a class="headerlink" href="#quantifiers" title="Permalink to this headline">¶</a></h3>
+<p>A universal quantifer is constructed using the <code class="docutils literal notranslate"><span class="pre">forall</span></code> keyword. Its
+syntax has the following shape.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">forall</span> (x₁:t₁) ... (xₙ:tₙ) . p
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">x₁</span> <span class="pre">...</span> <span class="pre">xₙ</span></code> are bound variables and signify the domain over
+which one the proposition <code class="docutils literal notranslate"><span class="pre">p</span></code> is quantified. That is, <code class="docutils literal notranslate"><span class="pre">forall</span>
+<span class="pre">(x:t).</span> <span class="pre">p</span></code> is valid when for all <code class="docutils literal notranslate"><span class="pre">v</span> <span class="pre">:</span> <span class="pre">t</span></code> the proposition <code class="docutils literal notranslate"><span class="pre">p[v/x]</span></code>
+is valid.</p>
+<p>And existential quantifier has similar syntax, using the <code class="docutils literal notranslate"><span class="pre">exists</span></code>
+keyword.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">exists</span> (x₁:t₁) ... (xₙ:tₙ) . p
+</pre></div>
+</div>
+<p>In this case, <code class="docutils literal notranslate"><span class="pre">exists</span> <span class="pre">(x:t).</span> <span class="pre">p</span></code> is valid when for some <code class="docutils literal notranslate"><span class="pre">v</span> <span class="pre">:</span> <span class="pre">t</span></code> the
+proposition <code class="docutils literal notranslate"><span class="pre">p[v/x]</span></code> is valid.</p>
+<p>The scope of a quantifier extends as far to the right as possible.</p>
+<p>As usual in F*, the types on the bound variables can be omitted and F*
+will infer them. However, in the case of quantified formulas, it’s a
+good idea to write down the types, since the meaning of the quantifier
+can change signicantly depending on the type of the variable. Consider
+the two propositions below.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">exists</span> (x:int). x &lt; <span class="m">0</span>
+<span class="k">exists</span> (x:nat). x &lt; <span class="m">0</span>
+</pre></div>
+</div>
+<p>The first formula is valid by considering <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">-1</span></code>, while the second
+one is not—there is not natural number less than zero.</p>
+<p>It is possible to quantify over any F* type. This makes the
+quantifiers higher order and dependent. For example, one can write</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">forall</span> (n:nat) (p: (x:nat{x &gt;= n} -&gt; prop)). p n
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The SMT solver uses a number of heuristics to determine if a
+quantified proposition is valid. As you start writing more
+substantial F* programs and proofs, it will become important to
+learn a bit about these heuristics. We’ll cover this in a later
+chapter. If you’re impatient, you can also read about in on the <a class="reference external" href="https://github.com/FStarLang/FStar/wiki/Quantifiers-and-patterns">F*
+wiki</a>.</p>
+</div>
+</div>
+<div class="section" id="conjunction-disjunction-negation-implication">
+<h3>Conjunction, Disjunction, Negation, Implication<a class="headerlink" href="#conjunction-disjunction-negation-implication" title="Permalink to this headline">¶</a></h3>
+<p>In addition to the quantifiers, you can build propositions by
+combining them with other propositions, using the opertors below, in
+decreasing order of precedence.</p>
+<p><strong>Negation</strong></p>
+<p>The proposition <code class="docutils literal notranslate"><span class="pre">~p</span></code> is valid if the negation of <code class="docutils literal notranslate"><span class="pre">p</span></code> is
+valid. This is similar to the boolean operator <code class="docutils literal notranslate"><span class="pre">not</span></code>, but applies to
+propositions rather than just booleans.</p>
+<p><strong>Conjunction</strong></p>
+<p>The proposition <code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">/\</span> <span class="pre">q</span></code> is valid if both <code class="docutils literal notranslate"><span class="pre">p</span></code> and <code class="docutils literal notranslate"><span class="pre">q</span></code> are
+valid. This is similar to the boolean operator <code class="docutils literal notranslate"><span class="pre">&amp;&amp;</span></code>, but applies to
+propositions rather than just booleans.</p>
+<p><strong>Disjunction</strong></p>
+<p>The proposition <code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">\/</span> <span class="pre">q</span></code> is valid if at least one of <code class="docutils literal notranslate"><span class="pre">p</span></code> and <code class="docutils literal notranslate"><span class="pre">q</span></code>
+are valid. This is similar to the boolean operator <code class="docutils literal notranslate"><span class="pre">||</span></code>, but applies
+to propositions rather than just booleans.</p>
+<p><strong>Implication</strong></p>
+<p>The proposition <code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">==&gt;</span> <span class="pre">q</span></code> is valid if whenever <code class="docutils literal notranslate"><span class="pre">p</span></code> is valid, <code class="docutils literal notranslate"><span class="pre">q</span></code>
+is also valid.</p>
+<p><strong>Double Implication</strong></p>
+<p>The proposition <code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">&lt;==&gt;</span> <span class="pre">q</span></code> is valid if <code class="docutils literal notranslate"><span class="pre">p</span></code> and <code class="docutils literal notranslate"><span class="pre">q</span></code> are
+equivalent.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This may come as a surprise, but these precedence rules mean that
+<code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">/\</span> <span class="pre">q</span> <span class="pre">==&gt;</span> <span class="pre">r</span></code> is parsed as <code class="docutils literal notranslate"><span class="pre">(p</span> <span class="pre">/\</span> <span class="pre">q)</span> <span class="pre">==&gt;</span> <span class="pre">r</span></code> rather than
+<code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">/\</span> <span class="pre">(q</span> <span class="pre">==&gt;</span> <span class="pre">r)</span></code>. When in doubt, use parentheses.</p>
+</div>
+</div>
+</div>
+<div class="section" id="atomic-propositions">
+<h2>Atomic propositions<a class="headerlink" href="#atomic-propositions" title="Permalink to this headline">¶</a></h2>
+<p>We’ve shown you how to form new propositions by building them from
+existing propositions using the connectives. But, what about the basic
+propositions themselves?</p>
+<div class="section" id="propositional-equality">
+<span id="part1-ch2-propositional-equality"></span><h3>Propositional equality<a class="headerlink" href="#propositional-equality" title="Permalink to this headline">¶</a></h3>
+<p>We’ve implicitly used the equality operator <code class="docutils literal notranslate"><span class="pre">=</span></code> already. This is the
+<em>boolean</em> equality operator. Given two terms <code class="docutils literal notranslate"><span class="pre">e₁</span> <span class="pre">:</span> <span class="pre">t</span></code> and <code class="docutils literal notranslate"><span class="pre">e₂</span> <span class="pre">:</span>
+<span class="pre">t</span></code>, so long as <code class="docutils literal notranslate"><span class="pre">t</span></code> supports a notion of decidable equality,
+<code class="docutils literal notranslate"><span class="pre">(e₁</span> <span class="pre">=</span> <span class="pre">e₂)</span> <span class="pre">:</span> <span class="pre">bool</span></code>.</p>
+<p>But, what does it mean for a type <code class="docutils literal notranslate"><span class="pre">t</span></code> to support a decidable
+equality? We’ll answer this question in a later section, but, for now,
+consider that not all types support equality. For example, what if
+<code class="docutils literal notranslate"><span class="pre">t</span></code> were a function type, like <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">-&gt;</span> <span class="pre">int</span></code>. To decide if two
+functions <code class="docutils literal notranslate"><span class="pre">f₁,</span> <span class="pre">f₂</span> <span class="pre">:</span> <span class="pre">int</span> <span class="pre">-&gt;</span> <span class="pre">int</span></code> are equal, we’d have to apply them
+to all the infinitely many integers and compare their results—clearly,
+this is not decidable.</p>
+<p>F* offers another notion of equality, propositional equality, written
+<code class="docutils literal notranslate"><span class="pre">==</span></code>. For <em>any type</em> <code class="docutils literal notranslate"><span class="pre">t</span></code>, given terms <code class="docutils literal notranslate"><span class="pre">e₁,</span> <span class="pre">e₂</span> <span class="pre">:</span> <span class="pre">t</span></code>, the
+proposition <code class="docutils literal notranslate"><span class="pre">e₁</span> <span class="pre">==</span> <span class="pre">e₂</span></code> asserts the (possibly undecidable) equality
+of <code class="docutils literal notranslate"><span class="pre">e₁</span></code> and <code class="docutils literal notranslate"><span class="pre">e₂</span></code>.</p>
+<p><strong>Turning a Boolean into a proposition</strong></p>
+<p>Propositional equality provides a convenient way to turn a boolean
+into a proposition. For any boolean <code class="docutils literal notranslate"><span class="pre">b</span></code>, then term <code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">==</span> <span class="pre">true</span></code> is
+a <code class="docutils literal notranslate"><span class="pre">prop</span></code>. One seldom needs to do write this manually (although it
+does come up occasionally), since F* will automatically insert a
+<code class="docutils literal notranslate"><span class="pre">b==true</span></code> if you’re using a <code class="docutils literal notranslate"><span class="pre">b:bool</span></code> in a context where a <code class="docutils literal notranslate"><span class="pre">prop</span></code>
+was expected.</p>
+</div>
+<div class="section" id="type-vs-prop">
+<h3><code class="docutils literal notranslate"><span class="pre">Type</span></code> vs. <code class="docutils literal notranslate"><span class="pre">prop</span></code><a class="headerlink" href="#type-vs-prop" title="Permalink to this headline">¶</a></h3>
+<p>This next bit is quite technical. Don’t worry if you didn’t understand
+it at first. It’s enough to know at this stage that, just like
+automatically converting a boolean to <cite>prop</cite>, F* automatically
+converts any type to <code class="docutils literal notranslate"><span class="pre">prop</span></code>, when neeeded. So, you can form new
+atomic propositions out of types.</p>
+<p>Every well-typed term in F* has a type. Even types have types, e.g.,
+the type of <code class="docutils literal notranslate"><span class="pre">int</span></code> is <code class="docutils literal notranslate"><span class="pre">Type</span></code>, i.e., <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">:</span> <span class="pre">Type</span></code>, <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">:</span>
+<span class="pre">Type</span></code>, and even <code class="docutils literal notranslate"><span class="pre">prop</span> <span class="pre">:</span> <span class="pre">Type</span></code>. We’ll have to leave a full
+description of this to a later section, but, for now, we’ll just
+remark that another way to form an atomic proposition is to convert a
+type to a proposition.</p>
+<p>For any type <code class="docutils literal notranslate"><span class="pre">t</span> <span class="pre">:</span> <span class="pre">Type</span></code>, the type <code class="docutils literal notranslate"><span class="pre">_:unit</span> <span class="pre">{</span> <span class="pre">t</span> <span class="pre">}</span> <span class="pre">:</span> <span class="pre">prop</span></code>. We call
+this “squashing” a type. This is so common, that F* provides two
+mechanisms to support this:</p>
+<ol class="arabic simple">
+<li><p>All the propositonal connectives, like <code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">/\</span> <span class="pre">q</span></code> are designed so
+that both <code class="docutils literal notranslate"><span class="pre">p</span></code> and <code class="docutils literal notranslate"><span class="pre">q</span></code> can be types (i.e., <code class="docutils literal notranslate"><span class="pre">p,q</span> <span class="pre">:</span> <span class="pre">Type</span></code>),
+rather than propositions, and they implicitly squash their types.</p></li>
+<li><p>The standard library, <code class="docutils literal notranslate"><span class="pre">FStar.Squash</span></code>, provides several utilities
+for manipulating squashed types.</p></li>
+</ol>
+</div>
+</div>
+<div class="section" id="assertions">
+<span id="part1-ch2-assertions"></span><h2>Assertions<a class="headerlink" href="#assertions" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have a way to write down propositions, how can we ask F*
+to check if those propositions are valid? There are several ways, the
+most common of which is an <em>assertion</em>. Here’s an example:</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> sqr_is_nat (x:int) : unit = <span class="k">assert</span> (x * x &gt;= <span class="m">0</span>)
+</pre></div>
+</div>
+<p>This defines a function <code class="docutils literal notranslate"><span class="pre">sqr_is_nat</span> <span class="pre">:</span> <span class="pre">int</span> <span class="pre">-&gt;</span> <span class="pre">unit</span></code>—meaning it takes
+a <code class="docutils literal notranslate"><span class="pre">nat</span></code> and always returns <code class="docutils literal notranslate"><span class="pre">()</span></code>. So, it’s not very interesting as
+a function.</p>
+<p>However, it’s body contains an assertion that <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">*</span> <span class="pre">x</span> <span class="pre">&gt;=</span> <span class="pre">0</span></code>. Now,
+many programming languages support runtime assertions—code to check
+some property of program when it executes. But, assertions in F* are
+different—they are checked by the F* compiler <em>before</em> your program is
+executed.</p>
+<p>In this case, the <code class="docutils literal notranslate"><span class="pre">assert</span></code> instructs F* to encode the program to SMT
+and to ask Z3 if <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">*</span> <span class="pre">x</span> <span class="pre">&gt;=</span> <span class="pre">0</span></code> is valid for an arbitrary integer
+<code class="docutils literal notranslate"><span class="pre">x:int</span></code>. If Z3 can confirm this fact (which it can), then F* accepts
+the program and no trace of the assertion is left in your program when
+it executes. Otherwise the program is rejected at compile time. For
+example, if we were to write</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> sqr_is_pos (x:int) : unit = <span class="k">assert</span> (x * x &gt; <span class="m">0</span>)
+</pre></div>
+</div>
+<p>Then, F* complains with the following message:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Ch2</span><span class="o">.</span><span class="n">fst</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">39</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">50</span><span class="p">):</span> <span class="p">(</span><span class="n">Error</span> <span class="mi">19</span><span class="p">)</span> <span class="n">assertion</span> <span class="n">failed</span><span class="p">;</span> <span class="n">The</span> <span class="n">SMT</span> <span class="n">solver</span> <span class="n">could</span> <span class="ow">not</span> <span class="n">prove</span> <span class="n">the</span> <span class="n">query</span><span class="p">,</span> <span class="k">try</span> <span class="n">to</span> <span class="n">spell</span> <span class="n">your</span> <span class="n">proof</span> <span class="ow">in</span> <span class="n">more</span> <span class="n">detail</span> <span class="ow">or</span> <span class="n">increase</span> <span class="n">fuel</span><span class="o">/</span><span class="n">ifuel</span>
+</pre></div>
+</div>
+<p>You can use an assertion with any proposition, as shown below.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> max x y = <span class="k">if</span> x &gt; y <span class="k">then</span> x <span class="k">else</span> y
+<span class="k">let</span> <span class="k">_</span> = <span class="k">assert</span> (max <span class="m">0</span> <span class="m">1</span> = <span class="m">1</span>)
+<span class="k">let</span> <span class="k">_</span> = <span class="k">assert</span> (<span class="k">forall</span> x y. max x y &gt;= x /\
+                            max x y &gt;= y /\
+                            (max x y = x \/ max x y = y))
+</pre></div>
+</div>
+</div>
+<div class="section" id="assumptions">
+<h2>Assumptions<a class="headerlink" href="#assumptions" title="Permalink to this headline">¶</a></h2>
+<p>The dual of an assertion is an assumption. Rather than asking F* and
+Z3 to prove a fact, an assumption allows one to tell F* and Z3 to
+accept that some proposition is valid. You should use assumptions with
+care—it’s easy to make a mistake and assume a fact that isn’t actually
+true.</p>
+<p>The syntax of an assumption is similar to an assertion. Here, below,
+we write <code class="docutils literal notranslate"><span class="pre">assume</span> <span class="pre">(x</span> <span class="pre">&lt;&gt;</span> <span class="pre">0)</span></code> to tell F* to assume <code class="docutils literal notranslate"><span class="pre">x</span></code> is non-zero in
+the rest of the function. That allows F* to prove that the assertion
+that follows is valid.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> sqr_is_pos (x:int) = <span class="k">assume</span> (x &lt;&gt; <span class="m">0</span>); <span class="k">assert</span> (x * x &gt; <span class="m">0</span>)
+</pre></div>
+</div>
+<p>Of course, the assertion is not valid for all <code class="docutils literal notranslate"><span class="pre">x</span></code>—it’s only valid
+for those <code class="docutils literal notranslate"><span class="pre">x</span></code> that also validate the preceding assumption.</p>
+<p>Just like an <code class="docutils literal notranslate"><span class="pre">assert</span></code>, the type of <code class="docutils literal notranslate"><span class="pre">assume</span> <span class="pre">p</span></code> is <code class="docutils literal notranslate"><span class="pre">unit</span></code>.</p>
+<p>There’s a more powerful form of assumption, called an <code class="docutils literal notranslate"><span class="pre">admit</span></code>. The
+term <code class="docutils literal notranslate"><span class="pre">admit()</span></code> can given any type you like. For example,</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> sqr_is_pos (x:int) : y:nat{y &gt; <span class="m">0</span>} = admit()
+</pre></div>
+</div>
+<p>Both <code class="docutils literal notranslate"><span class="pre">assume</span></code> and <code class="docutils literal notranslate"><span class="pre">admit</span></code> can be helpful when you’re working
+through a proof, but a proof isn’t done until it’s free of them.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+    <!-- <a href="https://github.com/FStarLang/fstar/"> -->
+    <!--     <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"> -->
+    <!-- </a> -->
+
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="part1_inductives.html" class="btn btn-neutral float-right" title="Inductive types and pattern matching" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="part1_polymorphism.html" class="btn btn-neutral float-left" title="Polymorphism and type inference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Microsoft Research
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,646 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Inductive types and pattern matching &mdash; Proof-Oriented Programming in F*  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../static/custom.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../static/documentation_options.js"></script>
+        <script src="../static/jquery.js"></script>
+        <script src="../static/underscore.js"></script>
+        <script src="../static/doctools.js"></script>
+        <script src="../static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Proofs of termination" href="part1_termination.html" />
+    <link rel="prev" title="Interfacing with an SMT solver" href="part1_prop_assertions.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Proof-Oriented Programming in F*
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">A Capsule Summary of F*</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="part1.html">Programming and Proving with Total Functions</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="part1_getting_off_the_ground.html">Getting off the ground</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part1_polymorphism.html">Polymorphism and type inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part1_prop_assertions.html">Interfacing with an SMT solver</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Inductive types and pattern matching</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#enumerations">Enumerations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#discriminators">Discriminators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#exhaustiveness">Exhaustiveness</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#tuples">Tuples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#projectors">Projectors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#syntax-for-tuples">Syntax for tuples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#records">Records</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#options">Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#unions-or-the-either-type">Unions, or the <code class="docutils literal notranslate"><span class="pre">either</span></code> type</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lists">Lists</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#length-of-a-list">Length of a list</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#exercises">Exercises</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="part1_termination.html">Proofs of termination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part1_lemmas.html">Lemmas and proofs by induction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part1_quicksort.html">Case Study: Quicksort</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Proof-Oriented Programming in F*</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="part1.html">Programming and Proving with Total Functions</a> &raquo;</li>
+        
+      <li>Inductive types and pattern matching</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+
+           <div itemprop="articleBody">
+            
+  <div class="section" id="inductive-types-and-pattern-matching">
+<span id="part1-ch3"></span><h1>Inductive types and pattern matching<a class="headerlink" href="#inductive-types-and-pattern-matching" title="Permalink to this headline">¶</a></h1>
+<p>In this chapter, you’ll learn how to define new types in F*. These
+types are called <em>inductive types</em>, or, more informally,
+datatypes. We’ll also learn how to define functions over these
+inductive types by pattern matching and to prove properties about
+them.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We’ll only cover the most basic forms of inductive types here. In
+particular, the types we show here will not make use of indexing or
+any other form of dependent types—we’ll leave that for a later
+chapter.</p>
+</div>
+<div class="section" id="enumerations">
+<h2>Enumerations<a class="headerlink" href="#enumerations" title="Permalink to this headline">¶</a></h2>
+<p>We’ve seen that <code class="docutils literal notranslate"><span class="pre">unit</span></code> is the type with just one element <code class="docutils literal notranslate"><span class="pre">()</span></code> and
+that <code class="docutils literal notranslate"><span class="pre">bool</span></code> is the type with two elements, <code class="docutils literal notranslate"><span class="pre">true</span></code> and <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p>You can define your own types with an enumeration of elements, like so.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> three =
+  | One_of_three : three
+  | Two_of_three : three
+  | Three_of_three : three
+</pre></div>
+</div>
+<p>This introduces a new type <code class="docutils literal notranslate"><span class="pre">three</span> <span class="pre">:</span> <span class="pre">Type</span></code>, and three <em>distinct</em>
+constants <code class="docutils literal notranslate"><span class="pre">One_of_three</span> <span class="pre">:</span> <span class="pre">three</span></code>, <code class="docutils literal notranslate"><span class="pre">Two_of_three</span> <span class="pre">:</span> <span class="pre">three</span></code>,
+<code class="docutils literal notranslate"><span class="pre">Three_of_three</span> <span class="pre">:</span> <span class="pre">three</span></code>. These constants are also called
+“constructors” or “data constructors”. The name of a constructor must
+begin with an uppercase letter.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In this case, it may seem redundant to have to write the type of
+each constructor repeatedly—of course they’re all just constructors
+of the type <code class="docutils literal notranslate"><span class="pre">three</span></code>. In this case, F* will allow you to just
+write</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> three =
+  | One_of_three
+  | Two_of_three
+  | Three_of_three
+</pre></div>
+</div>
+<p>However, in general, as we start to use indexed types, each
+constructor can build a different instance of the defined type, so
+it will be important to have a way to specify the result type of
+each constructor. For uniformity, throughout this book, we’ll
+always annotate the types of constructors, even when not strictly
+necessary.</p>
+</div>
+<p>F* can prove that they are distinct and that these are the only terms
+of type <code class="docutils literal notranslate"><span class="pre">three</span></code>.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> distinct = <span class="k">assert</span> (One_of_three &lt;&gt; Two_of_three /\
+                       Two_of_three &lt;&gt; Three_of_three /\
+                       Three_of_three &lt;&gt; One_of_three)
+
+<span class="k">let</span> exhaustive (x:three) = <span class="k">assert</span> (x = One_of_three \/
+                                   x = Two_of_three \/
+                                   x = Three_of_three)
+</pre></div>
+</div>
+<p>To write functions that case analyze these new types, one uses the
+<code class="docutils literal notranslate"><span class="pre">match</span></code> construct. The syntax of <code class="docutils literal notranslate"><span class="pre">match</span></code> in F* is very similar to
+OCaml or F#. We’ll assume that you’re familiar with its basics. As we
+go, we’ll learn about more advanced ways to use <code class="docutils literal notranslate"><span class="pre">match</span></code>.</p>
+<p>Here are some examples.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> is_one (x:three)
+  : bool
+  = <span class="k">match</span> x <span class="k">with</span>
+    | One_of_three -&gt; <span class="k">true</span>
+    | <span class="k">_</span> -&gt; <span class="k">false</span>
+
+<span class="k">let</span> is_two (x:three)
+  : bool
+  = <span class="k">match</span> x <span class="k">with</span>
+    | Two_of_three -&gt; <span class="k">true</span>
+    | <span class="k">_</span> -&gt; <span class="k">false</span>
+
+<span class="k">let</span> is_three (x:three)
+  : bool
+  = <span class="k">match</span> x <span class="k">with</span>
+    | Three_of_three -&gt; <span class="k">true</span>
+    | <span class="k">_</span> -&gt; <span class="k">false</span>
+</pre></div>
+</div>
+<div class="section" id="discriminators">
+<h3>Discriminators<a class="headerlink" href="#discriminators" title="Permalink to this headline">¶</a></h3>
+<p>These functions test whether <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">:</span> <span class="pre">three</span></code> matches a given
+constructor, returning a <code class="docutils literal notranslate"><span class="pre">bool</span></code> in each case. Since it’s so common
+to write functions that test whether a value of an inductive type
+matches one of its constructors, F* automatically generates these
+functions for you. For example, instead of writing</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> three_as_int (x:three)
+  : int
+  = <span class="k">if</span> is_one x <span class="k">then</span> <span class="m">1</span>
+    <span class="k">else</span> <span class="k">if</span> is_two x <span class="k">then</span> <span class="m">2</span>
+    <span class="k">else</span> <span class="m">3</span>
+</pre></div>
+</div>
+<p>One can write:</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> three_as_int&#39; (x:three)
+  : int
+  = <span class="k">if</span> One_of_three? x <span class="k">then</span> <span class="m">1</span>
+    <span class="k">else</span> <span class="k">if</span> Two_of_three? x <span class="k">then</span> <span class="m">2</span>
+    <span class="k">else</span> <span class="m">3</span>
+</pre></div>
+</div>
+<p>In other words, for every constructor <code class="docutils literal notranslate"><span class="pre">T</span></code> of an inductive type
+<code class="docutils literal notranslate"><span class="pre">t</span></code>, F* generates a function named <code class="docutils literal notranslate"><span class="pre">T?</span></code> (called a “discriminator”)
+which tests if a <code class="docutils literal notranslate"><span class="pre">v:t</span></code> matches <code class="docutils literal notranslate"><span class="pre">T</span></code>.</p>
+</div>
+<div class="section" id="exhaustiveness">
+<h3>Exhaustiveness<a class="headerlink" href="#exhaustiveness" title="Permalink to this headline">¶</a></h3>
+<p>Of course, an even more direct way of writing <code class="docutils literal notranslate"><span class="pre">three_as_int</span></code> is</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> three_as_int&#39;&#39; (x:three)
+  : int
+  = <span class="k">match</span> x <span class="k">with</span>
+    | One_of_three -&gt; <span class="m">1</span>
+    | Two_of_three -&gt; <span class="m">2</span>
+    | Three_of_three -&gt; <span class="m">3</span>
+</pre></div>
+</div>
+<p>Every time you use a <code class="docutils literal notranslate"><span class="pre">match</span></code>, F* will make sure to prove that you
+are handling all possible cases. Try omitting one of the cases in
+<code class="docutils literal notranslate"><span class="pre">three_as_int</span></code> above and see what happens.</p>
+<p>Exhaustiveness checking in F* is a semantic check and can use the SMT
+solver to prove that all cases are handled appropriately. For example,
+you can write this:</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> only_two_as_int (x:three { not (Three_of_three? x) })
+  : int
+  = <span class="k">match</span> x <span class="k">with</span>
+    | One_of_three -&gt; <span class="m">1</span>
+    | Two_of_three -&gt; <span class="m">2</span>
+</pre></div>
+</div>
+<p>The refinement on the argument allows F* to prove that the
+<code class="docutils literal notranslate"><span class="pre">Three_of_three</span></code> case in the pattern is not required, since that
+branch would be unreachable anyway.</p>
+</div>
+</div>
+<div class="section" id="tuples">
+<h2>Tuples<a class="headerlink" href="#tuples" title="Permalink to this headline">¶</a></h2>
+<p>The next step from enumerations is to define composite types, e.g.,
+types that are from from pairs, triples, quadruples, etc. of other
+types. Here’s how</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> tup<span class="m">2</span> (a:Type)  (b:Type) =
+  | Tup<span class="m">2</span> : fst:a -&gt; snd:b -&gt; tup<span class="m">2</span> a b
+
+<span class="k">type</span> tup<span class="m">3</span> a b c =
+  | Tup<span class="m">3</span> : fst:a -&gt; snd:b -&gt; thd:c -&gt; tup<span class="m">3</span> a b c
+</pre></div>
+</div>
+<p>The type definition for <code class="docutils literal notranslate"><span class="pre">tup2</span> <span class="pre">a</span> <span class="pre">b</span></code> states that for any types <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">:</span>
+<span class="pre">Type</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">:</span> <span class="pre">Type</span></code>, <code class="docutils literal notranslate"><span class="pre">Tup2</span> <span class="pre">:</span> <span class="pre">a</span> <span class="pre">-&gt;</span> <span class="pre">b</span> <span class="pre">-&gt;</span> <span class="pre">tup2</span> <span class="pre">a</span> <span class="pre">b</span></code>. That is,
+<code class="docutils literal notranslate"><span class="pre">Tup2</span></code> is a constructor of <code class="docutils literal notranslate"><span class="pre">tup2</span></code>, such that given <code class="docutils literal notranslate"><span class="pre">x:a</span></code> and
+<code class="docutils literal notranslate"><span class="pre">y:b</span></code>, <code class="docutils literal notranslate"><span class="pre">Tup2</span> <span class="pre">x</span> <span class="pre">y</span> <span class="pre">:</span> <span class="pre">tup2</span> <span class="pre">a</span> <span class="pre">b</span></code>.</p>
+<p>The other types <code class="docutils literal notranslate"><span class="pre">tup3</span></code> and <code class="docutils literal notranslate"><span class="pre">tup4</span></code> are similar—the type
+annotations on the bound variables can be inferred.</p>
+<p>These are inductive types with just one case—so the discriminators
+<code class="docutils literal notranslate"><span class="pre">Tup2?</span></code>, <code class="docutils literal notranslate"><span class="pre">Tup3?</span></code>, and <code class="docutils literal notranslate"><span class="pre">Tup4?</span></code> aren’t particularly useful. But,
+we need a way to extract, or <em>project</em>, the components of a tuple. You
+can do that with a <code class="docutils literal notranslate"><span class="pre">match</span></code>.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> tup<span class="m">2_</span>fst #a #b (x:tup<span class="m">2</span> a b)
+  : a
+  = <span class="k">match</span> x <span class="k">with</span>
+    | Tup<span class="m">2</span> fst <span class="k">_</span> -&gt; fst
+
+<span class="k">let</span> tup<span class="m">2_</span>snd #a #b (x:tup<span class="m">2</span> a b)
+  : b
+  = <span class="k">match</span> x <span class="k">with</span>
+    | Tup<span class="m">2</span> <span class="k">_</span> snd -&gt; snd
+
+<span class="k">let</span> tup<span class="m">3_</span>fst #a #b #c (x:tup<span class="m">3</span> a b c)
+  : a
+  = <span class="k">match</span> x <span class="k">with</span>
+    | Tup<span class="m">3</span> fst <span class="k">_</span> <span class="k">_</span> -&gt; fst
+
+<span class="k">let</span> tup<span class="m">3_</span>snd #a #b #c (x:tup<span class="m">3</span> a b c)
+  : b
+  = <span class="k">match</span> x <span class="k">with</span>
+    | Tup<span class="m">3</span> <span class="k">_</span> snd <span class="k">_</span> -&gt; snd
+
+<span class="k">let</span> tup<span class="m">3_</span>third #a #b #c (x:tup<span class="m">3</span> a b c)
+  : c
+  = <span class="k">match</span> x <span class="k">with</span>
+    | Tup<span class="m">3</span> <span class="k">_</span> <span class="k">_</span> thd -&gt; thd
+</pre></div>
+</div>
+<div class="section" id="projectors">
+<h3>Projectors<a class="headerlink" href="#projectors" title="Permalink to this headline">¶</a></h3>
+<p>These projectors are common enough that F* auto-generates them for
+you. In particular, for any data constructor <code class="docutils literal notranslate"><span class="pre">T</span></code> of type <code class="docutils literal notranslate"><span class="pre">x₁:t₁</span> <span class="pre">-&gt;</span>
+<span class="pre">...</span> <span class="pre">-&gt;</span> <span class="pre">xₙ:tₙ</span> <span class="pre">-&gt;</span> <span class="pre">t</span></code>, F* auto-generates the following function:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">T?.xᵢ</span> <span class="pre">:</span> <span class="pre">y:t{T?</span> <span class="pre">y}</span> <span class="pre">-&gt;</span> <span class="pre">tᵢ</span></code></p></li>
+</ul>
+</div></blockquote>
+<p>That is, <code class="docutils literal notranslate"><span class="pre">T?.xᵢ</span></code> is a function which when applied to a <code class="docutils literal notranslate"><span class="pre">y:t</span></code> in
+case <code class="docutils literal notranslate"><span class="pre">T?</span> <span class="pre">y</span></code>, returns the <code class="docutils literal notranslate"><span class="pre">xᵢ</span></code> component of <code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">x₁</span> <span class="pre">...</span> <span class="pre">xₙ</span></code>.</p>
+<p>In the case of our <code class="docutils literal notranslate"><span class="pre">tup2</span></code> and <code class="docutils literal notranslate"><span class="pre">tup3</span></code> types, we have</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Tup2?.fst</span></code>, <code class="docutils literal notranslate"><span class="pre">Tup2?.snd</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Tup3?.fst</span></code>, <code class="docutils literal notranslate"><span class="pre">Tup3?.snd</span></code>, <code class="docutils literal notranslate"><span class="pre">Tup3?.thd</span></code></p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="syntax-for-tuples">
+<h3>Syntax for tuples<a class="headerlink" href="#syntax-for-tuples" title="Permalink to this headline">¶</a></h3>
+<p>Since tuples are so common, the module <code class="docutils literal notranslate"><span class="pre">FStar.Pervasives.Native.fst</span></code>
+defines tuple types up to arity 14. So, you shouldn’t have to define
+<code class="docutils literal notranslate"><span class="pre">tup2</span></code> and <code class="docutils literal notranslate"><span class="pre">tup3</span></code> etc. by yourself.</p>
+<p>The tuple types in <code class="docutils literal notranslate"><span class="pre">FStar.Pervasives.Native</span></code> come with syntactic
+sugar.</p>
+<ul class="simple">
+<li><p>You can write <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&amp;</span> <span class="pre">b</span></code> instead of the <code class="docutils literal notranslate"><span class="pre">tup2</span> <span class="pre">a</span> <span class="pre">b</span></code>; <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&amp;</span> <span class="pre">b</span> <span class="pre">&amp;</span> <span class="pre">c</span></code>
+instead of <code class="docutils literal notranslate"><span class="pre">tup3</span> <span class="pre">a</span> <span class="pre">b</span> <span class="pre">c</span></code>; and so on, up to arity 14.</p></li>
+<li><p>You can write <code class="docutils literal notranslate"><span class="pre">x,</span> <span class="pre">y</span></code> instead of <code class="docutils literal notranslate"><span class="pre">Tup2</span> <span class="pre">x</span> <span class="pre">y</span></code>; <code class="docutils literal notranslate"><span class="pre">x,</span> <span class="pre">y,</span> <span class="pre">z</span></code> instead
+of <code class="docutils literal notranslate"><span class="pre">Tup3</span> <span class="pre">x</span> <span class="pre">y</span> <span class="pre">z</span></code>; an so on, up to arity 14.</p></li>
+<li><p>You can write <code class="docutils literal notranslate"><span class="pre">x._1</span></code>, <code class="docutils literal notranslate"><span class="pre">x._2</span></code>, <code class="docutils literal notranslate"><span class="pre">x._3</span></code>, etc. to project the
+field <code class="docutils literal notranslate"><span class="pre">i</span></code> of a tuple whose arity is at least <code class="docutils literal notranslate"><span class="pre">i</span></code>.</p></li>
+</ul>
+<p>That said, if you’re using tuples beyond arity 4 or 5, it’s probably a
+good idea to define a <em>record</em>, as we’ll see next—since it can be hard
+to remember what the components of a large tuple represent.</p>
+</div>
+<div class="section" id="records">
+<h3>Records<a class="headerlink" href="#records" title="Permalink to this headline">¶</a></h3>
+<p>A record is just a tuple with user-chosen names for its fields and
+with special syntax for constructing then and projecting their
+fields. Here’s an example.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> point<span class="m">3</span>D = { x:int; y:int; z:int}
+
+<span class="k">let</span> origin = { y=<span class="m">0</span>; x=<span class="m">0</span>; z=<span class="m">0</span> }
+
+<span class="k">let</span> dot (p<span class="m">0</span> p<span class="m">1</span>:point<span class="m">3</span>D) = p<span class="m">0</span>.x * p<span class="m">1</span>.x + p<span class="m">0</span>.y * p<span class="m">1</span>.y + p<span class="m">0</span>.z * p<span class="m">1</span>.z
+
+<span class="k">let</span> translate_X (p:point<span class="m">3</span>D) (shift:int) = { p <span class="k">with</span> x = p.x + shift}
+
+<span class="k">let</span> is_origin (x:point<span class="m">3</span>D) =
+  <span class="k">match</span> x <span class="k">with</span>
+  | {z=<span class="m">0</span>;y=<span class="m">0</span>;x=<span class="m">0</span>} -&gt; <span class="k">true</span>
+  | <span class="k">_</span> -&gt; <span class="k">false</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>A record type is defined using curly braces <code class="docutils literal notranslate"><span class="pre">{}</span></code>. See <code class="docutils literal notranslate"><span class="pre">type</span>
+<span class="pre">point3D</span></code></p></li>
+<li><p>A record value is also constructed using curly braces, with an
+assignment for each field of the record. The fields need not be
+given in order. See <code class="docutils literal notranslate"><span class="pre">origin</span></code>.</p></li>
+<li><p>To access the fields of a record, you can use the dot notation
+<code class="docutils literal notranslate"><span class="pre">p.x</span></code>; See <code class="docutils literal notranslate"><span class="pre">dot</span></code>, which computes a dot product using dot
+notation.</p></li>
+<li><p>Records also support the <code class="docutils literal notranslate"><span class="pre">with</span></code> notation to construct a new record
+whose fields are the same as the old record, except for those fields
+mentioned after the <code class="docutils literal notranslate"><span class="pre">with</span></code>. That is, <code class="docutils literal notranslate"><span class="pre">translate_X</span> <span class="pre">p</span> <span class="pre">shift</span></code>
+returns <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">p.x</span> <span class="pre">+</span> <span class="pre">shift;</span> <span class="pre">y</span> <span class="pre">=</span> <span class="pre">p.y;</span> <span class="pre">z</span> <span class="pre">=</span> <span class="pre">p.z}</span></code>.</p></li>
+<li><p>Records can also be used to pattern match a value. For example, in
+<code class="docutils literal notranslate"><span class="pre">is_origin</span></code>, we match the fields of the record (in any order)
+against some patterns.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="options">
+<h2>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
+<p>Another common type from F*’s standard library is the <code class="docutils literal notranslate"><span class="pre">option</span></code> type,
+which is useful to represent a possibly missing value.</p>
+<p>Consider implementing a function to divide <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">/</span> <span class="pre">y</span></code>, for two integers
+<code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>. This function cannot be defined when <code class="docutils literal notranslate"><span class="pre">y</span></code> is zero,
+but it can be defined partially, by excluding the case where <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span>
+<span class="pre">0</span></code>, as shown below. (Of course, one can also refine the domain of the
+function to forbid <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">0</span></code>, but we’re just trying to illustrate the
+<code class="docutils literal notranslate"><span class="pre">option</span></code> type here.)</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> try_divide (x y:int)
+  : option int
+  = <span class="k">if</span> y = <span class="m">0</span> <span class="k">then</span> None <span class="k">else</span> Some (x / y)
+
+<span class="k">let</span> divide (x:int) (y:int{y&lt;&gt;<span class="m">0</span>}) = x / y
+</pre></div>
+</div>
+<p>Like most other functional languages, F* does not have a <code class="docutils literal notranslate"><span class="pre">null</span></code>
+value. Whenever a value may possibly be <code class="docutils literal notranslate"><span class="pre">null</span></code>, one typically uses
+the <code class="docutils literal notranslate"><span class="pre">option</span></code> type, using <code class="docutils literal notranslate"><span class="pre">None</span></code> to signify null and <code class="docutils literal notranslate"><span class="pre">Some</span> <span class="pre">v</span></code> for
+the non-null case.</p>
+</div>
+<div class="section" id="unions-or-the-either-type">
+<h2>Unions, or the <code class="docutils literal notranslate"><span class="pre">either</span></code> type<a class="headerlink" href="#unions-or-the-either-type" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">FStar.Pervasives</span></code> also defines the <code class="docutils literal notranslate"><span class="pre">either</span></code> type, shown below.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> either a b =
+  | Inl : v: a -&gt; either a b
+  | Inr : v: b -&gt; either a b
+</pre></div>
+</div>
+<p>The type <code class="docutils literal notranslate"><span class="pre">either</span> <span class="pre">a</span> <span class="pre">b</span></code> represents a value that could either be <code class="docutils literal notranslate"><span class="pre">Inl</span>
+<span class="pre">v</span></code> with <code class="docutils literal notranslate"><span class="pre">v:a</span></code>, or <code class="docutils literal notranslate"><span class="pre">Inr</span> <span class="pre">v</span></code> with <code class="docutils literal notranslate"><span class="pre">v:b</span></code>. That is, <code class="docutils literal notranslate"><span class="pre">either</span> <span class="pre">a</span> <span class="pre">b</span></code>
+is a tagged union of the <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code>. It’s easy to write functions
+to analyze the tag <code class="docutils literal notranslate"><span class="pre">Inl</span></code> (meaning it’s “in the left case”) or
+<code class="docutils literal notranslate"><span class="pre">Inr</span></code> (“in the right case”) and compute with the underlying
+values. Here’s an example:</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> same_case #a #b #c #d (x:either a b) (y:either c d)
+  : bool
+  = <span class="k">match</span> x, y <span class="k">with</span>
+    | Inl <span class="k">_</span>, Inl <span class="k">_</span>
+    | Inr <span class="k">_</span>, Inr <span class="k">_</span> -&gt; <span class="k">true</span>
+    | <span class="k">_</span> -&gt; <span class="k">false</span>
+
+<span class="k">let</span> sum (x:either bool int) (y:either bool int{same_case x y})
+  : z:either bool int{ Inl? z &lt;==&gt; Inl? x}
+  = <span class="k">match</span> x, y <span class="k">with</span>
+    | Inl xl, Inl yl -&gt; Inl (xl || yl)
+    | Inr xr, Inr yr -&gt; Inr (xr + yr)
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">same_case</span> <span class="pre">x</span> <span class="pre">y</span></code> function decides if the two unions are both
+simultaneously in the left or right case.</p>
+<p>Then, in <code class="docutils literal notranslate"><span class="pre">sum</span> <span class="pre">x</span> <span class="pre">y</span></code>, with a refinement that <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are in
+the same case, we can handle just two cases (when they are both in
+left, or both in right) and F* can prove that the case analysis is
+exhaustive. In the left case, the underlying values are boolean, so we
+combine them with <code class="docutils literal notranslate"><span class="pre">||</span></code>; in the right case, the underlying values are
+integers, so we combine them with <code class="docutils literal notranslate"><span class="pre">+</span></code>; and return them with the
+appropriate tag. The type of the result <code class="docutils literal notranslate"><span class="pre">z:either</span> <span class="pre">bool</span> <span class="pre">int{</span> <span class="pre">Inl?</span> <span class="pre">z</span> <span class="pre">&lt;==&gt;</span>
+<span class="pre">Inl?</span> <span class="pre">x}</span></code> shows that the result has the same case as <code class="docutils literal notranslate"><span class="pre">x</span></code> (and hence
+also <code class="docutils literal notranslate"><span class="pre">y</span></code>). We could have written the result type as <code class="docutils literal notranslate"><span class="pre">z:either</span> <span class="pre">bool</span>
+<span class="pre">int</span> <span class="pre">{</span> <span class="pre">same_case</span> <span class="pre">z</span> <span class="pre">x</span> <span class="pre">}</span></code>.</p>
+</div>
+<div class="section" id="lists">
+<h2>Lists<a class="headerlink" href="#lists" title="Permalink to this headline">¶</a></h2>
+<p>All the types we’ve see far have been inductive only in a degenerate
+sense—the constructors do not refer to the types they construct. Now,
+for our first truly inductive type, a list.</p>
+<p>Here’s the definition of <code class="docutils literal notranslate"><span class="pre">list</span></code> from <code class="docutils literal notranslate"><span class="pre">Prims</span></code>:</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> list a =
+  | Nil  : list a
+  | Cons : hd:a -&gt; tl:list a -&gt; list a
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">list</span></code> type is available implicitly in all F* programs and we
+have special (but standard) syntax for the list constructors:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">[]</span></code> is <code class="docutils literal notranslate"><span class="pre">Nil</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[v1;</span> <span class="pre">...;</span> <span class="pre">vn]</span></code> is <code class="docutils literal notranslate"><span class="pre">Cons</span> <span class="pre">v1</span> <span class="pre">...</span> <span class="pre">(Cons</span> <span class="pre">vn</span> <span class="pre">Nil)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hd</span> <span class="pre">::</span> <span class="pre">tl</span></code> is <code class="docutils literal notranslate"><span class="pre">Cons</span> <span class="pre">hd</span> <span class="pre">tl</span></code>.</p></li>
+</ul>
+<p>You can always just write out the constructors like <cite>Nil</cite> and <cite>Cons</cite>
+explicitly, if you find that useful (e.g., to partially apply <code class="docutils literal notranslate"><span class="pre">Cons</span>
+<span class="pre">hd</span> <span class="pre">:</span> <span class="pre">list</span> <span class="pre">a</span> <span class="pre">-&gt;</span> <span class="pre">list</span> <span class="pre">a</span></code>).</p>
+<div class="section" id="length-of-a-list">
+<span id="part1-inductives-length"></span><h3>Length of a list<a class="headerlink" href="#length-of-a-list" title="Permalink to this headline">¶</a></h3>
+<p>Let’s write some simple functions on lists, starting with computing
+the length of a list.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> length #a (l:list a)
+  : nat
+  = <span class="k">match</span> l <span class="k">with</span>
+    | [] -&gt; <span class="m">0</span>
+    | <span class="k">_</span> :: tl -&gt; <span class="m">1</span> + length tl
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">length</span></code> function is recursive and implicitly polymorphic in a
+type <code class="docutils literal notranslate"><span class="pre">a</span></code>. For any list <code class="docutils literal notranslate"><span class="pre">l</span> <span class="pre">:</span> <span class="pre">list</span> <span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">length</span> <span class="pre">l</span></code> returns a
+<code class="docutils literal notranslate"><span class="pre">nat</span></code>. The definition pattern matches on the list and calls
+<code class="docutils literal notranslate"><span class="pre">length</span></code> recursively on the tail of list, until the <code class="docutils literal notranslate"><span class="pre">[]</span></code> case is
+reached.</p>
+</div>
+</div>
+<div class="section" id="exercises">
+<span id="part1-inductives-append"></span><h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<p>Here’s the definition of <code class="docutils literal notranslate"><span class="pre">append</span></code>, a function that concatenates two
+lists. Can you give it a type that proves it always returns a list
+whose length is the sum of the lengths of its arguments.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> append l<span class="m">1</span> l<span class="m">2</span>
+  = <span class="k">match</span> l<span class="m">1</span> <span class="k">with</span>
+    | [] -&gt; l<span class="m">2</span>
+    | hd :: tl -&gt; hd :: append tl l<span class="m">2</span>
+</pre></div>
+</div>
+<div class="toggle docutils container">
+<div class="header docutils container">
+<p><strong>Answer</strong></p>
+</div>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">val</span> append (#a:Type) (l<span class="m">1</span> l<span class="m">2</span>:list a)
+  : l:list a { length l = length l<span class="m">1</span> + length l<span class="m">2</span> }
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+    <!-- <a href="https://github.com/FStarLang/fstar/"> -->
+    <!--     <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"> -->
+    <!-- </a> -->
+
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="part1_termination.html" class="btn btn-neutral float-right" title="Proofs of termination" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="part1_prop_assertions.html" class="btn btn-neutral float-left" title="Interfacing with an SMT solver" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Microsoft Research
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

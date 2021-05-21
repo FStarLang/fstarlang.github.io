@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Programming and Proving with Total Functions &mdash; Proof-Oriented Programming in F*  documentation</title>
+  <title>Case Study: Quicksort &mdash; Proof-Oriented Programming in F*  documentation</title>
   
 
   
@@ -38,8 +38,7 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Getting off the ground" href="part1_getting_off_the_ground.html" />
-    <link rel="prev" title="A Capsule Summary of F*" href="../intro.html" /> 
+    <link rel="prev" title="Lemmas and proofs by induction" href="part1_lemmas.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -87,14 +86,14 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../intro.html">A Capsule Summary of F*</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Programming and Proving with Total Functions</a><ul>
+<li class="toctree-l1 current"><a class="reference internal" href="part1.html">Programming and Proving with Total Functions</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="part1_getting_off_the_ground.html">Getting off the ground</a></li>
 <li class="toctree-l2"><a class="reference internal" href="part1_polymorphism.html">Polymorphism and type inference</a></li>
 <li class="toctree-l2"><a class="reference internal" href="part1_prop_assertions.html">Interfacing with an SMT solver</a></li>
 <li class="toctree-l2"><a class="reference internal" href="part1_inductives.html">Inductive types and pattern matching</a></li>
 <li class="toctree-l2"><a class="reference internal" href="part1_termination.html">Proofs of termination</a></li>
 <li class="toctree-l2"><a class="reference internal" href="part1_lemmas.html">Lemmas and proofs by induction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="part1_quicksort.html">Case Study: Quicksort</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Case Study: Quicksort</a></li>
 </ul>
 </li>
 </ul>
@@ -143,7 +142,9 @@
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Programming and Proving with Total Functions</li>
+          <li><a href="part1.html">Programming and Proving with Total Functions</a> &raquo;</li>
+        
+      <li>Case Study: Quicksort</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -161,37 +162,8 @@
 
            <div itemprop="articleBody">
             
-  <div class="section" id="programming-and-proving-with-total-functions">
-<span id="part1"></span><h1>Programming and Proving with Total Functions<a class="headerlink" href="#programming-and-proving-with-total-functions" title="Permalink to this headline">¶</a></h1>
-<p>The core design philosophy of F* is that the type of a term (a program
-fragment) is a specification of its runtime behavior. We write <code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">:</span>
-<span class="pre">t</span></code> to mean that a term <code class="docutils literal notranslate"><span class="pre">e</span></code> has type <code class="docutils literal notranslate"><span class="pre">t</span></code>. Many terms can have the
-same type and the same term can have many types.</p>
-<p>One (naive but useful) mental model is to think of a type as
-describing a set of values. For instance, the type <code class="docutils literal notranslate"><span class="pre">int</span></code> describes
-the set of terms which compute integer results, i.e., when you have
-<code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">:</span> <span class="pre">int</span></code>, then when <code class="docutils literal notranslate"><span class="pre">e</span></code> is reduced fully it produces a value in
-the set <code class="docutils literal notranslate"><span class="pre">{...,</span> <span class="pre">-2,</span> <span class="pre">-1,</span> <span class="pre">0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">...}</span></code>. Similarly, the type <code class="docutils literal notranslate"><span class="pre">bool</span></code>
-is the type of terms that compute or evaluate to one of the values in
-the set <code class="docutils literal notranslate"><span class="pre">{true,false}</span></code>. Unlike many other languages, F* allows
-defining types that describe arbitrary sets of values, e.g., the type
-that contains only the number <code class="docutils literal notranslate"><span class="pre">17</span></code>, or the type of functions that
-factor a number into its primes.</p>
-<p>When proving a program <code class="docutils literal notranslate"><span class="pre">e</span></code> correct, one starts by specifying the
-properties one is interested in as a type <code class="docutils literal notranslate"><span class="pre">t</span></code> and then trying to
-convince F* that <code class="docutils literal notranslate"><span class="pre">e</span></code> has type <code class="docutils literal notranslate"><span class="pre">t</span></code>, i.e., deriving <code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">:</span> <span class="pre">t</span></code>.</p>
-<p>The idea of using a type to specify properties of a program has deep
-roots in the connections between logic and computation. You may find
-it interesting to read about <a class="reference external" href="https://cacm.acm.org/magazines/2015/12/194626-propositions-as-types/fulltext">proposition as types</a>,
-a concept with many deep mathematical and philosophical
-implications. For now, it suffices to think of a type <code class="docutils literal notranslate"><span class="pre">t</span></code> as a
-specification, or a statement of a theorem, and <code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">:</span> <span class="pre">t</span></code> as
-computer-checkable claim that the term <code class="docutils literal notranslate"><span class="pre">e</span></code> is a proof of the theorem
-<code class="docutils literal notranslate"><span class="pre">t</span></code>.</p>
-<p>In the next few chapters we’ll learn about how to program total
-functions and prove  then correct.</p>
-<div class="toctree-wrapper compound">
-</div>
+  <div class="section" id="case-study-quicksort">
+<span id="part1-ch5"></span><h1>Case Study: Quicksort<a class="headerlink" href="#case-study-quicksort" title="Permalink to this headline">¶</a></h1>
 </div>
 
 
@@ -206,10 +178,8 @@ functions and prove  then correct.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="part1_getting_off_the_ground.html" class="btn btn-neutral float-right" title="Getting off the ground" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-      
-        <a href="../intro.html" class="btn btn-neutral float-left" title="A Capsule Summary of F*" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="part1_lemmas.html" class="btn btn-neutral float-left" title="Lemmas and proofs by induction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
