@@ -1,4 +1,4 @@
-Advanced KreMLin topics
+Advanced KaRaMeL topics
 =======================
 
 Bundling
@@ -72,7 +72,7 @@ as follows:
 
 .. note::
 
-  Since KreMLin automatically eliminates unreachable definitions by default,
+  Since KaRaMeL automatically eliminates unreachable definitions by default,
   bundling oftentimes prunes the call-graph quite heavily and is used to remove
   definitions that would otherwise be unreachable.
 
@@ -111,7 +111,7 @@ spec). If a declaration is not eliminated as expected, use ``-d reachability``
 which will explain why a declaration is still reachable and, therefore, not
 marked as private.
 
-Separate compilation via KreMLin
+Separate compilation via KaRaMeL
 --------------------------------
 
 This sections covers authoring two different projects that are built, extracted to
@@ -158,7 +158,7 @@ exclusively as a set of static headers, i.e. headers that contain definitions
 marked as ``inline static``.
 
 In that case, project A must pass a suitable ``-static-header`` option to
-KreMLin (same syntax as ``-bundle``, ``-library``, etc.). Definitions that match
+KaRaMeL (same syntax as ``-bundle``, ``-library``, etc.). Definitions that match
 the argument will then appear in their respective header files.
 
 Project B will then need to use (in addition to ``-library``):

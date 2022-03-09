@@ -5,7 +5,7 @@ Example: RingBuffer
 .. code:: fstar
 
   module RingBuffer
-  
+
 
 This module demonstrates how to implement a ringbuffer in Low*. It uses the
 new LowStar.Buffer abstraction, and demonstrates how to separate functional
@@ -23,7 +23,7 @@ we don't end up referring to FStar.ST by accident.
   module ST = FStar.HyperStack.ST
   module S = FStar.Seq
   module L = FStar.List.Tot
-  
+
 
 This brings into scope the ``!*`` and ``*=`` operators, which are
 specifically designed to operate on buffers of size 1, i.e. on pointers.
@@ -32,7 +32,7 @@ specifically designed to operate on buffers of size 1, i.e. on pointers.
 
   open LowStar.BufferOps
   open FStar.HyperStack.ST
-  
+
 
 A ringbuffer is a view over a buffer, with a start index, a length (i.e. how
 many elements are currently being stored) and a total length (i.e. the size
@@ -52,7 +52,7 @@ of a buffer and two pointers, uses a single reference to a record instead.
     length: B.pointer U32.t;
     total_length: U32.t
   }
-  
+
 
 To facilitate writing predicates, we define a handy shortcut that is the
 reflection of the ``!*`` operator at the proof level.
@@ -61,7 +61,7 @@ reflection of the ``!*`` operator at the proof level.
 
   unfold
   let deref #a (h: HS.mem) (x: B.pointer a) = B.get h x 0
-  
+
 
 A first version of the well-formedness predicate for ring buffers. This
 predicate refers to a sequence, not a buffer, and therefore does not need
@@ -78,7 +78,7 @@ zero-sized ringbuffers are not allowed.
     length <=^ total_length /\
     first <^ total_length /\
     total_length >^ 0ul
-  
+
 
 Same predicate as above, but this time operating on a memory state and using
 a stateful ringbuffer.
@@ -91,7 +91,7 @@ a stateful ringbuffer.
     M.(loc_disjoint (loc_buffer x.b) (loc_buffer x.length)) /\
     M.(loc_disjoint (loc_buffer x.first) (loc_buffer x.length)) /\
     well_formed_f (B.as_seq h x.b) (deref h x.first) (deref h x.length) x.total_length
-  
+
 
 We next define operators for moving around the ringbuffer with wraparound
 semantics. Defining this using a modulo operator is not a good idea, because:
@@ -112,7 +112,7 @@ So, instead, we just do a simple branch.
       0ul
     else
       i +^ 1ul
-  
+
   let prev (i total_length: U32.t): Pure U32.t
     (requires U32.(total_length >^ 0ul /\ i <^ total_length))
     (ensures fun r -> U32.( r <^ total_length ))
@@ -122,7 +122,7 @@ So, instead, we just do a simple branch.
       i -^ 1ul
     else
       total_length -^ 1ul
-  
+
 
 These two are useful from the client's perspective, to capture how many slots
 are left in the buffer.
@@ -131,10 +131,10 @@ are left in the buffer.
 
   let remaining_space #a (h: HS.mem) (x: t a { well_formed h x }) =
     U32.( x.total_length -^ (deref h x.length) )
-  
+
   let space_left #a (h: HS.mem) (x: t a { well_formed h x }) =
     U32.( remaining_space h x >^ 0ul )
-  
+
 
 A predicate over indices that captures whether a given entry in the buffer
 is occupied. Once again, we avoid modular arithmetic by branching.
@@ -148,7 +148,7 @@ is occupied. Once again, we avoid modular arithmetic by branching.
     let i = U32.v i in
     first <= i /\ i < first + length \/
     first <= i + total_length /\ i + total_length < first + length
-  
+
 
 Same thing, but over a memory and the actual references.
 
@@ -159,7 +159,7 @@ Same thing, but over a memory and the actual references.
     let length = deref h x.length in
     let total_length = x.total_length in
     used_slot_f first length total_length i
-  
+
 
 We reflect a ringbuffer as a list. This is the functional version that
 operates over a sequence.
@@ -178,7 +178,7 @@ operates over a sequence.
     else
       S.index b (U32.v first) ::
         as_list_f b (next first total_length) U32.( length -^ 1ul ) total_length
-  
+
 
 The one central lemma of this module: assigning something in the unused
 parts of the buffer does not affect the contents of the list.
@@ -207,7 +207,7 @@ parts of the buffer does not affect the contents of the list.
       seq_update_unused_preserves_list b i e (next first total_length)
         U32.(length -^ 1ul) total_length
     end
-  
+
 
 This version is more convenient and refers to the current memory and buffer,
 as opposed to as sequence.
@@ -219,7 +219,7 @@ as opposed to as sequence.
     (ensures fun l -> L.length l = U32.(v (deref h x.length)))
   =
     as_list_f (B.as_seq h x.b) (deref h x.first) (deref h x.length) x.total_length
-  
+
   #reset-options "--z3rlimit 50"
 
 ``pop`` is easy to prove, and requires no particular call to a lemma,
@@ -245,7 +245,7 @@ to prove automatically the functional specification.
     x.length *= U32.(!*x.length -^ 1ul);
     let h1 = ST.get () in
     e
-  
+
 
 ``push`` is slightly more involved and crucially relies on the lemma above.
 
@@ -269,7 +269,7 @@ to prove automatically the functional specification.
       (deref h0 x.first) (deref h0 x.length) x.total_length;
     x.first *= dest_slot;
     x.length *= U32.(!*x.length +^ 1ul)
-  
+
 
 We are reaching the point of diminishing returns for this example. The
 function below is only moderately interesting; the gist of it is that the
@@ -291,7 +291,7 @@ avoid integer overflow.
       length -^ (total_length -^ i)
     else
       i +^ length
-  
+
 
 A highly specialized lemma geared towards our post-condition. This could
 probably be proven with more automation if we had a more robust library of
@@ -316,7 +316,7 @@ list-based lemmas, but well.
       ()
     else
       as_list_append_one b e (next first total_length) U32.(length -^ 1ul) total_length
-  
+
 
 Pushing one element at the back is morally equivalent to appending a
 singleton list at the end. This function crucially relies on the custom
@@ -344,7 +344,7 @@ lemma above.
     as_list_append_one (B.as_seq h1 x.b) e
       (deref h1 x.first) (deref h1 x.length) x.total_length;
     x.length *= U32.(!*x.length +^ 1ul)
-  
+
 
 Similarly, we prove by induction a custom lemma that captures what it means
 to split a list at the last element.
@@ -370,7 +370,7 @@ to split a list at the last element.
       ()
     else
       as_list_minus_one b e (next first total_length) U32.(length -^ 1ul) total_length
-  
+
 
 Then, we use the lemma above to specify what it means to pop an element from
 the back: it is equivalent to splitting the list at the last element.
@@ -394,11 +394,11 @@ the back: it is equivalent to splitting the list at the last element.
     as_list_minus_one (B.as_seq h0 x.b) e
       (deref h0 x.first) (deref h0 x.length) x.total_length;
     e
-  
+
 
 ``create`` leverages the ``StackInline`` effect, and allocates three buffers
 -- we encapsulate stack allocation in a separate function, which facilitates
-verification. Relying on KreMLin's support, ``create`` will be textually
+verification. Relying on KaRaMeL's support, ``create`` will be textually
 inlined at call-site so that the allocations are effectively in the caller's
 stack frame.
 
@@ -411,7 +411,7 @@ stack frame.
   =
     let b = B.alloca init len in
     { b = b; first = B.alloca 0ul 1ul; length = B.alloca 0ul 1ul; total_length = len }
-  
+
 
 This test is crafted for continuous integration, so that the return value is
 0l, indicating success.

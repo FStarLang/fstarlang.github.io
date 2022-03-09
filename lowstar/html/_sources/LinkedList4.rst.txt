@@ -6,18 +6,18 @@ Example: linked list
 
   module LinkedList4
   open LowStar.BufferOps
-  
+
   module B = LowStar.Buffer
   module HS = FStar.HyperStack
   module G = FStar.Ghost
   module L = FStar.List.Tot
   module U32 = FStar.UInt32
   module MO = LowStar.Modifies
-  
+
   open FStar.HyperStack.ST
-  
+
   #set-options "--__no_positivity"
-  
+
 
 We revisit the classic example of lists, but in a low-level
 setting, using linked lists. This second version uses
@@ -28,12 +28,12 @@ setting, using linked lists. This second version uses
   noeq
   type t (a: Type0) =
     B.pointer_or_null (cell a)
-  
+
   and cell (a: Type0) = {
     next: t a;
     data: a;
   }
-  
+
 
 We enrich lists with a predicate that captures their length.  This
 predicate will be needed for any traversal of the list, in order
@@ -56,14 +56,14 @@ buffers in the heap is potentially infinite;
       a == data /\
       well_formed h next (G.hide q)
     ))
-  
+
 
 Note: all the ghost predicates and functions operate on a length of type
 nat; the Ghost effect guarantees that the length can only be used at
 run-time. Functions called at run-time will, conversely, use a length of
 type `erased nat`, which states that the length is
 computationally-irrelevant and can be safely removed from the resulting C
-code via a combination of F* + KreMLin erasure.
+code via a combination of F* + KaRaMeL erasure.
 
 
 .. code:: fstar
@@ -79,7 +79,7 @@ code via a combination of F* + KreMLin erasure.
     else
       let { next=next } = B.get h c 0 in
       length_functional h next (G.hide (L.tl (G.reveal l1))) (G.hide (L.tl (G.reveal l2)))
-  
+
 
 As we start proving some degree of functional correctness, we will have to
 reason about non-interference, and state that some operations do not modify
@@ -92,7 +92,7 @@ the footprint of a given list.
     (requires (well_formed h l n))
     (ensures (fun refs -> True))
     (decreases (G.reveal n))
-  
+
   let rec footprint #a h l n =
     if B.g_is_null l
     then MO.loc_none
@@ -101,7 +101,7 @@ the footprint of a given list.
       let refs = footprint h next (G.hide (L.tl (G.reveal n))) in
       MO.loc_union (MO.loc_buffer l) refs
   #reset-options
-  
+
   let rec modifies_disjoint_footprint
     (#a: Type)
     (h: HS.mem)
@@ -126,7 +126,7 @@ the footprint of a given list.
       let {next = l'} = B.get h l 0 in
       modifies_disjoint_footprint h l' (G.hide (L.tl (G.reveal n))) r h'
     end
-  
+
   let rec well_formed_distinct_lengths_disjoint
     #a
     (c1: B.pointer (cell a))
@@ -154,7 +154,7 @@ the footprint of a given list.
     in
     f ();
     B.pointer_distinct_sel_disjoint c1 c2 h
-  
+
   let rec well_formed_gt_lengths_disjoint_from_list
     #a
     (h: HS.mem)
@@ -171,7 +171,7 @@ the footprint of a given list.
     | _ ->
       well_formed_distinct_lengths_disjoint c1 c2 n1 n2 h;
       well_formed_gt_lengths_disjoint_from_list h c1 (B.get h c2 0).next n1 (G.hide (L.tl (G.reveal n2)))
-  
+
   let well_formed_head_tail_disjoint
     (#a: Type)
     (h: HS.mem)
@@ -183,7 +183,7 @@ the footprint of a given list.
       MO.loc_disjoint (MO.loc_buffer c) (footprint h (B.get h c 0).next (G.hide (L.tl (G.reveal n))))
     ))
   = well_formed_gt_lengths_disjoint_from_list h c (B.get h c 0).next n (G.hide (L.tl (G.reveal n)))
-  
+
   let rec unused_in_well_formed_disjoint_from_list
     #a #b
     (h: HS.mem)
@@ -197,7 +197,7 @@ the footprint of a given list.
   = match G.reveal n with
     | [] -> ()
     | _ -> unused_in_well_formed_disjoint_from_list h r (B.get h l 0).next (G.hide (L.tl (G.reveal n)))
-  
+
 
 Finally, the pop operation. Here we use the classic representation
 using null pointers, which requires the client to pass a pointer
@@ -231,7 +231,7 @@ hide/reveal the computationally-irrelevant length.
       well_formed h1 l n' /\
       MO.loc_disjoint (MO.loc_buffer pl) (footprint h1 l n')
     ))
-  
+
   let pop #a #n pl =
     let l = !* pl in
     let lcell = !* l in
@@ -241,7 +241,7 @@ hide/reveal the computationally-irrelevant length.
     well_formed_head_tail_disjoint h0 l n;
     modifies_disjoint_footprint h0 l n (MO.loc_buffer pl) h1;
     lcell.data
-  
+
   val push: (#a: Type) -> (#n: G.erased (list a)) -> (pl: B.pointer (t a)) -> (x: a) ->
     ST unit
       (requires (fun h ->
@@ -258,7 +258,7 @@ hide/reveal the computationally-irrelevant length.
         well_formed h1 l n' /\
         MO.loc_disjoint (MO.loc_buffer pl) (footprint h1 l n')
       ))
-  
+
   let push #a #n pl x =
     let h0 = get () in
     let l = !* pl in
@@ -274,7 +274,7 @@ hide/reveal the computationally-irrelevant length.
     pl *= pc;
     let h2 = get () in
     modifies_disjoint_footprint h1 l n (MO.loc_buffer pl) h2
-  
+
 
 Connecting our predicate `well_formed` to the regular length function.
 Note that this function takes a list whose length is unknown statically,
@@ -288,7 +288,7 @@ because of the existential quantification.
       h0 == h1 /\
       U32.v n = L.length (G.reveal gn)
     ))
-  
+
 
 Note that we could have as easily returned an option, but sometimes fatal
 errors are just easier to handle for client code. The `C.String` module
@@ -312,9 +312,9 @@ say, copy an immutable constant string into a mutable buffer.
         0ul // dummy return value, this point is unreachable
       end else
         n +^ 1ul
-  
+
   val main: unit -> ST (Int32.t) (fun _ -> true) (fun _ _ _ -> true)
-  
+
   let main () =
     let l: B.pointer_or_null (t Int32.t) = B.malloc HS.root B.null 1ul in
     push #Int32.t #(G.hide []) l 1l;

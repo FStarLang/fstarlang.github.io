@@ -164,11 +164,11 @@ let min_int32 = FStar.Int32.(0l -^ 0x7fffffffl -^ 1l)
 /// Some extensions to Low*
 /// -----------------------
 ///
-/// KreMLin supports a number of programming patterns beyond the original paper
+/// KaRaMeL supports a number of programming patterns beyond the original paper
 /// formalization, which aim to maximize programmer productivity. We now review
 /// the main ones.
 ///
-/// One can rely on KreMLin to compile F*'s structural equality (the ``(=)``
+/// One can rely on KaRaMeL to compile F*'s structural equality (the ``(=)``
 /// operator) to C functions specialized to each type. Furthermore, the function
 /// below demonstrates the use of a struct type as a value, which is
 /// straightforwardly compiled to a C structure passed by value. Be aware that doing
@@ -189,7 +189,7 @@ let uint128_equal (x y: uint128) =
 ///      return __eq__LowStar_uint128(x, y);
 ///    }
 ///
-/// One may also use F* inductives, knowing that KreMLin will compile them as
+/// One may also use F* inductives, knowing that KaRaMeL will compile them as
 /// tagged unions, with a variety of optimized compilation schemes to make the
 /// generated code as palatable as possible.
 
@@ -213,7 +213,7 @@ type key =
 ///    }
 ///    key;
 ///
-/// Generally, KreMLin performs a whole-program monomorphization of
+/// Generally, KaRaMeL performs a whole-program monomorphization of
 /// parameterized data types. The example below demonstrates this, along with a
 /// "pretty" compilation scheme for the option type that does not involves an
 /// anonymous union.
@@ -256,8 +256,8 @@ let abs2 (x: Int32.t): option Int32.t =
 ///          );
 ///    }
 ///
-/// Inductives are compiled by KreMLin, and so are pattern matches. Note that
-/// for a series of cascading if-then-elses, KreMLin has to insert a fallback
+/// Inductives are compiled by KaRaMeL, and so are pattern matches. Note that
+/// for a series of cascading if-then-elses, KaRaMeL has to insert a fallback
 /// else statement, both because the original F* code may be unverified and the
 /// pattern-matching may be incomplete, but also because the C compiler may
 /// trigger an error.
@@ -289,7 +289,7 @@ let fail_if #a #b (package: a * (a -> option b)): St b =
 ///      }
 ///      else
 ///      {
-///        KRML_HOST_PRINTF("KreMLin abort at %s:%d\n%s\n",
+///        KRML_HOST_PRINTF("KaRaMeL abort at %s:%d\n%s\n",
 ///          __FILE__,
 ///          __LINE__,
 ///          "unreachable (pattern matches are exhaustive in F*)");
@@ -320,7 +320,7 @@ let abs3 (x: Int32.t): St Int32.t =
 /// Local closures are not supported, as they do not have a natural compilation
 /// scheme to C. We will, however, show in (??) how to rely on F*'s
 /// meta-programming capabilities to normalize these closures away before
-/// passing them to KreMLin.
+/// passing them to KaRaMeL.
 
 let pow4 (x: UInt32.t): UInt32.t =
   let open FStar.UInt32 in
@@ -337,11 +337,11 @@ let pow4 (x: UInt32.t): UInt32.t =
 ///    }
 ///
 /// In the case that the user defines a global variable that does not compile to
-/// a C11 constant, KreMLin generates a "static initializer" in the special
-/// ``kremlinit_globals`` function. If the program has a ``main``, KreMLin
+/// a C11 constant, KaRaMeL generates a "static initializer" in the special
+/// ``kremlinit_globals`` function. If the program has a ``main``, KaRaMeL
 /// automatically prepends a call to ``kremlinit_globals`` in the ``main``. If
 /// the program does not have a ``main`` and is intended to be used as a
-/// library, KreMLin emits a warning, which is fatal by default.
+/// library, KaRaMeL emits a warning, which is fatal by default.
 
 let uint128_zero (): Tot uint128 =
   { high = 0UL; low = 0UL }
@@ -373,7 +373,7 @@ let zero = uint128_zero ()
 /// The example below cannot be compiled for the following reasons:
 ///
 /// - local recursive let-bindings are not Low*;
-/// - local closure captures variable in scope (KreMLin does not do closure conversion)
+/// - local closure captures variable in scope (KaRaMeL does not do closure conversion)
 /// - the list type is not Low*.
 
 let filter_map #a #b (f: a -> option b) (l: list a): list b =
@@ -395,15 +395,15 @@ let filter_map #a #b (f: a -> option b) (l: list a): list b =
 /// .. code:: bash
 ///
 ///    $ krml -skip-compilation -verbose LowStar.fst
-///    ⚙ KreMLin auto-detecting tools.
+///    ⚙ KaRaMeL auto-detecting tools.
 ///    (...)
 ///    ✔ [F*,extract]
 ///    <dummy>(0,0-0,0): (Warning 250) Error while extracting LowStar.filter_map
-///    to KreMLin (Failure("Internal error: name not found aux\n"))
+///    to KaRaMeL (Failure("Internal error: name not found aux\n"))
 ///
 /// To explain why the list type cannot be compiled to C, consider the snippet
 /// below. Data types are compiled as flat structures in C, meaning that the
-/// list type would have infinite size in C. This is compiled by KreMLin but
+/// list type would have infinite size in C. This is compiled by KaRaMeL but
 /// rejected by the C compiler. See ?? for an example of a linked list.
 
 type list_int32 =
@@ -419,14 +419,14 @@ let mk_list (): St list_int32 =
 /// .. code:: bash
 ///
 ///    $ krml -skip-linking -verbose LowStar.fst
-///    ⚙ KreMLin auto-detecting tools.
+///    ⚙ KaRaMeL auto-detecting tools.
 ///    (...)
 ///    ✘ [CC,./LowStar.c]
 ///    In file included from ./LowStar.c:8:0:
 ///    ./LowStar.h:95:22: error: field ‘tl’ has incomplete type
 ///       LowStar_list_int32 tl;
 ///
-/// Polymorphic assumes are also not compiled. KreMLin could generate one C
+/// Polymorphic assumes are also not compiled. KaRaMeL could generate one C
 /// ``extern`` declaration per monomorphic use, but this would require the user
 /// to provide a substantial amount of manually-written code, so instead we
 /// refuse to compile the definition below.
@@ -441,14 +441,14 @@ assume val pair_up: #a:Type -> #b:Type -> a -> b -> a * b
 /// .. code:: bash
 ///
 ///    $ krml -skip-compilation -verbose LowStar.fst
-///    ⚙ KreMLin auto-detecting tools.
+///    ⚙ KaRaMeL auto-detecting tools.
 ///    (...)
 ///    ✔ [F*,extract]
-///    Not extracting LowStar.pair_up to KreMLin (polymorphic assumes are not supported)
+///    Not extracting LowStar.pair_up to KaRaMeL (polymorphic assumes are not supported)
 ///
 /// One point worth mentioning is that indexed types are by default not
-/// supported. See section ?? for an unofficial KreMLin extension that works in
-/// some very narrow cases, or rewrite your code to make ``t`` an inductive. KreMLin
+/// supported. See section ?? for an unofficial KaRaMeL extension that works in
+/// some very narrow cases, or rewrite your code to make ``t`` an inductive. KaRaMeL
 /// currently does not have support for untagged unions, i.e. automatically
 /// making ``t`` a C union.
 
@@ -481,7 +481,7 @@ let default_t (a: alg): t a =
 ///          }
 ///        default:
 ///          {
-///            KRML_HOST_PRINTF("KreMLin incomplete match at %s:%d\n", __FILE__, __LINE__);
+///            KRML_HOST_PRINTF("KaRaMeL incomplete match at %s:%d\n", __FILE__, __LINE__);
 ///            KRML_HOST_EXIT(253U);
 ///          }
 ///      }
@@ -502,7 +502,7 @@ let default_t (a: alg): t a =
 /// ==================
 ///
 /// Low* is made up of a few primitive libraries that enjoy first-class support in
-/// KreMLin. These core libraries are typically made up of a model (an ``.fst``
+/// KaRaMeL. These core libraries are typically made up of a model (an ``.fst``
 /// file) and an interface (an ``.fsti`` file). Verification is performed against
 /// the model, but at extraction-time, the model is replaced with primitive C
 /// constructs.
@@ -724,7 +724,7 @@ let test_st_get (): St unit =
 /// ----------------
 ///
 /// Machine integers are modeled as natural numbers that fit within a certain number
-/// of bits. This model is dropped by KreMLin, in favor of C's fixed-width types.
+/// of bits. This model is dropped by KaRaMeL, in favor of C's fixed-width types.
 ///
 /// Fixed-width integers are found in ``FStar.UInt{16,32,64,128}.fst`` and
 /// ``FStar.Int{16,32,64,128}``. The ``FStar.Int.Cast.Full.fst`` module offers
@@ -732,7 +732,7 @@ let test_st_get (): St unit =
 ///
 /// .. warning ::
 ///
-///    By default, KreMLin relies on the non-standard ``unsigned __int128`` C
+///    By default, KaRaMeL relies on the non-standard ``unsigned __int128`` C
 ///    type to implement ``FStar.UInt128.t``. This type is widely supported
 ///    across GCC and Clang versions, but not by the Microsoft compilers. If you
 ///    need 128-bit unsigned integers, consider reading
@@ -813,7 +813,7 @@ type buffer (a:Type) =
 /// a starting index ``idx``, and a ``length``, which captures how much of an
 /// allocation slice one is currently pointing to.
 ///
-/// This is a model: at compilation-time, KreMLin implements buffers using C arrays.
+/// This is a model: at compilation-time, KaRaMeL implements buffers using C arrays.
 ///
 /// **The length** is available in ghost (proof) code only: just like in C, one
 /// cannot compute the length of a buffer at run-time. Therefore, a typical
@@ -1000,7 +1000,7 @@ let example_modifies_caller (b0: B.buffer UInt32.t) : Stack unit
 /// The Low* system libraries
 /// =========================
 ///
-/// KreMLin offers primitive support for a variety of C concepts.
+/// KaRaMeL offers primitive support for a variety of C concepts.
 ///
 /// C standard library
 /// ------------------
@@ -1067,7 +1067,7 @@ let example_modifies_caller (b0: B.buffer UInt32.t) : Stack unit
 ///    has type ``Prims.string``, whose operations, such ``(^)`` (concatenation)
 ///    cannot be implemented in Low*.
 ///
-///    KreMLin offers support for ``Prims.string`` via the ``-add-include
+///    KaRaMeL offers support for ``Prims.string`` via the ``-add-include
 ///    '"kremlin/internal/compat.h"'`` option. This header implements ``Prims.string``
 ///    as zero-terminated ``char *``\ 's (not ``const``). Operations such as ``(^)``
 ///    perform allocations on the heap and never free them, since ``Prims.string``\
@@ -1081,6 +1081,6 @@ let example_modifies_caller (b0: B.buffer UInt32.t) : Stack unit
 ///
 /// The ``C.Failure.fst`` exposes a single ``failwith`` function that properly
 /// has a polymorphic return type. This uses a recursion hack in combination
-/// with KreMLin's monomorphization, and will require you to disable compiler
+/// with KaRaMeL's monomorphization, and will require you to disable compiler
 /// warnings for infinite recursion.
 ///
