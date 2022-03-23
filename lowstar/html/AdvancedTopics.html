@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Advanced KreMLin topics &mdash; The KreMLin user manual  documentation</title><link rel="stylesheet" href="static/css/theme.css" type="text/css" />
+  <title>Advanced KaRaMeL topics &mdash; The KaRaMeL user manual  documentation</title><link rel="stylesheet" href="static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="static/js/html5shiv.min.js"></script>
@@ -35,7 +35,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> The KreMLin user manual
+            <a href="index.html" class="icon icon-home"> The KaRaMeL user manual
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -54,7 +54,7 @@
 <li class="toctree-l1"><a class="reference internal" href="TocExamples.html">Low* examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Toy.html">A toy project for learning Low*</a></li>
 <li class="toctree-l1"><a class="reference internal" href="AdvancedTips.html">Advanced tips &amp; tricks</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Advanced KreMLin topics</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Advanced KaRaMeL topics</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#bundling">Bundling</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#bundles-for-grouping-files-together">Bundles for grouping files together</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#bundles-for-hiding-implementation-details">Bundles for hiding implementation details</a></li>
@@ -62,7 +62,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#debugging-bundles">Debugging bundles</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#separate-compilation-via-kremlin">Separate compilation via KreMLin</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#separate-compilation-via-karamel">Separate compilation via KaRaMeL</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#via-external-linking">Via external linking</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#via-static-headers">Via static headers</a></li>
 </ul>
@@ -77,7 +77,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">The KreMLin user manual</a>
+          <a href="index.html">The KaRaMeL user manual</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -85,7 +85,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Advanced KreMLin topics</li>
+      <li>Advanced KaRaMeL topics</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/AdvancedTopics.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -95,8 +95,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="advanced-kremlin-topics">
-<h1>Advanced KreMLin topics<a class="headerlink" href="#advanced-kremlin-topics" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="advanced-karamel-topics">
+<h1>Advanced KaRaMeL topics<a class="headerlink" href="#advanced-karamel-topics" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="bundling">
 <h2>Bundling<a class="headerlink" href="#bundling" title="Permalink to this headline">¶</a></h2>
 <p>Bundles <code class="docutils literal notranslate"><span class="pre">B</span></code> are of the form <code class="docutils literal notranslate"><span class="pre">N₁+..+Nₙ=M₁,...,Mₙ</span></code>, where <code class="docutils literal notranslate"><span class="pre">Nᵢ</span></code> is a module
@@ -123,7 +123,7 @@ file is <code class="docutils literal notranslate"><span class="pre">N₁_..._N�
 places. This would cause errors with conflicting symbols at link-time, and
 would have a disastrous impact on your code segment size. Bundles do not
 change the fact that a definition only appears in a single place for each
-kremlin invocation.</p>
+KaRaMeL invocation.</p>
 </div>
 </div>
 <div class="section" id="bundles-for-hiding-implementation-details">
@@ -157,7 +157,7 @@ each <code class="docutils literal notranslate"><span class="pre">Mᵢ</span></c
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Since KreMLin automatically eliminates unreachable definitions by default,
+<p class="last">Since KaRaMeL automatically eliminates unreachable definitions by default,
 bundling oftentimes prunes the call-graph quite heavily and is used to remove
 definitions that would otherwise be unreachable.</p>
 </div>
@@ -192,8 +192,8 @@ which will explain why a declaration is still reachable and, therefore, not
 marked as private.</p>
 </div>
 </div>
-<div class="section" id="separate-compilation-via-kremlin">
-<h2>Separate compilation via KreMLin<a class="headerlink" href="#separate-compilation-via-kremlin" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="separate-compilation-via-karamel">
+<h2>Separate compilation via KaRaMeL<a class="headerlink" href="#separate-compilation-via-karamel" title="Permalink to this headline">¶</a></h2>
 <p>This sections covers authoring two different projects that are built, extracted to
 C and compiled separately.</p>
 <div class="section" id="via-external-linking">
@@ -209,21 +209,21 @@ i.e. a <code class="docutils literal notranslate"><span class="pre">.a</span></c
 <code class="docutils literal notranslate"><span class="pre">--already_cached</span></code>) and compiled to <code class="docutils literal notranslate"><span class="pre">liba.a</span></code> (via suitable <code class="docutils literal notranslate"><span class="pre">make</span></code>
 checks)</li>
 <li>project B must ensure that no linker symbols from project A are generated as
-part of its build (using kremlin’s <code class="docutils literal notranslate"><span class="pre">-library</span></code> option)</li>
+part of its build (using KaRaMeL’s <code class="docutils literal notranslate"><span class="pre">-library</span></code> option)</li>
 <li>project B will regenerate headers for declarations from within project A that
 will be used by project A: this is the declaration from B, as seen from
 project A; see as an example <code class="docutils literal notranslate"><span class="pre">mitls-fstar/src/tls/dist/compact/EverCrypt.h</span></code></li>
 </ul>
 <p>The last point means that project B will <em>never</em> include a header that was
 generated via the build of project A.</p>
-<p>The reason for doing so is related to monomorphization. Since kremlin does not
+<p>The reason for doing so is related to monomorphization. Since KaRaMeL does not
 dump information from project A to project B, project A may contain a copy of,
 say, <code class="docutils literal notranslate"><span class="pre">K__int32__int32</span></code> (the type of pairs monomorphized to <code class="docutils literal notranslate"><span class="pre">int32</span></code>). When
-compiling project B, however, kremlin does not know that this pair has already
+compiling project B, however, KaRaMeL does not know that this pair has already
 been monomorphized and may generate a second monomorphization of it in project
 B, resulting in C name conflicts and compilation errors if you try to mix
-headers from the kremlin run of A with the kremlin run of B. <em>Never mix headers
-obtained from different runs of kremlin!</em></p>
+headers from the KaRaMeL run of A with the KaRaMeL run of B. <em>Never mix headers
+obtained from different runs of KaRaMeL!</em></p>
 </div>
 <div class="section" id="via-static-headers">
 <h3>Via static headers<a class="headerlink" href="#via-static-headers" title="Permalink to this headline">¶</a></h3>
@@ -232,7 +232,7 @@ into project B, users will want to distribute project A (or part of it)
 exclusively as a set of static headers, i.e. headers that contain definitions
 marked as <code class="docutils literal notranslate"><span class="pre">inline</span> <span class="pre">static</span></code>.</p>
 <p>In that case, project A must pass a suitable <code class="docutils literal notranslate"><span class="pre">-static-header</span></code> option to
-KreMLin (same syntax as <code class="docutils literal notranslate"><span class="pre">-bundle</span></code>, <code class="docutils literal notranslate"><span class="pre">-library</span></code>, etc.). Definitions that match
+KaRaMeL (same syntax as <code class="docutils literal notranslate"><span class="pre">-bundle</span></code>, <code class="docutils literal notranslate"><span class="pre">-library</span></code>, etc.). Definitions that match
 the argument will then appear in their respective header files.</p>
 <p>Project B will then need to use (in addition to <code class="docutils literal notranslate"><span class="pre">-library</span></code>):</p>
 <ul class="simple">
@@ -259,7 +259,7 @@ type (see digression above).</p>
 <p class="first admonition-title">Note</p>
 <p class="last">kremlib does a mix of these two approaches; uint modules are extracted as
 static headers (and the suitable -static-header and -library options for
-clients are hardcoded in kremlin) – this allows projects such as HACL* to not
+clients are hardcoded in KaRaMeL) – this allows projects such as HACL* to not
 require any libkremlib.a; other parts of kremlib do not use this facility,
 meaning that projects like miTLS still link against libkremlib.a to find
 external symbols (e.g. from <code class="docutils literal notranslate"><span class="pre">FStar.Date</span></code>)</p>

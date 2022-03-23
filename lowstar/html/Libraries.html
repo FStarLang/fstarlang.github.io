@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Low* core libraries &mdash; The KreMLin user manual  documentation</title><link rel="stylesheet" href="static/css/theme.css" type="text/css" />
+  <title>Low* core libraries &mdash; The KaRaMeL user manual  documentation</title><link rel="stylesheet" href="static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="static/js/html5shiv.min.js"></script>
@@ -36,7 +36,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> The KreMLin user manual
+            <a href="index.html" class="icon icon-home"> The KaRaMeL user manual
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -73,7 +73,7 @@
 <li class="toctree-l1"><a class="reference internal" href="TocExamples.html">Low* examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Toy.html">A toy project for learning Low*</a></li>
 <li class="toctree-l1"><a class="reference internal" href="AdvancedTips.html">Advanced tips &amp; tricks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="AdvancedTopics.html">Advanced KreMLin topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AdvancedTopics.html">Advanced KaRaMeL topics</a></li>
 </ul>
 
         </div>
@@ -82,7 +82,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">The KreMLin user manual</a>
+          <a href="index.html">The KaRaMeL user manual</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -104,7 +104,7 @@
   <div class="section" id="low-core-libraries">
 <h1>Low* core libraries<a class="headerlink" href="#low-core-libraries" title="Permalink to this headline">¶</a></h1>
 <p>Low* is made up of a few primitive libraries that enjoy first-class support in
-KreMLin. These core libraries are typically made up of a model (an <code class="docutils literal notranslate"><span class="pre">.fst</span></code>
+KaRaMeL. These core libraries are typically made up of a model (an <code class="docutils literal notranslate"><span class="pre">.fst</span></code>
 file) and an interface (an <code class="docutils literal notranslate"><span class="pre">.fsti</span></code> file). Verification is performed against
 the model, but at extraction-time, the model is replaced with primitive C
 constructs.</p>
@@ -294,13 +294,13 @@ level. All of these are covered in the rest of this chapter.</p>
 <div class="section" id="machine-integers-1">
 <span id="machine-integers"></span><h2>Machine integers<a class="headerlink" href="#machine-integers-1" title="Permalink to this headline">¶</a></h2>
 <p>Machine integers are modeled as natural numbers that fit within a certain number
-of bits. This model is dropped by KreMLin, in favor of C’s fixed-width types.</p>
+of bits. This model is dropped by KaRaMeL, in favor of C’s fixed-width types.</p>
 <p>Fixed-width integers are found in <code class="docutils literal notranslate"><span class="pre">FStar.UInt{16,32,64,128}.fst</span></code> and
 <code class="docutils literal notranslate"><span class="pre">FStar.Int{16,32,64,128}</span></code>. The <code class="docutils literal notranslate"><span class="pre">FStar.Int.Cast.Full.fst</span></code> module offers
 conversion functions between these integer types.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">By default, KreMLin relies on the non-standard <code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">__int128</span></code> C
+<p class="last">By default, KaRaMeL relies on the non-standard <code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">__int128</span></code> C
 type to implement <code class="docutils literal notranslate"><span class="pre">FStar.UInt128.t</span></code>. This type is widely supported
 across GCC and Clang versions, but not by the Microsoft compilers. If you
 need 128-bit unsigned integers, consider reading
@@ -372,7 +372,7 @@ the stack and in the heap. <code class="docutils literal notranslate"><span clas
 <p>In other words, buffers are modeled as a reference to a sequence, along with
 a starting index <code class="docutils literal notranslate"><span class="pre">idx</span></code>, and a <code class="docutils literal notranslate"><span class="pre">length</span></code>, which captures how much of an
 allocation slice one is currently pointing to.</p>
-<p>This is a model: at compilation-time, KreMLin implements buffers using C arrays.</p>
+<p>This is a model: at compilation-time, KaRaMeL implements buffers using C arrays.</p>
 <p><strong>The length</strong> is available in ghost (proof) code only: just like in C, one
 cannot compute the length of a buffer at run-time. Therefore, a typical
 pattern is to use refinements to tie together a buffer and its length, as we

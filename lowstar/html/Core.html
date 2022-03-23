@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Low* language &mdash; The KreMLin user manual  documentation</title><link rel="stylesheet" href="static/css/theme.css" type="text/css" />
+  <title>Low* language &mdash; The KaRaMeL user manual  documentation</title><link rel="stylesheet" href="static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="static/js/html5shiv.min.js"></script>
@@ -36,7 +36,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> The KreMLin user manual
+            <a href="index.html" class="icon icon-home"> The KaRaMeL user manual
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -85,7 +85,7 @@
 <li class="toctree-l1"><a class="reference internal" href="TocExamples.html">Low* examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Toy.html">A toy project for learning Low*</a></li>
 <li class="toctree-l1"><a class="reference internal" href="AdvancedTips.html">Advanced tips &amp; tricks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="AdvancedTopics.html">Advanced KreMLin topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AdvancedTopics.html">Advanced KaRaMeL topics</a></li>
 </ul>
 
         </div>
@@ -94,7 +94,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">The KreMLin user manual</a>
+          <a href="index.html">The KaRaMeL user manual</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -279,12 +279,12 @@ source of truth.</p>
 </div>
 <div class="section" id="extensions-to-low">
 <h2>Extensions to Low*<a class="headerlink" href="#extensions-to-low" title="Permalink to this headline">¶</a></h2>
-<p>KreMLin supports a number of programming patterns beyond the original paper
+<p>KaRaMeL supports a number of programming patterns beyond the original paper
 formalization, which aim to maximize programmer productivity. We now review
 the main ones.</p>
 <div class="section" id="equalities-monomorphization">
 <h3>Equalities monomorphization<a class="headerlink" href="#equalities-monomorphization" title="Permalink to this headline">¶</a></h3>
-<p>One can rely on KreMLin to compile F*’s structural equality (the <code class="docutils literal notranslate"><span class="pre">(=)</span></code>
+<p>One can rely on KaRaMeL to compile F*’s structural equality (the <code class="docutils literal notranslate"><span class="pre">(=)</span></code>
 operator) to C functions specialized to each type. Furthermore, the function
 below demonstrates the use of a struct type as a value, which is
 straightforwardly compiled to a C structure passed by value. Be aware that doing
@@ -307,7 +307,7 @@ so has performance implications (see ??).</p>
 </div>
 <div class="section" id="inductives-as-tagged-unions-pattern-matching-compilation">
 <h3>Inductives as tagged unions; pattern-matching compilation<a class="headerlink" href="#inductives-as-tagged-unions-pattern-matching-compilation" title="Permalink to this headline">¶</a></h3>
-<p>One may also use F* inductives, knowing that KreMLin will compile them as
+<p>One may also use F* inductives, knowing that KaRaMeL will compile them as
 tagged unions. There are currently five different compilation schemes for data
 types that all aim to generate C code that is “as natural” as possible:</p>
 <ul class="simple">
@@ -350,7 +350,7 @@ scheme and generates a complete tagged union.</p>
 </div>
 <div class="section" id="data-type-monomorphization">
 <h3>Data type monomorphization<a class="headerlink" href="#data-type-monomorphization" title="Permalink to this headline">¶</a></h3>
-<p>Generally, KreMLin performs a whole-program monomorphization of
+<p>Generally, KaRaMeL performs a whole-program monomorphization of
 parameterized data types. The example below demonstrates this, along with a
 “pretty” compilation scheme for the option type that does not involves an
 anonymous union.</p>
@@ -395,8 +395,8 @@ anonymous union.</p>
 </div>
 <div class="section" id="pattern-matches-compilation">
 <h3>Pattern matches compilation<a class="headerlink" href="#pattern-matches-compilation" title="Permalink to this headline">¶</a></h3>
-<p>Inductives are compiled by KreMLin, and so are pattern matches. Note that
-for a series of cascading if-then-elses, KreMLin has to insert a fallback
+<p>Inductives are compiled by KaRaMeL, and so are pattern matches. Note that
+for a series of cascading if-then-elses, KaRaMeL has to insert a fallback
 else statement, both because the original F* code may be unverified and the
 pattern-matching may be incomplete, but also because the C compiler may
 trigger an error.</p>
@@ -426,7 +426,7 @@ trigger an error.</p>
   <span class="p">}</span>
   <span class="k">else</span>
   <span class="p">{</span>
-    <span class="n">KRML_HOST_PRINTF</span><span class="p">(</span><span class="s2">&quot;KreMLin abort at </span><span class="si">%s</span><span class="s2">:</span><span class="si">%d</span><span class="se">\n</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">KRML_HOST_PRINTF</span><span class="p">(</span><span class="s2">&quot;KaRaMeL abort at </span><span class="si">%s</span><span class="s2">:</span><span class="si">%d</span><span class="se">\n</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
       <span class="n">__FILE__</span><span class="p">,</span>
       <span class="n">__LINE__</span><span class="p">,</span>
       <span class="s2">&quot;unreachable (pattern matches are exhaustive in F*)&quot;</span><span class="p">);</span>
@@ -487,11 +487,11 @@ yourself, carry it around, and apply the closure to its environment manually.</p
 <div class="section" id="non-constant-globals">
 <h3>Non-constant globals<a class="headerlink" href="#non-constant-globals" title="Permalink to this headline">¶</a></h3>
 <p>In the case that the user defines a global variable that does not compile to
-a C11 constant, KreMLin generates a “static initializer” in the special
-<code class="docutils literal notranslate"><span class="pre">kremlinit_globals</span></code> function. If the program has a <code class="docutils literal notranslate"><span class="pre">main</span></code>, KreMLin
+a C11 constant, KaRaMeL generates a “static initializer” in the special
+<code class="docutils literal notranslate"><span class="pre">kremlinit_globals</span></code> function. If the program has a <code class="docutils literal notranslate"><span class="pre">main</span></code>, KaRaMeL
 automatically prepends a call to <code class="docutils literal notranslate"><span class="pre">kremlinit_globals</span></code> in the <code class="docutils literal notranslate"><span class="pre">main</span></code>. If
 the program does not have a <code class="docutils literal notranslate"><span class="pre">main</span></code> and is intended to be used as a
-library, KreMLin emits a warning, which is fatal by default.</p>
+library, KaRaMeL emits a warning, which is fatal by default.</p>
 <div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">uint128_zero</span> <span class="p">():</span> <span class="n">Tot</span> <span class="n">uint128</span> <span class="o">=</span>
   <span class="p">{</span> <span class="n">high</span> <span class="o">=</span> <span class="mi">0</span><span class="n">UL</span><span class="p">;</span> <span class="n">low</span> <span class="o">=</span> <span class="mi">0</span><span class="n">UL</span> <span class="p">}</span>
 
@@ -517,7 +517,7 @@ void kremlinit_globals()
 </div>
 <div class="section" id="code-quality-improvements">
 <h2>Code quality improvements<a class="headerlink" href="#code-quality-improvements" title="Permalink to this headline">¶</a></h2>
-<p>In addition to all the features describe above, KreMLin will go great lengths to
+<p>In addition to all the features describe above, KaRaMeL will go great lengths to
 generate readable code. Here are some of the optimization passes performed.</p>
 <div class="section" id="unused-argument-elimination">
 <h3>Unused argument elimination<a class="headerlink" href="#unused-argument-elimination" title="Permalink to this headline">¶</a></h3>
@@ -537,13 +537,13 @@ declarations should never have a unit field.</p>
 <h3>Temporary variable elimination<a class="headerlink" href="#temporary-variable-elimination" title="Permalink to this headline">¶</a></h3>
 <p>F* introduces a significant amount of temporary variables called <code class="docutils literal notranslate"><span class="pre">uu___</span></code>,
 owing to its monadic let semantics. (You can see these variables looking at the
-generated OCaml code.) KreMLin uses two different syntactic criteria to get rid
+generated OCaml code.) KaRaMeL uses two different syntactic criteria to get rid
 of those.</p>
 </div>
 <div class="section" id="tuple-elimination">
 <h3>Tuple elimination<a class="headerlink" href="#tuple-elimination" title="Permalink to this headline">¶</a></h3>
 <p>To avoid allocating too many intermediary values of monomorphized tuple types,
-KreMLin applies the following two rules before data type compilation &amp;
+KaRaMeL applies the following two rules before data type compilation &amp;
 monomorphization:</p>
 <div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">i</span><span class="p">)</span>   <span class="n">match</span> <span class="p">(</span><span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">)</span> <span class="k">with</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">e</span>  <span class="o">~~~&gt;</span>
       <span class="n">let</span> <span class="n">x</span> <span class="o">=</span> <span class="n">e1</span> <span class="ow">in</span> <span class="n">let</span> <span class="n">y</span> <span class="o">=</span> <span class="n">e2</span> <span class="ow">in</span> <span class="n">e</span>
@@ -583,7 +583,7 @@ Low*.</p>
 <p>The example below cannot be compiled for the following reasons:</p>
 <ul class="simple">
 <li>local recursive let-bindings are not Low*;</li>
-<li>local closure captures variable in scope (KreMLin does not do closure conversion)</li>
+<li>local closure captures variable in scope (KaRaMeL does not do closure conversion)</li>
 <li>the list type is not Low*.</li>
 </ul>
 <div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">filter_map</span> <span class="c1">#a #b (f: a -&gt; option b) (l: list a): list b =</span>
@@ -603,16 +603,16 @@ Low*.</p>
 <p>Trying to compile the snippet above will generate a warning when calling F*
 to generate a <code class="docutils literal notranslate"><span class="pre">.krml</span></code> file.</p>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ krml -skip-compilation -verbose LowStar.fst
-⚙ KreMLin auto-detecting tools.
+⚙ KaRaMeL auto-detecting tools.
 (...)
 ✔ [F*,extract]
 &lt;dummy&gt;(0,0-0,0): (Warning 250) Error while extracting LowStar.filter_map
-to KreMLin (Failure(&quot;Internal error: name not found aux\n&quot;))
+to KaRaMeL (Failure(&quot;Internal error: name not found aux\n&quot;))
 </pre></div>
 </div>
 <p>To explain why the list type cannot be compiled to C, consider the snippet
 below. Data types are compiled as flat structures in C, meaning that the
-list type would have infinite size in C. This is compiled by KreMLin but
+list type would have infinite size in C. This is compiled by KaRaMeL but
 rejected by the C compiler. See ?? for an example of a linked list.</p>
 <div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span> <span class="n">list_int32</span> <span class="o">=</span>
 <span class="o">|</span> <span class="n">Nil</span><span class="p">:</span> <span class="n">list_int32</span>
@@ -625,7 +625,7 @@ rejected by the C compiler. See ?? for an example of a linked list.</p>
 <p>Trying to compile the snippet above will generate an error when calling the
 C compiler to generate a <code class="docutils literal notranslate"><span class="pre">.o</span></code> file.</p>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ krml -skip-linking -verbose LowStar.fst
-⚙ KreMLin auto-detecting tools.
+⚙ KaRaMeL auto-detecting tools.
 (...)
 ✘ [CC,./LowStar.c]
 In file included from ./LowStar.c:8:0:
@@ -633,7 +633,7 @@ In file included from ./LowStar.c:8:0:
    LowStar_list_int32 tl;
 </pre></div>
 </div>
-<p>Polymorphic assumes are also not compiled. KreMLin could generate one C
+<p>Polymorphic assumes are also not compiled. KaRaMeL could generate one C
 <code class="docutils literal notranslate"><span class="pre">extern</span></code> declaration per monomorphic use, but this would require the user
 to provide a substantial amount of manually-written code, so instead we
 refuse to compile the definition below.</p>
@@ -645,15 +645,15 @@ refuse to compile the definition below.</p>
 <p>Trying to compile the snippet above will generate a warning when calling F*
 to generate a <code class="docutils literal notranslate"><span class="pre">.krml</span></code> file.</p>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ krml -skip-compilation -verbose LowStar.fst
-⚙ KreMLin auto-detecting tools.
+⚙ KaRaMeL auto-detecting tools.
 (...)
 ✔ [F*,extract]
-Not extracting LowStar.pair_up to KreMLin (polymorphic assumes are not supported)
+Not extracting LowStar.pair_up to KaRaMeL (polymorphic assumes are not supported)
 </pre></div>
 </div>
 <p>One point worth mentioning is that indexed types are by default not
-supported. See section ?? for an unofficial KreMLin extension that works in
-some very narrow cases, or rewrite your code to make <code class="docutils literal notranslate"><span class="pre">t</span></code> an inductive. KreMLin
+supported. See section ?? for an unofficial KaRaMeL extension that works in
+some very narrow cases, or rewrite your code to make <code class="docutils literal notranslate"><span class="pre">t</span></code> an inductive. KaRaMeL
 currently does not have support for untagged unions, i.e. automatically
 making <code class="docutils literal notranslate"><span class="pre">t</span></code> a C union.</p>
 <div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span> <span class="n">alg</span> <span class="o">=</span> <span class="o">|</span> <span class="n">Alg1</span> <span class="o">|</span> <span class="n">Alg2</span>
@@ -685,7 +685,7 @@ making <code class="docutils literal notranslate"><span class="pre">t</span></co
       <span class="p">}</span>
     <span class="n">default</span><span class="p">:</span>
       <span class="p">{</span>
-        <span class="n">KRML_HOST_PRINTF</span><span class="p">(</span><span class="s2">&quot;KreMLin incomplete match at </span><span class="si">%s</span><span class="s2">:</span><span class="si">%d</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">__FILE__</span><span class="p">,</span> <span class="n">__LINE__</span><span class="p">);</span>
+        <span class="n">KRML_HOST_PRINTF</span><span class="p">(</span><span class="s2">&quot;KaRaMeL incomplete match at </span><span class="si">%s</span><span class="s2">:</span><span class="si">%d</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">__FILE__</span><span class="p">,</span> <span class="n">__LINE__</span><span class="p">);</span>
         <span class="n">KRML_HOST_EXIT</span><span class="p">(</span><span class="mi">253</span><span class="n">U</span><span class="p">);</span>
       <span class="p">}</span>
   <span class="p">}</span>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tooling and project setup &mdash; The KreMLin user manual  documentation</title><link rel="stylesheet" href="static/css/theme.css" type="text/css" />
+  <title>Tooling and project setup &mdash; The KaRaMeL user manual  documentation</title><link rel="stylesheet" href="static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="static/js/html5shiv.min.js"></script>
@@ -36,7 +36,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> The KreMLin user manual
+            <a href="index.html" class="icon icon-home"> The KaRaMeL user manual
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -65,7 +65,7 @@
 <li class="toctree-l1"><a class="reference internal" href="TocExamples.html">Low* examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Toy.html">A toy project for learning Low*</a></li>
 <li class="toctree-l1"><a class="reference internal" href="AdvancedTips.html">Advanced tips &amp; tricks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="AdvancedTopics.html">Advanced KreMLin topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AdvancedTopics.html">Advanced KaRaMeL topics</a></li>
 </ul>
 
         </div>
@@ -74,7 +74,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">The KreMLin user manual</a>
+          <a href="index.html">The KaRaMeL user manual</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -113,14 +113,14 @@ library.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ./everest z3 opam
 </pre></div>
 </div>
-<p>Then, you can either install F* and KreMLin yourself, or rely on the Everest
+<p>Then, you can either install F* and KaRaMeL yourself, or rely on the Everest
 script for that purpose:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ./everest pull FStar make kremlin make
 </pre></div>
 </div>
 <p>In any case, remember to export suitable values for the <code class="docutils literal notranslate"><span class="pre">FSTAR_HOME</span></code> and
 <code class="docutils literal notranslate"><span class="pre">KREMLIN_HOME</span></code> environment variables once you’re done.</p>
-<p>Be aware that KreMLin is not at this time compatible with recent versions of
+<p>Be aware that KaRaMeL is not at this time compatible with recent versions of
 OCaml. See <a class="reference external" href="https://github.com/FStarLang/kremlin/issues/169">https://github.com/FStarLang/kremlin/issues/169</a> for the discussion.</p>
 <p>We strongly recommend using the <a class="reference external" href="https://github.com/FStarLang/fstar-mode.el">fstar-mode.el</a> Emacs plugin for interactive mode
 support.</p>
@@ -146,7 +146,7 @@ OCaml specifications</li>
 <li><code class="docutils literal notranslate"><span class="pre">obj</span></code>: F* and OCaml build artifacts, i.e. whatever is covered by F*’s
 <code class="docutils literal notranslate"><span class="pre">--depend</span></code> facility: <code class="docutils literal notranslate"><span class="pre">.checked</span></code> files (binary serialized build products
 once a file has been verified), <code class="docutils literal notranslate"><span class="pre">.ml</span></code> files (the result of F* extracting to
-OCaml), <code class="docutils literal notranslate"><span class="pre">.krml</span></code> files (the result of F* dumping its AST for KreMLin),
+OCaml), <code class="docutils literal notranslate"><span class="pre">.krml</span></code> files (the result of F* dumping its AST for KaRaMeL),
 <code class="docutils literal notranslate"><span class="pre">.cm*</span></code> files (OCaml build), etc.</li>
 <li><code class="docutils literal notranslate"><span class="pre">hints</span></code>: F* hint files, i.e. serialized Z3 unsat-cores that facilitate proof
 replay</li>
@@ -182,7 +182,7 @@ sucessfully build a Low* project:</p>
 <li>verify all the source files for this project, generating <code class="docutils literal notranslate"><span class="pre">.checked</span></code> files</li>
 <li>extract F* code using those checked files to either <code class="docutils literal notranslate"><span class="pre">.krml</span></code> or <code class="docutils literal notranslate"><span class="pre">.ml</span></code></li>
 <li>build and link ML code (for specs)</li>
-<li>run KreMLin and generate C code</li>
+<li>run KaRaMeL and generate C code</li>
 <li>dependency analysis for the generated C code</li>
 <li>build C code, generating a C library (more rarely, an executable)</li>
 <li>build C tests and link against compiled library.</li>
@@ -217,7 +217,7 @@ and use an external build tool, e.g. <code class="docutils literal notranslate">
 w.r.t. their respective source files; similarly, running make in <code class="docutils literal notranslate"><span class="pre">kremlin/</span></code>
 ensures that all the <code class="docutils literal notranslate"><span class="pre">kremlib</span></code> (C support libraries) <code class="docutils literal notranslate"><span class="pre">.checked</span></code> files are
 up-to-date.</p>
-<p>Any Low* program will need to refer to both ulib in F* and kremlib in KreMLin.
+<p>Any Low* program will need to refer to both ulib in F* and kremlib in KaRaMeL.
 The client Makefile we provide will therefore <em>enforce</em> that all the checked
 files for the projects it depends on be up-to-date, and will error out
 otherwise.</p>
@@ -462,14 +462,14 @@ OCaml can no longer be interleaved.</p>
 <span class="c"># documentation.</span>
 <span class="nv">HAND_WRITTEN_C_FILES</span> <span class="o">=</span> code/c/Impl_Bignum_Intrinsics.c
 
-<span class="c"># This is now the preferred and recommended way to compile C code with KreMLin.</span>
+<span class="c"># This is now the preferred and recommended way to compile C code with KaRaMeL.</span>
 <span class="c">#</span>
-<span class="c"># KreMLin (via -skip-compilation) only generates a stub Makefile in dist/,</span>
+<span class="c"># KaRaMeL (via -skip-compilation) only generates a stub Makefile in dist/,</span>
 <span class="c"># instead of acting as a C compilation driver like it did before. The Makefile</span>
-<span class="c"># that is generated by KreMLin is basic, but takes into account:</span>
+<span class="c"># that is generated by KaRaMeL is basic, but takes into account:</span>
 <span class="c"># - the -o option to determine what is being built</span>
 <span class="c"># - the C files passed on the command line, which will be linked together</span>
-<span class="c"># - C compiler flags passed to KreMLin via -ccopts</span>
+<span class="c"># - C compiler flags passed to KaRaMeL via -ccopts</span>
 <span class="c">#</span>
 <span class="c"># This Makefile is called Makefile.basic and should be enough for all your basic</span>
 <span class="c"># needs. If you need something more fancy, you can easily author your own custom</span>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Example: linked list &mdash; The KreMLin user manual  documentation</title><link rel="stylesheet" href="static/css/theme.css" type="text/css" />
+  <title>Example: linked list &mdash; The KaRaMeL user manual  documentation</title><link rel="stylesheet" href="static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="static/js/html5shiv.min.js"></script>
@@ -36,7 +36,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> The KreMLin user manual
+            <a href="index.html" class="icon icon-home"> The KaRaMeL user manual
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -60,7 +60,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Toy.html">A toy project for learning Low*</a></li>
 <li class="toctree-l1"><a class="reference internal" href="AdvancedTips.html">Advanced tips &amp; tricks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="AdvancedTopics.html">Advanced KreMLin topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AdvancedTopics.html">Advanced KaRaMeL topics</a></li>
 </ul>
 
         </div>
@@ -69,7 +69,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">The KreMLin user manual</a>
+          <a href="index.html">The KaRaMeL user manual</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -143,7 +143,7 @@ nat; the Ghost effect guarantees that the length can only be used at
 run-time. Functions called at run-time will, conversely, use a length of
 type <cite>erased nat</cite>, which states that the length is
 computationally-irrelevant and can be safely removed from the resulting C
-code via a combination of F* + KreMLin erasure.</p>
+code via a combination of F* + KaRaMeL erasure.</p>
 <div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">rec</span> <span class="n">length_functional</span> <span class="c1">#a (h: HS.mem) (c: t a) (l1 l2: G.erased (list a)):</span>
   <span class="n">Lemma</span>
     <span class="p">(</span><span class="n">requires</span> <span class="p">(</span><span class="n">well_formed</span> <span class="n">h</span> <span class="n">c</span> <span class="n">l1</span> <span class="o">/</span>\ <span class="n">well_formed</span> <span class="n">h</span> <span class="n">c</span> <span class="n">l2</span><span class="p">))</span>
