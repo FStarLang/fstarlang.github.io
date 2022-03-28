@@ -95,7 +95,7 @@
   <div class="section" id="tooling-and-project-setup">
 <h1>Tooling and project setup<a class="headerlink" href="#tooling-and-project-setup" title="Permalink to this headline">¶</a></h1>
 <p>For the sake of this tutorial, we use a sample project that provides a toy
-implementation of bignum addition in C. The project is located in the kremlin
+implementation of bignum addition in C. The project is located in the karamel
 repository, under the <code class="docutils literal notranslate"><span class="pre">book/tutorial</span></code> directory.</p>
 <p>The sample project has a minimal specification, a corresponding implementation,
 a powerful build system that should cover most common situations and a set of C
@@ -115,13 +115,13 @@ library.</p>
 </div>
 <p>Then, you can either install F* and KaRaMeL yourself, or rely on the Everest
 script for that purpose:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ./everest pull FStar make kremlin make
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ./everest pull FStar make karamel make
 </pre></div>
 </div>
 <p>In any case, remember to export suitable values for the <code class="docutils literal notranslate"><span class="pre">FSTAR_HOME</span></code> and
-<code class="docutils literal notranslate"><span class="pre">KREMLIN_HOME</span></code> environment variables once you’re done.</p>
+<code class="docutils literal notranslate"><span class="pre">KRML_HOME</span></code> environment variables once you’re done.</p>
 <p>Be aware that KaRaMeL is not at this time compatible with recent versions of
-OCaml. See <a class="reference external" href="https://github.com/FStarLang/kremlin/issues/169">https://github.com/FStarLang/kremlin/issues/169</a> for the discussion.</p>
+OCaml. See <a class="reference external" href="https://github.com/FStarLang/karamel/issues/169">https://github.com/FStarLang/karamel/issues/169</a> for the discussion.</p>
 <p>We strongly recommend using the <a class="reference external" href="https://github.com/FStarLang/fstar-mode.el">fstar-mode.el</a> Emacs plugin for interactive mode
 support.</p>
 <div class="admonition note">
@@ -214,10 +214,10 @@ and use an external build tool, e.g. <code class="docutils literal notranslate">
 <h3>Separate F* builds<a class="headerlink" href="#separate-f-builds" title="Permalink to this headline">¶</a></h3>
 <p>Each project is expected to build its own .checked files; running <code class="docutils literal notranslate"><span class="pre">make</span></code> in
 <code class="docutils literal notranslate"><span class="pre">FStar/</span></code> establishes the invariant that all the checked files are up-to-date
-w.r.t. their respective source files; similarly, running make in <code class="docutils literal notranslate"><span class="pre">kremlin/</span></code>
-ensures that all the <code class="docutils literal notranslate"><span class="pre">kremlib</span></code> (C support libraries) <code class="docutils literal notranslate"><span class="pre">.checked</span></code> files are
+w.r.t. their respective source files; similarly, running make in <code class="docutils literal notranslate"><span class="pre">karamel/</span></code>
+ensures that all the <code class="docutils literal notranslate"><span class="pre">krmllib</span></code> (C support libraries) <code class="docutils literal notranslate"><span class="pre">.checked</span></code> files are
 up-to-date.</p>
-<p>Any Low* program will need to refer to both ulib in F* and kremlib in KaRaMeL.
+<p>Any Low* program will need to refer to both ulib in F* and krmllib in KaRaMeL.
 The client Makefile we provide will therefore <em>enforce</em> that all the checked
 files for the projects it depends on be up-to-date, and will error out
 otherwise.</p>
@@ -233,7 +233,7 @@ the user needs to rebuild F*.</p>
 more comments than actual code.  It describes a very comprehensive scenario in
 which:</p>
 <ul class="simple">
-<li>you need to mix hand-written and kremlin-generated C files to produce a C
+<li>you need to mix hand-written and karamel-generated C files to produce a C
 library <code class="docutils literal notranslate"><span class="pre">libbignum.a</span></code></li>
 <li>you need to extract the specs to OCaml for spec testing, with a hand-written
 test driver;</li>
@@ -253,8 +253,8 @@ interactive mode:</p>
   <span class="k">$(</span>error FSTAR_HOME is not defined<span class="k">)</span>
 <span class="cp">endif</span>
 
-<span class="cp">ifeq (,$(KREMLIN_HOME))</span>
-  <span class="k">$(</span>error KREMLIN_HOME is not defined<span class="k">)</span>
+<span class="cp">ifeq (,$(KRML_HOME))</span>
+  <span class="k">$(</span>error KRML_HOME is not defined<span class="k">)</span>
 <span class="cp">endif</span>
 
 <span class="c"># I prefer to always check all fst files in the source directories; otherwise,</span>
@@ -263,8 +263,8 @@ interactive mode:</p>
 <span class="nv">SOURCE_DIRS</span> <span class="o">=</span> <span class="k">$(</span>BIGNUM_HOME<span class="k">)</span>/code <span class="k">$(</span>BIGNUM_HOME<span class="k">)</span>/specs
 
 <span class="c"># We want our source tree on the include path, along with pre-built ulib and</span>
-<span class="c"># kremlib so that F* can reuse these build artifacts rather than reverify F* and</span>
-<span class="c"># kremlib as part of this build (which would be doomed to fail since there&#39;s a</span>
+<span class="c"># krmllib so that F* can reuse these build artifacts rather than reverify F* and</span>
+<span class="c"># krmllib as part of this build (which would be doomed to fail since there&#39;s a</span>
 <span class="c"># lot of trickery involved in building ulib -- better leave it up to the F*</span>
 <span class="c"># build!).</span>
 <span class="c">#</span>
@@ -273,7 +273,7 @@ interactive mode:</p>
 <span class="nv">INCLUDE_DIRS</span> <span class="o">=</span> <span class="se">\</span>
   <span class="k">$(</span>SOURCE_DIRS<span class="k">)</span> <span class="se">\</span>
   <span class="k">$(</span>FSTAR_HOME<span class="k">)</span>/ulib/.cache <span class="se">\</span>
-  <span class="k">$(</span>KREMLIN_HOME<span class="k">)</span>/kremlib <span class="se">\</span>
+  <span class="k">$(</span>KRML_HOME<span class="k">)</span>/krmllib <span class="se">\</span>
   <span class="k">$(</span>BIGNUM_HOME<span class="k">)</span>/obj
 
 
@@ -348,7 +348,7 @@ OCaml can no longer be interleaved.</p>
 <span class="c"># But also:</span>
 <span class="c"># - --cmi, for cross-module inlining, a must-have for anyone who relies on</span>
 <span class="c">#   inline_for_extraction in the presence of interfaces</span>
-<span class="c"># - --cache_checked_modules to rely on a pre-built ulib and kremlib</span>
+<span class="c"># - --cache_checked_modules to rely on a pre-built ulib and krmllib</span>
 <span class="c"># - --cache_dir, to avoid polluting our generated build artifacts outside o</span>
 <span class="nv">FSTAR_NO_FLAGS</span> <span class="o">=</span> <span class="k">$(</span>FSTAR_HOME<span class="k">)</span>/bin/fstar.exe <span class="k">$(</span>FSTAR_HINTS<span class="k">)</span> <span class="se">\</span>
   --odir obj --cache_checked_modules <span class="k">$(</span>FSTAR_INCLUDES<span class="k">)</span> --cmi <span class="se">\</span>
@@ -443,7 +443,7 @@ OCaml can no longer be interleaved.</p>
 
 <span class="nf">.PRECIOUS</span><span class="o">:</span> <span class="n">obj</span>/%.<span class="n">krml</span>
 <span class="nf">obj/%.krml</span><span class="o">:</span>
-	<span class="k">$(</span>FSTAR<span class="k">)</span> <span class="k">$(</span>notdir <span class="k">$(</span>subst .checked,,$&lt;<span class="k">))</span> --codegen Kremlin <span class="se">\</span>
+	<span class="k">$(</span>FSTAR<span class="k">)</span> <span class="k">$(</span>notdir <span class="k">$(</span>subst .checked,,$&lt;<span class="k">))</span> --codegen krml <span class="se">\</span>
 	--extract_module <span class="k">$(</span>basename <span class="k">$(</span>notdir <span class="k">$(</span>subst .checked,,$&lt;<span class="k">)))</span>
 
 <span class="nf">obj/Specs_Driver.ml</span><span class="o">:</span> <span class="n">specs</span>/<span class="n">ml</span>/<span class="n">Specs_Driver</span>.<span class="n">ml</span>
@@ -454,7 +454,7 @@ OCaml can no longer be interleaved.</p>
 <span class="c"># F* --&gt; C</span>
 <span class="c"># --------</span>
 
-<span class="nv">KRML</span><span class="o">=</span><span class="k">$(</span>KREMLIN_HOME<span class="k">)</span>/krml
+<span class="nv">KRML</span><span class="o">=</span><span class="k">$(</span>KRML_HOME<span class="k">)</span>/krml
 
 <span class="c"># Note: the implementation of the intrinsic uses external linkage, but you could</span>
 <span class="c"># easily turn this file into a .h, use -add-include &#39;&quot;Impl_Bignum_Intrinsics.h&quot;&#39;</span>
@@ -495,7 +495,7 @@ OCaml can no longer be interleaved.</p>
 	  -minimal <span class="se">\</span>
 	  -bundle <span class="s1">&#39;FStar.*&#39;</span> <span class="se">\</span>
 	  -add-include <span class="s1">&#39;&lt;stdint.h&gt;&#39;</span> <span class="se">\</span>
-	  -add-include <span class="s1">&#39;&quot;kremlin/internal/target.h&quot;&#39;</span> <span class="se">\</span>
+	  -add-include <span class="s1">&#39;&quot;krml/internal/target.h&quot;&#39;</span> <span class="se">\</span>
 	  <span class="k">$(</span>notdir <span class="k">$(</span>HAND_WRITTEN_C_FILES<span class="k">))</span> <span class="se">\</span>
 	  -o libbignum.a
 
@@ -504,7 +504,7 @@ OCaml can no longer be interleaved.</p>
 
 <span class="c"># Here we do a recursive make invocation because a new dependency analysis needs</span>
 <span class="c"># to be performed on the generated C files. This recursive make deals with all</span>
-<span class="c"># the files copied in dist, which includes kremlin-generated and hand-written,</span>
+<span class="c"># the files copied in dist, which includes karamel-generated and hand-written,</span>
 <span class="c"># copied files from HAND_WRITTEN_C_FILES.</span>
 
 <span class="nf">dist/libbignum.a</span><span class="o">:</span> <span class="n">dist</span>/<span class="n">Makefile</span>.<span class="n">basic</span>
@@ -554,7 +554,7 @@ OCaml can no longer be interleaved.</p>
 <span class="c"># Compiling the hand-written test</span>
 <span class="c"># -------------------------------</span>
 
-<span class="nv">CFLAGS</span> <span class="o">+=</span> -I dist -I <span class="k">$(</span>KREMLIN_HOME<span class="k">)</span>/include
+<span class="nv">CFLAGS</span> <span class="o">+=</span> -I dist -I <span class="k">$(</span>KRML_HOME<span class="k">)</span>/include
 
 <span class="nf">tests/c-tests.exe</span><span class="o">:</span> <span class="n">dist</span>/<span class="n">libbignum</span>.<span class="n">a</span> <span class="n">tests</span>/<span class="n">c</span>-<span class="n">tests</span>.<span class="n">o</span>
 	<span class="k">$(</span>CC<span class="k">)</span> $^ -o <span class="nv">$@</span>

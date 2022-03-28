@@ -488,8 +488,8 @@ yourself, carry it around, and apply the closure to its environment manually.</p
 <h3>Non-constant globals<a class="headerlink" href="#non-constant-globals" title="Permalink to this headline">¶</a></h3>
 <p>In the case that the user defines a global variable that does not compile to
 a C11 constant, KaRaMeL generates a “static initializer” in the special
-<code class="docutils literal notranslate"><span class="pre">kremlinit_globals</span></code> function. If the program has a <code class="docutils literal notranslate"><span class="pre">main</span></code>, KaRaMeL
-automatically prepends a call to <code class="docutils literal notranslate"><span class="pre">kremlinit_globals</span></code> in the <code class="docutils literal notranslate"><span class="pre">main</span></code>. If
+<code class="docutils literal notranslate"><span class="pre">krmlinit_globals</span></code> function. If the program has a <code class="docutils literal notranslate"><span class="pre">main</span></code>, KaRaMeL
+automatically prepends a call to <code class="docutils literal notranslate"><span class="pre">krmlinit_globals</span></code> in the <code class="docutils literal notranslate"><span class="pre">main</span></code>. If
 the program does not have a <code class="docutils literal notranslate"><span class="pre">main</span></code> and is intended to be used as a
 library, KaRaMeL emits a warning, which is fatal by default.</p>
 <div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">uint128_zero</span> <span class="p">():</span> <span class="n">Tot</span> <span class="n">uint128</span> <span class="o">=</span>
@@ -502,12 +502,12 @@ library, KaRaMeL emits a warning, which is fatal by default.</p>
 (...)
 Warning 9: : Some globals did not compile to C values and must be
 initialized before starting main(). You did not provide a main function,
-so users of your library MUST MAKE SURE they call kremlinit_globals();
-(see kremlinit.c).
+so users of your library MUST MAKE SURE they call krmlinit_globals();
+(see krmlinit.c).
 
-$ cat kremlinit.c
+$ cat krmlinit.c
 (...)
-void kremlinit_globals()
+void krmlinit_globals()
 {
   zero = uint128_zero();
 }
@@ -693,7 +693,7 @@ making <code class="docutils literal notranslate"><span class="pre">t</span></co
 </pre></div>
 </div>
 <p>If you are lucky, the C compiler may generate an error:</p>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ krml -skip-linking LowStar.fst -add-include &#39;&quot;kremstr.h&quot;&#39; -no-prefix LowStar -warn-error +9
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ krml -skip-linking LowStar.fst -add-include &#39;&quot;krmlstr.h&quot;&#39; -no-prefix LowStar -warn-error +9
 
 ✘ [CC,./LowStar.c]
 ./LowStar.c: In function ‘default_t’:
