@@ -588,7 +588,7 @@ Low*.</p>
 </ul>
 <div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">filter_map</span> <span class="c1">#a #b (f: a -&gt; option b) (l: list a): list b =</span>
   <span class="n">let</span> <span class="n">rec</span> <span class="n">aux</span> <span class="p">(</span><span class="n">acc</span><span class="p">:</span> <span class="nb">list</span> <span class="n">b</span><span class="p">)</span> <span class="p">(</span><span class="n">l</span><span class="p">:</span> <span class="nb">list</span> <span class="n">a</span><span class="p">):</span> <span class="n">Tot</span> <span class="p">(</span><span class="nb">list</span> <span class="n">b</span><span class="p">)</span> <span class="p">(</span><span class="n">decreases</span> <span class="n">l</span><span class="p">)</span> <span class="o">=</span>
-    <span class="n">match</span> <span class="n">l</span> <span class="k">with</span>
+    <span class="k">match</span> <span class="n">l</span> <span class="k">with</span>
     <span class="o">|</span> <span class="n">hd</span> <span class="p">::</span> <span class="n">tl</span> <span class="o">-&gt;</span>
         <span class="n">begin</span> <span class="n">match</span> <span class="n">f</span> <span class="n">hd</span> <span class="k">with</span>
         <span class="o">|</span> <span class="n">Some</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">aux</span> <span class="p">(</span><span class="n">x</span> <span class="p">::</span> <span class="n">acc</span><span class="p">)</span> <span class="n">tl</span>
@@ -658,12 +658,12 @@ currently does not have support for untagged unions, i.e. automatically
 making <code class="docutils literal notranslate"><span class="pre">t</span></code> a C union.</p>
 <div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span> <span class="n">alg</span> <span class="o">=</span> <span class="o">|</span> <span class="n">Alg1</span> <span class="o">|</span> <span class="n">Alg2</span>
 <span class="n">let</span> <span class="n">t</span> <span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">alg</span><span class="p">)</span> <span class="o">=</span>
-  <span class="n">match</span> <span class="n">a</span> <span class="k">with</span>
+  <span class="k">match</span> <span class="n">a</span> <span class="k">with</span>
   <span class="o">|</span> <span class="n">Alg1</span> <span class="o">-&gt;</span> <span class="n">UInt32</span><span class="o">.</span><span class="n">t</span>
   <span class="o">|</span> <span class="n">Alg2</span> <span class="o">-&gt;</span> <span class="n">uint128</span>
 
 <span class="n">let</span> <span class="n">default_t</span> <span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">alg</span><span class="p">):</span> <span class="n">t</span> <span class="n">a</span> <span class="o">=</span>
-  <span class="n">match</span> <span class="n">a</span> <span class="k">with</span>
+  <span class="k">match</span> <span class="n">a</span> <span class="k">with</span>
   <span class="o">|</span> <span class="n">Alg1</span> <span class="o">-&gt;</span> <span class="mi">0</span><span class="n">ul</span>
   <span class="o">|</span> <span class="n">Alg2</span> <span class="o">-&gt;</span> <span class="n">zero</span>
 </pre></div>
@@ -675,11 +675,11 @@ making <code class="docutils literal notranslate"><span class="pre">t</span></co
 <span class="p">{</span>
   <span class="n">switch</span> <span class="p">(</span><span class="n">a</span><span class="p">)</span>
   <span class="p">{</span>
-    <span class="n">case</span> <span class="n">Alg1</span><span class="p">:</span>
+    <span class="k">case</span> <span class="n">Alg1</span><span class="p">:</span>
       <span class="p">{</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">void</span> <span class="o">*</span><span class="p">)(</span><span class="n">uint32_t</span><span class="p">)</span><span class="mi">0</span><span class="n">U</span><span class="p">;</span>
       <span class="p">}</span>
-    <span class="n">case</span> <span class="n">Alg2</span><span class="p">:</span>
+    <span class="k">case</span> <span class="n">Alg2</span><span class="p">:</span>
       <span class="p">{</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">void</span> <span class="o">*</span><span class="p">)</span><span class="n">zero</span>
       <span class="p">}</span>

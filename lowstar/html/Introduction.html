@@ -166,19 +166,19 @@ calls using a printf-like combinator, <cite>evaluated within F*</cite>.</li>
 </ul>
 <p>Once compiled by the KaRaMeL compiler, we obtain the following C code:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
-<span class="kt">int32_t</span> <span class="nf">main</span><span class="p">()</span>
-<span class="p">{</span>
-  <span class="kt">uint32_t</span> <span class="n">b</span><span class="p">[</span><span class="mi">8U</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">0U</span> <span class="p">};</span>
-  <span class="n">b</span><span class="p">[</span><span class="mi">0U</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="p">)</span><span class="mi">255U</span><span class="p">;</span>
-  <span class="cm">/* Calls to printf are desugared via meta-programming */</span>
-  <span class="n">Prims_string</span> <span class="n">s</span> <span class="o">=</span> <span class="s">&quot;from Low*!&quot;</span><span class="p">;</span>
-  <span class="n">LowStar_Printf_print_string</span><span class="p">(</span><span class="s">&quot;Hello from &quot;</span><span class="p">);</span>
-  <span class="n">LowStar_Printf_print_string</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
-  <span class="n">LowStar_Printf_print_string</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">buffer contents: &quot;</span><span class="p">);</span>
-  <span class="n">LowStar_Printf_print_lmbuffer_u32</span><span class="p">((</span><span class="kt">uint32_t</span><span class="p">)</span><span class="mi">8U</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint32_t</span> <span class="o">*</span><span class="p">)</span><span class="n">b</span><span class="p">);</span>
-  <span class="n">LowStar_Printf_print_string</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-  <span class="k">return</span> <span class="p">(</span><span class="kt">int32_t</span><span class="p">)</span><span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="kt">int32_t</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">b</span><span class="p">[</span><span class="mi">8U</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mi">0U</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="w">  </span><span class="n">b</span><span class="p">[</span><span class="mi">0U</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">)</span><span class="mi">255U</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* Calls to printf are desugared via meta-programming */</span><span class="w"></span>
+<span class="w">  </span><span class="n">Prims_string</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;from Low*!&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">LowStar_Printf_print_string</span><span class="p">(</span><span class="s">&quot;Hello from &quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">LowStar_Printf_print_string</span><span class="p">(</span><span class="n">s</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">LowStar_Printf_print_string</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">buffer contents: &quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">LowStar_Printf_print_lmbuffer_u32</span><span class="p">((</span><span class="kt">uint32_t</span><span class="p">)</span><span class="mi">8U</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">b</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">LowStar_Printf_print_string</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="kt">int32_t</span><span class="p">)</span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
 </pre></div>
 </div>

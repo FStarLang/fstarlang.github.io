@@ -127,7 +127,7 @@ buffers in the heap is potentially infinite;</p>
 <div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">rec</span> <span class="n">well_formed</span> <span class="c1">#a (h: HS.mem) (c: t a) (l: G.erased (list a))</span>
 <span class="p">:</span> <span class="n">GTot</span> <span class="n">Type0</span> <span class="p">(</span><span class="n">decreases</span> <span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">reveal</span> <span class="n">l</span><span class="p">))</span>
 <span class="o">=</span> <span class="n">B</span><span class="o">.</span><span class="n">live</span> <span class="n">h</span> <span class="n">c</span> <span class="o">/</span>\ <span class="p">(</span>
-  <span class="n">match</span> <span class="n">G</span><span class="o">.</span><span class="n">reveal</span> <span class="n">l</span> <span class="k">with</span>
+  <span class="k">match</span> <span class="n">G</span><span class="o">.</span><span class="n">reveal</span> <span class="n">l</span> <span class="k">with</span>
   <span class="o">|</span> <span class="p">[]</span> <span class="o">-&gt;</span>
     <span class="n">B</span><span class="o">.</span><span class="n">g_is_null</span> <span class="n">c</span>
   <span class="o">|</span> <span class="n">a</span> <span class="p">::</span> <span class="n">q</span> <span class="o">-&gt;</span>

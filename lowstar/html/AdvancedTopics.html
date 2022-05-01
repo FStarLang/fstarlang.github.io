@@ -242,14 +242,14 @@ the prototypes generated in B’s vision of A and A’s actual C file</li>
 definitions</li>
 </ul>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// From A.h</span>
-<span class="kr">inline</span> <span class="k">static</span> <span class="kt">void</span> <span class="nf">A_foo</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="o">*</span><span class="n">src</span><span class="p">)</span> <span class="p">{</span>
-  <span class="p">...</span>
-  <span class="c1">// code</span>
-  <span class="p">...</span>
-<span class="p">}</span>
+<span class="kr">inline</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">A_foo</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="o">*</span><span class="n">src</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="p">...</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// code</span>
+<span class="w">  </span><span class="p">...</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
 <span class="c1">// From B_A.h, i.e. B&#39;s prototypes for A&#39;s declarations</span>
-<span class="kr">inline</span> <span class="k">static</span> <span class="kt">void</span> <span class="nf">A_foo</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="o">*</span><span class="n">src</span><span class="p">);</span>
+<span class="kr">inline</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">A_foo</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="o">*</span><span class="n">src</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>This method is potentially more efficient than external linking, but should only
