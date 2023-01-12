@@ -132,7 +132,7 @@ KaRaMeL invocation.</p>
 declarations that otherwise would’ve been public following the default F*
 visibility rules. Consider, for instance, the following bundle argument taken
 from <a class="reference external" href="https://github.com/project-everest/hacl-star/blob/25e19b1c906d4de18d9bfe767a1cd9a5fbf6698c/Makefile.common#L96">HACL*’s Makefile</a>:</p>
-<div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="nv">CHACHA20_BUNDLE</span><span class="o">=</span>-bundle Hacl.Chacha20<span class="o">=</span>Hacl.Impl.Chacha20,Hacl.Impl.Chacha20.*
+<div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="nv">CHACHA20_BUNDLE</span><span class="o">=</span>-bundle<span class="w"> </span>Hacl.Chacha20<span class="o">=</span>Hacl.Impl.Chacha20,Hacl.Impl.Chacha20.*
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">Hacl.Chacha20</span></code> module only defines a single entry point:
@@ -174,11 +174,11 @@ bundle that matched it first, i.e. bundles follow a left-to-right order.</p>
 <div class="section" id="examples-of-bundles">
 <h3>Examples of bundles<a class="headerlink" href="#examples-of-bundles" title="Permalink to this headline">¶</a></h3>
 <p>Taken from HACL*…</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>-bundle Foo.Bar1<span class="o">=</span> <span class="c1"># this is a no-op, Bar1 is kept as-is in its own file</span>
--bundle Foo.Bar2<span class="o">=</span> <span class="c1"># idem</span>
--bundle Foo.*<span class="o">[</span><span class="nv">rename</span><span class="o">=</span>Foo_Misc<span class="o">]</span>
-  <span class="c1"># everything in the Foo namespace EXCEPT for Bar1 and Bar2 goes into</span>
-  <span class="c1"># Foo_Misc, relying on the left-to-right semantics</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>-bundle<span class="w"> </span>Foo.Bar1<span class="o">=</span><span class="w"> </span><span class="c1"># this is a no-op, Bar1 is kept as-is in its own file</span>
+-bundle<span class="w"> </span>Foo.Bar2<span class="o">=</span><span class="w"> </span><span class="c1"># idem</span>
+-bundle<span class="w"> </span>Foo.*<span class="o">[</span><span class="nv">rename</span><span class="o">=</span>Foo_Misc<span class="o">]</span>
+<span class="w">  </span><span class="c1"># everything in the Foo namespace EXCEPT for Bar1 and Bar2 goes into</span>
+<span class="w">  </span><span class="c1"># Foo_Misc, relying on the left-to-right semantics</span>
 </pre></div>
 </div>
 </div>
@@ -242,14 +242,14 @@ the prototypes generated in B’s vision of A and A’s actual C file</li>
 definitions</li>
 </ul>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// From A.h</span>
-<span class="kr">inline</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">A_foo</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="o">*</span><span class="n">src</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="p">...</span><span class="w"></span>
+<span class="kr">inline</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">A_foo</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="o">*</span><span class="n">src</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="p">...</span>
 <span class="w">  </span><span class="c1">// code</span>
-<span class="w">  </span><span class="p">...</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">...</span>
+<span class="p">}</span>
 
 <span class="c1">// From B_A.h, i.e. B&#39;s prototypes for A&#39;s declarations</span>
-<span class="kr">inline</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">A_foo</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="o">*</span><span class="n">src</span><span class="p">);</span><span class="w"></span>
+<span class="kr">inline</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">A_foo</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="o">*</span><span class="n">src</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>This method is potentially more efficient than external linking, but should only

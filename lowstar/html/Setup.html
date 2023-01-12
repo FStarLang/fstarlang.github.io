@@ -110,12 +110,12 @@ deeper look at the code.</p>
 All of our proofs are intimately tied to a specific version of F*, and if you’re
 not running the right one, you may have trouble even building F*’s standard
 library.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ./everest z3 opam
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>./everest<span class="w"> </span>z3<span class="w"> </span>opam
 </pre></div>
 </div>
 <p>Then, you can either install F* and KaRaMeL yourself, or rely on the Everest
 script for that purpose:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ./everest pull FStar make karamel make
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>./everest<span class="w"> </span>pull<span class="w"> </span>FStar<span class="w"> </span>make<span class="w"> </span>karamel<span class="w"> </span>make
 </pre></div>
 </div>
 <p>In any case, remember to export suitable values for the <code class="docutils literal notranslate"><span class="pre">FSTAR_HOME</span></code> and
@@ -247,20 +247,20 @@ interactive mode:</p>
 <span class="c"># suitably defined, in order to define the %.fst-in and %.fsti-in targets for</span>
 <span class="c"># computing the arguments to the interactive mode.</span>
 
-<span class="nv">BIGNUM_HOME</span> <span class="o">?=</span> .
+<span class="nv">BIGNUM_HOME</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span>.
 
 <span class="cp">ifeq (,$(FSTAR_HOME))</span>
-  <span class="k">$(</span>error FSTAR_HOME is not defined<span class="k">)</span>
+<span class="w">  </span><span class="k">$(</span>error<span class="w"> </span>FSTAR_HOME<span class="w"> </span>is<span class="w"> </span>not<span class="w"> </span>defined<span class="k">)</span>
 <span class="cp">endif</span>
 
 <span class="cp">ifeq (,$(KRML_HOME))</span>
-  <span class="k">$(</span>error KRML_HOME is not defined<span class="k">)</span>
+<span class="w">  </span><span class="k">$(</span>error<span class="w"> </span>KRML_HOME<span class="w"> </span>is<span class="w"> </span>not<span class="w"> </span>defined<span class="k">)</span>
 <span class="cp">endif</span>
 
 <span class="c"># I prefer to always check all fst files in the source directories; otherwise,</span>
 <span class="c"># it&#39;s too easy to add a new file only to find out later that it&#39;s not being</span>
 <span class="c"># checked. Note the usage of BIGNUM_HOME</span>
-<span class="nv">SOURCE_DIRS</span> <span class="o">=</span> <span class="k">$(</span>BIGNUM_HOME<span class="k">)</span>/code <span class="k">$(</span>BIGNUM_HOME<span class="k">)</span>/specs
+<span class="nv">SOURCE_DIRS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>BIGNUM_HOME<span class="k">)</span>/code<span class="w"> </span><span class="k">$(</span>BIGNUM_HOME<span class="k">)</span>/specs
 
 <span class="c"># We want our source tree on the include path, along with pre-built ulib and</span>
 <span class="c"># krmllib so that F* can reuse these build artifacts rather than reverify F* and</span>
@@ -270,17 +270,17 @@ interactive mode:</p>
 <span class="c">#</span>
 <span class="c"># Also note that we have our own directory on the include path for the sake of</span>
 <span class="c"># the interactive mode, for finding checked files for our own F* files.</span>
-<span class="nv">INCLUDE_DIRS</span> <span class="o">=</span> <span class="se">\</span>
-  <span class="k">$(</span>SOURCE_DIRS<span class="k">)</span> <span class="se">\</span>
-  <span class="k">$(</span>FSTAR_HOME<span class="k">)</span>/ulib/.cache <span class="se">\</span>
-  <span class="k">$(</span>KRML_HOME<span class="k">)</span>/krmllib <span class="se">\</span>
-  <span class="k">$(</span>BIGNUM_HOME<span class="k">)</span>/obj
+<span class="nv">INCLUDE_DIRS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="k">$(</span>SOURCE_DIRS<span class="k">)</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="k">$(</span>FSTAR_HOME<span class="k">)</span>/ulib/.cache<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="k">$(</span>KRML_HOME<span class="k">)</span>/krmllib<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="k">$(</span>BIGNUM_HOME<span class="k">)</span>/obj
 
 
-<span class="nv">FSTAR_INCLUDES</span> <span class="o">=</span> <span class="k">$(</span>addprefix --include ,<span class="k">$(</span>INCLUDE_DIRS<span class="k">))</span>
+<span class="nv">FSTAR_INCLUDES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>addprefix<span class="w"> </span>--include<span class="w"> </span>,<span class="k">$(</span>INCLUDE_DIRS<span class="k">))</span>
 
 <span class="nf">%.fst-in %.fsti-in</span><span class="o">:</span>
-	@echo <span class="k">$(</span>FSTAR_INCLUDES<span class="k">)</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="k">$(</span>FSTAR_INCLUDES<span class="k">)</span>
 </pre></div>
 </div>
 <p>This allows authoring a minimalistic Makefile for sub-directories, whose sole
@@ -312,33 +312,33 @@ OCaml can no longer be interleaved.</p>
 <span class="c"># I usually prefer to rule out OSX make on the basis that it doesn&#39;t have the</span>
 <span class="c"># shortest stem rule, which is incredibly useful.</span>
 <span class="cp">ifeq (3.81,$(MAKE_VERSION))</span>
-  <span class="k">$(</span>error You seem to be using the OSX antiquated Make version. Hint: brew <span class="se">\</span>
-    install make, <span class="k">then</span> invoke gmake instead of make<span class="k">)</span>
+<span class="w">  </span><span class="k">$(</span>error<span class="w"> </span>You<span class="w"> </span>seem<span class="w"> </span>to<span class="w"> </span>be<span class="w"> </span>using<span class="w"> </span>the<span class="w"> </span>OSX<span class="w"> </span>antiquated<span class="w"> </span>Make<span class="w"> </span>version.<span class="w"> </span>Hint:<span class="w"> </span>brew<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>install<span class="w"> </span>make,<span class="w"> </span><span class="k">then</span><span class="w"> </span>invoke<span class="w"> </span>gmake<span class="w"> </span>instead<span class="w"> </span>of<span class="w"> </span>make<span class="k">)</span>
 <span class="cp">endif</span>
 
 
 <span class="c"># Main entry points (first one is default)</span>
 <span class="c"># ----------------------------------------</span>
 
-<span class="nf">all</span><span class="o">:</span> <span class="n">dist</span>/<span class="n">libbignum</span>.<span class="n">a</span>
+<span class="nf">all</span><span class="o">:</span><span class="w"> </span><span class="n">dist</span>/<span class="n">libbignum</span>.<span class="n">a</span>
 
-<span class="nf">test</span><span class="o">:</span> <span class="n">tests</span>/<span class="n">c</span>-<span class="n">tests</span>.<span class="n">test</span> <span class="n">obj</span>/<span class="n">specs</span>-<span class="n">test</span>.<span class="n">test</span>
+<span class="nf">test</span><span class="o">:</span><span class="w"> </span><span class="n">tests</span>/<span class="n">c</span>-<span class="n">tests</span>.<span class="n">test</span> <span class="n">obj</span>/<span class="n">specs</span>-<span class="n">test</span>.<span class="n">test</span>
 
-<span class="nf">%.test</span><span class="o">:</span> %.<span class="n">exe</span>
-	$&lt;
+<span class="nf">%.test</span><span class="o">:</span><span class="w"> </span>%.<span class="n">exe</span>
+<span class="w">	</span>$&lt;
 
 <span class="cp">include Makefile.include</span>
 
 <span class="c"># Definition of F* flags</span>
 <span class="c"># ----------------------</span>
 
-<span class="nv">FSTAR_HINTS</span> <span class="o">?=</span> --use_hints --use_hint_hashes --record_hints
+<span class="nv">FSTAR_HINTS</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span>--use_hints<span class="w"> </span>--use_hint_hashes<span class="w"> </span>--record_hints
 
 <span class="c"># This flag controls what gets extracted to OCaml. Generally, we don&#39;t extract</span>
 <span class="c"># the FStar namespace since it&#39;s already extracted and packaged as the ocamlfind</span>
 <span class="c"># package fstarlib. Here, unlike in -bundle, +Spec matches both Spec and</span>
 <span class="c"># Spec.*</span>
-<span class="nv">FSTAR_EXTRACT</span> <span class="o">=</span> --extract <span class="s1">&#39;OCaml:-* +Spec&#39;</span>
+<span class="nv">FSTAR_EXTRACT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>--extract<span class="w"> </span><span class="s1">&#39;OCaml:-* +Spec&#39;</span>
 
 <span class="c"># Some reasonable flags to turn on:</span>
 <span class="c"># - 247: checked file not written because some of its dependencies...</span>
@@ -350,10 +350,10 @@ OCaml can no longer be interleaved.</p>
 <span class="c">#   inline_for_extraction in the presence of interfaces</span>
 <span class="c"># - --cache_checked_modules to rely on a pre-built ulib and krmllib</span>
 <span class="c"># - --cache_dir, to avoid polluting our generated build artifacts outside o</span>
-<span class="nv">FSTAR_NO_FLAGS</span> <span class="o">=</span> <span class="k">$(</span>FSTAR_HOME<span class="k">)</span>/bin/fstar.exe <span class="k">$(</span>FSTAR_HINTS<span class="k">)</span> <span class="se">\</span>
-  --odir obj --cache_checked_modules <span class="k">$(</span>FSTAR_INCLUDES<span class="k">)</span> --cmi <span class="se">\</span>
-  --already_cached <span class="s1">&#39;Prims FStar LowStar C Spec.Loops TestLib WasmSupport&#39;</span> --warn_error <span class="s1">&#39;+241@247+285&#39;</span> <span class="se">\</span>
-  --cache_dir obj --hint_dir hints
+<span class="nv">FSTAR_NO_FLAGS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>FSTAR_HOME<span class="k">)</span>/bin/fstar.exe<span class="w"> </span><span class="k">$(</span>FSTAR_HINTS<span class="k">)</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--odir<span class="w"> </span>obj<span class="w"> </span>--cache_checked_modules<span class="w"> </span><span class="k">$(</span>FSTAR_INCLUDES<span class="k">)</span><span class="w"> </span>--cmi<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--already_cached<span class="w"> </span><span class="s1">&#39;Prims FStar LowStar C Spec.Loops TestLib WasmSupport&#39;</span><span class="w"> </span>--warn_error<span class="w"> </span><span class="s1">&#39;+241@247+285&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--cache_dir<span class="w"> </span>obj<span class="w"> </span>--hint_dir<span class="w"> </span>hints
 
 <span class="c"># Initial dependency analysis</span>
 <span class="c"># ---------------------------</span>
@@ -361,8 +361,8 @@ OCaml can no longer be interleaved.</p>
 <span class="c"># Important to wildcard both fst and fsti since there are fstis without fsts,</span>
 <span class="c"># etc. Note that I&#39;m using wildcard rather than assume $(SHELL) is bash and has</span>
 <span class="c"># fancy globbing rules -- particularly true on Windows.</span>
-<span class="nv">FSTAR_ROOTS</span> <span class="o">=</span> <span class="k">$(</span>wildcard <span class="k">$(</span>addsuffix /*.fsti,<span class="k">$(</span>SOURCE_DIRS<span class="k">)))</span> <span class="se">\</span>
-  <span class="k">$(</span>wildcard <span class="k">$(</span>addsuffix /*.fst,<span class="k">$(</span>SOURCE_DIRS<span class="k">)))</span> <span class="se">\</span>
+<span class="nv">FSTAR_ROOTS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>wildcard<span class="w"> </span><span class="k">$(</span>addsuffix<span class="w"> </span>/*.fsti,<span class="k">$(</span>SOURCE_DIRS<span class="k">)))</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="k">$(</span>wildcard<span class="w"> </span><span class="k">$(</span>addsuffix<span class="w"> </span>/*.fst,<span class="k">$(</span>SOURCE_DIRS<span class="k">)))</span><span class="w"> </span><span class="se">\</span>
 
 
 <span class="c"># This is the only bulletproof way that I know of forcing a regeneration of the</span>
@@ -372,10 +372,10 @@ OCaml can no longer be interleaved.</p>
 <span class="c"># good to force regeneration even though .depend may be more recent than the</span>
 <span class="c"># mtime of the moved files.</span>
 <span class="cp">ifndef MAKE_RESTARTS</span>
-<span class="nf">.depend</span><span class="o">:</span> .<span class="n">FORCE</span>
-	<span class="k">$(</span>FSTAR_NO_FLAGS<span class="k">)</span> --dep full <span class="k">$(</span>notdir <span class="k">$(</span>FSTAR_ROOTS<span class="k">))</span> <span class="k">$(</span>FSTAR_EXTRACT<span class="k">)</span> &gt; <span class="nv">$@</span>
+<span class="nf">.depend</span><span class="o">:</span><span class="w"> </span>.<span class="n">FORCE</span>
+<span class="w">	</span><span class="k">$(</span>FSTAR_NO_FLAGS<span class="k">)</span><span class="w"> </span>--dep<span class="w"> </span>full<span class="w"> </span><span class="k">$(</span>notdir<span class="w"> </span><span class="k">$(</span>FSTAR_ROOTS<span class="k">))</span><span class="w"> </span><span class="k">$(</span>FSTAR_EXTRACT<span class="k">)</span><span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$@</span>
 
-<span class="nf">.PHONY</span><span class="o">:</span> .<span class="n">FORCE</span>
+<span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span>.<span class="n">FORCE</span>
 <span class="nf">.FORCE</span><span class="o">:</span>
 <span class="cp">endif</span>
 
@@ -387,15 +387,15 @@ OCaml can no longer be interleaved.</p>
 <span class="c"># Everest-specific idiom: all makefiles accept OTHERFLAGS, for instance, if one</span>
 <span class="c"># wants to rebuild with OTHERFLAGS=&quot;--admit_smt_queries true&quot;. We just don&#39;t</span>
 <span class="c"># pass such flags to the dependency analysis.</span>
-<span class="nv">FSTAR</span> <span class="o">=</span> <span class="k">$(</span>FSTAR_NO_FLAGS<span class="k">)</span> <span class="k">$(</span>OTHERFLAGS<span class="k">)</span>
+<span class="nv">FSTAR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>FSTAR_NO_FLAGS<span class="k">)</span><span class="w"> </span><span class="k">$(</span>OTHERFLAGS<span class="k">)</span>
 
 <span class="c"># Creating these directories via a make rule, rather than rely on F* creating</span>
 <span class="c"># them, as two calls to F* might race.</span>
 <span class="nf">hints</span><span class="o">:</span>
-	mkdir <span class="nv">$@</span>
+<span class="w">	</span>mkdir<span class="w"> </span><span class="nv">$@</span>
 
 <span class="nf">obj</span><span class="o">:</span>
-	mkdir <span class="nv">$@</span>
+<span class="w">	</span>mkdir<span class="w"> </span><span class="nv">$@</span>
 
 <span class="c"># We allow some specific pattern rules to be added here, relying on the shortest</span>
 <span class="c"># stem rule for them to take precedence. For instance, you may want to do:</span>
@@ -413,13 +413,13 @@ OCaml can no longer be interleaved.</p>
 <span class="c">#</span>
 <span class="c"># To avoid this unpleasant behavior, the most general pattern rule (longest</span>
 <span class="c"># stem) also defines a suitable default value for FSTAR_FLAGS.</span>
-<span class="nf">%.checked</span><span class="o">:</span> <span class="n">FSTAR_FLAGS</span>=
+<span class="nf">%.checked</span><span class="o">:</span><span class="w"> </span><span class="n">FSTAR_FLAGS</span>=
 
 <span class="c"># Note: F* will not change the mtime of a checked file if it is</span>
 <span class="c"># up-to-date (checksum matches, file unchanged), but this will confuse</span>
 <span class="c"># make and result in endless rebuilds. So, we touch that file.</span>
-<span class="nf">%.checked</span><span class="o">:</span> <span class="p">|</span> <span class="n">hints</span> <span class="n">obj</span>
-	<span class="k">$(</span>FSTAR<span class="k">)</span> $&lt; <span class="k">$(</span>FSTAR_FLAGS<span class="k">)</span> <span class="o">&amp;&amp;</span> touch -c <span class="nv">$@</span>
+<span class="nf">%.checked</span><span class="o">:</span><span class="w"> </span><span class="p">|</span> <span class="n">hints</span> <span class="n">obj</span>
+<span class="w">	</span><span class="k">$(</span>FSTAR<span class="k">)</span><span class="w"> </span>$&lt;<span class="w"> </span><span class="k">$(</span>FSTAR_FLAGS<span class="k">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>touch<span class="w"> </span>-c<span class="w"> </span><span class="nv">$@</span>
 
 <span class="c"># Extraction</span>
 <span class="c"># ----------</span>
@@ -436,20 +436,20 @@ OCaml can no longer be interleaved.</p>
 <span class="c">#</span>
 <span class="c"># We use basename because we may also extract krml files from .fsti.checked</span>
 <span class="c"># files (not true for OCaml, we don&#39;t extract mlis from fstis).</span>
-<span class="nf">.PRECIOUS</span><span class="o">:</span> <span class="n">obj</span>/%.<span class="n">ml</span>
+<span class="nf">.PRECIOUS</span><span class="o">:</span><span class="w"> </span><span class="n">obj</span>/%.<span class="n">ml</span>
 <span class="nf">obj/%.ml</span><span class="o">:</span>
-	<span class="k">$(</span>FSTAR<span class="k">)</span> <span class="k">$(</span>notdir <span class="k">$(</span>subst .checked,,$&lt;<span class="k">))</span> --codegen OCaml <span class="se">\</span>
-	--extract_module <span class="k">$(</span>basename <span class="k">$(</span>notdir <span class="k">$(</span>subst .checked,,$&lt;<span class="k">)))</span>
+<span class="w">	</span><span class="k">$(</span>FSTAR<span class="k">)</span><span class="w"> </span><span class="k">$(</span>notdir<span class="w"> </span><span class="k">$(</span>subst<span class="w"> </span>.checked,,$&lt;<span class="k">))</span><span class="w"> </span>--codegen<span class="w"> </span>OCaml<span class="w"> </span><span class="se">\</span>
+<span class="w">	</span>--extract_module<span class="w"> </span><span class="k">$(</span>basename<span class="w"> </span><span class="k">$(</span>notdir<span class="w"> </span><span class="k">$(</span>subst<span class="w"> </span>.checked,,$&lt;<span class="k">)))</span>
 
-<span class="nf">.PRECIOUS</span><span class="o">:</span> <span class="n">obj</span>/%.<span class="n">krml</span>
+<span class="nf">.PRECIOUS</span><span class="o">:</span><span class="w"> </span><span class="n">obj</span>/%.<span class="n">krml</span>
 <span class="nf">obj/%.krml</span><span class="o">:</span>
-	<span class="k">$(</span>FSTAR<span class="k">)</span> <span class="k">$(</span>notdir <span class="k">$(</span>subst .checked,,$&lt;<span class="k">))</span> --codegen krml <span class="se">\</span>
-	--extract_module <span class="k">$(</span>basename <span class="k">$(</span>notdir <span class="k">$(</span>subst .checked,,$&lt;<span class="k">)))</span>
+<span class="w">	</span><span class="k">$(</span>FSTAR<span class="k">)</span><span class="w"> </span><span class="k">$(</span>notdir<span class="w"> </span><span class="k">$(</span>subst<span class="w"> </span>.checked,,$&lt;<span class="k">))</span><span class="w"> </span>--codegen<span class="w"> </span>krml<span class="w"> </span><span class="se">\</span>
+<span class="w">	</span>--extract_module<span class="w"> </span><span class="k">$(</span>basename<span class="w"> </span><span class="k">$(</span>notdir<span class="w"> </span><span class="k">$(</span>subst<span class="w"> </span>.checked,,$&lt;<span class="k">)))</span>
 
-<span class="nf">obj/Specs_Driver.ml</span><span class="o">:</span> <span class="n">specs</span>/<span class="n">ml</span>/<span class="n">Specs_Driver</span>.<span class="n">ml</span>
+<span class="nf">obj/Specs_Driver.ml</span><span class="o">:</span><span class="w"> </span><span class="n">specs</span>/<span class="n">ml</span>/<span class="n">Specs_Driver</span>.<span class="n">ml</span>
 <span class="c">	# This ensures that all the source directories are not polluted with</span>
 <span class="c">	# build artifacts</span>
-	cp $&lt; <span class="nv">$@</span>
+<span class="w">	</span>cp<span class="w"> </span>$&lt;<span class="w"> </span><span class="nv">$@</span>
 
 <span class="c"># F* --&gt; C</span>
 <span class="c"># --------</span>
@@ -460,7 +460,7 @@ OCaml can no longer be interleaved.</p>
 <span class="c"># easily turn this file into a .h, use -add-include &#39;&quot;Impl_Bignum_Intrinsics.h&quot;&#39;</span>
 <span class="c"># and pass -static-header Impl.Bignum.Intrinsics as described in the</span>
 <span class="c"># documentation.</span>
-<span class="nv">HAND_WRITTEN_C_FILES</span> <span class="o">=</span> code/c/Impl_Bignum_Intrinsics.c
+<span class="nv">HAND_WRITTEN_C_FILES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>code/c/Impl_Bignum_Intrinsics.c
 
 <span class="c"># This is now the preferred and recommended way to compile C code with KaRaMeL.</span>
 <span class="c">#</span>
@@ -482,22 +482,22 @@ OCaml can no longer be interleaved.</p>
 <span class="c">#</span>
 <span class="c"># See the advanced topics section for an in-depth explanation of how the -bundle</span>
 <span class="c"># option works. We also use -minimal.</span>
-<span class="nf">dist/Makefile.basic</span><span class="o">:</span> <span class="k">$(</span><span class="nv">filter-out</span> %<span class="nv">prims.krml</span>,<span class="k">$(</span><span class="nv">ALL_KRML_FILES</span><span class="k">))</span> <span class="k">$(</span><span class="nv">HAND_WRITTEN_C_FILES</span><span class="k">)</span>
-	mkdir -p <span class="k">$(</span>dir <span class="nv">$@</span><span class="k">)</span>
-	cp <span class="k">$(</span>HAND_WRITTEN_C_FILES<span class="k">)</span> <span class="k">$(</span>dir <span class="nv">$@</span><span class="k">)</span>
-	<span class="k">$(</span>KRML<span class="k">)</span> -tmpdir <span class="k">$(</span>dir <span class="nv">$@</span><span class="k">)</span> -skip-compilation <span class="se">\</span>
-	  <span class="k">$(</span>filter %.krml,$^<span class="k">)</span> <span class="se">\</span>
-	  -warn-error @4@5@18 <span class="se">\</span>
-	  -fparentheses <span class="se">\</span>
-	  -bundle Impl.Bignum.Intrinsics<span class="o">=</span> <span class="se">\</span>
-	  -bundle <span class="s1">&#39;LowStar.*,Prims&#39;</span> <span class="se">\</span>
-	  -bundle Impl.Bignum<span class="o">=</span>Impl.Bignum.*,Spec.*<span class="o">[</span><span class="nv">rename</span><span class="o">=</span>Bignum<span class="o">]</span> <span class="se">\</span>
-	  -minimal <span class="se">\</span>
-	  -bundle <span class="s1">&#39;FStar.*&#39;</span> <span class="se">\</span>
-	  -add-include <span class="s1">&#39;&lt;stdint.h&gt;&#39;</span> <span class="se">\</span>
-	  -add-include <span class="s1">&#39;&quot;krml/internal/target.h&quot;&#39;</span> <span class="se">\</span>
-	  <span class="k">$(</span>notdir <span class="k">$(</span>HAND_WRITTEN_C_FILES<span class="k">))</span> <span class="se">\</span>
-	  -o libbignum.a
+<span class="nf">dist/Makefile.basic</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">filter-out</span> %<span class="nv">prims.krml</span>,<span class="k">$(</span><span class="nv">ALL_KRML_FILES</span><span class="k">))</span> <span class="k">$(</span><span class="nv">HAND_WRITTEN_C_FILES</span><span class="k">)</span>
+<span class="w">	</span>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="k">$(</span>dir<span class="w"> </span><span class="nv">$@</span><span class="k">)</span>
+<span class="w">	</span>cp<span class="w"> </span><span class="k">$(</span>HAND_WRITTEN_C_FILES<span class="k">)</span><span class="w"> </span><span class="k">$(</span>dir<span class="w"> </span><span class="nv">$@</span><span class="k">)</span>
+<span class="w">	</span><span class="k">$(</span>KRML<span class="k">)</span><span class="w"> </span>-tmpdir<span class="w"> </span><span class="k">$(</span>dir<span class="w"> </span><span class="nv">$@</span><span class="k">)</span><span class="w"> </span>-skip-compilation<span class="w"> </span><span class="se">\</span>
+<span class="w">	  </span><span class="k">$(</span>filter<span class="w"> </span>%.krml,$^<span class="k">)</span><span class="w"> </span><span class="se">\</span>
+<span class="w">	  </span>-warn-error<span class="w"> </span>@4@5@18<span class="w"> </span><span class="se">\</span>
+<span class="w">	  </span>-fparentheses<span class="w"> </span><span class="se">\</span>
+<span class="w">	  </span>-bundle<span class="w"> </span>Impl.Bignum.Intrinsics<span class="o">=</span><span class="w"> </span><span class="se">\</span>
+<span class="w">	  </span>-bundle<span class="w"> </span><span class="s1">&#39;LowStar.*,Prims&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">	  </span>-bundle<span class="w"> </span>Impl.Bignum<span class="o">=</span>Impl.Bignum.*,Spec.*<span class="o">[</span><span class="nv">rename</span><span class="o">=</span>Bignum<span class="o">]</span><span class="w"> </span><span class="se">\</span>
+<span class="w">	  </span>-minimal<span class="w"> </span><span class="se">\</span>
+<span class="w">	  </span>-bundle<span class="w"> </span><span class="s1">&#39;FStar.*&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">	  </span>-add-include<span class="w"> </span><span class="s1">&#39;&lt;stdint.h&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">	  </span>-add-include<span class="w"> </span><span class="s1">&#39;&quot;krml/internal/target.h&quot;&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">	  </span><span class="k">$(</span>notdir<span class="w"> </span><span class="k">$(</span>HAND_WRITTEN_C_FILES<span class="k">))</span><span class="w"> </span><span class="se">\</span>
+<span class="w">	  </span>-o<span class="w"> </span>libbignum.a
 
 <span class="c"># Compiling the generated C code</span>
 <span class="c"># ------------------------------</span>
@@ -507,8 +507,8 @@ OCaml can no longer be interleaved.</p>
 <span class="c"># the files copied in dist, which includes karamel-generated and hand-written,</span>
 <span class="c"># copied files from HAND_WRITTEN_C_FILES.</span>
 
-<span class="nf">dist/libbignum.a</span><span class="o">:</span> <span class="n">dist</span>/<span class="n">Makefile</span>.<span class="n">basic</span>
-	<span class="k">$(</span>MAKE<span class="k">)</span> -C <span class="k">$(</span>dir <span class="nv">$@</span><span class="k">)</span> -f <span class="k">$(</span>notdir $&lt;<span class="k">)</span>
+<span class="nf">dist/libbignum.a</span><span class="o">:</span><span class="w"> </span><span class="n">dist</span>/<span class="n">Makefile</span>.<span class="n">basic</span>
+<span class="w">	</span><span class="k">$(</span>MAKE<span class="k">)</span><span class="w"> </span>-C<span class="w"> </span><span class="k">$(</span>dir<span class="w"> </span><span class="nv">$@</span><span class="k">)</span><span class="w"> </span>-f<span class="w"> </span><span class="k">$(</span>notdir<span class="w"> </span>$&lt;<span class="k">)</span>
 
 <span class="c"># Compiling the generated OCaml code</span>
 <span class="c"># ----------------------------------</span>
@@ -520,16 +520,16 @@ OCaml can no longer be interleaved.</p>
 
 <span class="c"># First complication... no comment.</span>
 <span class="cp">ifeq ($(OS),Windows_NT)</span>
-  <span class="nb">export</span> OCAMLPATH :<span class="o">=</span> <span class="k">$(</span>FSTAR_HOME<span class="k">)</span>/bin<span class="p">;</span><span class="k">$(</span>OCAMLPATH<span class="k">)</span>
+<span class="w">  </span><span class="nb">export</span><span class="w"> </span>OCAMLPATH<span class="w"> </span>:<span class="o">=</span><span class="w"> </span><span class="k">$(</span>FSTAR_HOME<span class="k">)</span>/bin<span class="p">;</span><span class="k">$(</span>OCAMLPATH<span class="k">)</span>
 <span class="cp">else</span>
-  <span class="nb">export</span> OCAMLPATH :<span class="o">=</span> <span class="k">$(</span>FSTAR_HOME<span class="k">)</span>/bin:<span class="k">$(</span>OCAMLPATH<span class="k">)</span>
+<span class="w">  </span><span class="nb">export</span><span class="w"> </span>OCAMLPATH<span class="w"> </span>:<span class="o">=</span><span class="w"> </span><span class="k">$(</span>FSTAR_HOME<span class="k">)</span>/bin:<span class="k">$(</span>OCAMLPATH<span class="k">)</span>
 <span class="cp">endif</span>
 
 <span class="c"># Second complication: F* generates a list of ML files in the reverse linking</span>
 <span class="c"># order. No POSIX-portable way of reversing the order of a list.</span>
-<span class="nv">TAC</span> <span class="o">=</span> <span class="k">$(</span>shell which tac &gt;/dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;tac&quot;</span> <span class="o">||</span> <span class="nb">echo</span> <span class="s2">&quot;tail -r&quot;</span><span class="k">)</span>
+<span class="nv">TAC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>shell<span class="w"> </span>which<span class="w"> </span>tac<span class="w"> </span>&gt;/dev/null<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;tac&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;tail -r&quot;</span><span class="k">)</span>
 
-<span class="nv">ALL_CMX_FILES</span> <span class="o">=</span> <span class="k">$(</span>patsubst %.ml,%.cmx,<span class="k">$(</span>shell <span class="nb">echo</span> <span class="k">$(</span>ALL_ML_FILES<span class="k">)</span> <span class="p">|</span> <span class="k">$(</span>TAC<span class="k">)))</span>
+<span class="nv">ALL_CMX_FILES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>patsubst<span class="w"> </span>%.ml,%.cmx,<span class="k">$(</span>shell<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="k">$(</span>ALL_ML_FILES<span class="k">)</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">$(</span>TAC<span class="k">)))</span>
 
 <span class="c"># Third complication: F* does not know about our hand-written files. So, we need</span>
 <span class="c"># to manually add dependency edges in the graph. In our case, the test driver</span>
@@ -538,26 +538,26 @@ OCaml can no longer be interleaved.</p>
 <span class="c"># files. If it had to be inserted somewhere in the middle of the topological</span>
 <span class="c"># order, it would be trickier...</span>
 
-<span class="nf">obj/Specs_Driver.cmx</span><span class="o">:</span> <span class="k">$(</span><span class="nv">ALL_CMX_FILES</span><span class="k">)</span>
+<span class="nf">obj/Specs_Driver.cmx</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">ALL_CMX_FILES</span><span class="k">)</span>
 
 <span class="c"># Finally, how to compile things...</span>
 
-<span class="nv">OCAMLOPT</span> <span class="o">=</span> ocamlfind opt -package fstarlib -linkpkg -g -I <span class="k">$(</span>BIGNUM_HOME<span class="k">)</span>/obj -w -8-20-26
+<span class="nv">OCAMLOPT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>ocamlfind<span class="w"> </span>opt<span class="w"> </span>-package<span class="w"> </span>fstarlib<span class="w"> </span>-linkpkg<span class="w"> </span>-g<span class="w"> </span>-I<span class="w"> </span><span class="k">$(</span>BIGNUM_HOME<span class="k">)</span>/obj<span class="w"> </span>-w<span class="w"> </span>-8-20-26
 
-<span class="nf">.PRECIOUS</span><span class="o">:</span> <span class="n">obj</span>/%.<span class="n">cmx</span>
-<span class="nf">obj/%.cmx</span><span class="o">:</span> <span class="n">obj</span>/%.<span class="n">ml</span>
-	<span class="k">$(</span>OCAMLOPT<span class="k">)</span> -c $&lt; -o <span class="nv">$@</span>
+<span class="nf">.PRECIOUS</span><span class="o">:</span><span class="w"> </span><span class="n">obj</span>/%.<span class="n">cmx</span>
+<span class="nf">obj/%.cmx</span><span class="o">:</span><span class="w"> </span><span class="n">obj</span>/%.<span class="n">ml</span>
+<span class="w">	</span><span class="k">$(</span>OCAMLOPT<span class="k">)</span><span class="w"> </span>-c<span class="w"> </span>$&lt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">$@</span>
 
-<span class="nf">obj/specs-test.exe</span><span class="o">:</span> <span class="k">$(</span><span class="nv">ALL_CMX_FILES</span><span class="k">)</span> <span class="n">obj</span>/<span class="n">Specs_Driver</span>.<span class="n">cmx</span>
-	<span class="k">$(</span>OCAMLOPT<span class="k">)</span> $^ -o <span class="nv">$@</span>
+<span class="nf">obj/specs-test.exe</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">ALL_CMX_FILES</span><span class="k">)</span> <span class="n">obj</span>/<span class="n">Specs_Driver</span>.<span class="n">cmx</span>
+<span class="w">	</span><span class="k">$(</span>OCAMLOPT<span class="k">)</span><span class="w"> </span>$^<span class="w"> </span>-o<span class="w"> </span><span class="nv">$@</span>
 
 <span class="c"># Compiling the hand-written test</span>
 <span class="c"># -------------------------------</span>
 
-<span class="nv">CFLAGS</span> <span class="o">+=</span> -I dist -I <span class="k">$(</span>KRML_HOME<span class="k">)</span>/include
+<span class="nv">CFLAGS</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span>-I<span class="w"> </span>dist<span class="w"> </span>-I<span class="w"> </span><span class="k">$(</span>KRML_HOME<span class="k">)</span>/include
 
-<span class="nf">tests/c-tests.exe</span><span class="o">:</span> <span class="n">dist</span>/<span class="n">libbignum</span>.<span class="n">a</span> <span class="n">tests</span>/<span class="n">c</span>-<span class="n">tests</span>.<span class="n">o</span>
-	<span class="k">$(</span>CC<span class="k">)</span> $^ -o <span class="nv">$@</span>
+<span class="nf">tests/c-tests.exe</span><span class="o">:</span><span class="w"> </span><span class="n">dist</span>/<span class="n">libbignum</span>.<span class="n">a</span> <span class="n">tests</span>/<span class="n">c</span>-<span class="n">tests</span>.<span class="n">o</span>
+<span class="w">	</span><span class="k">$(</span>CC<span class="k">)</span><span class="w"> </span>$^<span class="w"> </span>-o<span class="w"> </span><span class="nv">$@</span>
 </pre></div>
 </div>
 </div>
