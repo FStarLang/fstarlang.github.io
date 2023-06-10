@@ -397,7 +397,7 @@ OCaml can no longer be interleaved.</p>
 <span class="c"># mtime of the moved files.</span>
 <span class="cp">ifndef MAKE_RESTARTS</span>
 <span class="nf">.depend</span><span class="o">:</span><span class="w"> </span>.<span class="n">FORCE</span>
-<span class="w">	</span><span class="k">$(</span>FSTAR_NO_FLAGS<span class="k">)</span><span class="w"> </span>--dep<span class="w"> </span>full<span class="w"> </span><span class="k">$(</span>notdir<span class="w"> </span><span class="k">$(</span>FSTAR_ROOTS<span class="k">))</span><span class="w"> </span><span class="k">$(</span>FSTAR_EXTRACT<span class="k">)</span><span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$@</span>
+<span class="w">	</span><span class="k">$(</span>FSTAR_NO_FLAGS<span class="k">)</span><span class="w"> </span>--dep<span class="w"> </span>full<span class="w"> </span><span class="k">$(</span>notdir<span class="w"> </span><span class="k">$(</span>FSTAR_ROOTS<span class="k">))</span><span class="w"> </span><span class="k">$(</span>FSTAR_EXTRACT<span class="k">)</span><span class="w"> </span>--output_deps_to<span class="w"> </span><span class="nv">$@</span>
 
 <span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span>.<span class="n">FORCE</span>
 <span class="nf">.FORCE</span><span class="o">:</span>
