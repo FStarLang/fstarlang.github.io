@@ -71,6 +71,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#via-static-headers">Via static headers</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#assumptions-on-the-c-target">Assumptions on the C target</a></li>
 </ul>
 </li>
 </ul>
@@ -269,6 +270,17 @@ meaning that projects like miTLS still link against libkrmllib.a to find
 external symbols (e.g. from <code class="docutils literal notranslate"><span class="pre">FStar.Date</span></code>)</p>
 </div>
 </div>
+</div>
+<div class="section" id="assumptions-on-the-c-target">
+<h2>Assumptions on the C target<a class="headerlink" href="#assumptions-on-the-c-target" title="Permalink to this headline">¶</a></h2>
+<p>KaRaMeL makes several assumptions regarding the C target environment. Most of
+these are unlikely to be violated in any modern environment.</p>
+<ul class="simple">
+<li>The size of <cite>int</cite> is at most 4. This ensures that our compilation strategy for
+uint8 and uint16 (namely, upcast subexpressions into uint32_t to defeat the
+promotion to unsigned int, which would lead to UB on overflow) is sound. This
+strategy may be suboptimal on machines for which <cite>sizeof int &lt; 4</cite>.</li>
+</ul>
 </div>
 </div>
 
