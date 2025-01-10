@@ -126,7 +126,7 @@ script for that purpose:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>nix<span class="w"> </span>shell
 </pre></div>
 </div>
-<p>In any case, remember to export suitable values for the <code class="docutils literal notranslate"><span class="pre">FSTAR_HOME</span></code> and
+<p>In any case, remember to export suitable values for the <code class="docutils literal notranslate"><span class="pre">FSTAR_EXE</span></code> and
 <code class="docutils literal notranslate"><span class="pre">KRML_HOME</span></code> environment variables once you’re done.</p>
 <p>We strongly recommend using the <a class="reference external" href="https://github.com/FStarLang/fstar-mode.el">fstar-mode.el</a> Emacs plugin for interactive mode
 support.</p>
@@ -255,21 +255,11 @@ interactive mode:</p>
 
 <span class="nv">BIGNUM_HOME</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span>.
 
-<span class="c"># Where is F* ?</span>
-<span class="cp">ifndef FSTAR_HOME</span>
-<span class="w">  </span><span class="nv">FSTAR_EXE</span><span class="o">=</span><span class="k">$(</span>shell<span class="w"> </span>which<span class="w"> </span>fstar.exe<span class="k">)</span>
-<span class="cp">  ifneq ($(FSTAR_EXE),)</span>
-<span class="c">    # Assuming that fstar.exe is in some ..../bin directory</span>
-<span class="w">    </span><span class="nv">FSTAR_HOME</span><span class="o">=</span><span class="k">$(</span>dir<span class="w"> </span><span class="k">$(</span>FSTAR_EXE<span class="k">))</span>/..
-<span class="cp">  else</span>
-<span class="w">    </span><span class="k">$(</span>error<span class="w"> </span><span class="s2">&quot;fstar.exe not found, please install FStar&quot;</span><span class="k">)</span>
-<span class="cp">  endif</span>
-<span class="cp">endif</span>
-<span class="k">export</span><span class="w"> </span><span class="nv">FSTAR_HOME</span>
-
 <span class="cp">ifeq (,$(KRML_HOME))</span>
 <span class="w">  </span><span class="k">$(</span>error<span class="w"> </span>KRML_HOME<span class="w"> </span>is<span class="w"> </span>not<span class="w"> </span>defined<span class="k">)</span>
 <span class="cp">endif</span>
+
+<span class="nv">FSTAR_EXE</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span>fstar.exe
 
 <span class="c"># I prefer to always check all fst files in the source directories; otherwise,</span>
 <span class="c"># it&#39;s too easy to add a new file only to find out later that it&#39;s not being</span>
@@ -364,19 +354,7 @@ OCaml can no longer be interleaved.</p>
 <span class="c"># - --cache_checked_modules to rely on a pre-built ulib and krmllib</span>
 <span class="c"># - --cache_dir, to avoid polluting our generated build artifacts outside o</span>
 
-<span class="c"># Where is F* ?</span>
-<span class="cp">ifndef FSTAR_HOME</span>
-<span class="w">  </span><span class="nv">FSTAR_EXE</span><span class="o">=</span><span class="k">$(</span>shell<span class="w"> </span>which<span class="w"> </span>fstar.exe<span class="k">)</span>
-<span class="cp">  ifneq ($(FSTAR_EXE),)</span>
-<span class="c">    # Assuming that fstar.exe is in some ..../bin directory</span>
-<span class="w">    </span><span class="nv">FSTAR_HOME</span><span class="o">=</span><span class="k">$(</span>dir<span class="w"> </span><span class="k">$(</span>FSTAR_EXE<span class="k">))</span>/..
-<span class="cp">  else</span>
-<span class="w">    </span><span class="k">$(</span>error<span class="w"> </span><span class="s2">&quot;fstar.exe not found, please install FStar&quot;</span><span class="k">)</span>
-<span class="cp">  endif</span>
-<span class="cp">endif</span>
-<span class="k">export</span><span class="w"> </span><span class="nv">FSTAR_HOME</span>
-
-<span class="nv">FSTAR_NO_FLAGS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>FSTAR_HOME<span class="k">)</span>/bin/fstar.exe<span class="w"> </span><span class="k">$(</span>FSTAR_HINTS<span class="k">)</span><span class="w"> </span><span class="se">\</span>
+<span class="nv">FSTAR_NO_FLAGS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>FSTAR_EXE<span class="k">)</span><span class="w"> </span><span class="k">$(</span>FSTAR_HINTS<span class="k">)</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--odir<span class="w"> </span>obj<span class="w"> </span>--cache_checked_modules<span class="w"> </span><span class="k">$(</span>FSTAR_INCLUDES<span class="k">)</span><span class="w"> </span>--cmi<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--already_cached<span class="w"> </span><span class="s1">&#39;Prims FStar LowStar C Spec.Loops TestLib WasmSupport&#39;</span><span class="w"> </span>--warn_error<span class="w"> </span><span class="s1">&#39;+241@247+285&#39;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--cache_dir<span class="w"> </span>obj<span class="w"> </span>--hint_dir<span class="w"> </span>hints
@@ -547,9 +525,9 @@ OCaml can no longer be interleaved.</p>
 <span class="c"># First complication... no comment.</span>
 <span class="c"># NOTE: if F* was installed via opam, then this is redundant</span>
 <span class="cp">ifeq ($(OS),Windows_NT)</span>
-<span class="w">  </span><span class="nb">export</span><span class="w"> </span>OCAMLPATH<span class="w"> </span>:<span class="o">=</span><span class="w"> </span><span class="k">$(</span>FSTAR_HOME<span class="k">)</span>/lib<span class="p">;</span><span class="k">$(</span>OCAMLPATH<span class="k">)</span>
+<span class="w">  </span><span class="nb">export</span><span class="w"> </span>OCAMLPATH<span class="w"> </span>:<span class="o">=</span><span class="w"> </span><span class="k">$(</span>shell<span class="w"> </span><span class="k">$(</span>FSTAR_EXE<span class="k">)</span><span class="w"> </span>--locate_ocaml<span class="k">)</span><span class="p">;</span><span class="k">$(</span>OCAMLPATH<span class="k">)</span>
 <span class="cp">else</span>
-<span class="w">  </span><span class="nb">export</span><span class="w"> </span>OCAMLPATH<span class="w"> </span>:<span class="o">=</span><span class="w"> </span><span class="k">$(</span>FSTAR_HOME<span class="k">)</span>/lib:<span class="k">$(</span>OCAMLPATH<span class="k">)</span>
+<span class="w">  </span><span class="nb">export</span><span class="w"> </span>OCAMLPATH<span class="w"> </span>:<span class="o">=</span><span class="w"> </span><span class="k">$(</span>shell<span class="w"> </span><span class="k">$(</span>FSTAR_EXE<span class="k">)</span><span class="w"> </span>--locate_ocaml<span class="k">)</span>:<span class="k">$(</span>OCAMLPATH<span class="k">)</span>
 <span class="cp">endif</span>
 
 <span class="c"># Second complication: F* generates a list of ML files in the reverse linking</span>
