@@ -335,8 +335,6 @@ OCaml can no longer be interleaved.</p>
 <span class="c"># Definition of F* flags</span>
 <span class="c"># ----------------------</span>
 
-<span class="nv">FSTAR_HINTS</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span>--use_hints<span class="w"> </span>--use_hint_hashes<span class="w"> </span>--record_hints
-
 <span class="c"># This flag controls what gets extracted to OCaml. Generally, we don&#39;t extract</span>
 <span class="c"># the FStar namespace since it&#39;s already extracted and packaged as the ocamlfind</span>
 <span class="c"># package fstar.lib. Here, unlike in -bundle, +Spec matches both Spec and</span>
@@ -354,10 +352,10 @@ OCaml can no longer be interleaved.</p>
 <span class="c"># - --cache_checked_modules to rely on a pre-built ulib and krmllib</span>
 <span class="c"># - --cache_dir, to avoid polluting our generated build artifacts outside o</span>
 
-<span class="nv">FSTAR_NO_FLAGS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>FSTAR_EXE<span class="k">)</span><span class="w"> </span><span class="k">$(</span>FSTAR_HINTS<span class="k">)</span><span class="w"> </span><span class="se">\</span>
+<span class="nv">FSTAR_NO_FLAGS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>FSTAR_EXE<span class="k">)</span><span class="w"> </span>--ext<span class="w"> </span>context_pruning<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--odir<span class="w"> </span>obj<span class="w"> </span>--cache_checked_modules<span class="w"> </span><span class="k">$(</span>FSTAR_INCLUDES<span class="k">)</span><span class="w"> </span>--cmi<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--already_cached<span class="w"> </span><span class="s1">&#39;Prims FStar LowStar C Spec.Loops TestLib WasmSupport&#39;</span><span class="w"> </span>--warn_error<span class="w"> </span><span class="s1">&#39;+241@247+285&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--cache_dir<span class="w"> </span>obj<span class="w"> </span>--hint_dir<span class="w"> </span>hints
+<span class="w">  </span>--cache_dir<span class="w"> </span>obj
 
 <span class="c"># Initial dependency analysis</span>
 <span class="c"># ---------------------------</span>
@@ -395,9 +393,6 @@ OCaml can no longer be interleaved.</p>
 
 <span class="c"># Creating these directories via a make rule, rather than rely on F* creating</span>
 <span class="c"># them, as two calls to F* might race.</span>
-<span class="nf">hints</span><span class="o">:</span>
-<span class="w">	</span>mkdir<span class="w"> </span><span class="nv">$@</span>
-
 <span class="nf">obj</span><span class="o">:</span>
 <span class="w">	</span>mkdir<span class="w"> </span><span class="nv">$@</span>
 
@@ -422,7 +417,7 @@ OCaml can no longer be interleaved.</p>
 <span class="c"># Note: F* will not change the mtime of a checked file if it is</span>
 <span class="c"># up-to-date (checksum matches, file unchanged), but this will confuse</span>
 <span class="c"># make and result in endless rebuilds. So, we touch that file.</span>
-<span class="nf">%.checked</span><span class="o">:</span><span class="w"> </span><span class="p">|</span> <span class="n">hints</span> <span class="n">obj</span>
+<span class="nf">%.checked</span><span class="o">:</span><span class="w"> </span><span class="p">|</span> <span class="n">obj</span>
 <span class="w">	</span><span class="k">$(</span>FSTAR<span class="k">)</span><span class="w"> </span>$&lt;<span class="w"> </span><span class="k">$(</span>FSTAR_FLAGS<span class="k">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>touch<span class="w"> </span>-c<span class="w"> </span><span class="nv">$@</span>
 
 <span class="c"># Extraction</span>
