@@ -349,11 +349,10 @@ OCaml can no longer be interleaved.</p>
 <span class="c"># But also:</span>
 <span class="c"># - --cmi, for cross-module inlining, a must-have for anyone who relies on</span>
 <span class="c">#   inline_for_extraction in the presence of interfaces</span>
-<span class="c"># - --cache_checked_modules to rely on a pre-built ulib and krmllib</span>
-<span class="c"># - --cache_dir, to avoid polluting our generated build artifacts outside o</span>
+<span class="c"># - --cache_dir, to place checked files there</span>
 
 <span class="nv">FSTAR_NO_FLAGS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>FSTAR_EXE<span class="k">)</span><span class="w"> </span>--ext<span class="w"> </span>context_pruning<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--odir<span class="w"> </span>obj<span class="w"> </span>--cache_checked_modules<span class="w"> </span><span class="k">$(</span>FSTAR_INCLUDES<span class="k">)</span><span class="w"> </span>--cmi<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--odir<span class="w"> </span>obj<span class="w"> </span><span class="k">$(</span>FSTAR_INCLUDES<span class="k">)</span><span class="w"> </span>--cmi<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--already_cached<span class="w"> </span><span class="s1">&#39;Prims FStar LowStar C Spec.Loops TestLib WasmSupport&#39;</span><span class="w"> </span>--warn_error<span class="w"> </span><span class="s1">&#39;+241@247+285&#39;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--cache_dir<span class="w"> </span>obj
 
@@ -375,7 +374,7 @@ OCaml can no longer be interleaved.</p>
 <span class="c"># mtime of the moved files.</span>
 <span class="cp">ifndef MAKE_RESTARTS</span>
 <span class="nf">.depend</span><span class="o">:</span><span class="w"> </span>.<span class="n">FORCE</span>
-<span class="w">	</span><span class="k">$(</span>FSTAR_NO_FLAGS<span class="k">)</span><span class="w"> </span>--dep<span class="w"> </span>full<span class="w"> </span><span class="k">$(</span>notdir<span class="w"> </span><span class="k">$(</span>FSTAR_ROOTS<span class="k">))</span><span class="w"> </span><span class="k">$(</span>FSTAR_EXTRACT<span class="k">)</span><span class="w"> </span>--output_deps_to<span class="w"> </span><span class="nv">$@</span>
+<span class="w">	</span><span class="k">$(</span>FSTAR_NO_FLAGS<span class="k">)</span><span class="w"> </span>--dep<span class="w"> </span>full<span class="w"> </span><span class="k">$(</span>notdir<span class="w"> </span><span class="k">$(</span>FSTAR_ROOTS<span class="k">))</span><span class="w"> </span><span class="k">$(</span>FSTAR_EXTRACT<span class="k">)</span><span class="w"> </span>-o<span class="w"> </span><span class="nv">$@</span>
 
 <span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span>.<span class="n">FORCE</span>
 <span class="nf">.FORCE</span><span class="o">:</span>
@@ -418,32 +417,22 @@ OCaml can no longer be interleaved.</p>
 <span class="c"># up-to-date (checksum matches, file unchanged), but this will confuse</span>
 <span class="c"># make and result in endless rebuilds. So, we touch that file.</span>
 <span class="nf">%.checked</span><span class="o">:</span><span class="w"> </span><span class="p">|</span> <span class="n">obj</span>
-<span class="w">	</span><span class="k">$(</span>FSTAR<span class="k">)</span><span class="w"> </span>$&lt;<span class="w"> </span><span class="k">$(</span>FSTAR_FLAGS<span class="k">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>touch<span class="w"> </span>-c<span class="w"> </span><span class="nv">$@</span>
+<span class="w">	</span><span class="k">$(</span>FSTAR<span class="k">)</span><span class="w"> </span><span class="k">$(</span>FSTAR_FLAGS<span class="k">)</span><span class="w"> </span>-c<span class="w"> </span>$&lt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">$@</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>touch<span class="w"> </span>-c<span class="w"> </span><span class="nv">$@</span>
 
 <span class="c"># Extraction</span>
 <span class="c"># ----------</span>
 
-<span class="c"># A few mismatches here between the dependencies present in the .depend and the</span>
-<span class="c"># expected F* invocation. In .depend:</span>
-<span class="c">#</span>
-<span class="c"># obj/Bignum_Impl.ml: obj/Bignum.Impl.fst.checked ... more dependencies ...</span>
-<span class="c">#</span>
-<span class="c"># But F* wants (remember that F* searches for source files anywhere on the</span>
-<span class="c"># include path):</span>
-<span class="c">#</span>
-<span class="c"># fstar Bignum.Impl.fst --extract_module BigNum.Impl</span>
-<span class="c">#</span>
-<span class="c"># We use basename because we may also extract krml files from .fsti.checked</span>
-<span class="c"># files (not true for OCaml, we don&#39;t extract mlis from fstis).</span>
 <span class="nf">.PRECIOUS</span><span class="o">:</span><span class="w"> </span><span class="n">obj</span>/%.<span class="n">ml</span>
 <span class="nf">obj/%.ml</span><span class="o">:</span>
-<span class="w">	</span><span class="k">$(</span>FSTAR<span class="k">)</span><span class="w"> </span><span class="k">$(</span>notdir<span class="w"> </span><span class="k">$(</span>subst<span class="w"> </span>.checked,,$&lt;<span class="k">))</span><span class="w"> </span>--codegen<span class="w"> </span>OCaml<span class="w"> </span><span class="se">\</span>
-<span class="w">	</span>--extract_module<span class="w"> </span><span class="k">$(</span>basename<span class="w"> </span><span class="k">$(</span>notdir<span class="w"> </span><span class="k">$(</span>subst<span class="w"> </span>.checked,,$&lt;<span class="k">)))</span>
+<span class="w">	</span><span class="k">$(</span>FSTAR<span class="k">)</span><span class="w"> </span>--codegen<span class="w"> </span>OCaml<span class="w"> </span>$&lt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">$@</span>
 
+<span class="c"># By default, krml extraction in F* will extract every module into a</span>
+<span class="c"># single out.krml file. Make sure to extract the single module we want.</span>
 <span class="nf">.PRECIOUS</span><span class="o">:</span><span class="w"> </span><span class="n">obj</span>/%.<span class="n">krml</span>
 <span class="nf">obj/%.krml</span><span class="o">:</span>
-<span class="w">	</span><span class="k">$(</span>FSTAR<span class="k">)</span><span class="w"> </span><span class="k">$(</span>notdir<span class="w"> </span><span class="k">$(</span>subst<span class="w"> </span>.checked,,$&lt;<span class="k">))</span><span class="w"> </span>--codegen<span class="w"> </span>krml<span class="w"> </span><span class="se">\</span>
-<span class="w">	</span>--extract_module<span class="w"> </span><span class="k">$(</span>basename<span class="w"> </span><span class="k">$(</span>notdir<span class="w"> </span><span class="k">$(</span>subst<span class="w"> </span>.checked,,$&lt;<span class="k">)))</span>
+<span class="w">	</span><span class="k">$(</span>FSTAR<span class="k">)</span><span class="w"> </span>$&lt;<span class="w"> </span>--codegen<span class="w"> </span>krml<span class="w"> </span><span class="se">\</span>
+<span class="w">	</span>--extract_module<span class="w"> </span><span class="k">$(</span>basename<span class="w"> </span><span class="k">$(</span>notdir<span class="w"> </span><span class="k">$(</span>subst<span class="w"> </span>.checked,,$&lt;<span class="k">)))</span><span class="w"> </span><span class="se">\</span>
+<span class="w">	</span>-o<span class="w"> </span><span class="nv">$@</span>
 
 <span class="nf">obj/Specs_Driver.ml</span><span class="o">:</span><span class="w"> </span><span class="n">specs</span>/<span class="n">ml</span>/<span class="n">Specs_Driver</span>.<span class="n">ml</span>
 <span class="c">	# This ensures that all the source directories are not polluted with</span>
