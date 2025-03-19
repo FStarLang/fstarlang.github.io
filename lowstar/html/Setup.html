@@ -545,7 +545,7 @@ OCaml can no longer be interleaved.</p>
 
 <span class="nv">CFLAGS</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span>-I<span class="w"> </span>dist<span class="w"> </span>-I<span class="w"> </span><span class="k">$(</span>KRML_HOME<span class="k">)</span>/include
 
-<span class="nf">tests/c-tests.exe</span><span class="o">:</span><span class="w"> </span><span class="n">dist</span>/<span class="n">libbignum</span>.<span class="n">a</span> <span class="n">tests</span>/<span class="n">c</span>-<span class="n">tests</span>.<span class="n">o</span>
+<span class="nf">tests/c-tests.exe</span><span class="o">:</span><span class="w"> </span><span class="n">tests</span>/<span class="n">c</span>-<span class="n">tests</span>.<span class="n">o</span> <span class="n">dist</span>/<span class="n">libbignum</span>.<span class="n">a</span>
 <span class="w">	</span><span class="k">$(</span>CC<span class="k">)</span><span class="w"> </span>$^<span class="w"> </span>-o<span class="w"> </span><span class="nv">$@</span>
 </pre></div>
 </div>
