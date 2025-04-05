@@ -1,170 +1,420 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
-  <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
-  <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-  <link rel="stylesheet" href="style.ccs" type="text/css" />
+  <title>FStar.Tactics.Builtins</title>
+  <style>@charset "utf-8"; .gist{font-size:16px;color:#333;text-align:left;/*!* GitHub Light v0.4.1 * Copyright(c) 2012 - 2017 GitHub,Inc. * Licensed under MIT(https://github.com/primer/github-syntax-theme-generator/blob/master/LICENSE) */ direction:ltr}.gist .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;font-size:16px;line-height:1.5;word-wrap:break-word}.gist .markdown-body kbd{display:inline-block;padding:3px 5px;font:11px SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;line-height:10px;color:#444d56;vertical-align:middle;background-color:#fafbfc;border:1px solid #d1d5da;border-radius:3px;box-shadow:inset 0 -1px 0 #d1d5da}.gist .markdown-body:before{display:table;content:""}.gist .markdown-body:after{display:table;clear:both;content:""}.gist .markdown-body>:first-child{margin-top:0 !important}.gist .markdown-body>:last-child{margin-bottom:0 !important}.gist .markdown-body a:not([href]){color:inherit;text-decoration:none}.gist .markdown-body .absent{color:#cb2431}.gist .markdown-body .anchor{float:left;padding-right:4px;margin-left:-20px;line-height:1}.gist .markdown-body .anchor:focus{outline:none}.gist .markdown-body blockquote,.gist .markdown-body details,.gist .markdown-body dl,.gist .markdown-body ol,.gist .markdown-body p,.gist .markdown-body pre,.gist .markdown-body table,.gist .markdown-body ul{margin-top:0;margin-bottom:16px}.gist .markdown-body hr{height:.25em;padding:0;margin:24px 0;background-color:#e1e4e8;border:0}.gist .markdown-body blockquote{padding:0 1em;color:#6a737d;border-left:.25em solid #dfe2e5}.gist .markdown-body blockquote>:first-child{margin-top:0}.gist .markdown-body blockquote>:last-child{margin-bottom:0}.gist .markdown-body h1,.gist .markdown-body h2,.gist .markdown-body h3,.gist .markdown-body h4,.gist .markdown-body h5,.gist .markdown-body h6{margin-top:24px;margin-bottom:16px;font-weight:600;line-height:1.25}.gist .markdown-body h1 .octicon-link,.gist .markdown-body h2 .octicon-link,.gist .markdown-body h3 .octicon-link,.gist .markdown-body h4 .octicon-link,.gist .markdown-body h5 .octicon-link,.gist .markdown-body h6 .octicon-link{color:#1b1f23;vertical-align:middle;visibility:hidden}.gist .markdown-body h1:hover .anchor,.gist .markdown-body h2:hover .anchor,.gist .markdown-body h3:hover .anchor,.gist .markdown-body h4:hover .anchor,.gist .markdown-body h5:hover .anchor,.gist .markdown-body h6:hover .anchor{text-decoration:none}.gist .markdown-body h1:hover .anchor .octicon-link,.gist .markdown-body h2:hover .anchor .octicon-link,.gist .markdown-body h3:hover .anchor .octicon-link,.gist .markdown-body h4:hover .anchor .octicon-link,.gist .markdown-body h5:hover .anchor .octicon-link,.gist .markdown-body h6:hover .anchor .octicon-link{visibility:visible}.gist .markdown-body h1 code,.gist .markdown-body h1 tt,.gist .markdown-body h2 code,.gist .markdown-body h2 tt,.gist .markdown-body h3 code,.gist .markdown-body h3 tt,.gist .markdown-body h4 code,.gist .markdown-body h4 tt,.gist .markdown-body h5 code,.gist .markdown-body h5 tt,.gist .markdown-body h6 code,.gist .markdown-body h6 tt{font-size:inherit}.gist .markdown-body h1{font-size:2em}.gist .markdown-body h1,.gist .markdown-body h2{padding-bottom:.3em;border-bottom:1px solid #eaecef}.gist .markdown-body h2{font-size:1.5em}.gist .markdown-body h3{font-size:1.25em}.gist .markdown-body h4{font-size:1em}.gist .markdown-body h5{font-size:.875em}.gist .markdown-body h6{font-size:.85em;color:#6a737d}.gist .markdown-body ol,.gist .markdown-body ul{padding-left:2em}.gist .markdown-body ol.no-list,.gist .markdown-body ul.no-list{padding:0;list-style-type:none}.gist .markdown-body ol ol,.gist .markdown-body ol ul,.gist .markdown-body ul ol,.gist .markdown-body ul ul{margin-top:0;margin-bottom:0}.gist .markdown-body li{word-wrap:break-all}.gist .markdown-body li>p{margin-top:16px}.gist .markdown-body li+li{margin-top:.25em}.gist .markdown-body dl{padding:0}.gist .markdown-body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:600}.gist .markdown-body dl dd{padding:0 16px;margin-bottom:16px}.gist .markdown-body table{display:block;width:100%;overflow:auto}.gist .markdown-body table th{font-weight:600}.gist .markdown-body table td,.gist .markdown-body table th{padding:6px 13px;border:1px solid #dfe2e5}.gist .markdown-body table tr{background-color:#fff;border-top:1px solid #c6cbd1}.gist .markdown-body table tr:nth-child(2n){background-color:#f6f8fa}.gist .markdown-body table img{background-color:initial}.gist .markdown-body img{max-width:100%;box-sizing:initial;background-color:#fff}.gist .markdown-body img[align=right]{padding-left:20px}.gist .markdown-body img[align=left]{padding-right:20px}.gist .markdown-body .emoji{max-width:none;vertical-align:text-top;background-color:initial}.gist .markdown-body span.frame{display:block;overflow:hidden}.gist .markdown-body span.frame>span{display:block;float:left;width:auto;padding:7px;margin:13px 0 0;overflow:hidden;border:1px solid #dfe2e5}.gist .markdown-body span.frame span img{display:block;float:left}.gist .markdown-body span.frame span span{display:block;padding:5px 0 0;clear:both;color:#24292e}.gist .markdown-body span.align-center{display:block;overflow:hidden;clear:both}.gist .markdown-body span.align-center>span{display:block;margin:13px auto 0;overflow:hidden;text-align:center}.gist .markdown-body span.align-center span img{margin:0 auto;text-align:center}.gist .markdown-body span.align-right{display:block;overflow:hidden;clear:both}.gist .markdown-body span.align-right>span{display:block;margin:13px 0 0;overflow:hidden;text-align:right}.gist .markdown-body span.align-right span img{margin:0;text-align:right}.gist .markdown-body span.float-left{display:block;float:left;margin-right:13px;overflow:hidden}.gist .markdown-body span.float-left span{margin:13px 0 0}.gist .markdown-body span.float-right{display:block;float:right;margin-left:13px;overflow:hidden}.gist .markdown-body span.float-right>span{display:block;margin:13px auto 0;overflow:hidden;text-align:right}.gist .markdown-body code,.gist .markdown-body tt{padding:.2em .4em;margin:0;font-size:85%;background-color:#f6f8fa;border-radius:3px}.gist .markdown-body code br,.gist .markdown-body tt br{display:none}.gist .markdown-body del code{text-decoration:inherit}.gist .markdown-body pre{word-wrap:normal}.gist .markdown-body pre>code{padding:0;margin:0;font-size:100%;word-break:normal;white-space:pre;background:transparent;border:0}.gist .markdown-body .highlight{margin-bottom:16px}.gist .markdown-body .highlight pre{margin-bottom:0;word-break:normal}.gist .markdown-body .highlight pre,.gist .markdown-body pre{padding:16px;overflow:auto;font-size:85%;line-height:1.45;background-color:#f6f8fa;border-radius:3px}.gist .markdown-body pre code,.gist .markdown-body pre tt{display:inline;max-width:auto;padding:0;margin:0;overflow:visible;line-height:inherit;word-wrap:normal;background-color:#f6f8fa;border:0}.gist .markdown-body .csv-data td,.gist .markdown-body .csv-data th{padding:5px;overflow:hidden;font-size:12px;line-height:1;text-align:left;white-space:nowrap}.gist .markdown-body .csv-data .blob-num{padding:10px 8px 9px;text-align:right;background:#fff;border:0}.gist .markdown-body .csv-data tr{border-top:0}.gist .markdown-body .csv-data th{font-weight:600;background:#f6f8fa;border-top:0}.gist .pl-c{color:#6a737d}.gist .pl-c1,.gist .pl-s .pl-v{color:#005cc5}.gist .pl-e,.gist .pl-en{color:#6f42c1}.gist .pl-s .pl-s1,.gist .pl-smi{color:#24292e}.gist .pl-ent{color:#22863a}.gist .pl-k{color:#d73a49}.gist .pl-pds,.gist .pl-s,.gist .pl-s .pl-pse .pl-s1,.gist .pl-sr,.gist .pl-sr .pl-cce,.gist .pl-sr .pl-sra,.gist .pl-sr .pl-sre{color:#032f62}.gist .pl-smw,.gist .pl-v{color:#e36209}.gist .pl-bu{color:#b31d28}.gist .pl-ii{color:#fafbfc;background-color:#b31d28}.gist .pl-c2{color:#fafbfc;background-color:#d73a49}.gist .pl-c2:before{content:"^M"}.gist .pl-sr .pl-cce{font-weight:700;color:#22863a}.gist .pl-ml{color:#735c0f}.gist .pl-mh,.gist .pl-mh .pl-en,.gist .pl-ms{font-weight:700;color:#005cc5}.gist .pl-mi{font-style:italic;color:#24292e}.gist .pl-mb{font-weight:700;color:#24292e}.gist .pl-md{color:#b31d28;background-color:#ffeef0}.gist .pl-mi1{color:#22863a;background-color:#f0fff4}.gist .pl-mc{color:#e36209;background-color:#ffebda}.gist .pl-mi2{color:#f6f8fa;background-color:#005cc5}.gist .pl-mdr{font-weight:700;color:#6f42c1}.gist .pl-ba{color:#586069}.gist .pl-sg{color:#959da5}.gist .pl-corl{text-decoration:underline;color:#032f62}.gist .breadcrumb{font-size:16px;color:#586069}.gist .breadcrumb .separator{white-space:pre-wrap}.gist .breadcrumb .separator:after,.gist .breadcrumb .separator:before{content:" "}.gist .breadcrumb strong.final-path{color:#24292e}.gist strong{font-weight:bolder}.gist .editor-abort{display:inline;font-size:14px}.gist .blob-interaction-bar{position:relative;background-color:#f2f2f2;border-bottom:1px solid #e5e5e5}.gist .blob-interaction-bar:before{display:table;content:""}.gist .blob-interaction-bar:after{display:table;clear:both;content:""}.gist .blob-interaction-bar .octicon-search{position:absolute;top:10px;left:10px;font-size:12px;color:#586069}.gist .blob-filter{width:100%;padding:4px 20px 5px 30px;font-size:12px;border:0;border-radius:0;outline:none}.gist .blob-filter:focus{outline:none}.gist .html-blob{margin-bottom:15px}.gist .TagsearchPopover{width:inherit;max-width:600px}.gist .TagsearchPopover-content{max-height:300px}.gist .TagsearchPopover-list .TagsearchPopover-list-item:hover{background-color:#f6f8fa}.gist .TagsearchPopover-list .TagsearchPopover-list-item .TagsearchPopover-item:hover{text-decoration:none}.gist .TagsearchPopover-list .blob-code-inner{white-space:pre-wrap}.gist .linejump .linejump-input{width:340px;background-color:#fafbfc}.gist .linejump .btn,.gist .linejump .linejump-input{padding:10px 15px;font-size:16px}.gist .CopyBlock{line-height:20px;cursor:pointer}.gist .CopyBlock .octicon-clippy{display:none}.gist .CopyBlock:active,.gist .CopyBlock:focus,.gist .CopyBlock:hover{background-color:#fff;outline:none}.gist .CopyBlock:active .octicon-clippy,.gist .CopyBlock:focus .octicon-clippy,.gist .CopyBlock:hover .octicon-clippy{display:inline-block}.gist .blob-wrapper{overflow-x:auto;overflow-y:hidden}.gist .page-blob.height-full .blob-wrapper{overflow-y:auto}.gist .page-edit-blob.height-full .CodeMirror{height:300px}.gist .page-edit-blob.height-full .CodeMirror,.gist .page-edit-blob.height-full .CodeMirror-scroll{display:flex;flex-direction:column;flex:1 1 auto}.gist .blob-wrapper-embedded{max-height:240px;overflow-y:auto}.gist .diff-table{width:100%;border-collapse:initial}.gist .diff-table .line-comments{padding:10px;vertical-align:top;border-top:1px solid #e1e4e8}.gist .diff-table .line-comments:first-child+.empty-cell{border-left-width:1px}.gist .diff-table tr:not(:last-child) .line-comments{border-top:1px solid #e1e4e8;border-bottom:1px solid #e1e4e8}.gist .blob-num{width:1%;min-width:50px;padding-right:10px;padding-left:10px;font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;font-size:12px;line-height:20px;color:rgba(27,31,35,.3);text-align:right;white-space:nowrap;vertical-align:top;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.gist .blob-num:hover{color:rgba(27,31,35,.6)}.gist .blob-num:before{content:attr(data-line-number)}.gist .blob-num.non-expandable{cursor:default}.gist .blob-num.non-expandable:hover{color:rgba(27,31,35,.3)}.gist .blob-code{position:relative;padding-right:10px;padding-left:10px;line-height:20px;vertical-align:top}.gist .blob-code-inner{overflow:visible;font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;font-size:12px;color:#24292e;word-wrap:normal;white-space:pre}.gist .blob-code-inner .x-first{border-top-left-radius:.2em;border-bottom-left-radius:.2em}.gist .blob-code-inner .x-last{border-top-right-radius:.2em;border-bottom-right-radius:.2em}.gist .blob-code-inner.highlighted,.gist .blob-code-inner .highlighted{background-color:#fffbdd}.gist .blob-code-marker:before{padding-right:8px;content:attr(data-code-marker)}.gist .blob-code-marker-addition:before{content:"+ "}.gist .blob-code-marker-deletion:before{content:"- "}.gist .blob-code-marker-context:before{content:" "}.gist .soft-wrap .diff-table{table-layout:fixed}.gist .soft-wrap .blob-code{padding-left:18px;text-indent:-7px}.gist .soft-wrap .blob-code-inner{word-wrap:break-word;white-space:pre-wrap}.gist .soft-wrap .no-nl-marker{display:none}.gist .soft-wrap .add-line-comment{margin-left:-28px}.gist .blob-code-hunk,.gist .blob-num-expandable,.gist .blob-num-hunk{color:rgba(27,31,35,.7);vertical-align:middle}.gist .blob-num-expandable,.gist .blob-num-hunk{background-color:#dbedff}.gist .blob-code-hunk{padding-top:4px;padding-bottom:4px;background-color:#f1f8ff;border-width:1px 0}.gist .blob-expanded .blob-code,.gist .blob-expanded .blob-num{background-color:#fafbfc}.gist .blob-expanded+tr:not(.blob-expanded) .blob-code,.gist .blob-expanded+tr:not(.blob-expanded) .blob-num,.gist .blob-expanded .blob-num-hunk,.gist tr:not(.blob-expanded)+.blob-expanded .blob-code,.gist tr:not(.blob-expanded)+.blob-expanded .blob-num{border-top:1px solid #eaecef}.gist .blob-num-expandable{padding:0;font-size:12px;text-align:center}.gist .blob-num-expandable .diff-expander{display:block;width:auto;height:auto;padding:4px 11px 4px 10px;margin-right:-1px;color:#586069;cursor:pointer}.gist .blob-num-expandable .diff-expander .octicon{vertical-align:top}.gist .blob-num-expandable .directional-expander{display:block;width:auto;height:auto;margin-right:-1px;color:#586069;cursor:pointer}.gist .blob-num-expandable .single-expander{padding-top:4px;padding-bottom:4px}.gist .blob-num-expandable .diff-expander:hover,.gist .blob-num-expandable .directional-expander:hover{color:#fff;text-shadow:none;background-color:#0366d6;border-color:#0366d6}.gist .blob-code-addition{background-color:#e6ffed}.gist .blob-code-addition .x{color:#24292e;background-color:#acf2bd}.gist .blob-num-addition{background-color:#cdffd8;border-color:#bef5cb}.gist .blob-code-deletion{background-color:#ffeef0}.gist .blob-code-deletion .x{color:#24292e;background-color:#fdb8c0}.gist .blob-num-deletion{background-color:#ffdce0;border-color:#fdaeb7}.gist .is-selecting,.gist .is-selecting .blob-num{cursor:ns-resize !important}.gist .is-selecting .add-line-comment,.gist .is-selecting a{pointer-events:none;cursor:ns-resize !important}.gist .is-selecting .is-hovered .add-line-comment{opacity:0}.gist .is-selecting.file-diff-split,.gist .is-selecting.file-diff-split .blob-num{cursor:nwse-resize !important}.gist .is-selecting.file-diff-split .add-line-comment,.gist .is-selecting.file-diff-split .empty-cell,.gist .is-selecting.file-diff-split a{pointer-events:none;cursor:nwse-resize !important}.gist .selected-line{position:relative}.gist .selected-line:after{position:absolute;top:0;left:0;display:block;width:100%;height:100%;box-sizing:border-box;pointer-events:none;content:"";background:rgba(255,223,93,.2);mix-blend-mode:multiply}.gist .selected-line.selected-line-top:after{border-top:1px solid #ffd33d}.gist .selected-line.selected-line-bottom:after{border-bottom:1px solid #ffd33d}.gist .selected-line.selected-line-left:after,.gist .selected-line:first-child:after{border-left:1px solid #ffd33d}.gist .selected-line.selected-line-right:after,.gist .selected-line:last-child:after{border-right:1px solid #ffd33d}.gist .is-commenting .selected-line.blob-code:before{position:absolute;top:0;left:-1px;display:block;width:4px;height:100%;content:"";background:#0366d6}.gist .add-line-comment{position:relative;z-index:5;float:left;width:22px;height:22px;margin:-2px -10px -2px -20px;line-height:21px;color:#fff;text-align:center;text-indent:0;cursor:pointer;background-color:#0366d6;background-image:linear-gradient(#0372ef,#0366d6);border-radius:3px;box-shadow:0 1px 4px rgba(27,31,35,.15);opacity:0;transition:transform .1s ease-in-out;transform:scale(.8)}.gist .add-line-comment:hover{transform:scale(1)}.gist .add-line-comment:focus,.is-hovered .gist .add-line-comment{opacity:1}.gist .add-line-comment .octicon{vertical-align:text-top;pointer-events:none}.gist .add-line-comment.octicon-check{background:#333;opacity:1}.gist .inline-comment-form{border:1px solid #dfe2e5;border-radius:3px}.gist .inline-review-comment{margin-top:0 !important;margin-bottom:10px !important}.gist .inline-review-comment .gc:first-child+tr .blob-code,.gist .inline-review-comment .gc:first-child+tr .blob-num{padding-top:5px}.gist .inline-review-comment tr:last-child{border-bottom-right-radius:3px;border-bottom-left-radius:3px}.gist .inline-review-comment tr:last-child .blob-code,.gist .inline-review-comment tr:last-child .blob-num{padding-bottom:8px}.gist .inline-review-comment tr:last-child .blob-code:first-child,.gist .inline-review-comment tr:last-child .blob-num:first-child{border-bottom-left-radius:3px}.gist .inline-review-comment tr:last-child .blob-code:last-child,.gist .inline-review-comment tr:last-child .blob-num:last-child{border-bottom-right-radius:3px}.gist .timeline-inline-comments{width:100%;table-layout:fixed}.gist .show-inline-notes .inline-comments,.gist .timeline-inline-comments .inline-comments{display:table-row}.gist .inline-comments,.gist .inline-comments.is-collapsed{display:none}.gist .inline-comments .line-comments.is-collapsed{visibility:hidden}.gist .inline-comments .line-comments+.blob-num{border-left-width:1px}.gist .inline-comments .timeline-comment{margin-bottom:10px}.gist .comment-holder,.gist .inline-comments .inline-comment-form,.gist .inline-comments .inline-comment-form-container{max-width:780px}.gist .empty-cell+.line-comments,.gist .line-comments+.line-comments{border-left:1px solid #eaecef}.gist .inline-comment-form-container .inline-comment-form,.gist .inline-comment-form-container.open .inline-comment-form-actions{display:none}.gist .inline-comment-form-container .inline-comment-form-actions,.gist .inline-comment-form-container.open .inline-comment-form{display:block}.gist body.full-width .container,.gist body.full-width .container-lg,.gist body.full-width .container-xl,.gist body.split-diff .container,.gist body.split-diff .container-lg,.gist body.split-diff .container-xl{width:100%;max-width:none;padding-right:20px;padding-left:20px}.gist body.full-width .repository-content,.gist body.split-diff .repository-content{width:100%}.gist body.full-width .new-pr-form,.gist body.split-diff .new-pr-form{max-width:980px}.gist .file-diff-split{table-layout:fixed}.gist .file-diff-split .blob-code+.blob-num{border-left:1px solid #f6f8fa}.gist .file-diff-split .blob-code-inner{word-wrap:break-word;white-space:pre-wrap}.gist .file-diff-split .empty-cell{cursor:default;background-color:#fafbfc;border-right-color:#eaecef}@media (max-width:1280px){.gist .file-diff-split .write-selected .comment-form-head{margin-bottom:48px !important}.gist .file-diff-split markdown-toolbar{position:absolute;right:8px;bottom:-40px}}.gist .submodule-diff-stats .octicon-diff-removed{color:#cb2431}.gist .submodule-diff-stats .octicon-diff-renamed{color:#677a85}.gist .submodule-diff-stats .octicon-diff-modified{color:#d0b44c}.gist .submodule-diff-stats .octicon-diff-added{color:#28a745}.gist .BlobToolbar{left:-17px}.gist .BlobToolbar-dropdown{margin-left:-2px}.gist .code-navigation-banner{background:linear-gradient(180deg,rgba(242,248,254,0),rgba(242,248,254,.47))}.gist .code-navigation-banner .code-navigation-banner-illo{background-image:url(code-navigation-banner-illo.svg);background-repeat:no-repeat;background-position:50%}.gist .pl-token.active,.gist .pl-token:hover{cursor:pointer;background:#ffea7f}.gist .task-list-item{list-style-type:none}.gist .task-list-item label{font-weight:400}.gist .task-list-item.enabled label{cursor:pointer}.gist .task-list-item+.task-list-item{margin-top:3px}.gist .task-list-item .handle{display:none}.gist .task-list-item-checkbox{margin:0 .2em .25em -1.6em;vertical-align:middle}.gist .reorderable-task-lists .markdown-body .contains-task-list{padding:0}.gist .reorderable-task-lists .markdown-body li:not(.task-list-item){margin-left:26px}.gist .reorderable-task-lists .markdown-body ol:not(.contains-task-list) li,.gist .reorderable-task-lists .markdown-body ul:not(.contains-task-list) li{margin-left:0}.gist .reorderable-task-lists .markdown-body li p{margin-top:0}.gist .reorderable-task-lists .markdown-body .task-list-item{padding-right:15px;padding-left:42px;margin-right:-15px;margin-left:-15px;border:1px solid transparent}.gist .reorderable-task-lists .markdown-body .task-list-item+.task-list-item{margin-top:0}.gist .reorderable-task-lists .markdown-body .task-list-item .contains-task-list{padding-top:4px}.gist .reorderable-task-lists .markdown-body .task-list-item .handle{display:block;float:left;width:20px;padding:2px 0 0 2px;margin-left:-43px;opacity:0}.gist .reorderable-task-lists .markdown-body .task-list-item .drag-handle{fill:#333}.gist .reorderable-task-lists .markdown-body .task-list-item.hovered>.handle{opacity:1}.gist .reorderable-task-lists .markdown-body .task-list-item.is-dragging{opacity:0}.gist .review-comment-contents .markdown-body .task-list-item{padding-left:42px;margin-right:-12px;margin-left:-12px;border-top-left-radius:3px;border-bottom-left-radius:3px}.gist .review-comment-contents .markdown-body .task-list-item.hovered{border-left-color:#ededed}.gist .highlight{padding:0;margin:0;font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;font-size:12px;font-weight:400;line-height:1.4;color:#333;background:#fff;border:0}.gist .octospinner,.gist .render-viewer-error,.gist .render-viewer-fatal,.gist .render-viewer-invalid{display:none}.gist iframe.render-viewer{width:100%;height:480px;overflow:hidden;border:0}.gist code,.gist pre{font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace !important}.gist .gist-meta{padding:10px;overflow:hidden;font:12px -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;color:#586069;background-color:#f7f7f7;border-radius:0 0 3px 3px}.gist .gist-meta a{font-weight:600;color:#666;text-decoration:none;border:0}.gist .gist-data{overflow:auto;word-wrap:normal;background-color:#fff;border-bottom:1px solid #ddd;border-radius:3px 3px 0 0}.gist .gist-file{margin-bottom:1em;font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;border:1px solid;border-color:#ddd #ddd #ccc;border-radius:3px}.gist .gist-file article{padding:6px}.gist .gist-file .scroll .gist-data{position:absolute;top:0;right:0;bottom:30px;left:0;overflow:scroll}.gist .gist-file .scroll .gist-meta{position:absolute;right:0;bottom:0;left:0}.gist .blob-num{min-width:inherit}.gist .blob-code,.gist .blob-num{padding:1px 10px !important;background:transparent}.gist .blob-code{text-align:left;border:0}.gist .blob-wrapper table{border-collapse:collapse}.gist table,.gist table tr,.gist table tr td,.gist table tr th{border-collapse:collapse}.gist .blob-wrapper tr:first-child td{padding-top:4px}.gist .markdown-body .anchor{display:none}</style>
 </head>
 <body>
-<h1 id="module-fstar.tactics.builtins">module FStar.Tactics.Builtins</h1>
-<p>Tactic primitives</p>
-<p>Every tactic primitive, i.e., those built into the compiler</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> top_env:Unidentified product: [<span class="dt">unit</span>] (Tac env)</code></pre></div>
-<p>[top_env] returns the environment where the tactic started running. * This works even if no goals are present.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> push_binder:Unidentified product: [env] Unidentified product: [binder] env</code></pre></div>
-<p>[push_binder] extends the environment with a single binder. This is useful as one traverses the syntax of a term, pushing binders as one traverses a binder in a lambda, match, etc. Note, the environment here is disconnected to (though perhaps derived from) the environment in the proofstate</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> fresh:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">int</span>)</code></pre></div>
-<p>[fresh ()] returns a fresh integer. It does not get reset when catching a failure.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> refine_intro:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>[refine_intro] will turn a goal of shape [w : x:t{phi}] into [w : t] and [phi{w/x}]</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> tc:Unidentified product: [env] Unidentified product: [term] (Tac term)</code></pre></div>
-<p>[tc] returns the type of a term in [env], or fails if it is untypeable.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> tcc:Unidentified product: [env] Unidentified product: [term] (Tac comp)</code></pre></div>
-<p>[tcc] like [tc], but returns the full computation type with the effect label and its arguments (WPs, etc) as well</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> unshelve:Unidentified product: [term] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>[unshelve] creates a goal from a term for its given type. It can be used when the system decided not to present a goal, but you want one anyway. For example, if you request a uvar through [uvar_env] or [fresh_uvar], you might want to instantiate it explicitly.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> unquote:Unidentified product: [#a:Type] Unidentified product: [term] (Tac a)</code></pre></div>
-<p>[unquote t] with turn a quoted term [t] into an actual value, of any type. This will fail at tactic runtime if the quoted term does not typecheck to type [a].</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> catch:Unidentified product: [#a:Type] Unidentified product: [(Unidentified product: [<span class="dt">unit</span>] (Tac a))] (TacS (either exn a))</code></pre></div>
-<p>[catch t] will attempt to run [t] and allow to recover from a failure. If [t] succeeds with return value [a], [catch t] returns [Inr a]. On failure, it returns [Inl msg], where [msg] is the error [t] raised. See also [or_else].</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> trivial:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>[trivial] will discharge the goal if it's exactly [True] after doing normalization and simplification of it.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> norm:Unidentified product: [list norm_step] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>[norm steps] will call the normalizer on the current goal's type and witness, with its reduction behaviour parameterized by the flags in [steps]. Currently, the flags (provided in Prims) are [simpl] (do logical simplifications) [whnf] (only reduce until weak head-normal-form) [primops] (performing primitive reductions, such as arithmetic and string operations) [delta] (unfold names) [zeta] (inline let bindings) [iota] (reduce match statements over constructors) [delta_only] (restrict delta to only unfold this list of fully-qualfied identifiers)</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> norm_term_env:Unidentified product: [env] Unidentified product: [list norm_step] Unidentified product: [term] (Tac term)</code></pre></div>
-<p>[norm_term_env e steps t] will call the normalizer on the term [t] using the list of steps [steps], over environment [e]. The list has the same meaning as for [norm].</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> norm_binder_type:Unidentified product: [list norm_step] Unidentified product: [binder] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>[norm_binder_type steps b] will call the normalizer on the type of the [b] binder for the current goal. Notably, this cannot be done via binder_retype and norm, because of uvars being resolved to lambda-abstractions.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> intro:Unidentified product: [<span class="dt">unit</span>] (Tac binder)</code></pre></div>
-<p>[intro] pushes the first argument of an arrow goal into the environment, turning [Gamma |- ?u : x:a -&gt; b] into [Gamma, x:a |- ?u' : b]. Note that this does not work for logical implications/forall. See FStar.Tactics.Logic for that.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> intro_rec:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="co">(*(binder, binder)))</span></code></pre></div>
-<p>Similar to intros, but allows to build a recursive function. Currently broken (c.f. issue #1103)</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> rename_to:Unidentified product: [binder] Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>[rename_to b nm] will rename the binder [b] to [nm] in the environment, goal, and witness in a safe manner. The only use of this is to make goals and terms more user readable.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> revert:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>[revert] pushes out a binder from the environment into the goal type, so a behaviour opposite to [intros].</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> binder_retype:Unidentified product: [binder] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>[binder_retype] changes the type of a binder in the context. After calling it with a binder of type <code>t</code>, the user is presented with a goal of the form <code>t == ?u</code> to be filled. The original goal (following that one) has the type of <code>b</code> in the context replaced by <code>?u</code>.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> clear_top:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>[clear_top] will drop the outermost binder from the environment. Can only be used if the goal does not at all depend on it.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> clear:Unidentified product: [binder] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>[clear] will drop the given binder from the context, is nothing depends on it.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> rewrite:Unidentified product: [binder] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>If [b] is a binder of type [v == r], [rewrite b] will rewrite the variable [v] for [r] everywhere in the current goal type and witness/</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> t_exact:Unidentified product: [<span class="dt">bool</span>] Unidentified product: [<span class="dt">bool</span>] Unidentified product: [term] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>First boolean is whether to attempt to intrpoduce a refinement before solving. In that case, a goal for the refinement formula will be added. Second boolean is whether to set the expected type internally. Just use <code>exact</code> from FStar.Tactics.Derived if you don't know what's up with all this.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> t_apply:Unidentified product: [<span class="dt">bool</span>] Unidentified product: [<span class="dt">bool</span>] Unidentified product: [term] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>Inner primitive for [apply], takes a boolean specifying whether to not ask for implicits that appear free in posterior goals. Example: when the boolean is true, applying transitivity to [|- a = c] will give two goals, [|- a = ?u] and [|- ?u = c] without asking to instantiate [?u] since it will most likely be constrained later by solving these goals. In any case, we track [?u] and will fail if it's not solved later.</p>
-<p>You probably want [apply] from FStar.Tactics.Derived.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> apply_lemma:Unidentified product: [term] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>[apply_lemma l] will solve a goal of type [squash phi] when [l] is a Lemma ensuring [phi]. The arguments to [l] and its requires clause are introduced as new goals. As a small optimization, [unit] arguments are discharged by the engine.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> print:Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>[print str] has no effect on the proofstate, but will have the side effect of printing [str] on the compiler's standard output.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> debugging:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">bool</span>)</code></pre></div>
-<p>[debugging ()] returns true if the current module has the debug flag on, i.e. when [--debug MyModule --debug_level Tac] was passed in.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> dump:Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>Similar to [print], but will dump a text representation of the proofstate along with the message.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> trefl:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>Solves a goal [Gamma |= squash (l == r)] by attempting to unify [l] with [r]. This currently only exists because of some universe problems when trying to [apply] a reflexivity lemma.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> t_pointwise:Unidentified product: [direction] Unidentified product: [(Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>))] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>(TODO: explain bettter) When running [pointwise tau] For every subterm [t'] of the goal's type [t], the engine will build a goal [Gamma |= t' == ?u] and run [tau] on it. When the tactic proves the goal, the engine will rewrite [t'] for [?u] in the original goal type. This is done for every subterm, bottom-up. This allows to recurse over an unknown goal type. By inspecting the goal, the [tau] can then decide what to do (to not do anything, use [trefl]).</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> topdown_rewrite:Unidentified product: [(Unidentified product: [ctrl:term] (Tac <span class="co">(*(bool, int))))] Unidentified product: [(Unidentified product: [rw:unit] (Tac unit))] (Tac unit)</span></code></pre></div>
-<p>[topdown_rewrite ctrl rw] is used to rewrite those sub-terms [t] of the goal on which [fst (ctrl t)] returns true.</p>
-<pre><code>On each such sub-term, [rw] is presented with an equality of goal
-of the form [Gamma |= t == ?u]. When [rw] proves the goal,
-the engine will rewrite [t] for [?u] in the original goal
-type.
-
-The goal formula is traversed top-down and the traversal can be
-controlled by [snd (ctrl t)]:
-
-When [snd (ctrl t) = 0], the traversal continues down through the
-position in the goal term.
-
-When [snd (ctrl t) = 1], the traversal continues to the next
-sub-tree of the goal.
-
-When [snd (ctrl t) = 2], no more rewrites are performed in the
-goal.</code></pre>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> dup:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>Given the current goal [Gamma |- w : t], [dup] will turn this goal into [Gamma |- ?u : t] and [Gamma |= ?u == w]. It can thus be used to change a goal's witness in any way needed, by choosing some [?u] (possibly with exact) and then solving the other goal.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> prune:Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>[prune &quot;A.B.C&quot;] will mark all top-level definitions in module [A.B.C] (and submodules of it) to not be encoded to the SMT, for the current goal. The string is a namespace prefix. [prune &quot;&quot;] will prune everything, but note that [prune &quot;FStar.S&quot;] will not prune [&quot;FStar.Set&quot;].</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> addns:Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>The opposite operation of [prune]. The latest one takes precedence.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> t_destruct:Unidentified product: [term] (Tac (list <span class="co">(*(fv, nat))))</span></code></pre></div>
-<p>Destruct a value of an inductive type by matching on it. The generated match has one branch for each constructor and is therefore trivially exhaustive, no VC is generated for that purpose. It returns a list with the fvars of each constructor and their arities, in the order they appear as goals.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> set_options:Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>Set command line options for the current goal. Mostly useful to change SMT encoding options such as [set_options &quot;--z3rlimit 20&quot;].</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> uvar_env:Unidentified product: [env] Unidentified product: [<span class="dt">option</span> typ] (Tac term)</code></pre></div>
-<p>Creates a new, unconstrained unification variable in environment [env]. The type of the uvar can optionally be provided in [o]. If not provided, a second uvar is created for the type.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> unify_env:Unidentified product: [env] Unidentified product: [term] Unidentified product: [term] (Tac <span class="dt">bool</span>)</code></pre></div>
-<p>Call the unifier on two terms. The returned boolean specifies whether unification was possible. When the tactic returns true, the terms have been unified, instantiating uvars as needed. When false, unification was not possible and no change to uvars occurs.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> launch_process:Unidentified product: [<span class="dt">string</span>] Unidentified product: [list <span class="dt">string</span>] Unidentified product: [<span class="dt">string</span>] (Tac <span class="dt">string</span>)</code></pre></div>
-<p>Launches an external process [prog] with arguments [args] and input [input] and returns the output. For security reasons, this can only be performed when the <code>--unsafe_tactic_exec</code> options was provided for the current F* invocation. The tactic will fail if this is not so.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> fresh_bv_named:Unidentified product: [<span class="dt">string</span>] Unidentified product: [typ] (Tac bv)</code></pre></div>
-<p>Get a fresh bv of some name and type. The name is only useful for pretty-printing, since there is a fresh unaccessible integer within the bv too.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> change:Unidentified product: [typ] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>Change the goal to another type, given that it is convertible to the current type.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> get_guard_policy:Unidentified product: [<span class="dt">unit</span>] (Tac guard_policy)</code></pre></div>
-<p>Get the current guard policy. The guard policy specifies what should be done when a VC arises internally from the tactic engine. Options are SMT (mark it as an SMT goal), Goal (add it as an extra goal) and Force (only allow trivial guards, that need no SMT.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> set_guard_policy:Unidentified product: [guard_policy] (Tac <span class="dt">unit</span>)</code></pre></div>
+<h1>
+<a id="user-content-fstartacticsbuiltins" class="anchor" href="#fstartacticsbuiltins" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>FStar.Tactics.Builtins</h1>
+<p>Every tactic primitive, i.e., those built into the compiler
+@summary Tactic primitives</p>
+<ul>
+<li>Opens module <a href="FStar.Tactics.Effect.html">FStar.Tactics.Effect</a>
+</li>
+<li>Opens module <a href="FStar.Reflection.Types.html">FStar.Reflection.Types</a>
+</li>
+<li>Opens module <a href="FStar.Reflection.Data.html">FStar.Reflection.Data</a>
+</li>
+<li>Opens module <a href="FStar.Tactics.Types.html">FStar.Tactics.Types</a>
+</li>
+<li>Opens module <a href="FStar.Tactics.Result.html">FStar.Tactics.Result</a>
+</li>
+</ul>
+<h4>
+<a id="user-content-top_env" class="anchor" href="#top_env" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>top_env</h4>
+<p><a href="#top_env"><code>top_env</code></a> returns the environment where the tactic started running.</p>
+<ul>
+<li>This works even if no goals are present.</li>
+</ul>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">top_env</span> <span class="pl-c1">:</span> <span class="pl-c1">unit</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-en">env</span></pre></div>
+<h4>
+<a id="user-content-fresh" class="anchor" href="#fresh" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>fresh</h4>
+<p><code>fresh ()</code> returns a fresh integer. It does not get reset when
+catching a failure.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">fresh</span> <span class="pl-c1">:</span> <span class="pl-c1">unit</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">int</span></pre></div>
+<h4>
+<a id="user-content-refine_intro" class="anchor" href="#refine_intro" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>refine_intro</h4>
+<p><a href="#refine_intro"><code>refine_intro</code></a> will turn a goal of shape <code>w : x:t{phi}</code>
+into <code>w : t</code> and <code>phi{w/x}</code></p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">refine_intro</span> <span class="pl-c1">:</span> <span class="pl-c1">unit</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<h4>
+<a id="user-content-tc" class="anchor" href="#tc" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>tc</h4>
+<p><a href="#tc"><code>tc</code></a> returns the type of a term in <code>env</code>,
+or fails if it is untypeable.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">tc</span> <span class="pl-c1">:</span> <span class="pl-en">env</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">term</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-en">term</span></pre></div>
+<h4>
+<a id="user-content-tcc" class="anchor" href="#tcc" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>tcc</h4>
+<p><a href="#tcc"><code>tcc</code></a> like <a href="#tc"><code>tc</code></a>, but returns the full computation type
+with the effect label and its arguments (WPs, etc) as well</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">tcc</span> <span class="pl-c1">:</span> <span class="pl-en">env</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">term</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-en">comp</span></pre></div>
+<h4>
+<a id="user-content-unshelve" class="anchor" href="#unshelve" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>unshelve</h4>
+<p><a href="#unshelve"><code>unshelve</code></a> creates a goal from a term for its given type.
+It can be used when the system decided not to present a goal, but
+you want one anyway. For example, if you request a uvar through
+<a href="#uvar_env"><code>uvar_env</code></a> or <code>fresh_uvar</code>, you might want to instantiate it
+explicitly.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">unshelve</span> <span class="pl-c1">:</span> <span class="pl-en">term</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<h4>
+<a id="user-content-unquote" class="anchor" href="#unquote" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>unquote</h4>
+<p><code>unquote t</code> with turn a quoted term <code>t</code> into an actual value, of
+any type. This will fail at tactic runtime if the quoted term does not
+typecheck to type <code>a</code>.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">unquote</span> <span class="pl-c1">:</span> <span class="pl-c1">#</span><span class="pl-en">a</span><span class="pl-c1">:Type</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">term</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-en">a</span></pre></div>
+<h4>
+<a id="user-content-catch" class="anchor" href="#catch" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>catch</h4>
+<p><code>catch t</code> will attempt to run <code>t</code> and allow to recover from a
+failure. If <code>t</code> succeeds with return value <code>a</code>, <code>catch t</code> returns <code>Inr a</code>. On failure, it returns <code>Inl msg</code>, where <code>msg</code> is the error <code>t</code>
+raised, and all unionfind effects are reverted. See also <a href="#recover"><code>recover</code></a> and
+<code>or_else</code>.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">catch</span> <span class="pl-c1">:</span> <span class="pl-c1">#</span><span class="pl-en">a</span><span class="pl-c1">:Type</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">(unit</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-en">a</span><span class="pl-c1">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">TacS</span> <span class="pl-c1">(</span><span class="pl-en">either</span> <span class="pl-en">exn</span> <span class="pl-en">a</span><span class="pl-c1">)</span></pre></div>
+<h4>
+<a id="user-content-recover" class="anchor" href="#recover" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>recover</h4>
+<p>Like <code>catch t</code>, but will not discard unionfind effects on failure.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">recover</span> <span class="pl-c1">:</span> <span class="pl-c1">#</span><span class="pl-en">a</span><span class="pl-c1">:Type</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">(unit</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-en">a</span><span class="pl-c1">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">TacS</span> <span class="pl-c1">(</span><span class="pl-en">either</span> <span class="pl-en">exn</span> <span class="pl-en">a</span><span class="pl-c1">)</span></pre></div>
+<h4>
+<a id="user-content-norm" class="anchor" href="#norm" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>norm</h4>
+<p><code>norm steps</code> will call the normalizer on the current goal's
+type and witness, with its reduction behaviour parameterized
+by the flags in <code>steps</code>.
+Currently, the flags (provided in Prims) are
+<code>simpl</code> (do logical simplifications)
+<code>whnf</code> (only reduce until weak head-normal-form)
+<code>primops</code> (performing primitive reductions, such as arithmetic and
+string operations)
+<code>delta</code> (unfold names)
+<code>zeta</code> (unroll let rec bindings, but with heuristics to avoid loops)
+<code>zeta_full</code> (unroll let rec bindings fully)
+<code>iota</code> (reduce match statements over constructors)
+<code>delta_only</code> (restrict delta to only unfold this list of fully-qualfied identifiers)</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">norm</span>  <span class="pl-c1">:</span> <span class="pl-en">list</span> <span class="pl-en">norm_step</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<h4>
+<a id="user-content-norm_term_env" class="anchor" href="#norm_term_env" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>norm_term_env</h4>
+<p><code>norm_term_env e steps t</code> will call the normalizer on the term <code>t</code>
+using the list of steps <code>steps</code>, over environment <code>e</code>. The list has the same meaning as for <a href="#norm"><code>norm</code></a>.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">norm_term_env</span>  <span class="pl-c1">:</span> <span class="pl-en">env</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">list</span> <span class="pl-en">norm_step</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">term</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-en">term</span></pre></div>
+<h4>
+<a id="user-content-norm_binder_type" class="anchor" href="#norm_binder_type" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>norm_binder_type</h4>
+<p><code>norm_binder_type steps b</code> will call the normalizer on the type of the <code>b</code>
+binder for the current goal. Notably, this cannot be done via binder_retype and norm,
+because of uvars being resolved to lambda-abstractions.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">norm_binder_type</span>  <span class="pl-c1">:</span> <span class="pl-en">list</span> <span class="pl-en">norm_step</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">binder</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<h4>
+<a id="user-content-intro" class="anchor" href="#intro" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>intro</h4>
+<p><a href="#intro"><code>intro</code></a> pushes the first argument of an arrow goal into the
+environment, turning <code>Gamma |- ?u : x:a -&gt; b</code> into <code>Gamma, x:a |- ?u' : b</code>.
+Note that this does not work for logical implications/forall. See
+FStar.Tactics.Logic for that.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">intro</span> <span class="pl-c1">:</span> <span class="pl-c1">unit</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-en">binder</span></pre></div>
+<h4>
+<a id="user-content-intro_rec" class="anchor" href="#intro_rec" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>intro_rec</h4>
+<p>Similar to intros, but allows to build a recursive function.
+Currently broken (c.f. issue #1103)</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">intro_rec</span>  <span class="pl-c1">:</span> <span class="pl-c1">unit</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">(</span><span class="pl-en">binder</span> * <span class="pl-en">binder</span><span class="pl-c1">)</span></pre></div>
+<h4>
+<a id="user-content-rename_to" class="anchor" href="#rename_to" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>rename_to</h4>
+<p><code>rename_to b nm</code> will rename the binder <code>b</code> to <code>nm</code> in
+the environment, goal, and witness in a safe manner. The only use of this
+is to make goals and terms more user readable. The primitive returns
+the new binder, since the old one disappears from the context.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">rename_to</span>  <span class="pl-c1">:</span> <span class="pl-en">binder</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">string</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-en">binder</span></pre></div>
+<h4>
+<a id="user-content-revert" class="anchor" href="#revert" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>revert</h4>
+<p><a href="#revert"><code>revert</code></a> pushes out a binder from the environment into the goal type,
+so a behaviour opposite to <code>intros</code>.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">revert</span>  <span class="pl-c1">:</span> <span class="pl-c1">unit</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<h4>
+<a id="user-content-binder_retype" class="anchor" href="#binder_retype" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>binder_retype</h4>
+<p><a href="#binder_retype"><code>binder_retype</code></a> changes the type of a binder in the context. After calling it
+with a binder of type <code>t</code>, the user is presented with a goal of the form <code>t == ?u</code>
+to be filled. The original goal (following that one) has the type of <code>b</code> in the
+context replaced by <code>?u</code>.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">binder_retype</span>  <span class="pl-c1">:</span> <span class="pl-en">binder</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<h4>
+<a id="user-content-clear_top" class="anchor" href="#clear_top" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>clear_top</h4>
+<p><a href="#clear_top"><code>clear_top</code></a> will drop the outermost binder from the environment.
+Can only be used if the goal does not at all depend on it.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">clear_top</span> <span class="pl-c1">:</span> <span class="pl-c1">unit</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<h4>
+<a id="user-content-clear" class="anchor" href="#clear" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>clear</h4>
+<p><a href="#clear"><code>clear</code></a> will drop the given binder from the context, is
+nothing depends on it.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">clear</span> <span class="pl-c1">:</span> <span class="pl-en">binder</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<h4>
+<a id="user-content-rewrite" class="anchor" href="#rewrite" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>rewrite</h4>
+<p>If <code>b</code> is a binder of type <code>v == r</code>, <code>rewrite b</code> will rewrite
+the variable <code>v</code> for <code>r</code> everywhere in the current goal type and witness/</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">rewrite</span> <span class="pl-c1">:</span> <span class="pl-en">binder</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<h4>
+<a id="user-content-t_exact" class="anchor" href="#t_exact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>t_exact</h4>
+<p>First boolean is whether to attempt to intrpoduce a refinement
+before solving. In that case, a goal for the refinement formula will be
+added. Second boolean is whether to set the expected type internally.
+Just use <code>exact</code> from FStar.Tactics.Derived if you don't know what's up
+with all this.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">t_exact</span> <span class="pl-c1">:</span> <span class="pl-c1">bool</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">bool</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">term</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<h4>
+<a id="user-content-t_apply" class="anchor" href="#t_apply" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>t_apply</h4>
+<p>Inner primitive for <code>apply</code>, takes a boolean specifying whether
+to not ask for implicits that appear free in posterior goals, and a
+boolean specifying whether it's forbidden to instantiate uvars in the
+goal.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">t_apply</span> <span class="pl-c1">:</span> <span class="pl-en">uopt</span><span class="pl-c1">:bool</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">noinst</span><span class="pl-c1">:bool</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">term</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<p>Example: when <code>uopt</code> is true, applying transitivity to <code>|- a = c</code>
+will give two goals, <code>|- a = ?u</code> and <code>|- ?u = c</code> without asking to
+instantiate <code>?u</code> since it will most likely be constrained later by
+solving these goals. In any case, we track <code>?u</code> and will fail if it's
+not solved later.</p>
+<p>Example: when <code>noinst</code> is true, applying a function returning
+<code>1 = 2</code> will fail on a goal of the shape <code>1 = ?u</code> since it must
+instantiate <code>?u</code>. We use this in typeclass resolution.</p>
+<p>You may want <code>apply</code> from FStar.Tactics.Derived, or one of
+the other user facing variants.</p>
+<h4>
+<a id="user-content-t_apply_lemma" class="anchor" href="#t_apply_lemma" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>t_apply_lemma</h4>
+<p><code>t_apply_lemma ni nilhs l</code> will solve a goal of type <code>squash phi</code>
+when <code>l</code> is a Lemma ensuring <code>phi</code>. The arguments to <code>l</code> and its
+requires clause are introduced as new goals. As a small optimization,
+<code>unit</code> arguments are discharged by the engine. For the meanining of
+the <code>noinst</code> boolean arg see <a href="#t_apply"><code>t_apply</code></a>, briefly, it does not allow to
+instantiate uvars in the goal. The <code>noinst_lhs</code> flag is similar, it
+forbids instantiating uvars <em>but only on the LHS of the goal</em>, provided
+the goal is an equality. It is meant to be useful for rewrite-goals, of
+the shape <code>X = ?u</code>. Setting <code>noinst</code> means <code>noinst_lhs</code> is ignored.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">t_apply_lemma</span> <span class="pl-c1">:</span> <span class="pl-en">noinst</span><span class="pl-c1">:bool</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">noinst_lhs</span><span class="pl-c1">:bool</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">term</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<p>TODO: do the unit thing too for <code>apply</code>.</p>
+<h4>
+<a id="user-content-print" class="anchor" href="#print" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>print</h4>
+<p><code>print str</code> has no effect on the proofstate, but will have the side effect
+of printing <code>str</code> on the compiler's standard output.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">print</span> <span class="pl-c1">:</span> <span class="pl-c1">string</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<h4>
+<a id="user-content-debugging" class="anchor" href="#debugging" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>debugging</h4>
+<p><code>debugging ()</code> returns true if the current module has the debug flag
+on, i.e. when <code>--debug MyModule --debug_level Tac</code> was passed in.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">debugging</span> <span class="pl-c1">:</span> <span class="pl-c1">unit</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">bool</span></pre></div>
+<h4>
+<a id="user-content-dump" class="anchor" href="#dump" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>dump</h4>
+<p>Similar to <a href="#print"><code>print</code></a>, but will dump a text representation of the proofstate
+along with the message.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">dump</span> <span class="pl-c1">:</span> <span class="pl-c1">string</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<h4>
+<a id="user-content-dump_all" class="anchor" href="#dump_all" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>dump_all</h4>
+<p>Similar to <a href="#dump"><code>dump</code></a>, but will print <em>every</em> unsolved implicit
+in the proofstate, not only the visible/focused goals. When the
+<code>print_resolved</code> boolean is true, it will also print every solved goal.
+Warning, these can be a <em>lot</em>.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">dump_all</span> <span class="pl-c1">:</span> <span class="pl-en">print_resolved</span><span class="pl-c1">:bool</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">string</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<h4>
+<a id="user-content-dump_uvars_of" class="anchor" href="#dump_uvars_of" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>dump_uvars_of</h4>
+<p>Will print a goal for every unresolved implicit in the provided goal.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">dump_uvars_of</span> <span class="pl-c1">:</span> <span class="pl-en">goal</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">string</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<h4>
+<a id="user-content-t_trefl" class="anchor" href="#t_trefl" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>t_trefl</h4>
+<p>Solves a goal <code>Gamma |= squash (l == r)</code> by attempting to unify
+<code>l</code> with <code>r</code>. This currently only exists because of some universe
+problems when trying to <code>apply</code> a reflexivity lemma. When <code>allow_guards</code>
+is <code>true</code>, it is allowed that (some) guards are raised during the
+unification process and added as a single goal to be discharged later.
+Currently, the only guards allowed here are for equating refinement
+types (e.g. <code>x:int{x&gt;0}</code> and <code>x:int{0&lt;x}</code>.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">t_trefl</span> <span class="pl-c1">:</span> <span class="pl-en">allow_guards</span><span class="pl-c1">:bool</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<h4>
+<a id="user-content-t_commute_applied_match" class="anchor" href="#t_commute_applied_match" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>t_commute_applied_match</h4>
+<p>Provides a proof for the equality
+[(match e with ... | pi -&gt; ei ...) a1 .. an
+== (match e with ... | pi -&gt; e1 a1 .. an)].
+This is particularly useful to rewrite the expression on the left to the
+one on the right when the RHS is actually a unification variable.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">t_commute_applied_match</span> <span class="pl-c1">:</span> <span class="pl-c1">unit</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<h4>
+<a id="user-content-ctrl_rewrite" class="anchor" href="#ctrl_rewrite" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ctrl_rewrite</h4>
+<p><a href="#ctrl_rewrite"><code>ctrl_rewrite</code></a> will traverse the current goal, and call <code>ctrl</code></p>
+<ul>
+<li>repeatedly on subterms. When <code>ctrl t</code> returns <code>(true, _)</code>, the</li>
+<li>tactic will call <code>rw</code> with a goal of type <code>t = ?u</code>, which once</li>
+<li>solved will rewrite <code>t</code> to the solution of <code>?u</code>. No goal is</li>
+<li>made if <code>ctrl t</code> returns <code>(false, _)</code>.</li>
+<li>
+</li>
+<li>The second component of the return value of <code>ctrl</code> specifies</li>
+<li>whether for continue descending in the goal or not. It can</li>
+<li>either be:</li>
+<li>
+<ul>
+<li>Continue: keep on with further subterms</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Skip: stop descending in this tree</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Abort: stop everything</li>
+</ul>
+</li>
+<li>
+</li>
+<li>The first argument is the direction, <code>TopDown</code> or <code>BottomUp</code>. It</li>
+<li>specifies how the AST of the goal is traversed (preorder or postorder).</li>
+<li>
+</li>
+<li>Note: for <code>BottomUp</code> a <code>Skip</code> means to stop trying to rewrite everything</li>
+<li>from the current node up to the root, but still consider sibilings. This</li>
+<li>means that <code>ctrl_rewrite BottomUp (fun _ -&gt; (true, Skip)) t</code> will call <code>t</code>
+</li>
+<li>for every leaf node in the AST.</li>
+<li>
+</li>
+<li>See <code>pointwise</code> and <code>topdown_rewrite</code> for more friendly versions.</li>
+</ul>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">ctrl_rewrite</span> <span class="pl-c1">:</span>
+    <span class="pl-en">direction</span> <span class="pl-c1">-&gt;</span>
+    <span class="pl-c1">(</span><span class="pl-en">ctrl</span> <span class="pl-c1">:</span> <span class="pl-en">term</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">(bool</span> <span class="pl-c1">&amp;</span> <span class="pl-en">ctrl_flag</span><span class="pl-c1">))</span> <span class="pl-c1">-&gt;</span>
+    <span class="pl-c1">(</span><span class="pl-en">rw</span><span class="pl-c1">:unit</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit)</span> <span class="pl-c1">-&gt;</span>
+    <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<h4>
+<a id="user-content-dup" class="anchor" href="#dup" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>dup</h4>
+<p>Given the current goal <code>Gamma |- w : t</code>,
+<a href="#dup"><code>dup</code></a> will turn this goal into
+<code>Gamma |- ?u : t</code> and
+<code>Gamma |= ?u == w</code>. It can thus be used to change
+a goal's witness in any way needed, by choosing
+some <code>?u</code> (possibly with exact) and then solving the other goal.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">dup</span> <span class="pl-c1">:</span> <span class="pl-c1">unit</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<p>Proof namespace management</p>
+<h4>
+<a id="user-content-prune" class="anchor" href="#prune" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>prune</h4>
+<p><code>prune "A.B.C"</code> will mark all top-level definitions in module
+<code>A.B.C</code> (and submodules of it) to not be encoded to the SMT, for the current goal.
+The string is a namespace prefix. <code>prune ""</code> will prune everything, but note
+that <code>prune "FStar.S"</code> will not prune <code>"FStar.Set"</code>.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">prune</span> <span class="pl-c1">:</span> <span class="pl-c1">string</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<h4>
+<a id="user-content-addns" class="anchor" href="#addns" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>addns</h4>
+<p>The opposite operation of <a href="#prune"><code>prune</code></a>. The latest one takes precedence.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">addns</span> <span class="pl-c1">:</span> <span class="pl-c1">string</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<h4>
+<a id="user-content-t_destruct" class="anchor" href="#t_destruct" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>t_destruct</h4>
+<p>Destruct a value of an inductive type by matching on it. The generated
+match has one branch for each constructor and is therefore trivially
+exhaustive, no VC is generated for that purpose. It returns a list
+with the fvars of each constructor and their arities, in the order
+they appear as goals.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">t_destruct</span> <span class="pl-c1">:</span> <span class="pl-en">term</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">(</span><span class="pl-en">list</span> <span class="pl-c1">(</span><span class="pl-en">fv</span> * <span class="pl-c1">nat))</span></pre></div>
+<h4>
+<a id="user-content-set_options" class="anchor" href="#set_options" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>set_options</h4>
+<p>Set command line options for the current goal. Mostly useful to
+change SMT encoding options such as <code>set_options "--z3rlimit 20"</code>.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">set_options</span> <span class="pl-c1">:</span> <span class="pl-c1">string</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<h4>
+<a id="user-content-uvar_env" class="anchor" href="#uvar_env" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>uvar_env</h4>
+<p>Creates a new, unconstrained unification variable in environment
+<code>env</code>. The type of the uvar can optionally be provided in <code>o</code>. If not
+provided, a second uvar is created for the type.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">uvar_env</span> <span class="pl-c1">:</span> <span class="pl-en">env</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">option</span> <span class="pl-en">typ</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-en">term</span></pre></div>
+<h4>
+<a id="user-content-unify_env" class="anchor" href="#unify_env" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>unify_env</h4>
+<p>Call the unifier on two terms. The returned boolean specifies
+whether unification was possible. When the tactic returns true, the
+terms have been unified, instantiating uvars as needed. When false,
+unification was not possible and no change to uvars occurs.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">unify_env</span> <span class="pl-c1">:</span> <span class="pl-en">env</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">t1</span><span class="pl-c1">:</span><span class="pl-en">term</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">t2</span><span class="pl-c1">:</span><span class="pl-en">term</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">bool</span></pre></div>
+<h4>
+<a id="user-content-unify_guard_env" class="anchor" href="#unify_guard_env" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>unify_guard_env</h4>
+<p>Similar to <a href="#unify_env"><code>unify_env</code></a>, but allows for some guards to be raised
+during unification (see <a href="#t_trefl"><code>t_trefl</code></a> for an explanation). Will add a new
+goal with the guard.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">unify_guard_env</span> <span class="pl-c1">:</span> <span class="pl-en">env</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">t1</span><span class="pl-c1">:</span><span class="pl-en">term</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">t2</span><span class="pl-c1">:</span><span class="pl-en">term</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">bool</span></pre></div>
+<h4>
+<a id="user-content-match_env" class="anchor" href="#match_env" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>match_env</h4>
+<p>Check if <code>t1</code> matches <code>t2</code>, i.e., whether <code>t2</code> can have its uvars
+instantiated into unifying with <code>t1</code>. When the tactic returns true, the
+terms have been unified, instantiating uvars as needed. When false,
+matching was not possible and no change to uvars occurs.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">match_env</span> <span class="pl-c1">:</span> <span class="pl-en">env</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">t1</span><span class="pl-c1">:</span><span class="pl-en">term</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">t2</span><span class="pl-c1">:</span><span class="pl-en">term</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">bool</span></pre></div>
+<h4>
+<a id="user-content-launch_process" class="anchor" href="#launch_process" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>launch_process</h4>
+<p>Launches an external process <code>prog</code> with arguments <code>args</code> and input
+<code>input</code> and returns the output. For security reasons, this can only be
+performed when the <code>--unsafe_tactic_exec</code> options was provided for the
+current F* invocation. The tactic will fail if this is not so.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">launch_process</span> <span class="pl-c1">:</span> <span class="pl-c1">string</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">list</span> <span class="pl-c1">string</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">string</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">string</span></pre></div>
+<h4>
+<a id="user-content-fresh_bv_named" class="anchor" href="#fresh_bv_named" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>fresh_bv_named</h4>
+<p>Get a fresh bv of some name and type. The name is only useful
+for pretty-printing, since there is a fresh unaccessible integer within
+the bv too.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">fresh_bv_named</span> <span class="pl-c1">:</span> <span class="pl-c1">string</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">typ</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-en">bv</span></pre></div>
+<h4>
+<a id="user-content-change" class="anchor" href="#change" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>change</h4>
+<p>Change the goal to another type, given that it is convertible
+to the current type.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">change</span> <span class="pl-c1">:</span> <span class="pl-en">typ</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<h4>
+<a id="user-content-get_guard_policy" class="anchor" href="#get_guard_policy" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>get_guard_policy</h4>
+<p>Get the current guard policy. The guard policy specifies what should
+be done when a VC arises internally from the tactic engine. Options
+are SMT (mark it as an SMT goal), Goal (add it as an extra goal)
+and Force (only allow trivial guards, that need no SMT.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">get_guard_policy</span> <span class="pl-c1">:</span> <span class="pl-c1">unit</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-en">guard_policy</span></pre></div>
+<h4>
+<a id="user-content-set_guard_policy" class="anchor" href="#set_guard_policy" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>set_guard_policy</h4>
 <p>Set the current guard policy. See [get_guard_policy} for an explanation</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> lax_on:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">bool</span>)</code></pre></div>
-<p>[lax_on] returns true iff the current environment has the <code>--lax</code> option set, and thus drops all verification conditions.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> tadmit_t:Unidentified product: [term] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>Admit the current goal and set the witness to the given term. Absolutely unsafe. Raises a warning.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> inspect:Unidentified product: [term] (Tac term_view)</code></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">set_guard_policy</span> <span class="pl-c1">:</span> <span class="pl-en">guard_policy</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<h4>
+<a id="user-content-lax_on" class="anchor" href="#lax_on" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>lax_on</h4>
+<p><a href="#lax_on"><code>lax_on</code></a> returns true iff the current environment has the
+<code>--lax</code> option set, and thus drops all verification conditions.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">lax_on</span> <span class="pl-c1">:</span> <span class="pl-c1">unit</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">bool</span></pre></div>
+<h4>
+<a id="user-content-tadmit_t" class="anchor" href="#tadmit_t" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>tadmit_t</h4>
+<p>Admit the current goal and set the witness to the given term.
+Absolutely unsafe. Raises a warning.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">tadmit_t</span> <span class="pl-c1">:</span> <span class="pl-en">term</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<h4>
+<a id="user-content-inspect" class="anchor" href="#inspect" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>inspect</h4>
 <p>View a term in a fully-named representation</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> pack:Unidentified product: [term_view] (Tac term)</code></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">inspect</span> <span class="pl-c1">:</span> <span class="pl-en">term</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-en">term_view</span></pre></div>
+<h4>
+<a id="user-content-pack" class="anchor" href="#pack" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>pack</h4>
 <p>Pack a term view on a fully-named representation back into a term</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> join:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>Join the first two goals, which must be irrelevant, in a single one by finding a maximal prefix of their environment and reverting appropriately. Useful to minimize SMT queries that share internal obligations.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> set_goals:Unidentified product: [list goal] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>Set the current set of active goals at will. Obligations remain in the implicits.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> set_smt_goals:Unidentified product: [list goal] (Tac <span class="dt">unit</span>)</code></pre></div>
-<p>Set the current set of SMT goals at will. Obligations remain in the implicits. TODO: This is a really bad name, there's no special &quot;SMT&quot; about these goals.</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">val</span> curms:Unidentified product: [<span class="dt">unit</span>] (Tac <span class="dt">int</span>)</code></pre></div>
-<p>[curms ()] returns the current (wall) time in millseconds</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">pack</span>    <span class="pl-c1">:</span> <span class="pl-en">term_view</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-en">term</span></pre></div>
+<h4>
+<a id="user-content-join" class="anchor" href="#join" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>join</h4>
+<p>Join the first two goals, which must be irrelevant, in a single
+one by finding a maximal prefix of their environment and reverting
+appropriately. Useful to minimize SMT queries that share internal
+obligations.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">join</span> <span class="pl-c1">:</span> <span class="pl-c1">unit</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<p>Local metastate via a string-keyed map. <code>lget</code> fails if the
+found element is not typeable at the requested type.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">lget</span>     <span class="pl-c1">:</span> <span class="pl-c1">#</span><span class="pl-en">a</span><span class="pl-c1">:Type</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">string</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-en">a</span>
+<span class="pl-k">val</span> <span class="pl-en">lset</span>     <span class="pl-c1">:</span> <span class="pl-c1">#</span><span class="pl-en">a</span><span class="pl-c1">:Type</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">string</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">a</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<h4>
+<a id="user-content-set_goals" class="anchor" href="#set_goals" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>set_goals</h4>
+<p>Set the current set of active goals at will. Obligations remain
+in the implicits.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">set_goals</span>     <span class="pl-c1">:</span> <span class="pl-en">list</span> <span class="pl-en">goal</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<h4>
+<a id="user-content-set_smt_goals" class="anchor" href="#set_smt_goals" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>set_smt_goals</h4>
+<p>Set the current set of SMT goals at will. Obligations remain in the
+implicits. TODO: This is a really bad name, there's no special "SMT"
+about these goals.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">set_smt_goals</span> <span class="pl-c1">:</span> <span class="pl-en">list</span> <span class="pl-en">goal</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+<h4>
+<a id="user-content-curms" class="anchor" href="#curms" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>curms</h4>
+<p><code>curms ()</code> returns the current (wall) time in millseconds</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">curms</span> <span class="pl-c1">:</span> <span class="pl-c1">unit</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">int</span></pre></div>
+<h4>
+<a id="user-content-set_urgency" class="anchor" href="#set_urgency" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>set_urgency</h4>
+<p><code>set_urgency u</code> sets the urgency of error messages. Usually set just
+before raising an exception (see e.g. <code>fail_silently</code>).</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">val</span> <span class="pl-en">set_urgency</span> <span class="pl-c1">:</span> <span class="pl-c1">int</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span></pre></div>
+
 </body>
 </html>
