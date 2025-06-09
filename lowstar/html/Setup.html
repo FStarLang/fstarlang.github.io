@@ -351,7 +351,7 @@ OCaml can no longer be interleaved.</p>
 <span class="c">#   inline_for_extraction in the presence of interfaces</span>
 <span class="c"># - --cache_dir, to place checked files there</span>
 
-<span class="nv">FSTAR_NO_FLAGS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>FSTAR_EXE<span class="k">)</span><span class="w"> </span>--ext<span class="w"> </span>context_pruning<span class="w"> </span><span class="se">\</span>
+<span class="nv">FSTAR_NO_FLAGS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>FSTAR_EXE<span class="k">)</span><span class="w"> </span>--ext<span class="w"> </span>optimize_let_vc<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--odir<span class="w"> </span>obj<span class="w"> </span><span class="k">$(</span>FSTAR_INCLUDES<span class="k">)</span><span class="w"> </span>--cmi<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--already_cached<span class="w"> </span><span class="s1">&#39;Prims FStar LowStar C Spec.Loops TestLib WasmSupport&#39;</span><span class="w"> </span>--warn_error<span class="w"> </span><span class="s1">&#39;+241@247+285&#39;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--cache_dir<span class="w"> </span>obj
