@@ -1,29 +1,20 @@
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="english" data-content_root="./">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Example: memcpy &mdash; The KaRaMeL user manual  documentation</title><link rel="stylesheet" href="static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>Example: memcpy &mdash; The KaRaMeL user manual  documentation</title>
+      <link rel="stylesheet" type="text/css" href="static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="static/css/theme.css?v=86f27845" />
+
   
-      <script>
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'./',
-              VERSION:'',
-              LANGUAGE:'None',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script src="static/jquery.js"></script>
-        <script src="static/underscore.js"></script>
-        <script src="static/doctools.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+        <script src="static/jquery.js?v=8dae8fb0"></script>
+        <script src="static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="static/documentation_options.js?v=df973ab0"></script>
+        <script src="static/doctools.js?v=888ff710"></script>
+        <script src="static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -50,7 +41,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Setup.html">Tooling and project setup</a></li>
@@ -92,8 +83,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="example-memcpy">
-<h1>Example: <cite>memcpy</cite><a class="headerlink" href="#example-memcpy" title="Permalink to this headline">¶</a></h1>
+  <section id="example-memcpy">
+<h1>Example: <cite>memcpy</cite><a class="headerlink" href="#example-memcpy" title="Link to this heading"></a></h1>
 <p>The snippet below implements a classic <code class="docutils literal notranslate"><span class="pre">memcpy</span></code> function, copying <code class="docutils literal notranslate"><span class="pre">len</span></code>
 elements of type <code class="docutils literal notranslate"><span class="pre">a</span></code> from <code class="docutils literal notranslate"><span class="pre">src</span></code> into <code class="docutils literal notranslate"><span class="pre">dst</span></code>.</p>
 <div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">MemCpy</span>
@@ -171,22 +162,22 @@ elements of type <code class="docutils literal notranslate"><span class="pre">a<
 </div>
 <p>This example showcases several features of Low*. We only present the code from
 a high-level point of view.</p>
-<p>The code starts by opening several modules that are part of the “Low*
-standard library”.</p>
+<p>The code starts by opening several modules that are part of the &quot;Low*
+standard library&quot;.</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">Buffer</span></code> is our model of stack- and heap- allocated C arrays
-(described in <a class="reference internal" href="Libraries.html#buffer-library"><span class="std std-ref">The buffer library</span></a>)</li>
-<li><code class="docutils literal notranslate"><span class="pre">Seq</span></code> is the sequence abstraction from the F* standard library, which
+<li><p><code class="docutils literal notranslate"><span class="pre">Buffer</span></code> is our model of stack- and heap- allocated C arrays
+(described in <a class="reference internal" href="Libraries.html#buffer-library"><span class="std std-ref">The buffer library</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Seq</span></code> is the sequence abstraction from the F* standard library, which
 <code class="docutils literal notranslate"><span class="pre">Buffer</span></code> uses to reflect the contents of a given buffer in a given heap
-at the proof level</li>
-<li><code class="docutils literal notranslate"><span class="pre">Modifies</span></code> provides a universal modifies clause over buffers, references
-and regions (described in <a class="reference internal" href="Libraries.html#modifies-library"><span class="std std-ref">The modifies clauses library</span></a>)</li>
-<li><code class="docutils literal notranslate"><span class="pre">UInt32</span></code> is a model of the C11 <code class="docutils literal notranslate"><span class="pre">uint32_t</span></code> type, reflected at the proof
-level using natural numbers (described in <a class="reference internal" href="Libraries.html#machine-integers"><span class="std std-ref">Machine integers</span></a>)</li>
-<li><code class="docutils literal notranslate"><span class="pre">HyperStack</span></code> is our model of the C memory layout (described in
-<a class="reference internal" href="Libraries.html#memory-model"><span class="std std-ref">The memory model</span></a>)</li>
-<li><code class="docutils literal notranslate"><span class="pre">C</span></code> and <code class="docutils literal notranslate"><span class="pre">C.Loops</span></code> expose some C concepts to F* (described in
-<a class="reference internal" href="MoreLibraries.html#c-library"><span class="std std-ref">Low* system libraries</span></a>)</li>
+at the proof level</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Modifies</span></code> provides a universal modifies clause over buffers, references
+and regions (described in <a class="reference internal" href="Libraries.html#modifies-library"><span class="std std-ref">The modifies clauses library</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UInt32</span></code> is a model of the C11 <code class="docutils literal notranslate"><span class="pre">uint32_t</span></code> type, reflected at the proof
+level using natural numbers (described in <a class="reference internal" href="Libraries.html#machine-integers"><span class="std std-ref">Machine integers</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HyperStack</span></code> is our model of the C memory layout (described in
+<a class="reference internal" href="Libraries.html#memory-model"><span class="std std-ref">The memory model</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">C</span></code> and <code class="docutils literal notranslate"><span class="pre">C.Loops</span></code> expose some C concepts to F* (described in
+<a class="reference internal" href="MoreLibraries.html#c-library"><span class="std std-ref">Low* system libraries</span></a>)</p></li>
 </ul>
 <p>The first definition is a lemma over sequences: if two sequences are equal over
 the slice <code class="docutils literal notranslate"><span class="pre">[0;</span> <span class="pre">i)</span></code> and their <code class="docutils literal notranslate"><span class="pre">i</span></code>-th element is equal, then they are equal
@@ -208,7 +199,7 @@ by the <code class="docutils literal notranslate"><span class="pre">UL</span></c
 called over these two arrays. From a verification perspective, since the stack
 frame is freed after calling <code class="docutils literal notranslate"><span class="pre">main</span></code>, we can successfully state that <code class="docutils literal notranslate"><span class="pre">main</span></code>
 modifies no buffer.</p>
-</div>
+</section>
 
 
            </div>

@@ -1,29 +1,20 @@
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="english" data-content_root="./">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Introduction &mdash; The KaRaMeL user manual  documentation</title><link rel="stylesheet" href="static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>Introduction &mdash; The KaRaMeL user manual  documentation</title>
+      <link rel="stylesheet" type="text/css" href="static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="static/css/theme.css?v=86f27845" />
+
   
-      <script>
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'./',
-              VERSION:'',
-              LANGUAGE:'None',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script src="static/jquery.js"></script>
-        <script src="static/underscore.js"></script>
-        <script src="static/doctools.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+        <script src="static/jquery.js?v=8dae8fb0"></script>
+        <script src="static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="static/documentation_options.js?v=df973ab0"></script>
+        <script src="static/doctools.js?v=888ff710"></script>
+        <script src="static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -50,7 +41,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#the-essence-of-low">The essence of Low*</a></li>
@@ -90,12 +81,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+  <section id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h1>
 <p>This manual documents Low*, a subset of F* that enjoys compilation to C
 through its companion compiler KaRaMeL. As such, KaRa<strong>M</strong>e<strong>L</strong> offers an
 alternative to OCa<strong>ML</strong> for extracting and running F* programs (hence the
-name – also a pun on K&amp;R C).</p>
+name -- also a pun on K&amp;R C).</p>
 <p>Low* is not only a language subset, but also a set of F* libraries that
 model a <em>curated</em> set of C features: the C memory model, stack- and
 heap-allocated arrays, machine integers, C string literals, and a few
@@ -109,23 +100,23 @@ KaRaMeL tool and the various ways it can be used to generate C programs or
 libraries; covers a few advanced examples.</p>
 <p>Low* has been successfully used to write numerous projects, including:</p>
 <ul class="simple">
-<li><a class="reference external" href="https://github.com/mitls/hacl-star">HACL*</a>, a library of verified
-cryptographic primitives used in Firefox, the Linux Kernel and other projects;</li>
-<li><a class="reference external" href="https://hacl-star.github.io/HaclValeEverCrypt.html">EverCrypt</a>, a
+<li><p><a class="reference external" href="https://github.com/mitls/hacl-star">HACL*</a>, a library of verified
+cryptographic primitives used in Firefox, the Linux Kernel and other projects;</p></li>
+<li><p><a class="reference external" href="https://hacl-star.github.io/HaclValeEverCrypt.html">EverCrypt</a>, a
 multiplexing, agile, abstract cryptographic provider that combines C and ASM
-implementations of state-of-the art cryptographic algorithms;</li>
-<li><a class="reference external" href="https://github.com/project-everest/everquic-crypto/">EverQuic</a>, an
-implementation of the QUIC packet encryption and decryption,</li>
-<li><a class="reference external" href="https://github.com/project-everest/everparse">EverParse</a>, a library of
+implementations of state-of-the art cryptographic algorithms;</p></li>
+<li><p><a class="reference external" href="https://github.com/project-everest/everquic-crypto/">EverQuic</a>, an
+implementation of the QUIC packet encryption and decryption,</p></li>
+<li><p><a class="reference external" href="https://github.com/project-everest/everparse">EverParse</a>, a library of
 low-level, zero-copy validators and serializers for parsing binary message
-formats.</li>
+formats.</p></li>
 </ul>
 <p>This tutorial assumes the reader is familiar with F*; when in doubt, head over
 to its <a class="reference external" href="https://fstar-lang.org/tutorial">tutorial</a>. For a research-oriented
-perspective on Low*, see the initial ICFP’17 paper and subsequent application
+perspective on Low*, see the initial ICFP'17 paper and subsequent application
 papers on the <a class="reference external" href="https://jonathan.protzenko.fr/publications.html">publications page</a>.</p>
-<div class="section" id="the-essence-of-low">
-<h2>The essence of Low*<a class="headerlink" href="#the-essence-of-low" title="Permalink to this headline">¶</a></h2>
+<section id="the-essence-of-low">
+<h2>The essence of Low*<a class="headerlink" href="#the-essence-of-low" title="Link to this heading"></a></h2>
 <p>Consider the following very simple program:</p>
 <div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">Intro</span>
 
@@ -151,22 +142,22 @@ papers on the <a class="reference external" href="https://jonathan.protzenko.fr/
 <p>Leaving an in-depth explanation of the code to subsequent sections, suffices to
 say, for now, that this code demonstrates:</p>
 <ul class="simple">
-<li>authoring a <code class="docutils literal notranslate"><span class="pre">main</span></code> function that operates within the special C-like memory
+<li><p>authoring a <code class="docutils literal notranslate"><span class="pre">main</span></code> function that operates within the special C-like memory
 model, called <code class="docutils literal notranslate"><span class="pre">HyperStack.St</span></code>, which accounts for stack-based and heap-based
-memory management;</li>
-<li>executing a piece of code within a fresh stack frame (<code class="docutils literal notranslate"><span class="pre">push_</span></code> and
-<code class="docutils literal notranslate"><span class="pre">pop_frame</span></code>), reflecting the structure of the call stack using F*’s built-in
-effect system</li>
-<li>dealing with C-like machine integers (<code class="docutils literal notranslate"><span class="pre">UInt32.t</span></code> and the <code class="docutils literal notranslate"><span class="pre">0ul</span></code> literal
+memory management;</p></li>
+<li><p>executing a piece of code within a fresh stack frame (<code class="docutils literal notranslate"><span class="pre">push_</span></code> and
+<code class="docutils literal notranslate"><span class="pre">pop_frame</span></code>), reflecting the structure of the call stack using F*'s built-in
+effect system</p></li>
+<li><p>dealing with C-like machine integers (<code class="docutils literal notranslate"><span class="pre">UInt32.t</span></code> and the <code class="docutils literal notranslate"><span class="pre">0ul</span></code> literal
 syntax for 32-bit unsigned integers), which are accurately modeled in F* to
-account for the underlying C behavior (e.g. no signed overflow)</li>
-<li>using the <code class="docutils literal notranslate"><span class="pre">Buffer</span></code> library which models C arrays, offering stack
+account for the underlying C behavior (e.g. no signed overflow)</p></li>
+<li><p>using the <code class="docutils literal notranslate"><span class="pre">Buffer</span></code> library which models C arrays, offering stack
 (<code class="docutils literal notranslate"><span class="pre">alloca</span></code>) and heap-based allocations; the library enforces temporal and
 spatial safety, relying on an accurate model of the C standard (e.g. no
-pointer addition unless the base pointer is live);</li>
-<li>generating comments into the resulting C source code (<code class="docutils literal notranslate"><span class="pre">C.comment</span></code>)</li>
-<li>using the <code class="docutils literal notranslate"><span class="pre">LowStar.Printf</span></code> library to meta-program a series of stateful
-calls using a printf-like combinator, <cite>evaluated within F*</cite>.</li>
+pointer addition unless the base pointer is live);</p></li>
+<li><p>generating comments into the resulting C source code (<code class="docutils literal notranslate"><span class="pre">C.comment</span></code>)</p></li>
+<li><p>using the <code class="docutils literal notranslate"><span class="pre">LowStar.Printf</span></code> library to meta-program a series of stateful
+calls using a printf-like combinator, <cite>evaluated within F*</cite>.</p></li>
 </ul>
 <p>Once compiled by the KaRaMeL compiler, we obtain the following C code:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
@@ -191,26 +182,26 @@ calls using a printf-like combinator, <cite>evaluated within F*</cite>.</li>
 buffer<span class="w"> </span>contents:<span class="w"> </span>ff<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="structure-of-this-manual">
-<h2>Structure of this manual<a class="headerlink" href="#structure-of-this-manual" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="structure-of-this-manual">
+<h2>Structure of this manual<a class="headerlink" href="#structure-of-this-manual" title="Link to this heading"></a></h2>
 <p>The goal of this manual is to provide both:</p>
 <ul class="simple">
-<li>a user’s guide to getting started with Low* and the toolchain, setting up a
+<li><p>a user's guide to getting started with Low* and the toolchain, setting up a
 project, its build, the interactive mode, and providing pointers for idiomatic
-examples of how to author code in Low*</li>
-<li>an advanced guide, on how to achieve separate builds, the integration of
+examples of how to author code in Low*</p></li>
+<li><p>an advanced guide, on how to achieve separate builds, the integration of
 hand-written and auto-generated code, generating static headers, dangers of
-doing so, how to achieve abstraction and modularity in Low*v2, etc.</li>
-<li>a reference manual for the krml tool, including code-generation options and
-tweaks</li>
-<li>a library reference, for all the modules in the <code class="docutils literal notranslate"><span class="pre">LowStar</span></code> namespace</li>
-<li>a repository of tips-and-tricks for larger projects, including how to author
+doing so, how to achieve abstraction and modularity in Low*v2, etc.</p></li>
+<li><p>a reference manual for the krml tool, including code-generation options and
+tweaks</p></li>
+<li><p>a library reference, for all the modules in the <code class="docutils literal notranslate"><span class="pre">LowStar</span></code> namespace</p></li>
+<li><p>a repository of tips-and-tricks for larger projects, including how to author
 robust proofs, selectively overriding ifuel settings using
-<code class="docutils literal notranslate"><span class="pre">allow_inversion</span></code>, dangerous patterns to be aware of, etc.</li>
+<code class="docutils literal notranslate"><span class="pre">allow_inversion</span></code>, dangerous patterns to be aware of, etc.</p></li>
 </ul>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

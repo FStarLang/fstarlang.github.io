@@ -1,29 +1,20 @@
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="english" data-content_root="./">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Low* buffer libraries &mdash; The KaRaMeL user manual  documentation</title><link rel="stylesheet" href="static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>Low* buffer libraries &mdash; The KaRaMeL user manual  documentation</title>
+      <link rel="stylesheet" type="text/css" href="static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="static/css/theme.css?v=86f27845" />
+
   
-      <script>
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'./',
-              VERSION:'',
-              LANGUAGE:'None',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script src="static/jquery.js"></script>
-        <script src="static/underscore.js"></script>
-        <script src="static/doctools.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+        <script src="static/jquery.js?v=8dae8fb0"></script>
+        <script src="static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="static/documentation_options.js?v=df973ab0"></script>
+        <script src="static/doctools.js?v=888ff710"></script>
+        <script src="static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -50,7 +41,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Setup.html">Tooling and project setup</a></li>
@@ -99,25 +90,25 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="low-buffer-libraries">
-<h1>Low* buffer libraries<a class="headerlink" href="#low-buffer-libraries" title="Permalink to this headline">¶</a></h1>
+  <section id="low-buffer-libraries">
+<h1>Low* buffer libraries<a class="headerlink" href="#low-buffer-libraries" title="Link to this heading"></a></h1>
 <p>In addition to mutable buffers, we provide libraries for immutable buffers,
 const pointers and uninitializer buffers.</p>
-<div class="section" id="immutable-buffers">
-<h2>Immutable buffers<a class="headerlink" href="#immutable-buffers" title="Permalink to this headline">¶</a></h2>
+<section id="immutable-buffers">
+<h2>Immutable buffers<a class="headerlink" href="#immutable-buffers" title="Link to this heading"></a></h2>
 <p>Immutable buffers are in <code class="docutils literal notranslate"><span class="pre">LowStar.ImmutableBuffer</span></code> and enjoy a <code class="docutils literal notranslate"><span class="pre">recall</span></code>
 axiom that allows bringing into scope the fact that the buffer still has the
 same contents as when it was created.</p>
 <p>This is particularly useful for top-level constants. There are numerous examples
 of this in HACL*. Note that owing to some design choices, immutable buffers do
 <em>NOT</em> generate a <code class="docutils literal notranslate"><span class="pre">const</span></code> pointer in C.</p>
-</div>
-<div class="section" id="uninitialized-buffers">
-<h2>Uninitialized buffers<a class="headerlink" href="#uninitialized-buffers" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="uninitialized-buffers">
+<h2>Uninitialized buffers<a class="headerlink" href="#uninitialized-buffers" title="Link to this heading"></a></h2>
 <p>In <code class="docutils literal notranslate"><span class="pre">LowStar.UninitializedBuffer</span></code>.</p>
-</div>
-<div class="section" id="const-pointers">
-<h2>Const pointers<a class="headerlink" href="#const-pointers" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="const-pointers">
+<h2>Const pointers<a class="headerlink" href="#const-pointers" title="Link to this heading"></a></h2>
 <p>In order to manipulate const pointers, you can use <code class="docutils literal notranslate"><span class="pre">LowStar.ConstPointer</span></code>. It
 is represented as an abstract type distinct from regular, immutable, or unitialized
 buffers (all instances of the base monotonic buffer type). Having a separate
@@ -128,8 +119,8 @@ casts.</p>
 in C, as the conversion from <code class="docutils literal notranslate"><span class="pre">t*</span></code> to <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">t*</span></code> is implicit.</p>
 <p>Projecting <code class="docutils literal notranslate"><span class="pre">const_buffer</span></code> to either <code class="docutils literal notranslate"><span class="pre">buffer</span></code> or <code class="docutils literal notranslate"><span class="pre">ibuffer</span></code> generates a
 cast.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

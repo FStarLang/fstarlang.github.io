@@ -1,29 +1,20 @@
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="english" data-content_root="./">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Low* string manipulation &mdash; The KaRaMeL user manual  documentation</title><link rel="stylesheet" href="static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>Low* string manipulation &mdash; The KaRaMeL user manual  documentation</title>
+      <link rel="stylesheet" type="text/css" href="static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="static/css/theme.css?v=86f27845" />
+
   
-      <script>
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'./',
-              VERSION:'',
-              LANGUAGE:'None',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script src="static/jquery.js"></script>
-        <script src="static/underscore.js"></script>
-        <script src="static/doctools.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+        <script src="static/jquery.js?v=8dae8fb0"></script>
+        <script src="static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="static/documentation_options.js?v=df973ab0"></script>
+        <script src="static/doctools.js?v=888ff710"></script>
+        <script src="static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -50,7 +41,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Setup.html">Tooling and project setup</a></li>
@@ -98,55 +89,55 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="low-string-manipulation">
-<h1>Low* string manipulation<a class="headerlink" href="#low-string-manipulation" title="Permalink to this headline">¶</a></h1>
+  <section id="low-string-manipulation">
+<h1>Low* string manipulation<a class="headerlink" href="#low-string-manipulation" title="Link to this heading"></a></h1>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">The <code class="docutils literal notranslate"><span class="pre">C.String</span></code> library is now fully deprecated.</p>
+<p class="admonition-title">Warning</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">C.String</span></code> library is now fully deprecated.</p>
 </div>
 <p>You may freely use string <em>literals</em> in your program, of type <code class="docutils literal notranslate"><span class="pre">Prims.string</span></code>.
 This is a valid Low* usage and will not trigger a warning. These strings are
 compiled as C literals and as such are zero-terminated.</p>
 <p>You may also use non-allocating functions that operate over strings, such as
 <code class="docutils literal notranslate"><span class="pre">FStar.strlen</span></code>, <code class="docutils literal notranslate"><span class="pre">string_of_bool</span></code>, polymorphic equality over strings <code class="docutils literal notranslate"><span class="pre">=</span></code>
-(compiles into <code class="docutils literal notranslate"><span class="pre">strcmp</span></code>), etc. – note that these are not part of the
-“minimal” krmllib and you’ll have to link in
+(compiles into <code class="docutils literal notranslate"><span class="pre">strcmp</span></code>), etc. -- note that these are not part of the
+&quot;minimal&quot; krmllib and you'll have to link in
 <code class="docutils literal notranslate"><span class="pre">krmllib/dist/generic/libkrmllib.a</span></code>.</p>
 <p>All other functions, e.g. <code class="docutils literal notranslate"><span class="pre">strcat</span></code>, <code class="docutils literal notranslate"><span class="pre">substring</span></code>, <code class="docutils literal notranslate"><span class="pre">string_of_int</span></code> are
 non-Low* and will trigger Warning 15, because they perform unchecked
 allocations.</p>
-<div class="section" id="printing-strings">
-<h2>Printing strings<a class="headerlink" href="#printing-strings" title="Permalink to this headline">¶</a></h2>
+<section id="printing-strings">
+<h2>Printing strings<a class="headerlink" href="#printing-strings" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">LowStar.Printf.printf</span></code> is now the official way to print strings. It is entirely
 meta-programmed and will meta-evaluate to a series of monomorphic calls, e.g.</p>
-<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LowStar</span><span class="o">.</span><span class="n">Printf</span><span class="o">.</span><span class="n">printf</span> <span class="s2">&quot;Contents of </span><span class="si">%x</span><span class="s2">uL -- length: </span><span class="si">%u</span><span class="s2">L&quot;</span> <span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="n">l</span>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="nn">LowStar</span><span class="p">.</span><span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">&quot;Contents of %xuL -- length: %uL&quot;</span> <span class="o">(</span><span class="n">l</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="n">l</span>
 </pre></div>
 </div>
 <p>will meta-evaluate to:</p>
-<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LowStar_Printf_print_string</span> <span class="s2">&quot;Contents of &quot;</span><span class="p">;</span>
-<span class="n">LowStar_Printf_print_buffer_u32</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
-<span class="n">LowStar_Printf_print_string</span> <span class="s2">&quot; -- length: &quot;</span><span class="p">;</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">LowStar_Printf_print_string</span><span class="w"> </span><span class="s">&quot;Contents of &quot;</span><span class="p">;</span>
+<span class="n">LowStar_Printf_print_buffer_u32</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">);</span>
+<span class="n">LowStar_Printf_print_string</span><span class="w"> </span><span class="s">&quot; -- length: &quot;</span><span class="p">;</span>
 <span class="n">LowStar_Printf_print_u32</span><span class="p">(</span><span class="n">l</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>There are no plans to make a call to <code class="docutils literal notranslate"><span class="pre">LowStar.Printf.printf</span></code> compile to a call
-to C’s <code class="docutils literal notranslate"><span class="pre">printf</span></code>.</p>
+to C's <code class="docutils literal notranslate"><span class="pre">printf</span></code>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">LowStar.Printf.sprintf</span></code> generates calls to <code class="docutils literal notranslate"><span class="pre">strcat</span></code> <em>unless</em> all of your
 arguments are constants, in which case the result will entirely meta-evaluate to
 a string constant. Use with care and watch out for Warning 15.</p>
-</div>
-<div class="section" id="string-as-buffers">
-<h2>String as buffers<a class="headerlink" href="#string-as-buffers" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="string-as-buffers">
+<h2>String as buffers<a class="headerlink" href="#string-as-buffers" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">LowStar.Literal</span></code> is experimental and needs an overhaul. The idea is to allow
 you to cast a string literal as an immutable buffer of <code class="docutils literal notranslate"><span class="pre">uint8</span></code>. The main issues are:</p>
 <ul class="simple">
-<li>no integration with <code class="docutils literal notranslate"><span class="pre">LowStar.ConstPointer</span></code>, which <code class="docutils literal notranslate"><span class="pre">LowStar.Literal</span></code> predates</li>
-<li>since F* imposes that string literals be valid utf8, this means that you can’t
-use this as a way to input arbitrary data.</li>
+<li><p>no integration with <code class="docutils literal notranslate"><span class="pre">LowStar.ConstPointer</span></code>, which <code class="docutils literal notranslate"><span class="pre">LowStar.Literal</span></code> predates</p></li>
+<li><p>since F* imposes that string literals be valid utf8, this means that you can't
+use this as a way to input arbitrary data.</p></li>
 </ul>
 <p>As such, the usefulness of <code class="docutils literal notranslate"><span class="pre">LowStar.Literal</span></code> is limited.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

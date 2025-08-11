@@ -1,29 +1,20 @@
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="english" data-content_root="../../">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Auxiliary implementation lemmas &mdash; The KaRaMeL user manual  documentation</title><link rel="stylesheet" href="../../static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../../static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>Auxiliary implementation lemmas &mdash; The KaRaMeL user manual  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../static/css/theme.css?v=86f27845" />
+
   
-      <script>
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../../',
-              VERSION:'',
-              LANGUAGE:'None',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script src="../../static/jquery.js"></script>
-        <script src="../../static/underscore.js"></script>
-        <script src="../../static/doctools.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+        <script src="../../static/jquery.js?v=8dae8fb0"></script>
+        <script src="../../static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../static/documentation_options.js?v=df973ab0"></script>
+        <script src="../../static/doctools.js?v=888ff710"></script>
+        <script src="../../static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -50,7 +41,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../Introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Setup.html">Tooling and project setup</a></li>
@@ -94,94 +85,94 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="auxiliary-implementation-lemmas">
-<h1>Auxiliary implementation lemmas<a class="headerlink" href="#auxiliary-implementation-lemmas" title="Permalink to this headline">¶</a></h1>
-<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">Impl</span><span class="o">.</span><span class="n">Bignum</span><span class="o">.</span><span class="n">Lemmas</span>
+  <section id="auxiliary-implementation-lemmas">
+<h1>Auxiliary implementation lemmas<a class="headerlink" href="#auxiliary-implementation-lemmas" title="Link to this heading"></a></h1>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nn">Impl</span><span class="p">.</span><span class="nn">Bignum</span><span class="p">.</span><span class="nc">Lemmas</span>
 </pre></div>
 </div>
-<p>Let’s move lemmas to a separate module. It’ll be cleaner!</p>
-<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">B</span> <span class="o">=</span> <span class="n">LowStar</span><span class="o">.</span><span class="n">Buffer</span>
-<span class="n">module</span> <span class="n">ST</span> <span class="o">=</span> <span class="n">FStar</span><span class="o">.</span><span class="n">HyperStack</span><span class="o">.</span><span class="n">ST</span>
-<span class="n">module</span> <span class="n">HS</span> <span class="o">=</span> <span class="n">FStar</span><span class="o">.</span><span class="n">HyperStack</span>
-<span class="n">module</span> <span class="n">S</span> <span class="o">=</span> <span class="n">FStar</span><span class="o">.</span><span class="n">Seq</span>
+<p>Let's move lemmas to a separate module. It'll be cleaner!</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">B</span> <span class="o">=</span> <span class="nn">LowStar</span><span class="p">.</span><span class="nc">Buffer</span>
+<span class="k">module</span> <span class="nc">ST</span> <span class="o">=</span> <span class="nn">FStar</span><span class="p">.</span><span class="nn">HyperStack</span><span class="p">.</span><span class="nc">ST</span>
+<span class="k">module</span> <span class="nc">HS</span> <span class="o">=</span> <span class="nn">FStar</span><span class="p">.</span><span class="nc">HyperStack</span>
+<span class="k">module</span> <span class="nc">S</span> <span class="o">=</span> <span class="nn">FStar</span><span class="p">.</span><span class="nc">Seq</span>
 
-<span class="n">module</span> <span class="n">U32</span> <span class="o">=</span> <span class="n">FStar</span><span class="o">.</span><span class="n">UInt32</span>
-<span class="n">module</span> <span class="n">U64</span> <span class="o">=</span> <span class="n">FStar</span><span class="o">.</span><span class="n">UInt64</span>
+<span class="k">module</span> <span class="nc">U32</span> <span class="o">=</span> <span class="nn">FStar</span><span class="p">.</span><span class="nc">UInt32</span>
+<span class="k">module</span> <span class="nc">U64</span> <span class="o">=</span> <span class="nn">FStar</span><span class="p">.</span><span class="nc">UInt64</span>
 </pre></div>
 </div>
 <p>I oftentimes use <code class="docutils literal notranslate"><span class="pre">Spec</span></code> to refer to the spec of the current module.</p>
-<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">Spec</span> <span class="o">=</span> <span class="n">Spec</span><span class="o">.</span><span class="n">Bignum</span>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">Spec</span> <span class="o">=</span> <span class="nn">Spec</span><span class="p">.</span><span class="nc">Bignum</span>
 </pre></div>
 </div>
 <p>This module only contains operators, and is meant to be opened.</p>
-<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">open</span> <span class="n">LowStar</span><span class="o">.</span><span class="n">BufferOps</span>
-<span class="nb">open</span> <span class="n">FStar</span><span class="o">.</span><span class="n">HyperStack</span><span class="o">.</span><span class="n">ST</span>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nn">LowStar</span><span class="p">.</span><span class="nc">BufferOps</span>
+<span class="k">open</span> <span class="nn">FStar</span><span class="p">.</span><span class="nn">HyperStack</span><span class="p">.</span><span class="nc">ST</span>
 
-<span class="c1">#set-options &quot;--max_fuel 0 --max_ifuel 0&quot;</span>
+<span class="o">#</span><span class="n">set</span><span class="o">-</span><span class="n">options</span> <span class="s2">&quot;--max_fuel 0 --max_ifuel 0&quot;</span>
 </pre></div>
 </div>
 <p>This is my little library of sequence lemmas that I always carry with me.</p>
-<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span>let lemma_slice (#a: Type) (s: S.seq a) (i: nat): Lemma
-  (requires (i &lt;= S.length s))
-  (ensures (S.equal (S.append (S.slice s 0 i) (S.slice s i (S.length s))) s))
-=
-  ()
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span> <span class="n">lemma_slice</span> <span class="o">(#</span><span class="n">a</span><span class="o">:</span> <span class="nc">Type</span><span class="o">)</span> <span class="o">(</span><span class="n">s</span><span class="o">:</span> <span class="nn">S</span><span class="p">.</span><span class="n">seq</span> <span class="n">a</span><span class="o">)</span> <span class="o">(</span><span class="n">i</span><span class="o">:</span> <span class="n">nat</span><span class="o">):</span> <span class="nc">Lemma</span>
+  <span class="o">(</span><span class="k">requires</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="nn">S</span><span class="p">.</span><span class="n">length</span> <span class="n">s</span><span class="o">))</span>
+  <span class="o">(</span><span class="k">ensures</span> <span class="o">(</span><span class="nn">S</span><span class="p">.</span><span class="n">equal</span> <span class="o">(</span><span class="nn">S</span><span class="p">.</span><span class="n">append</span> <span class="o">(</span><span class="nn">S</span><span class="p">.</span><span class="n">slice</span> <span class="n">s</span> <span class="mi">0</span> <span class="n">i</span><span class="o">)</span> <span class="o">(</span><span class="nn">S</span><span class="p">.</span><span class="n">slice</span> <span class="n">s</span> <span class="n">i</span> <span class="o">(</span><span class="nn">S</span><span class="p">.</span><span class="n">length</span> <span class="n">s</span><span class="o">)))</span> <span class="n">s</span><span class="o">))</span>
+<span class="o">=</span>
+  <span class="bp">()</span>
 
-let lemma_slice_ijk (#a: Type) (s: S.seq a) (i j k: nat): Lemma
-  (requires (i &lt;= j /\ j &lt;= k /\ k &lt;= S.length s))
-  (ensures (S.equal (S.append (S.slice s i j) (S.slice s j k)) (S.slice s i k)))
-=
-  ()
+<span class="kd">let</span> <span class="n">lemma_slice_ijk</span> <span class="o">(#</span><span class="n">a</span><span class="o">:</span> <span class="nc">Type</span><span class="o">)</span> <span class="o">(</span><span class="n">s</span><span class="o">:</span> <span class="nn">S</span><span class="p">.</span><span class="n">seq</span> <span class="n">a</span><span class="o">)</span> <span class="o">(</span><span class="n">i</span> <span class="n">j</span> <span class="n">k</span><span class="o">:</span> <span class="n">nat</span><span class="o">):</span> <span class="nc">Lemma</span>
+  <span class="o">(</span><span class="k">requires</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="n">j</span> <span class="o">/\</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">k</span> <span class="o">/\</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="nn">S</span><span class="p">.</span><span class="n">length</span> <span class="n">s</span><span class="o">))</span>
+  <span class="o">(</span><span class="k">ensures</span> <span class="o">(</span><span class="nn">S</span><span class="p">.</span><span class="n">equal</span> <span class="o">(</span><span class="nn">S</span><span class="p">.</span><span class="n">append</span> <span class="o">(</span><span class="nn">S</span><span class="p">.</span><span class="n">slice</span> <span class="n">s</span> <span class="n">i</span> <span class="n">j</span><span class="o">)</span> <span class="o">(</span><span class="nn">S</span><span class="p">.</span><span class="n">slice</span> <span class="n">s</span> <span class="n">j</span> <span class="n">k</span><span class="o">))</span> <span class="o">(</span><span class="nn">S</span><span class="p">.</span><span class="n">slice</span> <span class="n">s</span> <span class="n">i</span> <span class="n">k</span><span class="o">)))</span>
+<span class="o">=</span>
+  <span class="bp">()</span>
 
-#push-options &quot;--fuel 1&quot;
-let v_zero_tail (x: Spec.t): Lemma
-  (requires Spec.v x = 0 /\ S.length x &gt; 0)
-  // Two notes:
-  // i) discrepancy between B.sub that takes a length as its last argument and
-  //    S.slice that takes an index
-  // ii) doing this in terms of slice since the spec of sub is in terms of
-  //     slice; using tail would require lemma_tl all over again
-  (ensures Spec.v (S.slice x 1 (S.length x)) = 0)
-=
-  ()
+<span class="o">#</span><span class="n">push</span><span class="o">-</span><span class="n">options</span> <span class="s2">&quot;--fuel 1&quot;</span>
+<span class="kd">let</span> <span class="n">v_zero_tail</span> <span class="o">(</span><span class="n">x</span><span class="o">:</span> <span class="nn">Spec</span><span class="p">.</span><span class="n">t</span><span class="o">):</span> <span class="nc">Lemma</span>
+  <span class="o">(</span><span class="k">requires</span> <span class="nn">Spec</span><span class="p">.</span><span class="n">v</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">/\</span> <span class="nn">S</span><span class="p">.</span><span class="n">length</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span>
+  <span class="c">// Two notes:</span>
+  <span class="c">// i) discrepancy between B.sub that takes a length as its last argument and</span>
+  <span class="c">//    S.slice that takes an index</span>
+  <span class="c">// ii) doing this in terms of slice since the spec of sub is in terms of</span>
+  <span class="c">//     slice; using tail would require lemma_tl all over again</span>
+  <span class="o">(</span><span class="k">ensures</span> <span class="nn">Spec</span><span class="p">.</span><span class="n">v</span> <span class="o">(</span><span class="nn">S</span><span class="p">.</span><span class="n">slice</span> <span class="n">x</span> <span class="mi">1</span> <span class="o">(</span><span class="nn">S</span><span class="p">.</span><span class="n">length</span> <span class="n">x</span><span class="o">))</span> <span class="o">=</span> <span class="mi">0</span><span class="o">)</span>
+<span class="o">=</span>
+  <span class="bp">()</span>
 
-let rec v_all_zeroes (x: Spec.t): Lemma
-  (requires x `S.equal` S.create (S.length x) 0ul)
-  (ensures Spec.v x == 0)
-  (decreases (S.length x))
-=
-  if S.length x = 0 then
-    ()
-  else
-    v_all_zeroes (S.tail x)
-#pop-options
+<span class="kd">let</span> <span class="kd">rec</span> <span class="n">v_all_zeroes</span> <span class="o">(</span><span class="n">x</span><span class="o">:</span> <span class="nn">Spec</span><span class="p">.</span><span class="n">t</span><span class="o">):</span> <span class="nc">Lemma</span>
+  <span class="o">(</span><span class="k">requires</span> <span class="n">x</span> <span class="ow">`S.equal`</span> <span class="nn">S</span><span class="p">.</span><span class="n">create</span> <span class="o">(</span><span class="nn">S</span><span class="p">.</span><span class="n">length</span> <span class="n">x</span><span class="o">)</span> <span class="mi">0</span><span class="n">ul</span><span class="o">)</span>
+  <span class="o">(</span><span class="k">ensures</span> <span class="nn">Spec</span><span class="p">.</span><span class="n">v</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span>
+  <span class="o">(</span><span class="n">decreases</span> <span class="o">(</span><span class="nn">S</span><span class="p">.</span><span class="n">length</span> <span class="n">x</span><span class="o">))</span>
+<span class="o">=</span>
+  <span class="k">if</span> <span class="nn">S</span><span class="p">.</span><span class="n">length</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span>
+    <span class="bp">()</span>
+  <span class="k">else</span>
+    <span class="n">v_all_zeroes</span> <span class="o">(</span><span class="nn">S</span><span class="p">.</span><span class="n">tail</span> <span class="n">x</span><span class="o">)</span>
+<span class="o">#</span><span class="n">pop</span><span class="o">-</span><span class="n">options</span>
 
-let lemma_empty #a (x: S.seq a): Lemma
-  (requires S.length x = 0)
-  (ensures x `S.equal` S.empty)
-=
-  ()
+<span class="kd">let</span> <span class="n">lemma_empty</span> <span class="o">#</span><span class="n">a</span> <span class="o">(</span><span class="n">x</span><span class="o">:</span> <span class="nn">S</span><span class="p">.</span><span class="n">seq</span> <span class="n">a</span><span class="o">):</span> <span class="nc">Lemma</span>
+  <span class="o">(</span><span class="k">requires</span> <span class="nn">S</span><span class="p">.</span><span class="n">length</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="o">)</span>
+  <span class="o">(</span><span class="k">ensures</span> <span class="n">x</span> <span class="ow">`S.equal`</span> <span class="nn">S</span><span class="p">.</span><span class="n">empty</span><span class="o">)</span>
+<span class="o">=</span>
+  <span class="bp">()</span>
 
-let max32 (x y: U32.t): U32.t =
-  if x `U32.gt` y then x else y
+<span class="kd">let</span> <span class="n">max32</span> <span class="o">(</span><span class="n">x</span> <span class="n">y</span><span class="o">:</span> <span class="nn">U32</span><span class="p">.</span><span class="n">t</span><span class="o">):</span> <span class="nn">U32</span><span class="p">.</span><span class="n">t</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="n">x</span> <span class="ow">`U32.gt`</span> <span class="n">y</span> <span class="k">then</span> <span class="n">x</span> <span class="k">else</span> <span class="n">y</span>
 
-let max_fact (z x y: U32.t): Lemma
-  (requires U32.(
-    x &gt;^ 0ul /\ y &gt;^ 0ul /\ z &gt;^ 0ul /\
-    U32.v z == U32.v (max32 x y) + 1))
-  (ensures
-    U32.(v (z -^ 1ul) == U32.v (max32 (x -^ 1ul) (y -^ 1ul)) + 1))
-=
-  ()
+<span class="kd">let</span> <span class="n">max_fact</span> <span class="o">(</span><span class="n">z</span> <span class="n">x</span> <span class="n">y</span><span class="o">:</span> <span class="nn">U32</span><span class="p">.</span><span class="n">t</span><span class="o">):</span> <span class="nc">Lemma</span>
+  <span class="o">(</span><span class="k">requires</span> <span class="nn">U32</span><span class="p">.</span><span class="o">(</span>
+    <span class="n">x</span> <span class="o">&gt;^</span> <span class="mi">0</span><span class="n">ul</span> <span class="o">/\</span> <span class="n">y</span> <span class="o">&gt;^</span> <span class="mi">0</span><span class="n">ul</span> <span class="o">/\</span> <span class="n">z</span> <span class="o">&gt;^</span> <span class="mi">0</span><span class="n">ul</span> <span class="o">/\</span>
+    <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">z</span> <span class="o">==</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="o">(</span><span class="n">max32</span> <span class="n">x</span> <span class="n">y</span><span class="o">)</span> <span class="o">+</span> <span class="mi">1</span><span class="o">))</span>
+  <span class="o">(</span><span class="k">ensures</span>
+    <span class="nn">U32</span><span class="p">.</span><span class="o">(</span><span class="n">v</span> <span class="o">(</span><span class="n">z</span> <span class="o">-^</span> <span class="mi">1</span><span class="n">ul</span><span class="o">)</span> <span class="o">==</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="o">(</span><span class="n">max32</span> <span class="o">(</span><span class="n">x</span> <span class="o">-^</span> <span class="mi">1</span><span class="n">ul</span><span class="o">)</span> <span class="o">(</span><span class="n">y</span> <span class="o">-^</span> <span class="mi">1</span><span class="n">ul</span><span class="o">))</span> <span class="o">+</span> <span class="mi">1</span><span class="o">))</span>
+<span class="o">=</span>
+  <span class="bp">()</span>
 
-let slice_create #a (i: nat) (s: S.seq a): Lemma
-  (requires S.length s &gt; 0 /\ i + 1 &lt; S.length s)
-  (ensures S.slice s i (i + 1) `S.equal` S.create 1 (S.index s i))
-=
-  ()
+<span class="kd">let</span> <span class="n">slice_create</span> <span class="o">#</span><span class="n">a</span> <span class="o">(</span><span class="n">i</span><span class="o">:</span> <span class="n">nat</span><span class="o">)</span> <span class="o">(</span><span class="n">s</span><span class="o">:</span> <span class="nn">S</span><span class="p">.</span><span class="n">seq</span> <span class="n">a</span><span class="o">):</span> <span class="nc">Lemma</span>
+  <span class="o">(</span><span class="k">requires</span> <span class="nn">S</span><span class="p">.</span><span class="n">length</span> <span class="n">s</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">/\</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nn">S</span><span class="p">.</span><span class="n">length</span> <span class="n">s</span><span class="o">)</span>
+  <span class="o">(</span><span class="k">ensures</span> <span class="nn">S</span><span class="p">.</span><span class="n">slice</span> <span class="n">s</span> <span class="n">i</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="ow">`S.equal`</span> <span class="nn">S</span><span class="p">.</span><span class="n">create</span> <span class="mi">1</span> <span class="o">(</span><span class="nn">S</span><span class="p">.</span><span class="n">index</span> <span class="n">s</span> <span class="n">i</span><span class="o">))</span>
+<span class="o">=</span>
+  <span class="bp">()</span>
 </pre></div>
 </div>
-</div>
+</section>
 
 
            </div>

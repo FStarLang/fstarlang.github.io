@@ -1,29 +1,20 @@
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="english" data-content_root="./">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Advanced KaRaMeL topics &mdash; The KaRaMeL user manual  documentation</title><link rel="stylesheet" href="static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>Advanced KaRaMeL topics &mdash; The KaRaMeL user manual  documentation</title>
+      <link rel="stylesheet" type="text/css" href="static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="static/css/theme.css?v=86f27845" />
+
   
-      <script>
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'./',
-              VERSION:'',
-              LANGUAGE:'None',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script src="static/jquery.js"></script>
-        <script src="static/underscore.js"></script>
-        <script src="static/doctools.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+        <script src="static/jquery.js?v=8dae8fb0"></script>
+        <script src="static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="static/documentation_options.js?v=df973ab0"></script>
+        <script src="static/doctools.js?v=888ff710"></script>
+        <script src="static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -49,7 +40,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Setup.html">Tooling and project setup</a></li>
@@ -100,10 +91,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="advanced-karamel-topics">
-<h1>Advanced KaRaMeL topics<a class="headerlink" href="#advanced-karamel-topics" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="bundling">
-<h2>Bundling<a class="headerlink" href="#bundling" title="Permalink to this headline">¶</a></h2>
+  <section id="advanced-karamel-topics">
+<h1>Advanced KaRaMeL topics<a class="headerlink" href="#advanced-karamel-topics" title="Link to this heading"></a></h1>
+<section id="bundling">
+<h2>Bundling<a class="headerlink" href="#bundling" title="Link to this heading"></a></h2>
 <p>Bundles <code class="docutils literal notranslate"><span class="pre">B</span></code> are of the form <code class="docutils literal notranslate"><span class="pre">N₁+..+Nₙ=M₁,...,Mₙ</span></code>, where <code class="docutils literal notranslate"><span class="pre">Nᵢ</span></code> is a module
 name and <code class="docutils literal notranslate"><span class="pre">Mᵢ</span></code> is a pattern. The <code class="docutils literal notranslate"><span class="pre">N₁+..+Nₙ=</span></code> part is optional.</p>
 <p>Patterns are namespaces (i.e. a dot-separated list of module names) where the
@@ -111,32 +102,32 @@ last module name may be a wildcard <code class="docutils literal notranslate"><s
 <code class="docutils literal notranslate"><span class="pre">Hacl.Impl.Ed25519.*</span></code>, <code class="docutils literal notranslate"><span class="pre">*</span></code>. Examples of invalid patterns are the empty
 pattern; <code class="docutils literal notranslate"><span class="pre">*.Impl</span></code> (wildcard not in trailing position); etc.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Note that <code class="docutils literal notranslate"><span class="pre">Hacl.Impl.Chacha20.*</span></code> matches <code class="docutils literal notranslate"><span class="pre">Hacl.Impl.Chacha20.Constants</span></code>
-but not <code class="docutils literal notranslate"><span class="pre">Hacl.Impl.Chacha20</span></code> – this is unlike F*’s syntax for, say,
+<p class="admonition-title">Note</p>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">Hacl.Impl.Chacha20.*</span></code> matches <code class="docutils literal notranslate"><span class="pre">Hacl.Impl.Chacha20.Constants</span></code>
+but not <code class="docutils literal notranslate"><span class="pre">Hacl.Impl.Chacha20</span></code> -- this is unlike F*'s syntax for, say,
 <code class="docutils literal notranslate"><span class="pre">--extract</span></code> or <code class="docutils literal notranslate"><span class="pre">--using_facts_from</span></code>.</p>
 </div>
-<div class="section" id="bundles-for-grouping-files-together">
-<h3>Bundles for grouping files together<a class="headerlink" href="#bundles-for-grouping-files-together" title="Permalink to this headline">¶</a></h3>
+<section id="bundles-for-grouping-files-together">
+<h3>Bundles for grouping files together<a class="headerlink" href="#bundles-for-grouping-files-together" title="Link to this heading"></a></h3>
 <p>The first purpose of bundles is to group F* modules into a single C file. All of
 the <code class="docutils literal notranslate"><span class="pre">Nᵢ</span></code> and <code class="docutils literal notranslate"><span class="pre">Mᵢ</span></code> are concatenated into a C single file. The name of the single
 file is <code class="docutils literal notranslate"><span class="pre">N₁_..._Nₙ</span></code>, but can be controlled by appending an optional
 <code class="docutils literal notranslate"><span class="pre">[rename=FooBar]</span></code> argument to the bundle <code class="docutils literal notranslate"><span class="pre">B</span></code>.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Bundles do not allow you to duplicate code and have it appear in multiple
+<p class="admonition-title">Note</p>
+<p>Bundles do not allow you to duplicate code and have it appear in multiple
 places. This would cause errors with conflicting symbols at link-time, and
 would have a disastrous impact on your code segment size. Bundles do not
 change the fact that a definition only appears in a single place for each
 KaRaMeL invocation.</p>
 </div>
-</div>
-<div class="section" id="bundles-for-hiding-implementation-details">
-<h3>Bundles for hiding implementation details<a class="headerlink" href="#bundles-for-hiding-implementation-details" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="bundles-for-hiding-implementation-details">
+<h3>Bundles for hiding implementation details<a class="headerlink" href="#bundles-for-hiding-implementation-details" title="Link to this heading"></a></h3>
 <p>The second purpose of bundles is to hide beneath a C header some internal
-declarations that otherwise would’ve been public following the default F*
+declarations that otherwise would've been public following the default F*
 visibility rules. Consider, for instance, the following bundle argument taken
-from <a class="reference external" href="https://github.com/project-everest/hacl-star/blob/25e19b1c906d4de18d9bfe767a1cd9a5fbf6698c/Makefile.common#L96">HACL*’s Makefile</a>:</p>
+from <a class="reference external" href="https://github.com/project-everest/hacl-star/blob/25e19b1c906d4de18d9bfe767a1cd9a5fbf6698c/Makefile.common#L96">HACL*'s Makefile</a>:</p>
 <div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="nv">CHACHA20_BUNDLE</span><span class="o">=</span>-bundle<span class="w"> </span>Hacl.Chacha20<span class="o">=</span>Hacl.Impl.Chacha20,Hacl.Impl.Chacha20.*
 </pre></div>
 </div>
@@ -156,29 +147,29 @@ modularity when going to C.</p>
 therefore changes the visibility of declarations (types, functions, externals)
 as follows:</p>
 <ul class="simple">
-<li>visibility is left as-is for each one of the <code class="docutils literal notranslate"><span class="pre">Nᵢ</span></code></li>
-<li>visibility becomes as-needed for each one of the <code class="docutils literal notranslate"><span class="pre">Mᵢ</span></code>, i.e. the declarations in
-each <code class="docutils literal notranslate"><span class="pre">Mᵢ</span></code> become private (i.e. do not appear in the .h) unless otherwise needed</li>
+<li><p>visibility is left as-is for each one of the <code class="docutils literal notranslate"><span class="pre">Nᵢ</span></code></p></li>
+<li><p>visibility becomes as-needed for each one of the <code class="docutils literal notranslate"><span class="pre">Mᵢ</span></code>, i.e. the declarations in
+each <code class="docutils literal notranslate"><span class="pre">Mᵢ</span></code> become private (i.e. do not appear in the .h) unless otherwise needed</p></li>
 </ul>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Since KaRaMeL automatically eliminates unreachable definitions by default,
+<p class="admonition-title">Note</p>
+<p>Since KaRaMeL automatically eliminates unreachable definitions by default,
 bundling oftentimes prunes the call-graph quite heavily and is used to remove
 definitions that would otherwise be unreachable.</p>
 </div>
 <p>Some reasons why some declaration <code class="docutils literal notranslate"><span class="pre">d</span></code> in an <code class="docutils literal notranslate"><span class="pre">Mᵢ</span></code> might not be kept as private:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">d</span></code> is a function that is called from a separate C file, thus requiring an
-externally-visible declaration</li>
-<li><code class="docutils literal notranslate"><span class="pre">d</span></code> is a type that appears in the signature of a public function.</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">d</span></code> is a function that is called from a separate C file, thus requiring an
+externally-visible declaration</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">d</span></code> is a type that appears in the signature of a public function.</p></li>
 </ul>
 <p>Finally, a finer point of semantics which turns out to be quite useful in
 practice: in case an F* module is matched by two patterns, it will appear in the
 bundle that matched it first, i.e. bundles follow a left-to-right order.</p>
-</div>
-<div class="section" id="examples-of-bundles">
-<h3>Examples of bundles<a class="headerlink" href="#examples-of-bundles" title="Permalink to this headline">¶</a></h3>
-<p>Taken from HACL*…</p>
+</section>
+<section id="examples-of-bundles">
+<h3>Examples of bundles<a class="headerlink" href="#examples-of-bundles" title="Link to this heading"></a></h3>
+<p>Taken from HACL*...</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>-bundle<span class="w"> </span>Foo.Bar1<span class="o">=</span><span class="w"> </span><span class="c1"># this is a no-op, Bar1 is kept as-is in its own file</span>
 -bundle<span class="w"> </span>Foo.Bar2<span class="o">=</span><span class="w"> </span><span class="c1"># idem</span>
 -bundle<span class="w"> </span>Foo.*<span class="o">[</span><span class="nv">rename</span><span class="o">=</span>Foo_Misc<span class="o">]</span>
@@ -186,23 +177,23 @@ bundle that matched it first, i.e. bundles follow a left-to-right order.</p>
 <span class="w">  </span><span class="c1"># Foo_Misc, relying on the left-to-right semantics</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="debugging-bundles">
-<h3>Debugging bundles<a class="headerlink" href="#debugging-bundles" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="debugging-bundles">
+<h3>Debugging bundles<a class="headerlink" href="#debugging-bundles" title="Link to this heading"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">-d</span> <span class="pre">bundle</span></code> will spew out some debugging info to figure out how F* matched
 modules</p>
 <p>Oftentimes, one will use <code class="docutils literal notranslate"><span class="pre">-bundle</span></code> to get rid of some definitions (e.g.
 spec). If a declaration is not eliminated as expected, use <code class="docutils literal notranslate"><span class="pre">-d</span> <span class="pre">reachability</span></code>
 which will explain why a declaration is still reachable and, therefore, not
 marked as private.</p>
-</div>
-</div>
-<div class="section" id="separate-compilation-via-karamel">
-<h2>Separate compilation via KaRaMeL<a class="headerlink" href="#separate-compilation-via-karamel" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="separate-compilation-via-karamel">
+<h2>Separate compilation via KaRaMeL<a class="headerlink" href="#separate-compilation-via-karamel" title="Link to this heading"></a></h2>
 <p>This sections covers authoring two different projects that are built, extracted to
 C and compiled separately.</p>
-<div class="section" id="via-external-linking">
-<h3>Via external linking<a class="headerlink" href="#via-external-linking" title="Permalink to this headline">¶</a></h3>
+<section id="via-external-linking">
+<h3>Via external linking<a class="headerlink" href="#via-external-linking" title="Link to this heading"></a></h3>
 <p>The preferred way to achieve separate verification and compilation is by
 extracting and compiling projects separately, and linking them together at the
 final stage. In essence, each project produces a library (by default, static,
@@ -210,14 +201,14 @@ i.e. a <code class="docutils literal notranslate"><span class="pre">.a</span></c
 <p>In particular, this means that if project B (e.g. miTLS) depends on project A
 (e.g. HACL*), then:</p>
 <ul class="simple">
-<li>project B should assert that project A has already been verified (via
+<li><p>project B should assert that project A has already been verified (via
 <code class="docutils literal notranslate"><span class="pre">--already_cached</span></code>) and compiled to <code class="docutils literal notranslate"><span class="pre">liba.a</span></code> (via suitable <code class="docutils literal notranslate"><span class="pre">make</span></code>
-checks)</li>
-<li>project B must ensure that no linker symbols from project A are generated as
-part of its build (using KaRaMeL’s <code class="docutils literal notranslate"><span class="pre">-library</span></code> option)</li>
-<li>project B will regenerate headers for declarations from within project A that
+checks)</p></li>
+<li><p>project B must ensure that no linker symbols from project A are generated as
+part of its build (using KaRaMeL's <code class="docutils literal notranslate"><span class="pre">-library</span></code> option)</p></li>
+<li><p>project B will regenerate headers for declarations from within project A that
 will be used by project A: this is the declaration from B, as seen from
-project A; see as an example <code class="docutils literal notranslate"><span class="pre">mitls-fstar/src/tls/dist/compact/EverCrypt.h</span></code></li>
+project A; see as an example <code class="docutils literal notranslate"><span class="pre">mitls-fstar/src/tls/dist/compact/EverCrypt.h</span></code></p></li>
 </ul>
 <p>The last point means that project B will <em>never</em> include a header that was
 generated via the build of project A.</p>
@@ -229,9 +220,9 @@ been monomorphized and may generate a second monomorphization of it in project
 B, resulting in C name conflicts and compilation errors if you try to mix
 headers from the KaRaMeL run of A with the KaRaMeL run of B. <em>Never mix headers
 obtained from different runs of KaRaMeL!</em></p>
-</div>
-<div class="section" id="via-static-headers">
-<h3>Via static headers<a class="headerlink" href="#via-static-headers" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="via-static-headers">
+<h3>Via static headers<a class="headerlink" href="#via-static-headers" title="Link to this heading"></a></h3>
 <p>Sometimes, for performance reasons, or to avoid compiling and linking <code class="docutils literal notranslate"><span class="pre">liba.a</span></code>
 into project B, users will want to distribute project A (or part of it)
 exclusively as a set of static headers, i.e. headers that contain definitions
@@ -241,10 +232,10 @@ KaRaMeL (same syntax as <code class="docutils literal notranslate"><span class="
 the argument will then appear in their respective header files.</p>
 <p>Project B will then need to use (in addition to <code class="docutils literal notranslate"><span class="pre">-library</span></code>):</p>
 <ul class="simple">
-<li>the same <code class="docutils literal notranslate"><span class="pre">-static-header</span></code> option as A, to ensure that there is agreement in
-the prototypes generated in B’s vision of A and A’s actual C file</li>
-<li><code class="docutils literal notranslate"><span class="pre">-add-include</span></code>, to include the header from A that contains the static inline
-definitions</li>
+<li><p>the same <code class="docutils literal notranslate"><span class="pre">-static-header</span></code> option as A, to ensure that there is agreement in
+the prototypes generated in B's vision of A and A's actual C file</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-add-include</span></code>, to include the header from A that contains the static inline
+definitions</p></li>
 </ul>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// From A.h</span>
 <span class="kr">inline</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">A_foo</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="o">*</span><span class="n">src</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -261,28 +252,28 @@ definitions</li>
 be used for functions whose type signatures do not rely on any monomorphized
 type (see digression above).</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">krmllib does a mix of these two approaches; uint modules are extracted as
+<p class="admonition-title">Note</p>
+<p>krmllib does a mix of these two approaches; uint modules are extracted as
 static headers (and the suitable -static-header and -library options for
-clients are hardcoded in KaRaMeL) – this allows projects such as HACL* to not
+clients are hardcoded in KaRaMeL) -- this allows projects such as HACL* to not
 require any libkrmllib.a; other parts of krmllib do not use this facility,
 meaning that projects like miTLS still link against libkrmllib.a to find
 external symbols (e.g. from <code class="docutils literal notranslate"><span class="pre">FStar.Date</span></code>)</p>
 </div>
-</div>
-</div>
-<div class="section" id="assumptions-on-the-c-target">
-<h2>Assumptions on the C target<a class="headerlink" href="#assumptions-on-the-c-target" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="assumptions-on-the-c-target">
+<h2>Assumptions on the C target<a class="headerlink" href="#assumptions-on-the-c-target" title="Link to this heading"></a></h2>
 <p>KaRaMeL makes several assumptions regarding the C target environment. Most of
 these are unlikely to be violated in any modern environment.</p>
 <ul class="simple">
-<li>The size of <cite>int</cite> is at most 4. This ensures that our compilation strategy for
+<li><p>The size of <cite>int</cite> is at most 4. This ensures that our compilation strategy for
 uint8 and uint16 (namely, upcast subexpressions into uint32_t to defeat the
 promotion to unsigned int, which would lead to UB on overflow) is sound. This
-strategy may be suboptimal on machines for which <cite>sizeof int &lt; 4</cite>.</li>
+strategy may be suboptimal on machines for which <cite>sizeof int &lt; 4</cite>.</p></li>
 </ul>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

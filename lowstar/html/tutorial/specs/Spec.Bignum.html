@@ -1,29 +1,20 @@
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="english" data-content_root="../../">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Main specification &mdash; The KaRaMeL user manual  documentation</title><link rel="stylesheet" href="../../static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../../static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>Main specification &mdash; The KaRaMeL user manual  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../static/css/theme.css?v=86f27845" />
+
   
-      <script>
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../../',
-              VERSION:'',
-              LANGUAGE:'None',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script src="../../static/jquery.js"></script>
-        <script src="../../static/underscore.js"></script>
-        <script src="../../static/doctools.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+        <script src="../../static/jquery.js?v=8dae8fb0"></script>
+        <script src="../../static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../static/documentation_options.js?v=df973ab0"></script>
+        <script src="../../static/doctools.js?v=888ff710"></script>
+        <script src="../../static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -50,7 +41,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../Introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Setup.html">Tooling and project setup</a></li>
@@ -94,9 +85,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="main-specification">
-<h1>Main specification<a class="headerlink" href="#main-specification" title="Permalink to this headline">¶</a></h1>
-<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">Spec</span><span class="o">.</span><span class="n">Bignum</span>
+  <section id="main-specification">
+<h1>Main specification<a class="headerlink" href="#main-specification" title="Link to this heading"></a></h1>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nn">Spec</span><span class="p">.</span><span class="nc">Bignum</span>
 </pre></div>
 </div>
 <p>This specification module provides a functional implementation of bignum
@@ -108,27 +99,27 @@ details (i.e. this code is not Low*) and only extracts to OCaml.</p>
 future breakages, as new names may appear in a module at any given time,
 resulting in unpredictable shadowings; it also facilitates reading the code
 on GitHub without an interactive mode.</p>
-<p>Another note: it’s good to keep specifications executable (i.e. in Pure);
+<p>Another note: it's good to keep specifications executable (i.e. in Pure);
 specifications in GTot complicate things as they incur coercions; also, this
 makes the specs non-executable, which just makes debugging harder.</p>
-<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">S</span> <span class="o">=</span> <span class="n">FStar</span><span class="o">.</span><span class="n">Seq</span>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">S</span> <span class="o">=</span> <span class="nn">FStar</span><span class="p">.</span><span class="nc">Seq</span>
 </pre></div>
 </div>
 <p>People usually enjoy short abbreviations like these, as they work with the
-local open syntax (à la OCaml). It’s always possible to use <code class="docutils literal notranslate"><span class="pre">UInt32</span></code> (as
-the <code class="docutils literal notranslate"><span class="pre">FStar</span></code> namespace is always open), but this doesn’t work with the
+local open syntax (à la OCaml). It's always possible to use <code class="docutils literal notranslate"><span class="pre">UInt32</span></code> (as
+the <code class="docutils literal notranslate"><span class="pre">FStar</span></code> namespace is always open), but this doesn't work with the
 (local) open syntax.</p>
-<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">U32</span> <span class="o">=</span> <span class="n">FStar</span><span class="o">.</span><span class="n">UInt32</span>
-<span class="n">module</span> <span class="n">U64</span> <span class="o">=</span> <span class="n">FStar</span><span class="o">.</span><span class="n">UInt64</span>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">U32</span> <span class="o">=</span> <span class="nn">FStar</span><span class="p">.</span><span class="nc">UInt32</span>
+<span class="k">module</span> <span class="nc">U64</span> <span class="o">=</span> <span class="nn">FStar</span><span class="p">.</span><span class="nc">UInt64</span>
 </pre></div>
 </div>
-<p>These are nice abbreviations but we don’t want them to pollute the generated
+<p>These are nice abbreviations but we don't want them to pollute the generated
 OCaml code, so we use the two keywords to make sure they end up being just
 aliases.</p>
-<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">inline_for_extraction</span> <span class="n">noextract</span>
-<span class="n">let</span> <span class="n">u64_of_u32</span> <span class="o">=</span> <span class="n">FStar</span><span class="o">.</span><span class="n">Int</span><span class="o">.</span><span class="n">Cast</span><span class="o">.</span><span class="n">Full</span><span class="o">.</span><span class="n">uint32_to_uint64</span>
-<span class="n">inline_for_extraction</span> <span class="n">noextract</span>
-<span class="n">let</span> <span class="n">u32_of_u64</span> <span class="o">=</span> <span class="n">FStar</span><span class="o">.</span><span class="n">Int</span><span class="o">.</span><span class="n">Cast</span><span class="o">.</span><span class="n">Full</span><span class="o">.</span><span class="n">uint64_to_uint32</span>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">inline_for_extraction</span> <span class="k">noextract</span>
+<span class="kd">let</span> <span class="n">u64_of_u32</span> <span class="o">=</span> <span class="nn">FStar</span><span class="p">.</span><span class="nn">Int</span><span class="p">.</span><span class="nn">Cast</span><span class="p">.</span><span class="nn">Full</span><span class="p">.</span><span class="n">uint32_to_uint64</span>
+<span class="k">inline_for_extraction</span> <span class="k">noextract</span>
+<span class="kd">let</span> <span class="n">u32_of_u64</span> <span class="o">=</span> <span class="nn">FStar</span><span class="p">.</span><span class="nn">Int</span><span class="p">.</span><span class="nn">Cast</span><span class="p">.</span><span class="nn">Full</span><span class="p">.</span><span class="n">uint64_to_uint32</span>
 </pre></div>
 </div>
 <p>Back in ancient times, the <code class="docutils literal notranslate"><span class="pre">*</span></code> operator served both as a tuple operator
@@ -136,7 +127,7 @@ and as a multiplication. Now the preferred way to write a tuple is with the
 <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> operator, leaving <code class="docutils literal notranslate"><span class="pre">*</span></code> for multiplication only. For
 backwards-compatibility, this was not made the default, so we open this
 module to ensure <code class="docutils literal notranslate"><span class="pre">*</span></code> is multiplication over natural numbers.</p>
-<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">open</span> <span class="n">FStar</span><span class="o">.</span><span class="n">Mul</span>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nn">FStar</span><span class="p">.</span><span class="nc">Mul</span>
 </pre></div>
 </div>
 <p>The preferred style is to work with zero fuel (never unroll recursive
@@ -144,134 +135,134 @@ functions in SMT) and zero ifuel (never perform inversion automatically in
 SMT). This makes proofs more robust, more predictible, faster, and ensures
 that non-zero values are expected and documented. Via the push-pop options
 syntax, this can be made a local change.</p>
-<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#set-options &quot;--fuel 0 --ifuel 0&quot;</span>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="o">#</span><span class="n">set</span><span class="o">-</span><span class="n">options</span> <span class="s2">&quot;--fuel 0 --ifuel 0&quot;</span>
 </pre></div>
 </div>
 <p>There exists a module called <code class="docutils literal notranslate"><span class="pre">FStar.Integers</span></code> that offers overloaded
-operators for machine integers, but it has its own pitfalls, and I don’t
+operators for machine integers, but it has its own pitfalls, and I don't
 recommend using it until <a class="reference external" href="https://github.com/FStarLang/FStar/issues/1691">https://github.com/FStarLang/FStar/issues/1691</a> is
-fixed. In the meanwhile, let’s use ugly operators with suffixes.</p>
+fixed. In the meanwhile, let's use ugly operators with suffixes.</p>
 <p>Our type for the functional implementation of bignums is a sequence of words
 (also known as limbs in this context). This will be a little-endian
 representation, where the least significant word comes at index 0 in the
 sequence. We choose sequence over list as low-level arrays are reflected in
-a given heap as a sequence – this will thus make the proof of refinement
+a given heap as a sequence -- this will thus make the proof of refinement
 (the Low* implementation matches the spec) easier to perform.</p>
-<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">t</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="n">seq</span> <span class="n">UInt32</span><span class="o">.</span><span class="n">t</span>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span> <span class="n">t</span> <span class="o">=</span> <span class="nn">S</span><span class="p">.</span><span class="n">seq</span> <span class="nn">UInt32</span><span class="p">.</span><span class="n">t</span>
 
-<span class="n">let</span> <span class="nb">max</span> <span class="o">=</span> <span class="n">pow2</span> <span class="mi">32</span>
+<span class="kd">let</span> <span class="n">max</span> <span class="o">=</span> <span class="n">pow2</span> <span class="mi">32</span>
 </pre></div>
 </div>
-<p>Most modules define a <code class="docutils literal notranslate"><span class="pre">v</span></code> function that maps a type to its “value”, or
-“representation”, i.e. the reflection of a <code class="docutils literal notranslate"><span class="pre">t</span></code> as a high-level value.</p>
-<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">rec</span> <span class="n">v</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">t</span><span class="p">):</span> <span class="n">Tot</span> <span class="n">nat</span> <span class="p">(</span><span class="n">decreases</span> <span class="p">(</span><span class="n">S</span><span class="o">.</span><span class="n">length</span> <span class="n">x</span><span class="p">))</span> <span class="o">=</span>
-  <span class="o">//</span> <span class="n">Note</span> <span class="n">that</span> <span class="n">we</span> <span class="n">use</span> <span class="n">decidable</span> <span class="n">equality</span> <span class="n">here</span> <span class="n">since</span> <span class="n">we</span> <span class="n">intend</span> <span class="n">to</span> <span class="n">extract</span> <span class="n">this</span>
-  <span class="o">//</span> <span class="n">code</span> <span class="n">to</span> <span class="n">OCaml</span><span class="o">.</span>
-  <span class="k">if</span> <span class="n">S</span><span class="o">.</span><span class="n">length</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span> <span class="n">then</span>
+<p>Most modules define a <code class="docutils literal notranslate"><span class="pre">v</span></code> function that maps a type to its &quot;value&quot;, or
+&quot;representation&quot;, i.e. the reflection of a <code class="docutils literal notranslate"><span class="pre">t</span></code> as a high-level value.</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span> <span class="kd">rec</span> <span class="n">v</span> <span class="o">(</span><span class="n">x</span><span class="o">:</span> <span class="n">t</span><span class="o">):</span> <span class="nc">Tot</span> <span class="n">nat</span> <span class="o">(</span><span class="n">decreases</span> <span class="o">(</span><span class="nn">S</span><span class="p">.</span><span class="n">length</span> <span class="n">x</span><span class="o">))</span> <span class="o">=</span>
+  <span class="c">// Note that we use decidable equality here since we intend to extract this</span>
+  <span class="c">// code to OCaml.</span>
+  <span class="k">if</span> <span class="nn">S</span><span class="p">.</span><span class="n">length</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span>
     <span class="mi">0</span>
   <span class="k">else</span>
-    <span class="n">U32</span><span class="o">.</span><span class="n">v</span> <span class="p">(</span><span class="n">S</span><span class="o">.</span><span class="n">head</span> <span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="nb">max</span> <span class="o">*</span> <span class="n">v</span> <span class="p">(</span><span class="n">S</span><span class="o">.</span><span class="n">tail</span> <span class="n">x</span><span class="p">)</span>
+    <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="o">(</span><span class="nn">S</span><span class="p">.</span><span class="n">head</span> <span class="n">x</span><span class="o">)</span> <span class="o">+</span> <span class="n">max</span> <span class="o">*</span> <span class="n">v</span> <span class="o">(</span><span class="nn">S</span><span class="p">.</span><span class="n">tail</span> <span class="n">x</span><span class="o">)</span>
 </pre></div>
 </div>
 <p>A stylistic note: parentheses are oftentimes ommitted after <code class="docutils literal notranslate"><span class="pre">requires``and</span>
 <span class="pre">``ensures</span></code> but for some reason are still needed for <code class="docutils literal notranslate"><span class="pre">decreases</span></code>. See
 <a class="reference external" href="https://github.com/FStarLang/FStar/issues/1765">https://github.com/FStarLang/FStar/issues/1765</a></p>
-<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span>inline_for_extraction
-let add_carry (x y: U32.t): Pure (U32.t &amp; U32.t)
-  (requires True)
-  (ensures fun z -&gt;
-    let open U32 in
-    let a, c = z in
-    U32.v x + U32.v y == U32.v a + pow2 32 * U32.v c /\
-    U32.v c &lt;= 1
-  )
-=
-  let a = U32.(x +%^ y) in
-  assert (U32.v a == (U32.v x + U32.v y) % pow2 32);
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="k">inline_for_extraction</span>
+<span class="kd">let</span> <span class="n">add_carry</span> <span class="o">(</span><span class="n">x</span> <span class="n">y</span><span class="o">:</span> <span class="nn">U32</span><span class="p">.</span><span class="n">t</span><span class="o">):</span> <span class="nc">Pure</span> <span class="o">(</span><span class="nn">U32</span><span class="p">.</span><span class="n">t</span> <span class="o">&amp;</span> <span class="nn">U32</span><span class="p">.</span><span class="n">t</span><span class="o">)</span>
+  <span class="o">(</span><span class="k">requires</span> <span class="bp">True</span><span class="o">)</span>
+  <span class="o">(</span><span class="k">ensures</span> <span class="k">fun</span> <span class="n">z</span> <span class="o">-&gt;</span>
+    <span class="kd">let</span> <span class="k">open</span> <span class="nc">U32</span> <span class="k">in</span>
+    <span class="kd">let</span> <span class="n">a</span><span class="o">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">z</span> <span class="k">in</span>
+    <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">x</span> <span class="o">+</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">y</span> <span class="o">==</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">a</span> <span class="o">+</span> <span class="n">pow2</span> <span class="mi">32</span> <span class="o">*</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">c</span> <span class="o">/\</span>
+    <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">c</span> <span class="o">&lt;=</span> <span class="mi">1</span>
+  <span class="o">)</span>
+<span class="o">=</span>
+  <span class="kd">let</span> <span class="n">a</span> <span class="o">=</span> <span class="nn">U32</span><span class="p">.</span><span class="o">(</span><span class="n">x</span> <span class="o">+%^</span> <span class="n">y</span><span class="o">)</span> <span class="k">in</span>
+  <span class="ne">assert</span> <span class="o">(</span><span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">a</span> <span class="o">==</span> <span class="o">(</span><span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">x</span> <span class="o">+</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">y</span><span class="o">)</span> <span class="o">%</span> <span class="n">pow2</span> <span class="mi">32</span><span class="o">);</span>
 
-  let x64 = u64_of_u32 x in
-  let y64 = u64_of_u32 y in
-  let c = u32_of_u64 U64.((x64 +^ y64) &gt;&gt;^ 32ul) in
-  // This is a precondition of the modulo_modulo_lemma. Z3 stands no chance of
-  // solving this, so I just preemptively bring this fact into the context by
-  // using F*&#39;s reduction capabilities (implemented under the hood using
-  // efficient bignum arithmetic via Zarith).
-  assert_norm (pow2 64 = pow2 32 * pow2 32);
-  // Nonmodular arithmetic proofs do not generally go through with Z3. If they
-  // do, it&#39;s a piece of luck, and you should not rely on it! So, instead, I use
-  // a calc statement to make the proof explicit, help with the reasoning, and
-  // make sure whoever needs to maintain this proof in the future has a base to
-  // work with.
-  calc (==) {
-    U32.v c;
-  (==) { }
-    U64.(v ((x64 +^ y64) &gt;&gt;^ 32ul)) % pow2 64 % pow2 32;
-  (==) { FStar.Math.Lemmas.modulo_modulo_lemma U64.(v ((x64 +^ y64) &gt;&gt;^ 32ul)) (pow2 32) (pow2 32) }
-    U64.(v ((x64 +^ y64) &gt;&gt;^ 32ul)) % pow2 32;
-  (==) { FStar.UInt.shift_right_value_lemma #64 U64.(v (x64 +^ y64)) 32 }
-    (U64.(v (x64 +^ y64)) / pow2 32) % pow2 32;
-  (==) { }
-    ((U32.v x + U32.v y) / pow2 32) % pow2 32;
-  };
+  <span class="kd">let</span> <span class="n">x64</span> <span class="o">=</span> <span class="n">u64_of_u32</span> <span class="n">x</span> <span class="k">in</span>
+  <span class="kd">let</span> <span class="n">y64</span> <span class="o">=</span> <span class="n">u64_of_u32</span> <span class="n">y</span> <span class="k">in</span>
+  <span class="kd">let</span> <span class="n">c</span> <span class="o">=</span> <span class="n">u32_of_u64</span> <span class="nn">U64</span><span class="p">.</span><span class="o">((</span><span class="n">x64</span> <span class="o">+^</span> <span class="n">y64</span><span class="o">)</span> <span class="o">&gt;&gt;^</span> <span class="mi">32</span><span class="n">ul</span><span class="o">)</span> <span class="k">in</span>
+  <span class="c">// This is a precondition of the modulo_modulo_lemma. Z3 stands no chance of</span>
+  <span class="c">// solving this, so I just preemptively bring this fact into the context by</span>
+  <span class="c">// using F*&#39;s reduction capabilities (implemented under the hood using</span>
+  <span class="c">// efficient bignum arithmetic via Zarith).</span>
+  <span class="n">assert_norm</span> <span class="o">(</span><span class="n">pow2</span> <span class="mi">64</span> <span class="o">=</span> <span class="n">pow2</span> <span class="mi">32</span> <span class="o">*</span> <span class="n">pow2</span> <span class="mi">32</span><span class="o">);</span>
+  <span class="c">// Nonmodular arithmetic proofs do not generally go through with Z3. If they</span>
+  <span class="c">// do, it&#39;s a piece of luck, and you should not rely on it! So, instead, I use</span>
+  <span class="c">// a calc statement to make the proof explicit, help with the reasoning, and</span>
+  <span class="c">// make sure whoever needs to maintain this proof in the future has a base to</span>
+  <span class="c">// work with.</span>
+  <span class="ne">calc</span> <span class="o">(==)</span> <span class="o">{</span>
+    <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">c</span><span class="o">;</span>
+  <span class="o">(==)</span> <span class="o">{</span> <span class="o">}</span>
+    <span class="nn">U64</span><span class="p">.</span><span class="o">(</span><span class="n">v</span> <span class="o">((</span><span class="n">x64</span> <span class="o">+^</span> <span class="n">y64</span><span class="o">)</span> <span class="o">&gt;&gt;^</span> <span class="mi">32</span><span class="n">ul</span><span class="o">))</span> <span class="o">%</span> <span class="n">pow2</span> <span class="mi">64</span> <span class="o">%</span> <span class="n">pow2</span> <span class="mi">32</span><span class="o">;</span>
+  <span class="o">(==)</span> <span class="o">{</span> <span class="nn">FStar</span><span class="p">.</span><span class="nn">Math</span><span class="p">.</span><span class="nn">Lemmas</span><span class="p">.</span><span class="n">modulo_modulo_lemma</span> <span class="nn">U64</span><span class="p">.</span><span class="o">(</span><span class="n">v</span> <span class="o">((</span><span class="n">x64</span> <span class="o">+^</span> <span class="n">y64</span><span class="o">)</span> <span class="o">&gt;&gt;^</span> <span class="mi">32</span><span class="n">ul</span><span class="o">))</span> <span class="o">(</span><span class="n">pow2</span> <span class="mi">32</span><span class="o">)</span> <span class="o">(</span><span class="n">pow2</span> <span class="mi">32</span><span class="o">)</span> <span class="o">}</span>
+    <span class="nn">U64</span><span class="p">.</span><span class="o">(</span><span class="n">v</span> <span class="o">((</span><span class="n">x64</span> <span class="o">+^</span> <span class="n">y64</span><span class="o">)</span> <span class="o">&gt;&gt;^</span> <span class="mi">32</span><span class="n">ul</span><span class="o">))</span> <span class="o">%</span> <span class="n">pow2</span> <span class="mi">32</span><span class="o">;</span>
+  <span class="o">(==)</span> <span class="o">{</span> <span class="nn">FStar</span><span class="p">.</span><span class="nn">UInt</span><span class="p">.</span><span class="n">shift_right_value_lemma</span> <span class="o">#</span><span class="mi">64</span> <span class="nn">U64</span><span class="p">.</span><span class="o">(</span><span class="n">v</span> <span class="o">(</span><span class="n">x64</span> <span class="o">+^</span> <span class="n">y64</span><span class="o">))</span> <span class="mi">32</span> <span class="o">}</span>
+    <span class="o">(</span><span class="nn">U64</span><span class="p">.</span><span class="o">(</span><span class="n">v</span> <span class="o">(</span><span class="n">x64</span> <span class="o">+^</span> <span class="n">y64</span><span class="o">))</span> <span class="o">/</span> <span class="n">pow2</span> <span class="mi">32</span><span class="o">)</span> <span class="o">%</span> <span class="n">pow2</span> <span class="mi">32</span><span class="o">;</span>
+  <span class="o">(==)</span> <span class="o">{</span> <span class="o">}</span>
+    <span class="o">((</span><span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">x</span> <span class="o">+</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">y</span><span class="o">)</span> <span class="o">/</span> <span class="n">pow2</span> <span class="mi">32</span><span class="o">)</span> <span class="o">%</span> <span class="n">pow2</span> <span class="mi">32</span><span class="o">;</span>
+  <span class="o">};</span>
 
-  // Precondition of small_modulo_lemma_1. The naming of lemmas in
-  // FStar.Math.Lemmas is really suboptimal -- any help most welcome, of course.
-  assert_norm ((UInt.max_int 32 + UInt.max_int 32) / pow2 32 &lt; pow2 32);
+  <span class="c">// Precondition of small_modulo_lemma_1. The naming of lemmas in</span>
+  <span class="c">// FStar.Math.Lemmas is really suboptimal -- any help most welcome, of course.</span>
+  <span class="n">assert_norm</span> <span class="o">((</span><span class="nn">UInt</span><span class="p">.</span><span class="n">max_int</span> <span class="mi">32</span> <span class="o">+</span> <span class="nn">UInt</span><span class="p">.</span><span class="n">max_int</span> <span class="mi">32</span><span class="o">)</span> <span class="o">/</span> <span class="n">pow2</span> <span class="mi">32</span> <span class="o">&lt;</span> <span class="n">pow2</span> <span class="mi">32</span><span class="o">);</span>
 
-  // These proofs are tedious; they are, however, robust, since each step of a
-  // calc statement is proven in isolation. Always use calc when you can!
-  // Nonlinear arithmetic is generally highly unreliable with Z3, and very
-  // manual proofs are oftentimes the best way to go. Some people even choose to
-  // disable non-linear arithmetic altogether.
-  calc (==) {
-    U32.v a + max * U32.v c;
-  (==) {}
-    (U32.v x + U32.v y) % pow2 32 + max * (((U32.v x + U32.v y) / pow2 32) % pow2 32);
-  (==) {}
-    (U32.v x + U32.v y) % pow2 32 + (((U32.v x + U32.v y) / pow2 32) % pow2 32) * pow2 32;
-  (==) { FStar.Math.Lemmas.small_modulo_lemma_1 ((U32.v x + U32.v y) / pow2 32) (pow2 32) }
-    (U32.v x + U32.v y) % pow2 32 + (((U32.v x + U32.v y) / pow2 32)) * pow2 32;
-  (==) { FStar.Math.Lemmas.euclidean_division_definition (U32.v x + U32.v y) (pow2 32) }
-    U32.v x + U32.v y;
-  };
-  a, c
+  <span class="c">// These proofs are tedious; they are, however, robust, since each step of a</span>
+  <span class="c">// calc statement is proven in isolation. Always use calc when you can!</span>
+  <span class="c">// Nonlinear arithmetic is generally highly unreliable with Z3, and very</span>
+  <span class="c">// manual proofs are oftentimes the best way to go. Some people even choose to</span>
+  <span class="c">// disable non-linear arithmetic altogether.</span>
+  <span class="ne">calc</span> <span class="o">(==)</span> <span class="o">{</span>
+    <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">a</span> <span class="o">+</span> <span class="n">max</span> <span class="o">*</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">c</span><span class="o">;</span>
+  <span class="o">(==)</span> <span class="o">{}</span>
+    <span class="o">(</span><span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">x</span> <span class="o">+</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">y</span><span class="o">)</span> <span class="o">%</span> <span class="n">pow2</span> <span class="mi">32</span> <span class="o">+</span> <span class="n">max</span> <span class="o">*</span> <span class="o">(((</span><span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">x</span> <span class="o">+</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">y</span><span class="o">)</span> <span class="o">/</span> <span class="n">pow2</span> <span class="mi">32</span><span class="o">)</span> <span class="o">%</span> <span class="n">pow2</span> <span class="mi">32</span><span class="o">);</span>
+  <span class="o">(==)</span> <span class="o">{}</span>
+    <span class="o">(</span><span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">x</span> <span class="o">+</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">y</span><span class="o">)</span> <span class="o">%</span> <span class="n">pow2</span> <span class="mi">32</span> <span class="o">+</span> <span class="o">(((</span><span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">x</span> <span class="o">+</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">y</span><span class="o">)</span> <span class="o">/</span> <span class="n">pow2</span> <span class="mi">32</span><span class="o">)</span> <span class="o">%</span> <span class="n">pow2</span> <span class="mi">32</span><span class="o">)</span> <span class="o">*</span> <span class="n">pow2</span> <span class="mi">32</span><span class="o">;</span>
+  <span class="o">(==)</span> <span class="o">{</span> <span class="nn">FStar</span><span class="p">.</span><span class="nn">Math</span><span class="p">.</span><span class="nn">Lemmas</span><span class="p">.</span><span class="n">small_modulo_lemma_1</span> <span class="o">((</span><span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">x</span> <span class="o">+</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">y</span><span class="o">)</span> <span class="o">/</span> <span class="n">pow2</span> <span class="mi">32</span><span class="o">)</span> <span class="o">(</span><span class="n">pow2</span> <span class="mi">32</span><span class="o">)</span> <span class="o">}</span>
+    <span class="o">(</span><span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">x</span> <span class="o">+</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">y</span><span class="o">)</span> <span class="o">%</span> <span class="n">pow2</span> <span class="mi">32</span> <span class="o">+</span> <span class="o">(((</span><span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">x</span> <span class="o">+</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">y</span><span class="o">)</span> <span class="o">/</span> <span class="n">pow2</span> <span class="mi">32</span><span class="o">))</span> <span class="o">*</span> <span class="n">pow2</span> <span class="mi">32</span><span class="o">;</span>
+  <span class="o">(==)</span> <span class="o">{</span> <span class="nn">FStar</span><span class="p">.</span><span class="nn">Math</span><span class="p">.</span><span class="nn">Lemmas</span><span class="p">.</span><span class="n">euclidean_division_definition</span> <span class="o">(</span><span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">x</span> <span class="o">+</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">y</span><span class="o">)</span> <span class="o">(</span><span class="n">pow2</span> <span class="mi">32</span><span class="o">)</span> <span class="o">}</span>
+    <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">x</span> <span class="o">+</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">y</span><span class="o">;</span>
+  <span class="o">};</span>
+  <span class="n">a</span><span class="o">,</span> <span class="n">c</span>
 </pre></div>
 </div>
 <p>Here, we need to unroll the definition of add at least once with the SMT.
 With push/pop, the change is only local to this function.</p>
-<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#push-options &quot;--fuel 1&quot;</span>
-<span class="n">let</span> <span class="n">v_0</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">t</span><span class="p">):</span> <span class="n">Lemma</span>
-  <span class="p">(</span><span class="n">requires</span> <span class="n">S</span><span class="o">.</span><span class="n">length</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
-  <span class="p">(</span><span class="n">ensures</span> <span class="n">v</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
-  <span class="p">[</span> <span class="n">SMTPat</span> <span class="p">(</span><span class="n">v</span> <span class="n">x</span><span class="p">)</span> <span class="p">]</span>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="o">#</span><span class="n">push</span><span class="o">-</span><span class="n">options</span> <span class="s2">&quot;--fuel 1&quot;</span>
+<span class="kd">let</span> <span class="n">v_0</span> <span class="o">(</span><span class="n">x</span><span class="o">:</span> <span class="n">t</span><span class="o">):</span> <span class="nc">Lemma</span>
+  <span class="o">(</span><span class="k">requires</span> <span class="nn">S</span><span class="p">.</span><span class="n">length</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="o">)</span>
+  <span class="o">(</span><span class="k">ensures</span> <span class="n">v</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="o">)</span>
+  <span class="o">[</span> <span class="nc">SMTPat</span> <span class="o">(</span><span class="n">v</span> <span class="n">x</span><span class="o">)</span> <span class="o">]</span>
 <span class="o">=</span>
-  <span class="p">()</span>
-<span class="c1">#pop-options</span>
+  <span class="bp">()</span>
+<span class="o">#</span><span class="n">pop</span><span class="o">-</span><span class="n">options</span>
 </pre></div>
 </div>
-<p>I personally prefer –fuel because it combines max_fuel and initial_fuel,
+<p>I personally prefer --fuel because it combines max_fuel and initial_fuel,
 meaning that you really mean to say that your proof requires 2 units of
 fuel. These two lemmas with patterns mean that Z3 will automatically unfold
 v but, assuming fuel is zero, will not attempt to unfold anything
 else. There is a more systematic way of achieving this with opaque / reveal,
 but see the advanced topic for that.</p>
-<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#push-options &quot;--fuel 2&quot;</span>
-<span class="n">let</span> <span class="n">v_1</span> <span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">U32</span><span class="o">.</span><span class="n">t</span><span class="p">)</span> <span class="p">(</span><span class="n">y</span><span class="p">:</span> <span class="n">t</span><span class="p">):</span> <span class="n">Lemma</span>
-  <span class="p">(</span><span class="n">ensures</span> <span class="n">v</span> <span class="p">(</span><span class="n">S</span><span class="o">.</span><span class="n">cons</span> <span class="n">x</span> <span class="n">y</span><span class="p">)</span> <span class="o">==</span> <span class="n">U32</span><span class="o">.</span><span class="n">v</span> <span class="n">x</span> <span class="o">+</span> <span class="n">pow2</span> <span class="mi">32</span> <span class="o">*</span> <span class="p">(</span><span class="n">v</span> <span class="n">y</span><span class="p">))</span>
-  <span class="p">[</span> <span class="n">SMTPat</span> <span class="p">(</span><span class="n">v</span> <span class="p">(</span><span class="n">S</span><span class="o">.</span><span class="n">cons</span> <span class="n">x</span> <span class="n">y</span><span class="p">))</span> <span class="p">]</span>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="o">#</span><span class="n">push</span><span class="o">-</span><span class="n">options</span> <span class="s2">&quot;--fuel 2&quot;</span>
+<span class="kd">let</span> <span class="n">v_1</span> <span class="o">(</span><span class="n">x</span><span class="o">:</span> <span class="nn">U32</span><span class="p">.</span><span class="n">t</span><span class="o">)</span> <span class="o">(</span><span class="n">y</span><span class="o">:</span> <span class="n">t</span><span class="o">):</span> <span class="nc">Lemma</span>
+  <span class="o">(</span><span class="k">ensures</span> <span class="n">v</span> <span class="o">(</span><span class="nn">S</span><span class="p">.</span><span class="n">cons</span> <span class="n">x</span> <span class="n">y</span><span class="o">)</span> <span class="o">==</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">x</span> <span class="o">+</span> <span class="n">pow2</span> <span class="mi">32</span> <span class="o">*</span> <span class="o">(</span><span class="n">v</span> <span class="n">y</span><span class="o">))</span>
+  <span class="o">[</span> <span class="nc">SMTPat</span> <span class="o">(</span><span class="n">v</span> <span class="o">(</span><span class="nn">S</span><span class="p">.</span><span class="n">cons</span> <span class="n">x</span> <span class="n">y</span><span class="o">))</span> <span class="o">]</span>
 <span class="o">=</span>
-  <span class="n">S</span><span class="o">.</span><span class="n">lemma_tl</span> <span class="n">x</span> <span class="n">y</span>
-<span class="c1">#pop-options</span>
+  <span class="nn">S</span><span class="p">.</span><span class="n">lemma_tl</span> <span class="n">x</span> <span class="n">y</span>
+<span class="o">#</span><span class="n">pop</span><span class="o">-</span><span class="n">options</span>
 </pre></div>
 </div>
-<p>Since I authored the two lemmas above, I don’t need to rely on Z3 unfolding
+<p>Since I authored the two lemmas above, I don't need to rely on Z3 unfolding
 the definition of <code class="docutils literal notranslate"><span class="pre">v</span></code> for my proof to go through. This is in line with my
 earlier digression about always running with zero fuel and ifuel.</p>
 <p>I thought about requiring <code class="docutils literal notranslate"><span class="pre">S.length</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">S.length</span> <span class="pre">y</span></code> and then having a
-helper function that removes this precondition. I thought it’d be easier to
+helper function that removes this precondition. I thought it'd be easier to
 implement later if I wrote a functional implementation capable of dealing
 with any lengths for x and y. I also thought that it would be a tedious
-proof to do in the helper too, so might as well do it once. I guess it’s a
+proof to do in the helper too, so might as well do it once. I guess it's a
 matter of taste and personal preference at this stage.</p>
 <p>This function failed once as I was trying to process it in the interactive
 mode, then succeeded again on the second try without me changing anything.
@@ -281,107 +272,107 @@ should make it more robust. I used the <code class="docutils literal notranslate
 z3seed to ensure that the proof is reasonably robust. It probably was an
 rlimit issue (after all, I had not tweaked the default rlimit setting until
 now!).</p>
-<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span>#push-options &quot;--z3rlimit 20&quot; // --quake 3
-let rec add&#39; (x y: t) (c0: U32.t): Pure t
-  (requires True)
-  (ensures fun z -&gt; v x + v y + U32.v c0 = v z)
-  (decreases (S.length x + S.length y))
-=
-  if S.length x = 0 &amp;&amp; S.length y = 0 then
-    S.cons c0 S.empty
-  else if S.length x = 0 then
-    let y_head = S.head y in
-    let y_tail = S.tail y in
-    let a, c1 = add_carry y_head c0 in
-    let r = S.cons a (add&#39; S.empty y_tail c1) in
-    // Oftentimes, when I don&#39;t have any idea why the proof doesn&#39;t go through, I use a calc statement and write the steps in order.
-    calc (==) {
-      v r;
-      // Here I realized I needed to reason about the value of v (cons x y).
-      // While I could augment the fuel to allow Z3 to unroll the definition of
-      // v and prove the property as-needed, I chose to make it a separate
-      // lemma, which was helpful because I realized that even the separate
-      // lemma needed S.lemma_tl.
-    (==) { }
-      U32.v a + pow2 32 * v (add&#39; S.empty y_tail c1);
-    (==) { }
-      U32.v a + pow2 32 * (v y_tail + U32.v c1);
-      // Here I realized that I needed non-linearity. A manual lemma invocation
-      // is always preferred. Stay tuned for a better way of doing this below.
-    (==) { FStar.Math.Lemmas.distributivity_add_right (pow2 32) (v y_tail) (U32.v c1) }
-      U32.v a + pow2 32 * v y_tail + pow2 32 * U32.v c1;
-    (==) { }
-      U32.v y_head + U32.v c0 + pow2 32 * v y_tail;
-      // It&#39;s unfortunate that we have to call this lemma by hand. But adding a
-      // pattern to it might break a lot of other proofs!
-    (==) { S.lemma_tl y_head y_tail }
-      v y + U32.v c0;
-    };
-    r
-  else if S.length y = 0 then
-    let x_head = S.head x in
-    let x_tail = S.tail x in
-    let a, c1 = add_carry x_head c0 in
-    let r = S.cons a (add&#39; S.empty x_tail c1) in
-    // Since this case is identical to the one above, I could just take the two
-    // relevant lemma invocations and the proof would still go through without a
-    // calc statement. I prefer keeping the calc for proof robustness.
-    calc (==) {
-      v r;
-    (==) { }
-      U32.v a + pow2 32 * v (add&#39; S.empty x_tail c1);
-    (==) { }
-      U32.v a + pow2 32 * (v x_tail + U32.v c1);
-    (==) { FStar.Math.Lemmas.distributivity_add_right (pow2 32) (v x_tail) (U32.v c1) }
-      U32.v a + pow2 32 * v x_tail + pow2 32 * U32.v c1;
-    (==) { }
-      U32.v x_head + U32.v c0 + pow2 32 * v x_tail;
-    (==) { S.lemma_tl x_head x_tail }
-      v x + U32.v c0;
-    };
-    r
-  else
-    let x_head = S.head x in
-    let x_tail = S.tail x in
-    S.lemma_tl x_head x_tail;
-    let y_head = S.head y in
-    let y_tail = S.tail y in
-    S.lemma_tl y_head y_tail;
-    let a1, c1 = add_carry x_head y_head in
-    let a2, c2 = add_carry a1 c0 in
-    let c = U32.(c1 +^ c2) in
-    let r = S.cons a2 (add&#39; x_tail y_tail c) in
-    // As usual, a calc statement is more robust.
-    calc (==) {
-      v r;
-    (==) { }
-      U32.v a2 + pow2 32 * v (add&#39; x_tail y_tail c);
-    (==) { }
-      U32.v a2 + pow2 32 * (v x_tail + v y_tail + U32.v c1 + U32.v c2);
-    (==) { _ by (FStar.Tactics.CanonCommSemiring.int_semiring ()) }
-      // The main reason for using the tactic here is that this is basic
-      // distributivity, but I know from experience that Z3 might struggle with
-      // this fact, and that I don&#39;t want to write all of the arguments to all
-      // three calls to the distributivity lemma by hand.
-      U32.v a2 + pow2 32 * v x_tail + pow2 32 * v y_tail + pow2 32 * U32.v c1 + pow2 32 * U32.v c2;
-    };
-    // Knowing from the S.length x = 0 case above that reasoning about S.tail
-    // almost always requires a call to S.lemma_tl, I pre-emptively called it
-    // for both x and y above. (Doesn&#39;t hurt.) With that, the rest of the proof
-    // goes through automatically.
-    r
-#pop-options
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="o">#</span><span class="n">push</span><span class="o">-</span><span class="n">options</span> <span class="s2">&quot;--z3rlimit 20&quot;</span> <span class="c">// --quake 3</span>
+<span class="kd">let</span> <span class="kd">rec</span> <span class="n">add&#39;</span> <span class="o">(</span><span class="n">x</span> <span class="n">y</span><span class="o">:</span> <span class="n">t</span><span class="o">)</span> <span class="o">(</span><span class="n">c0</span><span class="o">:</span> <span class="nn">U32</span><span class="p">.</span><span class="n">t</span><span class="o">):</span> <span class="nc">Pure</span> <span class="n">t</span>
+  <span class="o">(</span><span class="k">requires</span> <span class="bp">True</span><span class="o">)</span>
+  <span class="o">(</span><span class="k">ensures</span> <span class="k">fun</span> <span class="n">z</span> <span class="o">-&gt;</span> <span class="n">v</span> <span class="n">x</span> <span class="o">+</span> <span class="n">v</span> <span class="n">y</span> <span class="o">+</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">c0</span> <span class="o">=</span> <span class="n">v</span> <span class="n">z</span><span class="o">)</span>
+  <span class="o">(</span><span class="n">decreases</span> <span class="o">(</span><span class="nn">S</span><span class="p">.</span><span class="n">length</span> <span class="n">x</span> <span class="o">+</span> <span class="nn">S</span><span class="p">.</span><span class="n">length</span> <span class="n">y</span><span class="o">))</span>
+<span class="o">=</span>
+  <span class="k">if</span> <span class="nn">S</span><span class="p">.</span><span class="n">length</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nn">S</span><span class="p">.</span><span class="n">length</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span>
+    <span class="nn">S</span><span class="p">.</span><span class="n">cons</span> <span class="n">c0</span> <span class="nn">S</span><span class="p">.</span><span class="n">empty</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="nn">S</span><span class="p">.</span><span class="n">length</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span>
+    <span class="kd">let</span> <span class="n">y_head</span> <span class="o">=</span> <span class="nn">S</span><span class="p">.</span><span class="n">head</span> <span class="n">y</span> <span class="k">in</span>
+    <span class="kd">let</span> <span class="n">y_tail</span> <span class="o">=</span> <span class="nn">S</span><span class="p">.</span><span class="n">tail</span> <span class="n">y</span> <span class="k">in</span>
+    <span class="kd">let</span> <span class="n">a</span><span class="o">,</span> <span class="n">c1</span> <span class="o">=</span> <span class="n">add_carry</span> <span class="n">y_head</span> <span class="n">c0</span> <span class="k">in</span>
+    <span class="kd">let</span> <span class="n">r</span> <span class="o">=</span> <span class="nn">S</span><span class="p">.</span><span class="n">cons</span> <span class="n">a</span> <span class="o">(</span><span class="n">add&#39;</span> <span class="nn">S</span><span class="p">.</span><span class="n">empty</span> <span class="n">y_tail</span> <span class="n">c1</span><span class="o">)</span> <span class="k">in</span>
+    <span class="c">// Oftentimes, when I don&#39;t have any idea why the proof doesn&#39;t go through, I use a calc statement and write the steps in order.</span>
+    <span class="ne">calc</span> <span class="o">(==)</span> <span class="o">{</span>
+      <span class="n">v</span> <span class="n">r</span><span class="o">;</span>
+      <span class="c">// Here I realized I needed to reason about the value of v (cons x y).</span>
+      <span class="c">// While I could augment the fuel to allow Z3 to unroll the definition of</span>
+      <span class="c">// v and prove the property as-needed, I chose to make it a separate</span>
+      <span class="c">// lemma, which was helpful because I realized that even the separate</span>
+      <span class="c">// lemma needed S.lemma_tl.</span>
+    <span class="o">(==)</span> <span class="o">{</span> <span class="o">}</span>
+      <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">a</span> <span class="o">+</span> <span class="n">pow2</span> <span class="mi">32</span> <span class="o">*</span> <span class="n">v</span> <span class="o">(</span><span class="n">add&#39;</span> <span class="nn">S</span><span class="p">.</span><span class="n">empty</span> <span class="n">y_tail</span> <span class="n">c1</span><span class="o">);</span>
+    <span class="o">(==)</span> <span class="o">{</span> <span class="o">}</span>
+      <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">a</span> <span class="o">+</span> <span class="n">pow2</span> <span class="mi">32</span> <span class="o">*</span> <span class="o">(</span><span class="n">v</span> <span class="n">y_tail</span> <span class="o">+</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">c1</span><span class="o">);</span>
+      <span class="c">// Here I realized that I needed non-linearity. A manual lemma invocation</span>
+      <span class="c">// is always preferred. Stay tuned for a better way of doing this below.</span>
+    <span class="o">(==)</span> <span class="o">{</span> <span class="nn">FStar</span><span class="p">.</span><span class="nn">Math</span><span class="p">.</span><span class="nn">Lemmas</span><span class="p">.</span><span class="n">distributivity_add_right</span> <span class="o">(</span><span class="n">pow2</span> <span class="mi">32</span><span class="o">)</span> <span class="o">(</span><span class="n">v</span> <span class="n">y_tail</span><span class="o">)</span> <span class="o">(</span><span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">c1</span><span class="o">)</span> <span class="o">}</span>
+      <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">a</span> <span class="o">+</span> <span class="n">pow2</span> <span class="mi">32</span> <span class="o">*</span> <span class="n">v</span> <span class="n">y_tail</span> <span class="o">+</span> <span class="n">pow2</span> <span class="mi">32</span> <span class="o">*</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">c1</span><span class="o">;</span>
+    <span class="o">(==)</span> <span class="o">{</span> <span class="o">}</span>
+      <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">y_head</span> <span class="o">+</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">c0</span> <span class="o">+</span> <span class="n">pow2</span> <span class="mi">32</span> <span class="o">*</span> <span class="n">v</span> <span class="n">y_tail</span><span class="o">;</span>
+      <span class="c">// It&#39;s unfortunate that we have to call this lemma by hand. But adding a</span>
+      <span class="c">// pattern to it might break a lot of other proofs!</span>
+    <span class="o">(==)</span> <span class="o">{</span> <span class="nn">S</span><span class="p">.</span><span class="n">lemma_tl</span> <span class="n">y_head</span> <span class="n">y_tail</span> <span class="o">}</span>
+      <span class="n">v</span> <span class="n">y</span> <span class="o">+</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">c0</span><span class="o">;</span>
+    <span class="o">};</span>
+    <span class="n">r</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="nn">S</span><span class="p">.</span><span class="n">length</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span>
+    <span class="kd">let</span> <span class="n">x_head</span> <span class="o">=</span> <span class="nn">S</span><span class="p">.</span><span class="n">head</span> <span class="n">x</span> <span class="k">in</span>
+    <span class="kd">let</span> <span class="n">x_tail</span> <span class="o">=</span> <span class="nn">S</span><span class="p">.</span><span class="n">tail</span> <span class="n">x</span> <span class="k">in</span>
+    <span class="kd">let</span> <span class="n">a</span><span class="o">,</span> <span class="n">c1</span> <span class="o">=</span> <span class="n">add_carry</span> <span class="n">x_head</span> <span class="n">c0</span> <span class="k">in</span>
+    <span class="kd">let</span> <span class="n">r</span> <span class="o">=</span> <span class="nn">S</span><span class="p">.</span><span class="n">cons</span> <span class="n">a</span> <span class="o">(</span><span class="n">add&#39;</span> <span class="nn">S</span><span class="p">.</span><span class="n">empty</span> <span class="n">x_tail</span> <span class="n">c1</span><span class="o">)</span> <span class="k">in</span>
+    <span class="c">// Since this case is identical to the one above, I could just take the two</span>
+    <span class="c">// relevant lemma invocations and the proof would still go through without a</span>
+    <span class="c">// calc statement. I prefer keeping the calc for proof robustness.</span>
+    <span class="ne">calc</span> <span class="o">(==)</span> <span class="o">{</span>
+      <span class="n">v</span> <span class="n">r</span><span class="o">;</span>
+    <span class="o">(==)</span> <span class="o">{</span> <span class="o">}</span>
+      <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">a</span> <span class="o">+</span> <span class="n">pow2</span> <span class="mi">32</span> <span class="o">*</span> <span class="n">v</span> <span class="o">(</span><span class="n">add&#39;</span> <span class="nn">S</span><span class="p">.</span><span class="n">empty</span> <span class="n">x_tail</span> <span class="n">c1</span><span class="o">);</span>
+    <span class="o">(==)</span> <span class="o">{</span> <span class="o">}</span>
+      <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">a</span> <span class="o">+</span> <span class="n">pow2</span> <span class="mi">32</span> <span class="o">*</span> <span class="o">(</span><span class="n">v</span> <span class="n">x_tail</span> <span class="o">+</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">c1</span><span class="o">);</span>
+    <span class="o">(==)</span> <span class="o">{</span> <span class="nn">FStar</span><span class="p">.</span><span class="nn">Math</span><span class="p">.</span><span class="nn">Lemmas</span><span class="p">.</span><span class="n">distributivity_add_right</span> <span class="o">(</span><span class="n">pow2</span> <span class="mi">32</span><span class="o">)</span> <span class="o">(</span><span class="n">v</span> <span class="n">x_tail</span><span class="o">)</span> <span class="o">(</span><span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">c1</span><span class="o">)</span> <span class="o">}</span>
+      <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">a</span> <span class="o">+</span> <span class="n">pow2</span> <span class="mi">32</span> <span class="o">*</span> <span class="n">v</span> <span class="n">x_tail</span> <span class="o">+</span> <span class="n">pow2</span> <span class="mi">32</span> <span class="o">*</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">c1</span><span class="o">;</span>
+    <span class="o">(==)</span> <span class="o">{</span> <span class="o">}</span>
+      <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">x_head</span> <span class="o">+</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">c0</span> <span class="o">+</span> <span class="n">pow2</span> <span class="mi">32</span> <span class="o">*</span> <span class="n">v</span> <span class="n">x_tail</span><span class="o">;</span>
+    <span class="o">(==)</span> <span class="o">{</span> <span class="nn">S</span><span class="p">.</span><span class="n">lemma_tl</span> <span class="n">x_head</span> <span class="n">x_tail</span> <span class="o">}</span>
+      <span class="n">v</span> <span class="n">x</span> <span class="o">+</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">c0</span><span class="o">;</span>
+    <span class="o">};</span>
+    <span class="n">r</span>
+  <span class="k">else</span>
+    <span class="kd">let</span> <span class="n">x_head</span> <span class="o">=</span> <span class="nn">S</span><span class="p">.</span><span class="n">head</span> <span class="n">x</span> <span class="k">in</span>
+    <span class="kd">let</span> <span class="n">x_tail</span> <span class="o">=</span> <span class="nn">S</span><span class="p">.</span><span class="n">tail</span> <span class="n">x</span> <span class="k">in</span>
+    <span class="nn">S</span><span class="p">.</span><span class="n">lemma_tl</span> <span class="n">x_head</span> <span class="n">x_tail</span><span class="o">;</span>
+    <span class="kd">let</span> <span class="n">y_head</span> <span class="o">=</span> <span class="nn">S</span><span class="p">.</span><span class="n">head</span> <span class="n">y</span> <span class="k">in</span>
+    <span class="kd">let</span> <span class="n">y_tail</span> <span class="o">=</span> <span class="nn">S</span><span class="p">.</span><span class="n">tail</span> <span class="n">y</span> <span class="k">in</span>
+    <span class="nn">S</span><span class="p">.</span><span class="n">lemma_tl</span> <span class="n">y_head</span> <span class="n">y_tail</span><span class="o">;</span>
+    <span class="kd">let</span> <span class="n">a1</span><span class="o">,</span> <span class="n">c1</span> <span class="o">=</span> <span class="n">add_carry</span> <span class="n">x_head</span> <span class="n">y_head</span> <span class="k">in</span>
+    <span class="kd">let</span> <span class="n">a2</span><span class="o">,</span> <span class="n">c2</span> <span class="o">=</span> <span class="n">add_carry</span> <span class="n">a1</span> <span class="n">c0</span> <span class="k">in</span>
+    <span class="kd">let</span> <span class="n">c</span> <span class="o">=</span> <span class="nn">U32</span><span class="p">.</span><span class="o">(</span><span class="n">c1</span> <span class="o">+^</span> <span class="n">c2</span><span class="o">)</span> <span class="k">in</span>
+    <span class="kd">let</span> <span class="n">r</span> <span class="o">=</span> <span class="nn">S</span><span class="p">.</span><span class="n">cons</span> <span class="n">a2</span> <span class="o">(</span><span class="n">add&#39;</span> <span class="n">x_tail</span> <span class="n">y_tail</span> <span class="n">c</span><span class="o">)</span> <span class="k">in</span>
+    <span class="c">// As usual, a calc statement is more robust.</span>
+    <span class="ne">calc</span> <span class="o">(==)</span> <span class="o">{</span>
+      <span class="n">v</span> <span class="n">r</span><span class="o">;</span>
+    <span class="o">(==)</span> <span class="o">{</span> <span class="o">}</span>
+      <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">a2</span> <span class="o">+</span> <span class="n">pow2</span> <span class="mi">32</span> <span class="o">*</span> <span class="n">v</span> <span class="o">(</span><span class="n">add&#39;</span> <span class="n">x_tail</span> <span class="n">y_tail</span> <span class="n">c</span><span class="o">);</span>
+    <span class="o">(==)</span> <span class="o">{</span> <span class="o">}</span>
+      <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">a2</span> <span class="o">+</span> <span class="n">pow2</span> <span class="mi">32</span> <span class="o">*</span> <span class="o">(</span><span class="n">v</span> <span class="n">x_tail</span> <span class="o">+</span> <span class="n">v</span> <span class="n">y_tail</span> <span class="o">+</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">c1</span> <span class="o">+</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">c2</span><span class="o">);</span>
+    <span class="o">(==)</span> <span class="o">{</span> <span class="n">_</span> <span class="k">by</span> <span class="o">(</span><span class="nn">FStar</span><span class="p">.</span><span class="nn">Tactics</span><span class="p">.</span><span class="nn">CanonCommSemiring</span><span class="p">.</span><span class="n">int_semiring</span> <span class="bp">()</span><span class="o">)</span> <span class="o">}</span>
+      <span class="c">// The main reason for using the tactic here is that this is basic</span>
+      <span class="c">// distributivity, but I know from experience that Z3 might struggle with</span>
+      <span class="c">// this fact, and that I don&#39;t want to write all of the arguments to all</span>
+      <span class="c">// three calls to the distributivity lemma by hand.</span>
+      <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">a2</span> <span class="o">+</span> <span class="n">pow2</span> <span class="mi">32</span> <span class="o">*</span> <span class="n">v</span> <span class="n">x_tail</span> <span class="o">+</span> <span class="n">pow2</span> <span class="mi">32</span> <span class="o">*</span> <span class="n">v</span> <span class="n">y_tail</span> <span class="o">+</span> <span class="n">pow2</span> <span class="mi">32</span> <span class="o">*</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">c1</span> <span class="o">+</span> <span class="n">pow2</span> <span class="mi">32</span> <span class="o">*</span> <span class="nn">U32</span><span class="p">.</span><span class="n">v</span> <span class="n">c2</span><span class="o">;</span>
+    <span class="o">};</span>
+    <span class="c">// Knowing from the S.length x = 0 case above that reasoning about S.tail</span>
+    <span class="c">// almost always requires a call to S.lemma_tl, I pre-emptively called it</span>
+    <span class="c">// for both x and y above. (Doesn&#39;t hurt.) With that, the rest of the proof</span>
+    <span class="c">// goes through automatically.</span>
+    <span class="n">r</span>
+<span class="o">#</span><span class="n">pop</span><span class="o">-</span><span class="n">options</span>
 </pre></div>
 </div>
-<p>No particular reason here for using Tot over Pure. Maybe because it’s more compact?</p>
-<div class="code fstar highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">add</span> <span class="p">(</span><span class="n">x</span> <span class="n">y</span><span class="p">:</span> <span class="n">t</span><span class="p">):</span> <span class="n">Tot</span> <span class="p">(</span><span class="n">z</span><span class="p">:</span><span class="n">t</span> <span class="p">{</span> <span class="n">v</span> <span class="n">z</span> <span class="o">=</span> <span class="n">v</span> <span class="n">x</span> <span class="o">+</span> <span class="n">v</span> <span class="n">y</span> <span class="p">})</span> <span class="o">=</span>
-  <span class="n">add</span><span class="s1">&#39; x y 0ul</span>
+<p>No particular reason here for using Tot over Pure. Maybe because it's more compact?</p>
+<div class="highlight-fstar notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span> <span class="n">add</span> <span class="o">(</span><span class="n">x</span> <span class="n">y</span><span class="o">:</span> <span class="n">t</span><span class="o">):</span> <span class="nc">Tot</span> <span class="o">(</span><span class="n">z</span><span class="o">:</span><span class="n">t</span> <span class="o">{</span> <span class="n">v</span> <span class="n">z</span> <span class="o">=</span> <span class="n">v</span> <span class="n">x</span> <span class="o">+</span> <span class="n">v</span> <span class="n">y</span> <span class="o">})</span> <span class="o">=</span>
+  <span class="n">add&#39;</span> <span class="n">x</span> <span class="n">y</span> <span class="mi">0</span><span class="n">ul</span>
 </pre></div>
 </div>
 <p>The next steps are of course to define <code class="docutils literal notranslate"><span class="pre">mul_carry</span></code>, <code class="docutils literal notranslate"><span class="pre">mul'</span></code> and <code class="docutils literal notranslate"><span class="pre">mul</span></code>.
 Another cool next step would be to make this module parametric over the limb
 type, to allow, say, U32 or U64.</p>
-</div>
+</section>
 
 
            </div>
