@@ -1,112 +1,843 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
-  <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
-  <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-  <link rel="stylesheet" href="style.ccs" type="text/css" />
+  <title>FStar.Tactics.PatternMatching</title>
+  <style>@charset "utf-8"; .gist{font-size:16px;color:#333;text-align:left;/*!* GitHub Light v0.4.1 * Copyright(c) 2012 - 2017 GitHub,Inc. * Licensed under MIT(https://github.com/primer/github-syntax-theme-generator/blob/master/LICENSE) */ direction:ltr}.gist .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;font-size:16px;line-height:1.5;word-wrap:break-word}.gist .markdown-body kbd{display:inline-block;padding:3px 5px;font:11px SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;line-height:10px;color:#444d56;vertical-align:middle;background-color:#fafbfc;border:1px solid #d1d5da;border-radius:3px;box-shadow:inset 0 -1px 0 #d1d5da}.gist .markdown-body:before{display:table;content:""}.gist .markdown-body:after{display:table;clear:both;content:""}.gist .markdown-body>:first-child{margin-top:0 !important}.gist .markdown-body>:last-child{margin-bottom:0 !important}.gist .markdown-body a:not([href]){color:inherit;text-decoration:none}.gist .markdown-body .absent{color:#cb2431}.gist .markdown-body .anchor{float:left;padding-right:4px;margin-left:-20px;line-height:1}.gist .markdown-body .anchor:focus{outline:none}.gist .markdown-body blockquote,.gist .markdown-body details,.gist .markdown-body dl,.gist .markdown-body ol,.gist .markdown-body p,.gist .markdown-body pre,.gist .markdown-body table,.gist .markdown-body ul{margin-top:0;margin-bottom:16px}.gist .markdown-body hr{height:.25em;padding:0;margin:24px 0;background-color:#e1e4e8;border:0}.gist .markdown-body blockquote{padding:0 1em;color:#6a737d;border-left:.25em solid #dfe2e5}.gist .markdown-body blockquote>:first-child{margin-top:0}.gist .markdown-body blockquote>:last-child{margin-bottom:0}.gist .markdown-body h1,.gist .markdown-body h2,.gist .markdown-body h3,.gist .markdown-body h4,.gist .markdown-body h5,.gist .markdown-body h6{margin-top:24px;margin-bottom:16px;font-weight:600;line-height:1.25}.gist .markdown-body h1 .octicon-link,.gist .markdown-body h2 .octicon-link,.gist .markdown-body h3 .octicon-link,.gist .markdown-body h4 .octicon-link,.gist .markdown-body h5 .octicon-link,.gist .markdown-body h6 .octicon-link{color:#1b1f23;vertical-align:middle;visibility:hidden}.gist .markdown-body h1:hover .anchor,.gist .markdown-body h2:hover .anchor,.gist .markdown-body h3:hover .anchor,.gist .markdown-body h4:hover .anchor,.gist .markdown-body h5:hover .anchor,.gist .markdown-body h6:hover .anchor{text-decoration:none}.gist .markdown-body h1:hover .anchor .octicon-link,.gist .markdown-body h2:hover .anchor .octicon-link,.gist .markdown-body h3:hover .anchor .octicon-link,.gist .markdown-body h4:hover .anchor .octicon-link,.gist .markdown-body h5:hover .anchor .octicon-link,.gist .markdown-body h6:hover .anchor .octicon-link{visibility:visible}.gist .markdown-body h1 code,.gist .markdown-body h1 tt,.gist .markdown-body h2 code,.gist .markdown-body h2 tt,.gist .markdown-body h3 code,.gist .markdown-body h3 tt,.gist .markdown-body h4 code,.gist .markdown-body h4 tt,.gist .markdown-body h5 code,.gist .markdown-body h5 tt,.gist .markdown-body h6 code,.gist .markdown-body h6 tt{font-size:inherit}.gist .markdown-body h1{font-size:2em}.gist .markdown-body h1,.gist .markdown-body h2{padding-bottom:.3em;border-bottom:1px solid #eaecef}.gist .markdown-body h2{font-size:1.5em}.gist .markdown-body h3{font-size:1.25em}.gist .markdown-body h4{font-size:1em}.gist .markdown-body h5{font-size:.875em}.gist .markdown-body h6{font-size:.85em;color:#6a737d}.gist .markdown-body ol,.gist .markdown-body ul{padding-left:2em}.gist .markdown-body ol.no-list,.gist .markdown-body ul.no-list{padding:0;list-style-type:none}.gist .markdown-body ol ol,.gist .markdown-body ol ul,.gist .markdown-body ul ol,.gist .markdown-body ul ul{margin-top:0;margin-bottom:0}.gist .markdown-body li{word-wrap:break-all}.gist .markdown-body li>p{margin-top:16px}.gist .markdown-body li+li{margin-top:.25em}.gist .markdown-body dl{padding:0}.gist .markdown-body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:600}.gist .markdown-body dl dd{padding:0 16px;margin-bottom:16px}.gist .markdown-body table{display:block;width:100%;overflow:auto}.gist .markdown-body table th{font-weight:600}.gist .markdown-body table td,.gist .markdown-body table th{padding:6px 13px;border:1px solid #dfe2e5}.gist .markdown-body table tr{background-color:#fff;border-top:1px solid #c6cbd1}.gist .markdown-body table tr:nth-child(2n){background-color:#f6f8fa}.gist .markdown-body table img{background-color:initial}.gist .markdown-body img{max-width:100%;box-sizing:initial;background-color:#fff}.gist .markdown-body img[align=right]{padding-left:20px}.gist .markdown-body img[align=left]{padding-right:20px}.gist .markdown-body .emoji{max-width:none;vertical-align:text-top;background-color:initial}.gist .markdown-body span.frame{display:block;overflow:hidden}.gist .markdown-body span.frame>span{display:block;float:left;width:auto;padding:7px;margin:13px 0 0;overflow:hidden;border:1px solid #dfe2e5}.gist .markdown-body span.frame span img{display:block;float:left}.gist .markdown-body span.frame span span{display:block;padding:5px 0 0;clear:both;color:#24292e}.gist .markdown-body span.align-center{display:block;overflow:hidden;clear:both}.gist .markdown-body span.align-center>span{display:block;margin:13px auto 0;overflow:hidden;text-align:center}.gist .markdown-body span.align-center span img{margin:0 auto;text-align:center}.gist .markdown-body span.align-right{display:block;overflow:hidden;clear:both}.gist .markdown-body span.align-right>span{display:block;margin:13px 0 0;overflow:hidden;text-align:right}.gist .markdown-body span.align-right span img{margin:0;text-align:right}.gist .markdown-body span.float-left{display:block;float:left;margin-right:13px;overflow:hidden}.gist .markdown-body span.float-left span{margin:13px 0 0}.gist .markdown-body span.float-right{display:block;float:right;margin-left:13px;overflow:hidden}.gist .markdown-body span.float-right>span{display:block;margin:13px auto 0;overflow:hidden;text-align:right}.gist .markdown-body code,.gist .markdown-body tt{padding:.2em .4em;margin:0;font-size:85%;background-color:#f6f8fa;border-radius:3px}.gist .markdown-body code br,.gist .markdown-body tt br{display:none}.gist .markdown-body del code{text-decoration:inherit}.gist .markdown-body pre{word-wrap:normal}.gist .markdown-body pre>code{padding:0;margin:0;font-size:100%;word-break:normal;white-space:pre;background:transparent;border:0}.gist .markdown-body .highlight{margin-bottom:16px}.gist .markdown-body .highlight pre{margin-bottom:0;word-break:normal}.gist .markdown-body .highlight pre,.gist .markdown-body pre{padding:16px;overflow:auto;font-size:85%;line-height:1.45;background-color:#f6f8fa;border-radius:3px}.gist .markdown-body pre code,.gist .markdown-body pre tt{display:inline;max-width:auto;padding:0;margin:0;overflow:visible;line-height:inherit;word-wrap:normal;background-color:#f6f8fa;border:0}.gist .markdown-body .csv-data td,.gist .markdown-body .csv-data th{padding:5px;overflow:hidden;font-size:12px;line-height:1;text-align:left;white-space:nowrap}.gist .markdown-body .csv-data .blob-num{padding:10px 8px 9px;text-align:right;background:#fff;border:0}.gist .markdown-body .csv-data tr{border-top:0}.gist .markdown-body .csv-data th{font-weight:600;background:#f6f8fa;border-top:0}.gist .pl-c{color:#6a737d}.gist .pl-c1,.gist .pl-s .pl-v{color:#005cc5}.gist .pl-e,.gist .pl-en{color:#6f42c1}.gist .pl-s .pl-s1,.gist .pl-smi{color:#24292e}.gist .pl-ent{color:#22863a}.gist .pl-k{color:#d73a49}.gist .pl-pds,.gist .pl-s,.gist .pl-s .pl-pse .pl-s1,.gist .pl-sr,.gist .pl-sr .pl-cce,.gist .pl-sr .pl-sra,.gist .pl-sr .pl-sre{color:#032f62}.gist .pl-smw,.gist .pl-v{color:#e36209}.gist .pl-bu{color:#b31d28}.gist .pl-ii{color:#fafbfc;background-color:#b31d28}.gist .pl-c2{color:#fafbfc;background-color:#d73a49}.gist .pl-c2:before{content:"^M"}.gist .pl-sr .pl-cce{font-weight:700;color:#22863a}.gist .pl-ml{color:#735c0f}.gist .pl-mh,.gist .pl-mh .pl-en,.gist .pl-ms{font-weight:700;color:#005cc5}.gist .pl-mi{font-style:italic;color:#24292e}.gist .pl-mb{font-weight:700;color:#24292e}.gist .pl-md{color:#b31d28;background-color:#ffeef0}.gist .pl-mi1{color:#22863a;background-color:#f0fff4}.gist .pl-mc{color:#e36209;background-color:#ffebda}.gist .pl-mi2{color:#f6f8fa;background-color:#005cc5}.gist .pl-mdr{font-weight:700;color:#6f42c1}.gist .pl-ba{color:#586069}.gist .pl-sg{color:#959da5}.gist .pl-corl{text-decoration:underline;color:#032f62}.gist .breadcrumb{font-size:16px;color:#586069}.gist .breadcrumb .separator{white-space:pre-wrap}.gist .breadcrumb .separator:after,.gist .breadcrumb .separator:before{content:" "}.gist .breadcrumb strong.final-path{color:#24292e}.gist strong{font-weight:bolder}.gist .editor-abort{display:inline;font-size:14px}.gist .blob-interaction-bar{position:relative;background-color:#f2f2f2;border-bottom:1px solid #e5e5e5}.gist .blob-interaction-bar:before{display:table;content:""}.gist .blob-interaction-bar:after{display:table;clear:both;content:""}.gist .blob-interaction-bar .octicon-search{position:absolute;top:10px;left:10px;font-size:12px;color:#586069}.gist .blob-filter{width:100%;padding:4px 20px 5px 30px;font-size:12px;border:0;border-radius:0;outline:none}.gist .blob-filter:focus{outline:none}.gist .html-blob{margin-bottom:15px}.gist .TagsearchPopover{width:inherit;max-width:600px}.gist .TagsearchPopover-content{max-height:300px}.gist .TagsearchPopover-list .TagsearchPopover-list-item:hover{background-color:#f6f8fa}.gist .TagsearchPopover-list .TagsearchPopover-list-item .TagsearchPopover-item:hover{text-decoration:none}.gist .TagsearchPopover-list .blob-code-inner{white-space:pre-wrap}.gist .linejump .linejump-input{width:340px;background-color:#fafbfc}.gist .linejump .btn,.gist .linejump .linejump-input{padding:10px 15px;font-size:16px}.gist .CopyBlock{line-height:20px;cursor:pointer}.gist .CopyBlock .octicon-clippy{display:none}.gist .CopyBlock:active,.gist .CopyBlock:focus,.gist .CopyBlock:hover{background-color:#fff;outline:none}.gist .CopyBlock:active .octicon-clippy,.gist .CopyBlock:focus .octicon-clippy,.gist .CopyBlock:hover .octicon-clippy{display:inline-block}.gist .blob-wrapper{overflow-x:auto;overflow-y:hidden}.gist .page-blob.height-full .blob-wrapper{overflow-y:auto}.gist .page-edit-blob.height-full .CodeMirror{height:300px}.gist .page-edit-blob.height-full .CodeMirror,.gist .page-edit-blob.height-full .CodeMirror-scroll{display:flex;flex-direction:column;flex:1 1 auto}.gist .blob-wrapper-embedded{max-height:240px;overflow-y:auto}.gist .diff-table{width:100%;border-collapse:initial}.gist .diff-table .line-comments{padding:10px;vertical-align:top;border-top:1px solid #e1e4e8}.gist .diff-table .line-comments:first-child+.empty-cell{border-left-width:1px}.gist .diff-table tr:not(:last-child) .line-comments{border-top:1px solid #e1e4e8;border-bottom:1px solid #e1e4e8}.gist .blob-num{width:1%;min-width:50px;padding-right:10px;padding-left:10px;font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;font-size:12px;line-height:20px;color:rgba(27,31,35,.3);text-align:right;white-space:nowrap;vertical-align:top;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.gist .blob-num:hover{color:rgba(27,31,35,.6)}.gist .blob-num:before{content:attr(data-line-number)}.gist .blob-num.non-expandable{cursor:default}.gist .blob-num.non-expandable:hover{color:rgba(27,31,35,.3)}.gist .blob-code{position:relative;padding-right:10px;padding-left:10px;line-height:20px;vertical-align:top}.gist .blob-code-inner{overflow:visible;font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;font-size:12px;color:#24292e;word-wrap:normal;white-space:pre}.gist .blob-code-inner .x-first{border-top-left-radius:.2em;border-bottom-left-radius:.2em}.gist .blob-code-inner .x-last{border-top-right-radius:.2em;border-bottom-right-radius:.2em}.gist .blob-code-inner.highlighted,.gist .blob-code-inner .highlighted{background-color:#fffbdd}.gist .blob-code-marker:before{padding-right:8px;content:attr(data-code-marker)}.gist .blob-code-marker-addition:before{content:"+ "}.gist .blob-code-marker-deletion:before{content:"- "}.gist .blob-code-marker-context:before{content:" "}.gist .soft-wrap .diff-table{table-layout:fixed}.gist .soft-wrap .blob-code{padding-left:18px;text-indent:-7px}.gist .soft-wrap .blob-code-inner{word-wrap:break-word;white-space:pre-wrap}.gist .soft-wrap .no-nl-marker{display:none}.gist .soft-wrap .add-line-comment{margin-left:-28px}.gist .blob-code-hunk,.gist .blob-num-expandable,.gist .blob-num-hunk{color:rgba(27,31,35,.7);vertical-align:middle}.gist .blob-num-expandable,.gist .blob-num-hunk{background-color:#dbedff}.gist .blob-code-hunk{padding-top:4px;padding-bottom:4px;background-color:#f1f8ff;border-width:1px 0}.gist .blob-expanded .blob-code,.gist .blob-expanded .blob-num{background-color:#fafbfc}.gist .blob-expanded+tr:not(.blob-expanded) .blob-code,.gist .blob-expanded+tr:not(.blob-expanded) .blob-num,.gist .blob-expanded .blob-num-hunk,.gist tr:not(.blob-expanded)+.blob-expanded .blob-code,.gist tr:not(.blob-expanded)+.blob-expanded .blob-num{border-top:1px solid #eaecef}.gist .blob-num-expandable{padding:0;font-size:12px;text-align:center}.gist .blob-num-expandable .diff-expander{display:block;width:auto;height:auto;padding:4px 11px 4px 10px;margin-right:-1px;color:#586069;cursor:pointer}.gist .blob-num-expandable .diff-expander .octicon{vertical-align:top}.gist .blob-num-expandable .directional-expander{display:block;width:auto;height:auto;margin-right:-1px;color:#586069;cursor:pointer}.gist .blob-num-expandable .single-expander{padding-top:4px;padding-bottom:4px}.gist .blob-num-expandable .diff-expander:hover,.gist .blob-num-expandable .directional-expander:hover{color:#fff;text-shadow:none;background-color:#0366d6;border-color:#0366d6}.gist .blob-code-addition{background-color:#e6ffed}.gist .blob-code-addition .x{color:#24292e;background-color:#acf2bd}.gist .blob-num-addition{background-color:#cdffd8;border-color:#bef5cb}.gist .blob-code-deletion{background-color:#ffeef0}.gist .blob-code-deletion .x{color:#24292e;background-color:#fdb8c0}.gist .blob-num-deletion{background-color:#ffdce0;border-color:#fdaeb7}.gist .is-selecting,.gist .is-selecting .blob-num{cursor:ns-resize !important}.gist .is-selecting .add-line-comment,.gist .is-selecting a{pointer-events:none;cursor:ns-resize !important}.gist .is-selecting .is-hovered .add-line-comment{opacity:0}.gist .is-selecting.file-diff-split,.gist .is-selecting.file-diff-split .blob-num{cursor:nwse-resize !important}.gist .is-selecting.file-diff-split .add-line-comment,.gist .is-selecting.file-diff-split .empty-cell,.gist .is-selecting.file-diff-split a{pointer-events:none;cursor:nwse-resize !important}.gist .selected-line{position:relative}.gist .selected-line:after{position:absolute;top:0;left:0;display:block;width:100%;height:100%;box-sizing:border-box;pointer-events:none;content:"";background:rgba(255,223,93,.2);mix-blend-mode:multiply}.gist .selected-line.selected-line-top:after{border-top:1px solid #ffd33d}.gist .selected-line.selected-line-bottom:after{border-bottom:1px solid #ffd33d}.gist .selected-line.selected-line-left:after,.gist .selected-line:first-child:after{border-left:1px solid #ffd33d}.gist .selected-line.selected-line-right:after,.gist .selected-line:last-child:after{border-right:1px solid #ffd33d}.gist .is-commenting .selected-line.blob-code:before{position:absolute;top:0;left:-1px;display:block;width:4px;height:100%;content:"";background:#0366d6}.gist .add-line-comment{position:relative;z-index:5;float:left;width:22px;height:22px;margin:-2px -10px -2px -20px;line-height:21px;color:#fff;text-align:center;text-indent:0;cursor:pointer;background-color:#0366d6;background-image:linear-gradient(#0372ef,#0366d6);border-radius:3px;box-shadow:0 1px 4px rgba(27,31,35,.15);opacity:0;transition:transform .1s ease-in-out;transform:scale(.8)}.gist .add-line-comment:hover{transform:scale(1)}.gist .add-line-comment:focus,.is-hovered .gist .add-line-comment{opacity:1}.gist .add-line-comment .octicon{vertical-align:text-top;pointer-events:none}.gist .add-line-comment.octicon-check{background:#333;opacity:1}.gist .inline-comment-form{border:1px solid #dfe2e5;border-radius:3px}.gist .inline-review-comment{margin-top:0 !important;margin-bottom:10px !important}.gist .inline-review-comment .gc:first-child+tr .blob-code,.gist .inline-review-comment .gc:first-child+tr .blob-num{padding-top:5px}.gist .inline-review-comment tr:last-child{border-bottom-right-radius:3px;border-bottom-left-radius:3px}.gist .inline-review-comment tr:last-child .blob-code,.gist .inline-review-comment tr:last-child .blob-num{padding-bottom:8px}.gist .inline-review-comment tr:last-child .blob-code:first-child,.gist .inline-review-comment tr:last-child .blob-num:first-child{border-bottom-left-radius:3px}.gist .inline-review-comment tr:last-child .blob-code:last-child,.gist .inline-review-comment tr:last-child .blob-num:last-child{border-bottom-right-radius:3px}.gist .timeline-inline-comments{width:100%;table-layout:fixed}.gist .show-inline-notes .inline-comments,.gist .timeline-inline-comments .inline-comments{display:table-row}.gist .inline-comments,.gist .inline-comments.is-collapsed{display:none}.gist .inline-comments .line-comments.is-collapsed{visibility:hidden}.gist .inline-comments .line-comments+.blob-num{border-left-width:1px}.gist .inline-comments .timeline-comment{margin-bottom:10px}.gist .comment-holder,.gist .inline-comments .inline-comment-form,.gist .inline-comments .inline-comment-form-container{max-width:780px}.gist .empty-cell+.line-comments,.gist .line-comments+.line-comments{border-left:1px solid #eaecef}.gist .inline-comment-form-container .inline-comment-form,.gist .inline-comment-form-container.open .inline-comment-form-actions{display:none}.gist .inline-comment-form-container .inline-comment-form-actions,.gist .inline-comment-form-container.open .inline-comment-form{display:block}.gist body.full-width .container,.gist body.full-width .container-lg,.gist body.full-width .container-xl,.gist body.split-diff .container,.gist body.split-diff .container-lg,.gist body.split-diff .container-xl{width:100%;max-width:none;padding-right:20px;padding-left:20px}.gist body.full-width .repository-content,.gist body.split-diff .repository-content{width:100%}.gist body.full-width .new-pr-form,.gist body.split-diff .new-pr-form{max-width:980px}.gist .file-diff-split{table-layout:fixed}.gist .file-diff-split .blob-code+.blob-num{border-left:1px solid #f6f8fa}.gist .file-diff-split .blob-code-inner{word-wrap:break-word;white-space:pre-wrap}.gist .file-diff-split .empty-cell{cursor:default;background-color:#fafbfc;border-right-color:#eaecef}@media (max-width:1280px){.gist .file-diff-split .write-selected .comment-form-head{margin-bottom:48px !important}.gist .file-diff-split markdown-toolbar{position:absolute;right:8px;bottom:-40px}}.gist .submodule-diff-stats .octicon-diff-removed{color:#cb2431}.gist .submodule-diff-stats .octicon-diff-renamed{color:#677a85}.gist .submodule-diff-stats .octicon-diff-modified{color:#d0b44c}.gist .submodule-diff-stats .octicon-diff-added{color:#28a745}.gist .BlobToolbar{left:-17px}.gist .BlobToolbar-dropdown{margin-left:-2px}.gist .code-navigation-banner{background:linear-gradient(180deg,rgba(242,248,254,0),rgba(242,248,254,.47))}.gist .code-navigation-banner .code-navigation-banner-illo{background-image:url(code-navigation-banner-illo.svg);background-repeat:no-repeat;background-position:50%}.gist .pl-token.active,.gist .pl-token:hover{cursor:pointer;background:#ffea7f}.gist .task-list-item{list-style-type:none}.gist .task-list-item label{font-weight:400}.gist .task-list-item.enabled label{cursor:pointer}.gist .task-list-item+.task-list-item{margin-top:3px}.gist .task-list-item .handle{display:none}.gist .task-list-item-checkbox{margin:0 .2em .25em -1.6em;vertical-align:middle}.gist .reorderable-task-lists .markdown-body .contains-task-list{padding:0}.gist .reorderable-task-lists .markdown-body li:not(.task-list-item){margin-left:26px}.gist .reorderable-task-lists .markdown-body ol:not(.contains-task-list) li,.gist .reorderable-task-lists .markdown-body ul:not(.contains-task-list) li{margin-left:0}.gist .reorderable-task-lists .markdown-body li p{margin-top:0}.gist .reorderable-task-lists .markdown-body .task-list-item{padding-right:15px;padding-left:42px;margin-right:-15px;margin-left:-15px;border:1px solid transparent}.gist .reorderable-task-lists .markdown-body .task-list-item+.task-list-item{margin-top:0}.gist .reorderable-task-lists .markdown-body .task-list-item .contains-task-list{padding-top:4px}.gist .reorderable-task-lists .markdown-body .task-list-item .handle{display:block;float:left;width:20px;padding:2px 0 0 2px;margin-left:-43px;opacity:0}.gist .reorderable-task-lists .markdown-body .task-list-item .drag-handle{fill:#333}.gist .reorderable-task-lists .markdown-body .task-list-item.hovered>.handle{opacity:1}.gist .reorderable-task-lists .markdown-body .task-list-item.is-dragging{opacity:0}.gist .review-comment-contents .markdown-body .task-list-item{padding-left:42px;margin-right:-12px;margin-left:-12px;border-top-left-radius:3px;border-bottom-left-radius:3px}.gist .review-comment-contents .markdown-body .task-list-item.hovered{border-left-color:#ededed}.gist .highlight{padding:0;margin:0;font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;font-size:12px;font-weight:400;line-height:1.4;color:#333;background:#fff;border:0}.gist .octospinner,.gist .render-viewer-error,.gist .render-viewer-fatal,.gist .render-viewer-invalid{display:none}.gist iframe.render-viewer{width:100%;height:480px;overflow:hidden;border:0}.gist code,.gist pre{font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace !important}.gist .gist-meta{padding:10px;overflow:hidden;font:12px -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;color:#586069;background-color:#f7f7f7;border-radius:0 0 3px 3px}.gist .gist-meta a{font-weight:600;color:#666;text-decoration:none;border:0}.gist .gist-data{overflow:auto;word-wrap:normal;background-color:#fff;border-bottom:1px solid #ddd;border-radius:3px 3px 0 0}.gist .gist-file{margin-bottom:1em;font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;border:1px solid;border-color:#ddd #ddd #ccc;border-radius:3px}.gist .gist-file article{padding:6px}.gist .gist-file .scroll .gist-data{position:absolute;top:0;right:0;bottom:30px;left:0;overflow:scroll}.gist .gist-file .scroll .gist-meta{position:absolute;right:0;bottom:0;left:0}.gist .blob-num{min-width:inherit}.gist .blob-code,.gist .blob-num{padding:1px 10px !important;background:transparent}.gist .blob-code{text-align:left;border:0}.gist .blob-wrapper table{border-collapse:collapse}.gist table,.gist table tr,.gist table tr td,.gist table tr th{border-collapse:collapse}.gist .blob-wrapper tr:first-child td{padding-top:4px}.gist .markdown-body .anchor{display:none}</style>
 </head>
 <body>
-<h1 id="module-fstar.tactics.patternmatching">module FStar.Tactics.PatternMatching</h1>
-<p>fsdoc: no-summary-found</p>
-<p>fsdoc: no-comment-found</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((mustfail #a (t:Unidentified product: [<span class="dt">unit</span>] (Tac a)) (message:<span class="dt">string</span>)):(Tac <span class="dt">unit</span>)):<span class="kw">match</span> trytac t <span class="kw">with</span> (Some _)  -&gt; fail message | None  -&gt; ()</code></pre></div>
+<blockquote>
+<h1>
+<a id="user-content-pattern-matching-tactics" class="anchor" href="#pattern-matching-tactics" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>==========================
+Pattern-matching tactics</h1>
+<p>:Author: Clément Pit-Claudel
+:Contact: <a href="mailto:clement.pitclaudel@live.com">clement.pitclaudel@live.com</a>
+:Date: 2017-10-13</p>
+</blockquote>
+<h1>
+<a id="user-content-fstartacticspatternmatching" class="anchor" href="#fstartacticspatternmatching" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>FStar.Tactics.PatternMatching</h1>
+<ul>
+<li>Opens module <a href="FStar.Tactics.html">FStar.Tactics</a>
+</li>
+</ul>
+<blockquote>
+<h1>
+<a id="user-content-contents" class="anchor" href="#contents" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contents</h1>
+<p>1  Contents
+2  Motivation
+3  Some utility functions
+4  Pattern types
+5  Pattern matching exceptions
+5.1  Types of exceptions
+5.2  The exception monad
+5.3  Liftings
+6  Pattern interpretation
+7  Pattern-matching problems
+7.1  Definitions
+7.2  Resolution
+8  A DSL for pattern-matching
+8.1  Pattern notations
+8.2  Problem notations
+8.3  Continuations
+9  Putting it all together
+10  Examples
+10.1  Simple examples
+10.2  A real-life example
+11  Possible extensions
+12  Notes</p>
+<h1>
+<a id="user-content-motivation" class="anchor" href="#motivation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Motivation</h1>
+<p>Suppose you have a goal of the form <code>squash (a == b)</code>.  How do you capture
+<code>a</code> and <code>b</code> for further inspection?</p>
+<p>Here's a basic (but cumbersome!) implementation:</p>
+</blockquote>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">fetch_eq_side</span> <span class="pl-c1">()</span> <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-c1">(</span><span class="pl-en">term</span> * <span class="pl-en">term</span><span class="pl-c1">)</span> <span class="pl-c1">=</span>
+  <span class="pl-k">let</span> <span class="pl-en">g</span> <span class="pl-c1">=</span> <span class="pl-en">cur_goal</span> <span class="pl-c1">()</span> <span class="pl-k">in</span>
+  <span class="pl-k">match</span> <span class="pl-en">inspect</span> <span class="pl-en">g</span> <span class="pl-k">with</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Tv_App</span> <span class="pl-k">squash</span> <span class="pl-c1">(</span><span class="pl-en">g</span><span class="pl-c1">,</span> <span class="pl-c1">_</span><span class="pl-c1">)</span> <span class="pl-c1">-&gt;</span>
+    <span class="pl-c1">(</span><span class="pl-k">match</span> <span class="pl-en">inspect</span> <span class="pl-k">squash</span> <span class="pl-k">with</span>
+     <span class="pl-c1">|</span> <span class="pl-c1">Tv_FVar</span> <span class="pl-k">squash</span> <span class="pl-c1">-&gt;</span>
+       <span class="pl-k">if</span> <span class="pl-en">fv_to_string</span> <span class="pl-k">squash</span> <span class="pl-c1">=</span> <span class="pl-en">flatten_name</span> <span class="pl-en">squash_qn</span> <span class="pl-k">then</span>
+         <span class="pl-c1">(</span><span class="pl-k">match</span> <span class="pl-en">inspect</span> <span class="pl-en">g</span> <span class="pl-k">with</span>
+          <span class="pl-c1">|</span> <span class="pl-c1">Tv_App</span> <span class="pl-en">eq_type_x</span> <span class="pl-c1">(</span><span class="pl-en">y</span><span class="pl-c1">,</span> <span class="pl-c1">_</span><span class="pl-c1">)</span> <span class="pl-c1">-&gt;</span>
+            <span class="pl-c1">(</span><span class="pl-k">match</span> <span class="pl-en">inspect</span> <span class="pl-en">eq_type_x</span> <span class="pl-k">with</span>
+             <span class="pl-c1">|</span> <span class="pl-c1">Tv_App</span> <span class="pl-en">eq_type</span> <span class="pl-c1">(</span><span class="pl-en">x</span><span class="pl-c1">,</span> <span class="pl-c1">_</span><span class="pl-c1">)</span> <span class="pl-c1">-&gt;</span>
+               <span class="pl-c1">(</span><span class="pl-k">match</span> <span class="pl-en">inspect</span> <span class="pl-en">eq_type</span> <span class="pl-k">with</span>
+                <span class="pl-c1">|</span> <span class="pl-c1">Tv_App</span> <span class="pl-en">eq</span> <span class="pl-c1">(</span><span class="pl-en">typ</span><span class="pl-c1">,</span> <span class="pl-c1">_</span><span class="pl-c1">)</span> <span class="pl-c1">-&gt;</span>
+                  <span class="pl-c1">(</span><span class="pl-k">match</span> <span class="pl-en">inspect</span> <span class="pl-en">eq</span> <span class="pl-k">with</span>
+                   <span class="pl-c1">|</span> <span class="pl-c1">Tv_FVar</span> <span class="pl-en">eq</span> <span class="pl-c1">-&gt;</span>
+                     <span class="pl-k">if</span> <span class="pl-en">fv_to_string</span> <span class="pl-en">eq</span> <span class="pl-c1">=</span> <span class="pl-en">flatten_name</span> <span class="pl-en">eq2_qn</span> <span class="pl-k">then</span>
+                       <span class="pl-c1">(</span><span class="pl-en">x</span><span class="pl-c1">,</span> <span class="pl-en">y</span><span class="pl-c1">)</span>
+                     <span class="pl-k">else</span> <span class="pl-en">fail</span> <span class="pl-s"><span class="pl-pds">"</span>not an equality<span class="pl-pds">"</span></span>
+                   <span class="pl-c1">|</span> <span class="pl-c1">_</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">fail</span> <span class="pl-s"><span class="pl-pds">"</span>not an app2 of fvar: <span class="pl-pds">"</span></span><span class="pl-c1">)</span>
+                <span class="pl-c1">|</span> <span class="pl-c1">_</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">fail</span> <span class="pl-s"><span class="pl-pds">"</span>not an app3<span class="pl-pds">"</span></span><span class="pl-c1">)</span>
+             <span class="pl-c1">|</span> <span class="pl-c1">_</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">fail</span> <span class="pl-s"><span class="pl-pds">"</span>not an app2<span class="pl-pds">"</span></span><span class="pl-c1">)</span>
+          <span class="pl-c1">|</span> <span class="pl-c1">_</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">fail</span> <span class="pl-s"><span class="pl-pds">"</span>not an app under squash<span class="pl-pds">"</span></span><span class="pl-c1">)</span>
+       <span class="pl-k">else</span> <span class="pl-en">fail</span> <span class="pl-s"><span class="pl-pds">"</span>not a squash<span class="pl-pds">"</span></span>
+     <span class="pl-c1">|</span> <span class="pl-c1">_</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">fail</span> <span class="pl-s"><span class="pl-pds">"</span>not an app of fvar at top level<span class="pl-pds">"</span></span><span class="pl-c1">)</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">_</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">fail</span> <span class="pl-s"><span class="pl-pds">"</span>not an app at top level<span class="pl-pds">"</span></span></pre></div>
+<blockquote>
+<p>…and here's how you could use it:</p>
+</blockquote>
+<p>let _ =</p>
+<p>assert_by_tactic (1 + 1 == 2)</p>
+<p>(fun () -&gt; let l, r = fetch_eq_side () in</p>
+<p>print (term_to_string l ^ " / " ^ term_to_string r))</p>
+<blockquote>
+<p>This file defines pattern-matching primitives that let you write the same
+thing like this…</p>
+<p>.. code:: fstar</p>
+<p>let fetch_eq_side' #a () : Tac (term * term) =
+gpm (fun (left right: a) (g: pm_goal (squash (left == right))) -&gt;
+(quote left, quote right) &lt;: Tac (term * term))</p>
+<p>let _ =
+assert_by_tactic (1 + 1 == 2)
+(fun () -&gt; let l, r = fetch_eq_side' #int () in
+print (term_to_string l ^ " / " ^ term_to_string r))</p>
+<p>…or, more succinctly, like this:</p>
+<p>.. code:: fstar</p>
+<p>let _ =
+assert_by_tactic (1 + 1 == 2)
+(gpm (fun (left right: int) (g: pm_goal (squash (left == right))) -&gt;
+let l, r = quote left, quote right in
+print (term_to_string l ^ " / " ^ term_to_string r) &lt;: Tac unit))</p>
+</blockquote>
+<p>Many of the tactics are written in the <code>Tac</code> effect, which isn't
+well-supported in SMT.  FIXME: remove this once <code>Tac</code> is marked as a stable
+effect.
+GM: Tac is now stable, but some VCs are still tough on z3, so there are a few admit()s.</p>
+<blockquote>
+<h1>
+<a id="user-content-some-utility-functions" class="anchor" href="#some-utility-functions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Some utility functions</h1>
+<p>(Skip over this part on a quick read — these are just convenience functions)</p>
+</blockquote>
+<h4>
+<a id="user-content-mustfail" class="anchor" href="#mustfail" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>mustfail</h4>
 <p>Ensure that tactic <code>t</code> fails. *</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((exact_hyp (a:Type0) (h:binder)):(Tac <span class="dt">unit</span>)):<span class="kw">let</span>  hd = quote ((FStar<span class="kw">.</span>Squash<span class="kw">.</span>return_squash #a)) <span class="kw">in</span> exact (mk_app hd (Prims<span class="kw">.</span>Cons ((FStar<span class="kw">.</span>Pervasives<span class="kw">.</span>Native<span class="kw">.</span>Mktuple2 (pack ((Tv_Var (bv_of_binder h)))) Q_Explicit)) (Prims<span class="kw">.</span>Nil )))</code></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">mustfail</span> <span class="pl-c1">#</span><span class="pl-en">a</span> <span class="pl-c1">(</span><span class="pl-en">t</span><span class="pl-c1">:</span> <span class="pl-c1">unit</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-en">a</span><span class="pl-c1">)</span> <span class="pl-c1">(</span><span class="pl-en">message</span><span class="pl-c1">:</span> <span class="pl-c1">string)</span> <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span> <span class="pl-c1">=</span>
+    <span class="pl-k">match</span> <span class="pl-en">trytac</span> <span class="pl-en">t</span> <span class="pl-k">with</span>
+    <span class="pl-c1">|</span> <span class="pl-c1">Some</span> <span class="pl-c1">_</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">fail</span> <span class="pl-en">message</span>
+    <span class="pl-c1">|</span> <span class="pl-c1">None</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">()</span></pre></div>
+<blockquote>
+<p>The following two tactics are needed because of issues with the <code>Tac</code>
+effect.</p>
+</blockquote>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">implies_intro'</span> <span class="pl-c1">()</span> <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span> <span class="pl-c1">=</span>
+  <span class="pl-k">let</span> <span class="pl-c1">_</span> <span class="pl-c1">=</span> <span class="pl-en">implies_intro</span> <span class="pl-c1">()</span> <span class="pl-k">in</span> <span class="pl-c1">()</span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">repeat'</span> <span class="pl-c1">#</span><span class="pl-en">a</span> <span class="pl-c1">(</span><span class="pl-en">f</span><span class="pl-c1">:</span> <span class="pl-c1">unit</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-en">a</span><span class="pl-c1">)</span> <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span> <span class="pl-c1">=</span>
+  <span class="pl-k">let</span> <span class="pl-c1">_</span> <span class="pl-c1">=</span> <span class="pl-en">repeat</span> <span class="pl-en">f</span> <span class="pl-k">in</span> <span class="pl-c1">()</span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">and_elim'</span> <span class="pl-c1">(</span><span class="pl-en">h</span><span class="pl-c1">:</span> <span class="pl-en">binder</span><span class="pl-c1">)</span> <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span> <span class="pl-c1">=</span>
+  <span class="pl-en">and_elim</span> <span class="pl-c1">(</span><span class="pl-en">pack</span> <span class="pl-c1">(</span><span class="pl-c1">Tv_Var</span> <span class="pl-c1">(</span><span class="pl-en">bv_of_binder</span> <span class="pl-en">h</span><span class="pl-c1">)));</span>
+  <span class="pl-en">clear</span> <span class="pl-en">h</span></pre></div>
+<h4>
+<a id="user-content-exact_hyp" class="anchor" href="#exact_hyp" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>exact_hyp</h4>
 <p>Use a hypothesis at type a to satisfy a goal at type squash a</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((exact_hyp&#39; (h:binder)):(Tac <span class="dt">unit</span>)):exact (pack ((Tv_Var (bv_of_binder h))))</code></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">exact_hyp</span> <span class="pl-c1">(</span><span class="pl-en">a</span><span class="pl-c1">:</span> <span class="pl-c1">Type0)</span> <span class="pl-c1">(</span><span class="pl-en">h</span><span class="pl-c1">:</span> <span class="pl-en">binder</span><span class="pl-c1">)</span> <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span> <span class="pl-c1">=</span>
+  <span class="pl-k">let</span> <span class="pl-en">hd</span> <span class="pl-c1">=</span> <span class="pl-en">quote</span> <span class="pl-c1">(</span><span class="pl-smi">FStar.Squash.</span><span class="pl-en">return_squash</span> <span class="pl-c1">#</span><span class="pl-en">a</span><span class="pl-c1">)</span> <span class="pl-k">in</span>
+  <span class="pl-en">exact</span> <span class="pl-c1">(</span><span class="pl-en">mk_app</span> <span class="pl-en">hd</span> <span class="pl-c1">[((</span><span class="pl-en">pack</span> <span class="pl-c1">(</span><span class="pl-c1">Tv_Var</span> <span class="pl-c1">(</span><span class="pl-en">bv_of_binder</span> <span class="pl-en">h</span><span class="pl-c1">))),</span> <span class="pl-c1">Q_Explicit</span><span class="pl-c1">)])</span></pre></div>
+<h4>
+<a id="user-content-exact_hyp-1" class="anchor" href="#exact_hyp-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>exact_hyp'</h4>
 <p>Use a hypothesis h (of type a) to satisfy a goal at type a</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((interp_pattern_aux (pat:pattern) (cur_bindings:bindings) (tm:term)):(Tac (match_res bindings))):admit (); <span class="kw">let</span>  (interp_any () cur_bindings tm) = <span class="kw">return</span> (Prims<span class="kw">.</span>Nil ) <span class="kw">in</span> <span class="kw">let</span>  (interp_var (v:varname) cur_bindings tm) = <span class="kw">match</span> List<span class="kw">.</span>Tot<span class="kw">.</span>assoc v cur_bindings <span class="kw">with</span> (Some tm&#39;)  -&gt; <span class="kw">if</span> term_eq tm tm&#39; <span class="kw">then</span> <span class="kw">return</span> cur_bindings <span class="kw">else</span> raise ((NonLinearMismatch ((FStar<span class="kw">.</span>Pervasives<span class="kw">.</span>Native<span class="kw">.</span>Mktuple3 v tm tm&#39;)))) | None  -&gt; <span class="kw">return</span> ((Prims<span class="kw">.</span>Cons ((FStar<span class="kw">.</span>Pervasives<span class="kw">.</span>Native<span class="kw">.</span>Mktuple2 v tm)) cur_bindings)) <span class="kw">in</span> <span class="kw">let</span>  (interp_qn (qn:qn) cur_bindings tm) = <span class="kw">match</span> inspect tm <span class="kw">with</span> (Tv_FVar fv)  -&gt; <span class="kw">if</span> =(fv_to_string fv, qn) <span class="kw">then</span> <span class="kw">return</span> cur_bindings <span class="kw">else</span> raise ((NameMismatch ((FStar<span class="kw">.</span>Pervasives<span class="kw">.</span>Native<span class="kw">.</span>Mktuple2 qn (fv_to_string fv))))) | _  -&gt; raise ((SimpleMismatch ((FStar<span class="kw">.</span>Pervasives<span class="kw">.</span>Native<span class="kw">.</span>Mktuple2 pat tm)))) <span class="kw">in</span> <span class="kw">let</span>  (interp_type cur_bindings tm) = <span class="kw">match</span> inspect tm <span class="kw">with</span> (Tv_Type ())  -&gt; <span class="kw">return</span> cur_bindings | _  -&gt; raise ((SimpleMismatch ((FStar<span class="kw">.</span>Pervasives<span class="kw">.</span>Native<span class="kw">.</span>Mktuple2 pat tm)))) <span class="kw">in</span> <span class="kw">let</span>  (interp_app (p_hd:(p:pattern:{<span class="st">&lt;&lt;(p, pat)})) (p_arg:(p:pattern:{&lt;&lt;(p, pat)})) cur_bindings tm) = match inspect tm with (Tv_App hd (arg, _))  -&gt; with_hd &lt;- interp_pattern_aux p_hd cur_bindings hd; with_arg &lt;- interp_pattern_aux p_arg with_hd arg; return with_arg | _  -&gt; raise ((SimpleMismatch ((FStar.Pervasives.Native.Mktuple2 pat tm)))) in match pat with PAny  -&gt; interp_any () cur_bindings tm | (PVar var)  -&gt; interp_var var cur_bindings tm | (PQn qn)  -&gt; interp_qn qn cur_bindings tm | PType  -&gt; interp_type cur_bindings tm | (PApp p_hd p_arg)  -&gt; interp_app p_hd p_arg cur_bindings tm | _  -&gt; fail &quot;?&quot;</span></code></pre></div>
-<p>Match a pattern against a term. <code>cur_bindings</code> is a list of bindings collected while matching previous parts of the pattern. Returns a result in the exception monad. *</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((interp_pattern (pat:pattern)):Unidentified product: [term] (Tac (match_res bindings))):(<span class="kw">fun</span> (tm:term) -&gt; rev_bindings &lt;- interp_pattern_aux pat (Prims<span class="kw">.</span>Nil ) tm; <span class="kw">return</span> (List<span class="kw">.</span>Tot<span class="kw">.</span>rev rev_bindings))</code></pre></div>
-<p>Match a pattern <code>pat</code> against a term. Returns a result in the exception monad. *</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((match_term pat (tm:term)):(Tac bindings)):<span class="kw">match</span> interp_pattern pat (norm_term (Prims<span class="kw">.</span>Nil ) tm) <span class="kw">with</span> (Success bb)  -&gt; bb | (Failure ex)  -&gt; Tactics<span class="kw">.</span>fail (string_of_match_exception ex)</code></pre></div>
-<p>Match a term <code>tm</code> against a pattern <code>pat</code>. Raises an exception if the match fails. This is mostly useful for debugging: use <code>mgw</code> to capture matches. *</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((assoc_varname_fail (#b:Type) (key:varname) (ls:list <span class="co">(*(varname, b)))):(Tac b)):match List.Tot.assoc key ls with None  -&gt; fail (^(&quot;Not found: &quot;, key)) | (Some x)  -&gt; x</span></code></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">exact_hyp'</span> <span class="pl-c1">(</span><span class="pl-en">h</span><span class="pl-c1">:</span> <span class="pl-en">binder</span><span class="pl-c1">):</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span> <span class="pl-c1">=</span>
+  <span class="pl-en">exact</span> <span class="pl-c1">(</span><span class="pl-en">pack</span> <span class="pl-c1">(</span><span class="pl-c1">Tv_Var</span> <span class="pl-c1">(</span><span class="pl-en">bv_of_binder</span> <span class="pl-en">h</span><span class="pl-c1">)))</span></pre></div>
+<blockquote>
+<h1>
+<a id="user-content-pattern-types" class="anchor" href="#pattern-types" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Pattern types</h1>
+<p>Patterns are defined using a simple inductive type, mirroring the structure
+of <code>term_view</code>.</p>
+</blockquote>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">type</span> <span class="pl-en">varname</span> <span class="pl-c1">=</span> <span class="pl-c1">string</span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">type</span> <span class="pl-en">qn</span> <span class="pl-c1">=</span> <span class="pl-c1">string</span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">type</span> <span class="pl-en">pattern</span> <span class="pl-c1">=</span>
+<span class="pl-c1">|</span> <span class="pl-c1">PAny</span><span class="pl-c1">:</span> <span class="pl-en">pattern</span>
+<span class="pl-c1">|</span> <span class="pl-c1">PVar</span><span class="pl-c1">:</span> <span class="pl-en">name</span><span class="pl-c1">:</span> <span class="pl-en">varname</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">pattern</span>
+<span class="pl-c1">|</span> <span class="pl-c1">PQn</span><span class="pl-c1">:</span> <span class="pl-en">qn</span><span class="pl-c1">:</span> <span class="pl-en">qn</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">pattern</span>
+<span class="pl-c1">|</span> <span class="pl-c1">PType</span><span class="pl-c1">:</span> <span class="pl-en">pattern</span>
+<span class="pl-c1">|</span> <span class="pl-c1">PApp</span><span class="pl-c1">:</span> <span class="pl-en">hd</span><span class="pl-c1">:</span> <span class="pl-en">pattern</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">arg</span><span class="pl-c1">:</span> <span class="pl-en">pattern</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">pattern</span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">desc_of_pattern</span> <span class="pl-c1">=</span> <span class="pl-k">function</span>
+<span class="pl-c1">|</span> <span class="pl-c1">PAny</span> <span class="pl-c1">-&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>anything<span class="pl-pds">"</span></span>
+<span class="pl-c1">|</span> <span class="pl-c1">PVar</span> <span class="pl-c1">_</span> <span class="pl-c1">-&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>a variable<span class="pl-pds">"</span></span>
+<span class="pl-c1">|</span> <span class="pl-c1">PQn</span> <span class="pl-en">qn</span> <span class="pl-c1">-&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>a constant (<span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-en">qn</span> <span class="pl-c1">^</span> <span class="pl-s"><span class="pl-pds">"</span>)<span class="pl-pds">"</span></span>
+<span class="pl-c1">|</span> <span class="pl-c1">PType</span> <span class="pl-c1">-&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>Type<span class="pl-pds">"</span></span>
+<span class="pl-c1">|</span> <span class="pl-c1">PApp</span> <span class="pl-c1">_</span> <span class="pl-c1">_</span> <span class="pl-c1">-&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>a function application<span class="pl-pds">"</span></span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-k">rec</span> <span class="pl-en">string_of_pattern</span> <span class="pl-c1">=</span> <span class="pl-k">function</span>
+<span class="pl-c1">|</span> <span class="pl-c1">PAny</span> <span class="pl-c1">-&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>__<span class="pl-pds">"</span></span>
+<span class="pl-c1">|</span> <span class="pl-c1">PVar</span> <span class="pl-en">x</span> <span class="pl-c1">-&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>?<span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-en">x</span>
+<span class="pl-c1">|</span> <span class="pl-c1">PQn</span> <span class="pl-en">qn</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">qn</span>
+<span class="pl-c1">|</span> <span class="pl-c1">PType</span> <span class="pl-c1">-&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>Type<span class="pl-pds">"</span></span>
+<span class="pl-c1">|</span> <span class="pl-c1">PApp</span> <span class="pl-en">l</span> <span class="pl-en">r</span> <span class="pl-c1">-&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>(<span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-en">string_of_pattern</span> <span class="pl-en">l</span> <span class="pl-c1">^</span> <span class="pl-s"><span class="pl-pds">"</span> <span class="pl-pds">"</span></span>
+                 <span class="pl-c1">^</span> <span class="pl-en">string_of_pattern</span> <span class="pl-en">r</span> <span class="pl-c1">^</span> <span class="pl-s"><span class="pl-pds">"</span>)<span class="pl-pds">"</span></span></pre></div>
+<blockquote>
+<h1>
+<a id="user-content-pattern-matching-exceptions" class="anchor" href="#pattern-matching-exceptions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Pattern matching exceptions</h1>
+<p>Pattern-matching is defined as a pure, monadic function (because of issues
+with combining DM4F effects, but also because it helps with debugging).
+This section defines the exception monad.</p>
+<h2>
+<a id="user-content-types-of-exceptions" class="anchor" href="#types-of-exceptions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Types of exceptions</h2>
+</blockquote>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">noeq</span> <span class="pl-k">type</span> <span class="pl-en">match_exception</span> <span class="pl-c1">=</span>
+<span class="pl-c1">|</span> <span class="pl-c1">NameMismatch</span> <span class="pl-en">of</span> <span class="pl-en">qn</span> * <span class="pl-en">qn</span>
+<span class="pl-c1">|</span> <span class="pl-c1">SimpleMismatch</span> <span class="pl-en">of</span> <span class="pl-en">pattern</span> * <span class="pl-en">term</span>
+<span class="pl-c1">|</span> <span class="pl-c1">NonLinearMismatch</span> <span class="pl-en">of</span> <span class="pl-en">varname</span> * <span class="pl-en">term</span> * <span class="pl-en">term</span>
+<span class="pl-c1">|</span> <span class="pl-c1">UnsupportedTermInPattern</span> <span class="pl-en">of</span> <span class="pl-en">term</span>
+<span class="pl-c1">|</span> <span class="pl-c1">IncorrectTypeInAbsPatBinder</span> <span class="pl-en">of</span> <span class="pl-en">typ</span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">term_head</span> <span class="pl-en">t</span> <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-c1">string</span> <span class="pl-c1">=</span>
+  <span class="pl-k">match</span> <span class="pl-en">inspect</span> <span class="pl-en">t</span> <span class="pl-k">with</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Tv_Var</span> <span class="pl-en">bv</span> <span class="pl-c1">-&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>Tv_Var<span class="pl-pds">"</span></span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Tv_BVar</span> <span class="pl-en">fv</span> <span class="pl-c1">-&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>Tv_BVar<span class="pl-pds">"</span></span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Tv_FVar</span> <span class="pl-en">fv</span> <span class="pl-c1">-&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>Tv_FVar<span class="pl-pds">"</span></span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Tv_App</span> <span class="pl-en">f</span> <span class="pl-en">x</span> <span class="pl-c1">-&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>Tv_App<span class="pl-pds">"</span></span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Tv_Abs</span> <span class="pl-en">x</span> <span class="pl-en">t</span> <span class="pl-c1">-&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>Tv_Abs<span class="pl-pds">"</span></span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Tv_Arrow</span> <span class="pl-en">x</span> <span class="pl-en">t</span> <span class="pl-c1">-&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>Tv_Arrow<span class="pl-pds">"</span></span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Tv_Type</span> <span class="pl-c1">()</span> <span class="pl-c1">-&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>Tv_Type<span class="pl-pds">"</span></span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Tv_Refine</span> <span class="pl-en">x</span> <span class="pl-en">t</span> <span class="pl-c1">-&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>Tv_Refine<span class="pl-pds">"</span></span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Tv_Const</span> <span class="pl-en">cst</span> <span class="pl-c1">-&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>Tv_Const<span class="pl-pds">"</span></span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Tv_Uvar</span> <span class="pl-en">i</span> <span class="pl-en">t</span> <span class="pl-c1">-&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>Tv_Uvar<span class="pl-pds">"</span></span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Tv_Let</span> <span class="pl-en">r</span> <span class="pl-en">attrs</span> <span class="pl-en">b</span> <span class="pl-en">t1</span> <span class="pl-en">t2</span> <span class="pl-c1">-&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>Tv_Let<span class="pl-pds">"</span></span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Tv_Match</span> <span class="pl-en">t</span> <span class="pl-c1">_</span> <span class="pl-en">branches</span> <span class="pl-c1">-&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>Tv_Match<span class="pl-pds">"</span></span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Tv_AscribedT</span> <span class="pl-c1">_</span> <span class="pl-c1">_</span> <span class="pl-c1">_</span> <span class="pl-c1">-&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>Tv_AscribedT<span class="pl-pds">"</span></span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Tv_AscribedC</span> <span class="pl-c1">_</span> <span class="pl-c1">_</span> <span class="pl-c1">_</span> <span class="pl-c1">-&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>Tv_AscribedC<span class="pl-pds">"</span></span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Tv_Unknown</span> <span class="pl-c1">-&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>Tv_Unknown<span class="pl-pds">"</span></span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">string_of_match_exception</span> <span class="pl-c1">=</span> <span class="pl-k">function</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">NameMismatch</span> <span class="pl-c1">(</span><span class="pl-en">qn1</span><span class="pl-c1">,</span> <span class="pl-en">qn2</span><span class="pl-c1">)</span> <span class="pl-c1">-&gt;</span>
+    <span class="pl-s"><span class="pl-pds">"</span>Match failure (name mismatch): expecting <span class="pl-pds">"</span></span> <span class="pl-c1">^</span>
+    <span class="pl-en">qn1</span> <span class="pl-c1">^</span> <span class="pl-s"><span class="pl-pds">"</span>, found <span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-en">qn2</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">SimpleMismatch</span> <span class="pl-c1">(</span><span class="pl-en">pat</span><span class="pl-c1">,</span> <span class="pl-en">tm</span><span class="pl-c1">)</span> <span class="pl-c1">-&gt;</span>
+    <span class="pl-s"><span class="pl-pds">"</span>Match failure (sort mismatch): expecting <span class="pl-pds">"</span></span> <span class="pl-c1">^</span>
+    <span class="pl-en">desc_of_pattern</span> <span class="pl-en">pat</span> <span class="pl-c1">^</span> <span class="pl-s"><span class="pl-pds">"</span>, got <span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-en">term_to_string</span> <span class="pl-en">tm</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">NonLinearMismatch</span> <span class="pl-c1">(</span><span class="pl-en">nm</span><span class="pl-c1">,</span> <span class="pl-en">t1</span><span class="pl-c1">,</span> <span class="pl-en">t2</span><span class="pl-c1">)</span> <span class="pl-c1">-&gt;</span>
+    <span class="pl-s"><span class="pl-pds">"</span>Match failure (nonlinear mismatch): variable <span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-en">nm</span> <span class="pl-c1">^</span>
+    <span class="pl-s"><span class="pl-pds">"</span> needs to match both <span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-c1">(</span><span class="pl-en">term_to_string</span> <span class="pl-en">t1</span><span class="pl-c1">)</span> <span class="pl-c1">^</span>
+    <span class="pl-s"><span class="pl-pds">"</span> and <span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-c1">(</span><span class="pl-en">term_to_string</span> <span class="pl-en">t2</span><span class="pl-c1">)</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">UnsupportedTermInPattern</span> <span class="pl-en">tm</span> <span class="pl-c1">-&gt;</span>
+    <span class="pl-s"><span class="pl-pds">"</span>Match failure (unsupported term in pattern): <span class="pl-pds">"</span></span> <span class="pl-c1">^</span>
+    <span class="pl-en">term_to_string</span> <span class="pl-en">tm</span> <span class="pl-c1">^</span> <span class="pl-s"><span class="pl-pds">"</span> (<span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-en">term_head</span> <span class="pl-en">tm</span> <span class="pl-c1">^</span> <span class="pl-s"><span class="pl-pds">"</span>)<span class="pl-pds">"</span></span>
+  <span class="pl-c1">|</span> <span class="pl-c1">IncorrectTypeInAbsPatBinder</span> <span class="pl-en">typ</span> <span class="pl-c1">-&gt;</span>
+    <span class="pl-s"><span class="pl-pds">"</span>Incorrect type in pattern-matching binder: <span class="pl-pds">"</span></span> <span class="pl-c1">^</span>
+    <span class="pl-en">term_to_string</span> <span class="pl-en">typ</span> <span class="pl-c1">^</span> <span class="pl-s"><span class="pl-pds">"</span> (use one of ``var``, ``hyp …``, or ``goal …``)<span class="pl-pds">"</span></span></pre></div>
+<blockquote>
+<h2>
+<a id="user-content-the-exception-monad" class="anchor" href="#the-exception-monad" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The exception monad</h2>
+</blockquote>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">noeq</span> <span class="pl-k">type</span> <span class="pl-en">match_res</span> <span class="pl-en">a</span> <span class="pl-c1">=</span>
+<span class="pl-c1">|</span> <span class="pl-c1">Success</span> <span class="pl-en">of</span> <span class="pl-en">a</span>
+<span class="pl-c1">|</span> <span class="pl-c1">Failure</span> <span class="pl-en">of</span> <span class="pl-en">match_exception</span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">return</span> <span class="pl-c1">#</span><span class="pl-en">a</span> <span class="pl-c1">(</span><span class="pl-en">x</span><span class="pl-c1">:</span> <span class="pl-en">a</span><span class="pl-c1">)</span> <span class="pl-c1">:</span> <span class="pl-en">match_res</span> <span class="pl-en">a</span> <span class="pl-c1">=</span>
+  <span class="pl-c1">Success</span> <span class="pl-en">x</span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">bind</span> <span class="pl-c1">(#</span><span class="pl-en">a</span> <span class="pl-c1">#</span><span class="pl-en">b</span><span class="pl-c1">:</span> <span class="pl-c1">Type)</span>
+         <span class="pl-c1">(</span><span class="pl-en">f</span><span class="pl-c1">:</span> <span class="pl-en">match_res</span> <span class="pl-en">a</span><span class="pl-c1">)</span>
+         <span class="pl-c1">(</span><span class="pl-en">g</span><span class="pl-c1">:</span> <span class="pl-en">a</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">(</span><span class="pl-en">match_res</span> <span class="pl-en">b</span><span class="pl-c1">))</span>
+    <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-c1">(</span><span class="pl-en">match_res</span> <span class="pl-en">b</span><span class="pl-c1">)</span> <span class="pl-c1">=</span>
+  <span class="pl-k">match</span> <span class="pl-en">f</span> <span class="pl-k">with</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Success</span> <span class="pl-en">aa</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">g</span> <span class="pl-en">aa</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Failure</span> <span class="pl-en">ex</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Failure</span> <span class="pl-en">ex</span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">raise</span> <span class="pl-c1">#</span><span class="pl-en">a</span> <span class="pl-c1">(</span><span class="pl-en">ex</span><span class="pl-c1">:</span> <span class="pl-en">match_exception</span><span class="pl-c1">)</span> <span class="pl-c1">:</span> <span class="pl-en">match_res</span> <span class="pl-en">a</span> <span class="pl-c1">=</span>
+  <span class="pl-c1">Failure</span> <span class="pl-en">ex</span></pre></div>
+<blockquote>
+<h2>
+<a id="user-content-liftings" class="anchor" href="#liftings" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Liftings</h2>
+<p>There's a natural lifting from the exception monad into the tactic effect:</p>
+</blockquote>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">lift_exn_tac</span> <span class="pl-c1">#</span><span class="pl-en">a</span> <span class="pl-c1">#</span><span class="pl-en">b</span> <span class="pl-c1">(</span><span class="pl-en">f</span><span class="pl-c1">:</span> <span class="pl-en">a</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">match_res</span> <span class="pl-en">b</span><span class="pl-c1">)</span> <span class="pl-c1">(</span><span class="pl-en">aa</span><span class="pl-c1">:</span> <span class="pl-en">a</span><span class="pl-c1">)</span> <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-en">b</span> <span class="pl-c1">=</span>
+  <span class="pl-k">match</span> <span class="pl-en">f</span> <span class="pl-en">aa</span> <span class="pl-k">with</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Success</span> <span class="pl-en">bb</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">bb</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Failure</span> <span class="pl-en">ex</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">Tactics.</span><span class="pl-en">fail</span> <span class="pl-c1">(</span><span class="pl-en">string_of_match_exception</span> <span class="pl-en">ex</span><span class="pl-c1">)</span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">lift_exn_tactic</span> <span class="pl-c1">#</span><span class="pl-en">a</span> <span class="pl-c1">#</span><span class="pl-en">b</span> <span class="pl-c1">(</span><span class="pl-en">f</span><span class="pl-c1">:</span> <span class="pl-en">a</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">match_res</span> <span class="pl-en">b</span><span class="pl-c1">)</span> <span class="pl-c1">(</span><span class="pl-en">aa</span><span class="pl-c1">:</span> <span class="pl-en">a</span><span class="pl-c1">)</span> <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-en">b</span> <span class="pl-c1">=</span>
+  <span class="pl-k">match</span> <span class="pl-en">f</span> <span class="pl-en">aa</span> <span class="pl-k">with</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Success</span> <span class="pl-en">bb</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">bb</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Failure</span> <span class="pl-en">ex</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">Tactics.</span><span class="pl-en">fail</span> <span class="pl-c1">(</span><span class="pl-en">string_of_match_exception</span> <span class="pl-en">ex</span><span class="pl-c1">)</span></pre></div>
+<blockquote>
+<h1>
+<a id="user-content-pattern-interpretation" class="anchor" href="#pattern-interpretation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Pattern interpretation</h1>
+<p>This section implement pattern-matching.  This is strictly a one term, one
+pattern implementation — handling cases in which mutliple hypotheses match
+the same pattern is done later.</p>
+</blockquote>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">type</span> <span class="pl-en">bindings</span> <span class="pl-c1">=</span> <span class="pl-en">list</span> <span class="pl-c1">(</span><span class="pl-en">varname</span> * <span class="pl-en">term</span><span class="pl-c1">)</span>
+<span class="pl-k">let</span> <span class="pl-en">string_of_bindings</span> <span class="pl-c1">(</span><span class="pl-en">bindings</span><span class="pl-c1">:</span> <span class="pl-en">bindings</span><span class="pl-c1">)</span> <span class="pl-c1">=</span>
+  <span class="pl-smi">String.</span><span class="pl-en">concat</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\n</span><span class="pl-pds">"</span></span>
+    <span class="pl-c1">(</span><span class="pl-en">map</span> <span class="pl-c1">(</span><span class="pl-k">fun</span> <span class="pl-c1">(</span><span class="pl-en">nm</span><span class="pl-c1">,</span> <span class="pl-en">tm</span><span class="pl-c1">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">(</span><span class="pl-s"><span class="pl-pds">"</span>&gt;&gt; <span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-en">nm</span> <span class="pl-c1">^</span> <span class="pl-s"><span class="pl-pds">"</span>: <span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-en">term_to_string</span> <span class="pl-en">tm</span><span class="pl-c1">))</span>
+                  <span class="pl-en">bindings</span><span class="pl-c1">)</span></pre></div>
+<h4>
+<a id="user-content-interp_pattern_aux" class="anchor" href="#interp_pattern_aux" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>interp_pattern_aux</h4>
+<p>Match a pattern against a term.
+<code>cur_bindings</code> is a list of bindings collected while matching previous parts of
+the pattern.  Returns a result in the exception monad. *</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-k">rec</span> <span class="pl-en">interp_pattern_aux</span> <span class="pl-c1">(</span><span class="pl-en">pat</span><span class="pl-c1">:</span> <span class="pl-en">pattern</span><span class="pl-c1">)</span> <span class="pl-c1">(</span><span class="pl-en">cur_bindings</span><span class="pl-c1">:</span> <span class="pl-en">bindings</span><span class="pl-c1">)</span> <span class="pl-c1">(</span><span class="pl-en">tm</span><span class="pl-c1">:</span><span class="pl-en">term</span><span class="pl-c1">)</span>
+    <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-c1">(</span><span class="pl-en">match_res</span> <span class="pl-en">bindings</span><span class="pl-c1">)</span> <span class="pl-c1">=</span>
+  <span class="pl-k">admit</span><span class="pl-c1">();</span>
+  <span class="pl-k">let</span> <span class="pl-en">interp_any</span> <span class="pl-c1">()</span> <span class="pl-en">cur_bindings</span> <span class="pl-en">tm</span> <span class="pl-c1">=</span>
+    <span class="pl-en">return</span> <span class="pl-c1">[]</span> <span class="pl-k">in</span>
+  <span class="pl-k">let</span> <span class="pl-en">interp_var</span> <span class="pl-c1">(</span><span class="pl-en">v</span><span class="pl-c1">:</span> <span class="pl-en">varname</span><span class="pl-c1">)</span> <span class="pl-en">cur_bindings</span> <span class="pl-en">tm</span> <span class="pl-c1">=</span>
+    <span class="pl-k">match</span> <span class="pl-smi">List.Tot.Base.</span><span class="pl-en">assoc</span> <span class="pl-en">v</span> <span class="pl-en">cur_bindings</span> <span class="pl-k">with</span>
+    <span class="pl-c1">|</span> <span class="pl-c1">Some</span> <span class="pl-en">tm'</span> <span class="pl-c1">-&gt;</span> <span class="pl-k">if</span> <span class="pl-en">term_eq</span> <span class="pl-en">tm</span> <span class="pl-en">tm'</span> <span class="pl-k">then</span> <span class="pl-en">return</span> <span class="pl-en">cur_bindings</span>
+                 <span class="pl-k">else</span> <span class="pl-en">raise</span> <span class="pl-c1">(</span><span class="pl-c1">NonLinearMismatch</span> <span class="pl-c1">(</span><span class="pl-en">v</span><span class="pl-c1">,</span> <span class="pl-en">tm</span><span class="pl-c1">,</span> <span class="pl-en">tm'</span><span class="pl-c1">))</span>
+    <span class="pl-c1">|</span> <span class="pl-c1">None</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">return</span> <span class="pl-c1">((</span><span class="pl-en">v</span><span class="pl-c1">,</span> <span class="pl-en">tm</span><span class="pl-c1">)</span> <span class="pl-c1">::</span> <span class="pl-en">cur_bindings</span><span class="pl-c1">)</span> <span class="pl-k">in</span>
+  <span class="pl-k">let</span> <span class="pl-en">interp_qn</span> <span class="pl-c1">(</span><span class="pl-en">qn</span><span class="pl-c1">:</span> <span class="pl-en">qn</span><span class="pl-c1">)</span> <span class="pl-en">cur_bindings</span> <span class="pl-en">tm</span> <span class="pl-c1">=</span>
+    <span class="pl-k">match</span> <span class="pl-en">inspect</span> <span class="pl-en">tm</span> <span class="pl-k">with</span>
+    <span class="pl-c1">|</span> <span class="pl-c1">Tv_FVar</span> <span class="pl-en">fv</span> <span class="pl-c1">-&gt;</span>
+      <span class="pl-k">if</span> <span class="pl-en">fv_to_string</span> <span class="pl-en">fv</span> <span class="pl-c1">=</span> <span class="pl-en">qn</span> <span class="pl-k">then</span> <span class="pl-en">return</span> <span class="pl-en">cur_bindings</span>
+      <span class="pl-k">else</span> <span class="pl-en">raise</span> <span class="pl-c1">(</span><span class="pl-c1">NameMismatch</span> <span class="pl-c1">(</span><span class="pl-en">qn</span><span class="pl-c1">,</span> <span class="pl-c1">(</span><span class="pl-en">fv_to_string</span> <span class="pl-en">fv</span><span class="pl-c1">)))</span>
+    <span class="pl-c1">|</span> <span class="pl-c1">_</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">raise</span> <span class="pl-c1">(</span><span class="pl-c1">SimpleMismatch</span> <span class="pl-c1">(</span><span class="pl-en">pat</span><span class="pl-c1">,</span> <span class="pl-en">tm</span><span class="pl-c1">))</span> <span class="pl-k">in</span>
+  <span class="pl-k">let</span> <span class="pl-en">interp_type</span> <span class="pl-en">cur_bindings</span> <span class="pl-en">tm</span> <span class="pl-c1">=</span>
+    <span class="pl-k">match</span> <span class="pl-en">inspect</span> <span class="pl-en">tm</span> <span class="pl-k">with</span>
+    <span class="pl-c1">|</span> <span class="pl-c1">Tv_Type</span> <span class="pl-c1">()</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">return</span> <span class="pl-en">cur_bindings</span>
+    <span class="pl-c1">|</span> <span class="pl-c1">_</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">raise</span> <span class="pl-c1">(</span><span class="pl-c1">SimpleMismatch</span> <span class="pl-c1">(</span><span class="pl-en">pat</span><span class="pl-c1">,</span> <span class="pl-en">tm</span><span class="pl-c1">))</span> <span class="pl-k">in</span>
+  <span class="pl-k">let</span> <span class="pl-en">interp_app</span> <span class="pl-c1">(</span><span class="pl-en">p_hd</span> <span class="pl-en">p_arg</span><span class="pl-c1">:</span> <span class="pl-c1">(</span><span class="pl-en">p</span><span class="pl-c1">:</span><span class="pl-en">pattern</span><span class="pl-c1">{</span><span class="pl-en">p</span> &lt;&lt; <span class="pl-en">pat</span><span class="pl-c1">}))</span> <span class="pl-en">cur_bindings</span> <span class="pl-en">tm</span> <span class="pl-c1">=</span>
+    <span class="pl-k">match</span> <span class="pl-en">inspect</span> <span class="pl-en">tm</span> <span class="pl-k">with</span>
+    <span class="pl-c1">|</span> <span class="pl-c1">Tv_App</span> <span class="pl-en">hd</span> <span class="pl-c1">(</span><span class="pl-en">arg</span><span class="pl-c1">,</span> <span class="pl-c1">_</span><span class="pl-c1">)</span> <span class="pl-c1">-&gt;</span>
+      <span class="pl-en">with_hd</span> <span class="pl-c1">&lt;--</span> <span class="pl-en">interp_pattern_aux</span> <span class="pl-en">p_hd</span> <span class="pl-en">cur_bindings</span> <span class="pl-en">hd</span><span class="pl-c1">;</span>
+      <span class="pl-en">with_arg</span> <span class="pl-c1">&lt;--</span> <span class="pl-en">interp_pattern_aux</span> <span class="pl-en">p_arg</span> <span class="pl-en">with_hd</span> <span class="pl-en">arg</span><span class="pl-c1">;</span>
+      <span class="pl-en">return</span> <span class="pl-en">with_arg</span>
+    <span class="pl-c1">|</span> <span class="pl-c1">_</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">raise</span> <span class="pl-c1">(</span><span class="pl-c1">SimpleMismatch</span> <span class="pl-c1">(</span><span class="pl-en">pat</span><span class="pl-c1">,</span> <span class="pl-en">tm</span><span class="pl-c1">))</span> <span class="pl-k">in</span>
+    <span class="pl-k">match</span> <span class="pl-en">pat</span> <span class="pl-k">with</span>
+    <span class="pl-c1">|</span> <span class="pl-c1">PAny</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">interp_any</span> <span class="pl-c1">()</span> <span class="pl-en">cur_bindings</span> <span class="pl-en">tm</span>
+    <span class="pl-c1">|</span> <span class="pl-c1">PVar</span> <span class="pl-en">var</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">interp_var</span> <span class="pl-en">var</span> <span class="pl-en">cur_bindings</span> <span class="pl-en">tm</span>
+    <span class="pl-c1">|</span> <span class="pl-c1">PQn</span> <span class="pl-en">qn</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">interp_qn</span> <span class="pl-en">qn</span> <span class="pl-en">cur_bindings</span> <span class="pl-en">tm</span>
+    <span class="pl-c1">|</span> <span class="pl-c1">PType</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">interp_type</span> <span class="pl-en">cur_bindings</span> <span class="pl-en">tm</span>
+    <span class="pl-c1">|</span> <span class="pl-c1">PApp</span> <span class="pl-en">p_hd</span> <span class="pl-en">p_arg</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">interp_app</span> <span class="pl-en">p_hd</span> <span class="pl-en">p_arg</span> <span class="pl-en">cur_bindings</span> <span class="pl-en">tm</span></pre></div>
+<p>GM: Jul 11 2018, sadly this is needed, seems this monad layered
+on top of Tac causesq queries to be hard on Z3</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-c1">|</span> <span class="pl-c1">_</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">fail</span> <span class="pl-s"><span class="pl-pds">"</span>?<span class="pl-pds">"</span></span></pre></div>
+<h4>
+<a id="user-content-interp_pattern" class="anchor" href="#interp_pattern" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>interp_pattern</h4>
+<p>Match a pattern <code>pat</code> against a term.
+Returns a result in the exception monad. *</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">interp_pattern</span> <span class="pl-c1">(</span><span class="pl-en">pat</span><span class="pl-c1">:</span> <span class="pl-en">pattern</span><span class="pl-c1">)</span> <span class="pl-c1">:</span> <span class="pl-en">term</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">(</span><span class="pl-en">match_res</span> <span class="pl-en">bindings</span><span class="pl-c1">)</span> <span class="pl-c1">=</span>
+  <span class="pl-k">fun</span> <span class="pl-c1">(</span><span class="pl-en">tm</span><span class="pl-c1">:</span> <span class="pl-en">term</span><span class="pl-c1">)</span> <span class="pl-c1">-&gt;</span>
+    <span class="pl-en">rev_bindings</span> <span class="pl-c1">&lt;--</span> <span class="pl-en">interp_pattern_aux</span> <span class="pl-en">pat</span> <span class="pl-c1">[]</span> <span class="pl-en">tm</span><span class="pl-c1">;</span>
+    <span class="pl-en">return</span> <span class="pl-c1">(</span><span class="pl-smi">List.Tot.Base.</span><span class="pl-en">rev</span> <span class="pl-en">rev_bindings</span><span class="pl-c1">)</span></pre></div>
+<h4>
+<a id="user-content-match_term" class="anchor" href="#match_term" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>match_term</h4>
+<p>Match a term <code>tm</code> against a pattern <code>pat</code>.
+Raises an exception if the match fails.  This is mostly useful for debugging:
+use <code>mgw</code> to capture matches. *</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">match_term</span> <span class="pl-en">pat</span> <span class="pl-c1">(</span><span class="pl-en">tm</span> <span class="pl-c1">:</span> <span class="pl-en">term</span><span class="pl-c1">)</span> <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-en">bindings</span> <span class="pl-c1">=</span>
+    <span class="pl-k">match</span> <span class="pl-en">interp_pattern</span> <span class="pl-en">pat</span> <span class="pl-c1">(</span><span class="pl-en">norm_term</span> <span class="pl-c1">[]</span> <span class="pl-en">tm</span><span class="pl-c1">)</span> <span class="pl-k">with</span>
+    <span class="pl-c1">|</span> <span class="pl-c1">Success</span> <span class="pl-en">bb</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">bb</span>
+    <span class="pl-c1">|</span> <span class="pl-c1">Failure</span> <span class="pl-en">ex</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">Tactics.</span><span class="pl-en">fail</span> <span class="pl-c1">(</span><span class="pl-en">string_of_match_exception</span> <span class="pl-en">ex</span><span class="pl-c1">)</span></pre></div>
+<blockquote>
+<h1>
+<a id="user-content-pattern-matching-problems" class="anchor" href="#pattern-matching-problems" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Pattern-matching problems</h1>
+<p>Generalizing past single-term single-pattern problems, we obtain the
+following notions of pattern-matching problems and solutions:</p>
+</blockquote>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">debug</span> <span class="pl-en">msg</span> <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span> <span class="pl-c1">=</span> <span class="pl-c1">()</span> <span class="pl-c">// print msg</span></pre></div>
+<blockquote>
+<h2>
+<a id="user-content-definitions" class="anchor" href="#definitions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Definitions</h2>
+</blockquote>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">absvar</span> <span class="pl-c1">=</span> <span class="pl-en">binder</span>
+<span class="pl-k">type</span> <span class="pl-en">hypothesis</span> <span class="pl-c1">=</span> <span class="pl-en">binder</span></pre></div>
+<blockquote>
+<p>A matching problem is composed of holes (<code>mp_vars</code>), hypothesis patterns
+(<code>mp_hyps</code>), and a goal pattern (<code>mp_goal</code>).</p>
+</blockquote>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">noeq</span> <span class="pl-k">type</span> <span class="pl-en">matching_problem</span> <span class="pl-c1">=</span>
+  <span class="pl-c1">{</span> <span class="pl-en">mp_vars</span><span class="pl-c1">:</span> <span class="pl-en">list</span> <span class="pl-en">varname</span><span class="pl-c1">;</span>
+    <span class="pl-en">mp_hyps</span><span class="pl-c1">:</span> <span class="pl-en">list</span> <span class="pl-c1">(</span><span class="pl-en">varname</span> * <span class="pl-en">pattern</span><span class="pl-c1">);</span>
+    <span class="pl-en">mp_goal</span><span class="pl-c1">:</span> <span class="pl-en">option</span> <span class="pl-en">pattern</span> <span class="pl-c1">}</span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">string_of_matching_problem</span> <span class="pl-en">mp</span> <span class="pl-c1">=</span>
+  <span class="pl-k">let</span> <span class="pl-en">vars</span> <span class="pl-c1">=</span>
+    <span class="pl-smi">String.</span><span class="pl-en">concat</span> <span class="pl-s"><span class="pl-pds">"</span>, <span class="pl-pds">"</span></span> <span class="pl-en">mp</span><span class="pl-c1">.</span><span class="pl-en">mp_vars</span> <span class="pl-k">in</span>
+  <span class="pl-k">let</span> <span class="pl-en">hyps</span> <span class="pl-c1">=</span>
+    <span class="pl-smi">String.</span><span class="pl-en">concat</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\n</span>        <span class="pl-pds">"</span></span>
+      <span class="pl-c1">(</span><span class="pl-smi">List.Tot.Base.</span><span class="pl-en">map</span> <span class="pl-c1">(</span><span class="pl-k">fun</span> <span class="pl-c1">(</span><span class="pl-en">nm</span><span class="pl-c1">,</span> <span class="pl-en">pat</span><span class="pl-c1">)</span> <span class="pl-c1">-&gt;</span>
+        <span class="pl-en">nm</span> <span class="pl-c1">^</span> <span class="pl-s"><span class="pl-pds">"</span>: <span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-c1">(</span><span class="pl-en">string_of_pattern</span> <span class="pl-en">pat</span><span class="pl-c1">))</span> <span class="pl-en">mp</span><span class="pl-c1">.</span><span class="pl-en">mp_hyps</span><span class="pl-c1">)</span> <span class="pl-k">in</span>
+  <span class="pl-k">let</span> <span class="pl-en">goal</span> <span class="pl-c1">=</span> <span class="pl-k">match</span> <span class="pl-en">mp</span><span class="pl-c1">.</span><span class="pl-en">mp_goal</span> <span class="pl-k">with</span>
+             <span class="pl-c1">|</span> <span class="pl-c1">None</span> <span class="pl-c1">-&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>_<span class="pl-pds">"</span></span>
+             <span class="pl-c1">|</span> <span class="pl-c1">Some</span> <span class="pl-en">pat</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">string_of_pattern</span> <span class="pl-en">pat</span> <span class="pl-k">in</span>
+  <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\n</span>{ vars: <span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-en">vars</span> <span class="pl-c1">^</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\n</span><span class="pl-pds">"</span></span> <span class="pl-c1">^</span>
+  <span class="pl-s"><span class="pl-pds">"</span>  hyps: <span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-en">hyps</span> <span class="pl-c1">^</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\n</span><span class="pl-pds">"</span></span> <span class="pl-c1">^</span>
+  <span class="pl-s"><span class="pl-pds">"</span>  goal: <span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-en">goal</span> <span class="pl-c1">^</span> <span class="pl-s"><span class="pl-pds">"</span> }<span class="pl-pds">"</span></span></pre></div>
+<blockquote>
+<p>A solution is composed of terms captured to mach the holes, and binders
+captured to match hypothesis patterns.</p>
+</blockquote>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">noeq</span> <span class="pl-k">type</span> <span class="pl-en">matching_solution</span> <span class="pl-c1">=</span>
+  <span class="pl-c1">{</span> <span class="pl-en">ms_vars</span><span class="pl-c1">:</span> <span class="pl-en">list</span> <span class="pl-c1">(</span><span class="pl-en">varname</span> * <span class="pl-en">term</span><span class="pl-c1">);</span>
+    <span class="pl-en">ms_hyps</span><span class="pl-c1">:</span> <span class="pl-en">list</span> <span class="pl-c1">(</span><span class="pl-en">varname</span> * <span class="pl-en">hypothesis</span><span class="pl-c1">)</span> <span class="pl-c1">}</span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">string_of_matching_solution</span> <span class="pl-en">ms</span> <span class="pl-c1">=</span>
+  <span class="pl-k">let</span> <span class="pl-en">vars</span> <span class="pl-c1">=</span>
+    <span class="pl-smi">String.</span><span class="pl-en">concat</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\n</span>            <span class="pl-pds">"</span></span>
+      <span class="pl-c1">(</span><span class="pl-en">map</span> <span class="pl-c1">(</span><span class="pl-k">fun</span> <span class="pl-c1">(</span><span class="pl-en">varname</span><span class="pl-c1">,</span> <span class="pl-en">tm</span><span class="pl-c1">)</span> <span class="pl-c1">-&gt;</span>
+        <span class="pl-en">varname</span> <span class="pl-c1">^</span> <span class="pl-s"><span class="pl-pds">"</span>: <span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-c1">(</span><span class="pl-en">term_to_string</span> <span class="pl-en">tm</span><span class="pl-c1">))</span> <span class="pl-en">ms</span><span class="pl-c1">.</span><span class="pl-en">ms_vars</span><span class="pl-c1">)</span> <span class="pl-k">in</span>
+  <span class="pl-k">let</span> <span class="pl-en">hyps</span> <span class="pl-c1">=</span>
+    <span class="pl-smi">String.</span><span class="pl-en">concat</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\n</span>        <span class="pl-pds">"</span></span>
+      <span class="pl-c1">(</span><span class="pl-en">map</span> <span class="pl-c1">(</span><span class="pl-k">fun</span> <span class="pl-c1">(</span><span class="pl-en">nm</span><span class="pl-c1">,</span> <span class="pl-en">binder</span><span class="pl-c1">)</span> <span class="pl-c1">-&gt;</span>
+        <span class="pl-en">nm</span> <span class="pl-c1">^</span> <span class="pl-s"><span class="pl-pds">"</span>: <span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-c1">(</span><span class="pl-en">binder_to_string</span> <span class="pl-en">binder</span><span class="pl-c1">))</span> <span class="pl-en">ms</span><span class="pl-c1">.</span><span class="pl-en">ms_hyps</span><span class="pl-c1">)</span> <span class="pl-k">in</span>
+  <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\n</span>{ vars: <span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-en">vars</span> <span class="pl-c1">^</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\n</span><span class="pl-pds">"</span></span> <span class="pl-c1">^</span>
+  <span class="pl-s"><span class="pl-pds">"</span>  hyps: <span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-en">hyps</span> <span class="pl-c1">^</span> <span class="pl-s"><span class="pl-pds">"</span> }<span class="pl-pds">"</span></span></pre></div>
+<h4>
+<a id="user-content-assoc_varname_fail" class="anchor" href="#assoc_varname_fail" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>assoc_varname_fail</h4>
 <p>Find a varname in an association list; fail if it can't be found. *</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((solve_mp_for_single_hyp #a (name:varname) (pat:pattern) (hypotheses:list hypothesis) (body:Unidentified product: [matching_solution] (Tac a)) (part_sol:matching_solution)):(Tac a)):<span class="kw">match</span> hypotheses <span class="kw">with</span> []  -&gt; fail #a <span class="st">&quot;No matching hypothesis&quot;</span> | (Prims<span class="kw">.</span>Cons h hs)  -&gt; or_else ((<span class="kw">fun</span> () -&gt; <span class="kw">match</span> interp_pattern_aux pat part_sol.ms_vars (type_of_binder h) <span class="kw">with</span> (Failure ex)  -&gt; fail (^(<span class="st">&quot;Failed to match hyp: &quot;</span>, (string_of_match_exception ex))) | (Success bindings)  -&gt; <span class="kw">let</span>  ms_hyps = (Prims<span class="kw">.</span>Cons ((FStar<span class="kw">.</span>Pervasives<span class="kw">.</span>Native<span class="kw">.</span>Mktuple2 name h)) part_sol.ms_hyps) <span class="kw">in</span> body ({part_sol <span class="kw">with</span> ms_vars=bindings ms_hyps=ms_hyps}))) ((<span class="kw">fun</span> () -&gt; solve_mp_for_single_hyp name pat hs body part_sol))</code></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">assoc_varname_fail</span> <span class="pl-c1">(#</span><span class="pl-en">b</span><span class="pl-c1">:</span> <span class="pl-c1">Type)</span> <span class="pl-c1">(</span><span class="pl-en">key</span><span class="pl-c1">:</span> <span class="pl-en">varname</span><span class="pl-c1">)</span> <span class="pl-c1">(</span><span class="pl-en">ls</span><span class="pl-c1">:</span> <span class="pl-en">list</span> <span class="pl-c1">(</span><span class="pl-en">varname</span> * <span class="pl-en">b</span><span class="pl-c1">))</span>
+    <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-en">b</span> <span class="pl-c1">=</span>
+  <span class="pl-k">match</span> <span class="pl-smi">List.Tot.Base.</span><span class="pl-en">assoc</span> <span class="pl-en">key</span> <span class="pl-en">ls</span> <span class="pl-k">with</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">None</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">fail</span> <span class="pl-c1">(</span><span class="pl-s"><span class="pl-pds">"</span>Not found: <span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-en">key</span><span class="pl-c1">)</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Some</span> <span class="pl-en">x</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">x</span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">ms_locate_hyp</span> <span class="pl-c1">(</span><span class="pl-en">a</span><span class="pl-c1">:</span> <span class="pl-c1">Type)</span> <span class="pl-c1">(</span><span class="pl-en">solution</span><span class="pl-c1">:</span> <span class="pl-en">matching_solution</span><span class="pl-c1">)</span>
+                  <span class="pl-c1">(</span><span class="pl-en">name</span><span class="pl-c1">:</span> <span class="pl-en">varname</span><span class="pl-c1">)</span> <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-en">binder</span> <span class="pl-c1">=</span>
+  <span class="pl-en">assoc_varname_fail</span> <span class="pl-en">name</span> <span class="pl-en">solution</span><span class="pl-c1">.</span><span class="pl-en">ms_hyps</span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">ms_locate_var</span> <span class="pl-c1">(</span><span class="pl-en">a</span><span class="pl-c1">:</span> <span class="pl-c1">Type)</span> <span class="pl-c1">(</span><span class="pl-en">solution</span><span class="pl-c1">:</span> <span class="pl-en">matching_solution</span><span class="pl-c1">)</span>
+                  <span class="pl-c1">(</span><span class="pl-en">name</span><span class="pl-c1">:</span> <span class="pl-en">varname</span><span class="pl-c1">)</span> <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-en">a</span> <span class="pl-c1">=</span>
+  <span class="pl-en">unquote</span> <span class="pl-c1">#</span><span class="pl-en">a</span> <span class="pl-c1">(</span><span class="pl-en">assoc_varname_fail</span> <span class="pl-en">name</span> <span class="pl-en">solution</span><span class="pl-c1">.</span><span class="pl-en">ms_vars</span><span class="pl-c1">)</span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">ms_locate_unit</span> <span class="pl-c1">(</span><span class="pl-en">a</span><span class="pl-c1">:</span> <span class="pl-c1">Type)</span> <span class="pl-en">_solution</span> <span class="pl-en">_binder_name</span> <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit</span> <span class="pl-c1">=</span>
+  <span class="pl-c1">()</span></pre></div>
+<blockquote>
+<h2>
+<a id="user-content-resolution" class="anchor" href="#resolution" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Resolution</h2>
+<p>Solving a matching problem is a two-steps process: find an initial
+assignment for holes based on the goal pattern, then find a set of
+hypotheses matching hypothesis patterns.</p>
+<p>Note that the implementation takes a continuation of type
+<code>matching_solution -&gt; Tac a</code>.  This continuation is needed because we want
+users to be able to provide extra criteria on matching solutions (most
+commonly, this criterion is that a particular tactic should run
+successfuly).</p>
+<p>This makes it easy to implement a simple for of search through the context,
+where one can find a hypothesis matching a particular predicate by
+constructing a trivial matching problem and passing the predicate as the
+continuation.</p>
+</blockquote>
+<h4>
+<a id="user-content-solve_mp_for_single_hyp" class="anchor" href="#solve_mp_for_single_hyp" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>solve_mp_for_single_hyp</h4>
 <p>Scan <code>hypotheses</code> for a match for <code>pat</code> that lets <code>body</code> succeed.</p>
-<p><code>name</code> is used to refer to the hypothesis matched in the final solution. <code>part_sol</code> includes bindings gathered while matching previous solutions. *</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((solve_mp_for_hyps #a (mp_hyps:list <span class="co">(*(varname, pattern))) (hypotheses:list hypothesis) (body:Unidentified product: [matching_solution] (Tac a)) (partial_solution:matching_solution)):(Tac a)):match mp_hyps with []  -&gt; body partial_solution | (Prims.Cons (name, pat) pats)  -&gt; solve_mp_for_single_hyp name pat hypotheses (solve_mp_for_hyps pats hypotheses body) partial_solution</span></code></pre></div>
-<p>Scan <code>hypotheses</code> for matches for <code>mp_hyps</code> that lets <code>body</code> succeed. *</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((solve_mp #a (problem:matching_problem) (hypotheses:binders) (goal:term) (body:Unidentified product: [matching_solution] (Tac a))):(Tac a)):<span class="kw">let</span>  goal_ps = <span class="kw">match</span> problem.mp_goal <span class="kw">with</span> None  -&gt; {ms_vars=(Prims<span class="kw">.</span>Nil ) ms_hyps=(Prims<span class="kw">.</span>Nil )} | (Some pat)  -&gt; <span class="kw">match</span> interp_pattern pat goal <span class="kw">with</span> (Failure ex)  -&gt; fail (^(<span class="st">&quot;Failed to match goal: &quot;</span>, (string_of_match_exception ex))) | (Success bindings)  -&gt; {ms_vars=bindings ms_hyps=(Prims<span class="kw">.</span>Nil )} <span class="kw">in</span> solve_mp_for_hyps #a problem.mp_hyps hypotheses body goal_ps</code></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-k">rec</span> <span class="pl-en">solve_mp_for_single_hyp</span> <span class="pl-c1">#</span><span class="pl-en">a</span>
+                                <span class="pl-c1">(</span><span class="pl-en">name</span><span class="pl-c1">:</span> <span class="pl-en">varname</span><span class="pl-c1">)</span>
+                                <span class="pl-c1">(</span><span class="pl-en">pat</span><span class="pl-c1">:</span> <span class="pl-en">pattern</span><span class="pl-c1">)</span>
+                                <span class="pl-c1">(</span><span class="pl-en">hypotheses</span><span class="pl-c1">:</span> <span class="pl-en">list</span> <span class="pl-en">hypothesis</span><span class="pl-c1">)</span>
+                                <span class="pl-c1">(</span><span class="pl-en">body</span><span class="pl-c1">:</span> <span class="pl-en">matching_solution</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-en">a</span><span class="pl-c1">)</span>
+                                <span class="pl-c1">(</span><span class="pl-en">part_sol</span><span class="pl-c1">:</span> <span class="pl-en">matching_solution</span><span class="pl-c1">)</span>
+    <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-en">a</span> <span class="pl-c1">=</span>
+  <span class="pl-k">match</span> <span class="pl-en">hypotheses</span> <span class="pl-k">with</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">[]</span> <span class="pl-c1">-&gt;</span>
+    <span class="pl-en">fail</span> <span class="pl-c1">#</span><span class="pl-en">a</span> <span class="pl-s"><span class="pl-pds">"</span>No matching hypothesis<span class="pl-pds">"</span></span>
+  <span class="pl-c1">|</span> <span class="pl-en">h</span> <span class="pl-c1">::</span> <span class="pl-en">hs</span> <span class="pl-c1">-&gt;</span>
+    <span class="pl-en">or_else</span> <span class="pl-c">// Must be in ``Tac`` here to run `body`</span>
+      <span class="pl-c1">(</span><span class="pl-k">fun</span> <span class="pl-c1">()</span> <span class="pl-c1">-&gt;</span>
+         <span class="pl-k">match</span> <span class="pl-en">interp_pattern_aux</span> <span class="pl-en">pat</span> <span class="pl-en">part_sol</span><span class="pl-c1">.</span><span class="pl-en">ms_vars</span> <span class="pl-c1">(</span><span class="pl-en">type_of_binder</span> <span class="pl-en">h</span><span class="pl-c1">)</span> <span class="pl-k">with</span>
+         <span class="pl-c1">|</span> <span class="pl-c1">Failure</span> <span class="pl-en">ex</span> <span class="pl-c1">-&gt;</span>
+           <span class="pl-en">fail</span> <span class="pl-c1">(</span><span class="pl-s"><span class="pl-pds">"</span>Failed to match hyp: <span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-c1">(</span><span class="pl-en">string_of_match_exception</span> <span class="pl-en">ex</span><span class="pl-c1">))</span>
+         <span class="pl-c1">|</span> <span class="pl-c1">Success</span> <span class="pl-en">bindings</span> <span class="pl-c1">-&gt;</span>
+           <span class="pl-k">let</span> <span class="pl-en">ms_hyps</span> <span class="pl-c1">=</span> <span class="pl-c1">(</span><span class="pl-en">name</span><span class="pl-c1">,</span> <span class="pl-en">h</span><span class="pl-c1">)</span> <span class="pl-c1">::</span> <span class="pl-en">part_sol</span><span class="pl-c1">.</span><span class="pl-en">ms_hyps</span> <span class="pl-k">in</span>
+           <span class="pl-en">body</span> <span class="pl-c1">({</span> <span class="pl-en">part_sol</span> <span class="pl-k">with</span> <span class="pl-en">ms_vars</span> <span class="pl-c1">=</span> <span class="pl-en">bindings</span><span class="pl-c1">;</span> <span class="pl-en">ms_hyps</span> <span class="pl-c1">=</span> <span class="pl-en">ms_hyps</span> <span class="pl-c1">}))</span>
+      <span class="pl-c1">(</span><span class="pl-k">fun</span> <span class="pl-c1">()</span> <span class="pl-c1">-&gt;</span>
+         <span class="pl-en">solve_mp_for_single_hyp</span> <span class="pl-en">name</span> <span class="pl-en">pat</span> <span class="pl-en">hs</span> <span class="pl-en">body</span> <span class="pl-en">part_sol</span><span class="pl-c1">)</span></pre></div>
+<p><code>name</code> is used to refer to the hypothesis matched in the final solution.
+<code>part_sol</code> includes bindings gathered while matching previous solutions. *</p>
+<h4>
+<a id="user-content-solve_mp_for_hyps" class="anchor" href="#solve_mp_for_hyps" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>solve_mp_for_hyps</h4>
+<p>Scan <code>hypotheses</code> for matches for <code>mp_hyps</code> that lets <code>body</code>
+succeed. *</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-k">rec</span> <span class="pl-en">solve_mp_for_hyps</span> <span class="pl-c1">#</span><span class="pl-en">a</span>
+                          <span class="pl-c1">(</span><span class="pl-en">mp_hyps</span><span class="pl-c1">:</span> <span class="pl-en">list</span> <span class="pl-c1">(</span><span class="pl-en">varname</span> * <span class="pl-en">pattern</span><span class="pl-c1">))</span>
+                          <span class="pl-c1">(</span><span class="pl-en">hypotheses</span><span class="pl-c1">:</span> <span class="pl-en">list</span> <span class="pl-en">hypothesis</span><span class="pl-c1">)</span>
+                          <span class="pl-c1">(</span><span class="pl-en">body</span><span class="pl-c1">:</span> <span class="pl-en">matching_solution</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-en">a</span><span class="pl-c1">)</span>
+                          <span class="pl-c1">(</span><span class="pl-en">partial_solution</span><span class="pl-c1">:</span> <span class="pl-en">matching_solution</span><span class="pl-c1">)</span>
+    <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-en">a</span> <span class="pl-c1">=</span>
+  <span class="pl-k">match</span> <span class="pl-en">mp_hyps</span> <span class="pl-k">with</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">[]</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">body</span> <span class="pl-en">partial_solution</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">(</span><span class="pl-en">name</span><span class="pl-c1">,</span> <span class="pl-en">pat</span><span class="pl-c1">)</span> <span class="pl-c1">::</span> <span class="pl-en">pats</span> <span class="pl-c1">-&gt;</span>
+    <span class="pl-en">solve_mp_for_single_hyp</span> <span class="pl-en">name</span> <span class="pl-en">pat</span> <span class="pl-en">hypotheses</span>
+      <span class="pl-c1">(</span><span class="pl-en">solve_mp_for_hyps</span> <span class="pl-en">pats</span> <span class="pl-en">hypotheses</span> <span class="pl-en">body</span><span class="pl-c1">)</span>
+      <span class="pl-en">partial_solution</span></pre></div>
+<h4>
+<a id="user-content-solve_mp" class="anchor" href="#solve_mp" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>solve_mp</h4>
 <p>Solve a matching problem.</p>
-<p>The solution returned is constructed to ensure that the continuation <code>body</code> succeeds: this implements the usual backtracking-match semantics. *</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((pattern_of_term_ex tm):(Tac (match_res pattern))):<span class="kw">match</span> inspect tm <span class="kw">with</span> (Tv_Var bv)  -&gt; <span class="kw">return</span> ((PVar (name_of_bv bv))) | (Tv_FVar fv)  -&gt; <span class="kw">let</span>  qn = fv_to_string fv <span class="kw">in</span> <span class="kw">return</span> (<span class="kw">if</span> =(qn, any_qn) <span class="kw">then</span> PAny <span class="kw">else</span> (PQn qn)) | (Tv_Type ())  -&gt; <span class="kw">return</span> PType | (Tv_App f (x, _))  -&gt; <span class="kw">let</span>  is_any = <span class="kw">match</span> inspect f <span class="kw">with</span> (Tv_FVar fv)  -&gt; =(fv_to_string fv, any_qn) | _  -&gt; <span class="kw">false</span> <span class="kw">in</span> <span class="kw">if</span> is_any <span class="kw">then</span> <span class="kw">return</span> PAny <span class="kw">else</span> (fpat &lt;- pattern_of_term_ex f; xpat &lt;- pattern_of_term_ex x; <span class="kw">return</span> ((PApp fpat xpat))) | _  -&gt; raise ((UnsupportedTermInPattern tm))</code></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">solve_mp</span> <span class="pl-c1">#</span><span class="pl-en">a</span> <span class="pl-c1">(</span><span class="pl-en">problem</span><span class="pl-c1">:</span> <span class="pl-en">matching_problem</span><span class="pl-c1">)</span>
+                <span class="pl-c1">(</span><span class="pl-en">hypotheses</span><span class="pl-c1">:</span> <span class="pl-en">binders</span><span class="pl-c1">)</span> <span class="pl-c1">(</span><span class="pl-en">goal</span><span class="pl-c1">:</span> <span class="pl-en">term</span><span class="pl-c1">)</span>
+                <span class="pl-c1">(</span><span class="pl-en">body</span><span class="pl-c1">:</span> <span class="pl-en">matching_solution</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-en">a</span><span class="pl-c1">)</span>
+    <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-en">a</span> <span class="pl-c1">=</span>
+  <span class="pl-k">let</span> <span class="pl-en">goal_ps</span> <span class="pl-c1">=</span>
+    <span class="pl-k">match</span> <span class="pl-en">problem</span><span class="pl-c1">.</span><span class="pl-en">mp_goal</span> <span class="pl-k">with</span>
+    <span class="pl-c1">|</span> <span class="pl-c1">None</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">{</span> <span class="pl-en">ms_vars</span> <span class="pl-c1">=</span> <span class="pl-c1">[];</span> <span class="pl-en">ms_hyps</span> <span class="pl-c1">=</span> <span class="pl-c1">[]</span> <span class="pl-c1">}</span>
+    <span class="pl-c1">|</span> <span class="pl-c1">Some</span> <span class="pl-en">pat</span> <span class="pl-c1">-&gt;</span>
+      <span class="pl-k">match</span> <span class="pl-en">interp_pattern</span> <span class="pl-en">pat</span> <span class="pl-en">goal</span> <span class="pl-k">with</span>
+      <span class="pl-c1">|</span> <span class="pl-c1">Failure</span> <span class="pl-en">ex</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">fail</span> <span class="pl-c1">(</span><span class="pl-s"><span class="pl-pds">"</span>Failed to match goal: <span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-c1">(</span><span class="pl-en">string_of_match_exception</span> <span class="pl-en">ex</span><span class="pl-c1">))</span>
+      <span class="pl-c1">|</span> <span class="pl-c1">Success</span> <span class="pl-en">bindings</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">{</span> <span class="pl-en">ms_vars</span> <span class="pl-c1">=</span> <span class="pl-en">bindings</span><span class="pl-c1">;</span> <span class="pl-en">ms_hyps</span> <span class="pl-c1">=</span> <span class="pl-c1">[]</span> <span class="pl-c1">}</span> <span class="pl-k">in</span>
+  <span class="pl-en">solve_mp_for_hyps</span> <span class="pl-c1">#</span><span class="pl-en">a</span> <span class="pl-en">problem</span><span class="pl-c1">.</span><span class="pl-en">mp_hyps</span> <span class="pl-en">hypotheses</span> <span class="pl-en">body</span> <span class="pl-en">goal_ps</span></pre></div>
+<p>The solution returned is constructed to ensure that the continuation <code>body</code>
+succeeds: this implements the usual backtracking-match semantics. *</p>
+<blockquote>
+<h1>
+<a id="user-content-a-dsl-for-pattern-matching" class="anchor" href="#a-dsl-for-pattern-matching" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>A DSL for pattern-matching</h1>
+<p>Using pattern-matching problems as defined above is relatively cumbersome,
+so we now introduce a lightweight notation, in two steps: pattern notations,
+and matching-problem notations.</p>
+<h2>
+<a id="user-content-pattern-notations" class="anchor" href="#pattern-notations" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Pattern notations</h2>
+<p>The first part of our pattern-matching syntax is pattern notations: we
+provide a reflective function which constructs a pattern from a term:
+variables are holes, free variables are constants, and applications are
+application patterns.</p>
+</blockquote>
+<p>This is a hack to allow users to capture anything.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">assume</span> <span class="pl-k">val</span> <span class="pl-en">__</span> <span class="pl-c1">:</span> <span class="pl-c1">#</span><span class="pl-en">t</span><span class="pl-c1">:Type</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">t</span>
+<span class="pl-k">let</span> <span class="pl-en">any_qn</span> <span class="pl-c1">=</span> <span class="pl-c1">`</span>%<span class="pl-en">__</span></pre></div>
+<h4>
+<a id="user-content-pattern_of_term_ex" class="anchor" href="#pattern_of_term_ex" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>pattern_of_term_ex</h4>
 <p>Compile a term <code>tm</code> into a pattern. *</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((beta_reduce (tm:term)):(Tac term)):norm_term (Prims<span class="kw">.</span>Nil ) tm</code></pre></div>
-<p>β-reduce a term <code>tm</code>. This is useful to remove needles function applications introduced by F<em>, like <code>(fun a b c -&gt; a) 1 2 3</code>. </em></p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((pattern_of_term tm):(Tac pattern)):<span class="kw">match</span> pattern_of_term_ex tm <span class="kw">with</span> (Success bb)  -&gt; bb | (Failure ex)  -&gt; Tactics<span class="kw">.</span>fail (string_of_match_exception ex)</code></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-k">rec</span> <span class="pl-en">pattern_of_term_ex</span> <span class="pl-en">tm</span> <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-c1">(</span><span class="pl-en">match_res</span> <span class="pl-en">pattern</span><span class="pl-c1">)</span> <span class="pl-c1">=</span>
+  <span class="pl-k">match</span> <span class="pl-en">inspect</span> <span class="pl-en">tm</span> <span class="pl-k">with</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Tv_Var</span> <span class="pl-en">bv</span> <span class="pl-c1">-&gt;</span>
+    <span class="pl-en">return</span> <span class="pl-c1">(</span><span class="pl-c1">PVar</span> <span class="pl-c1">(</span><span class="pl-en">name_of_bv</span> <span class="pl-en">bv</span><span class="pl-c1">))</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Tv_FVar</span> <span class="pl-en">fv</span> <span class="pl-c1">-&gt;</span>
+    <span class="pl-k">let</span> <span class="pl-en">qn</span> <span class="pl-c1">=</span> <span class="pl-en">fv_to_string</span> <span class="pl-en">fv</span> <span class="pl-k">in</span>
+    <span class="pl-en">return</span> <span class="pl-c1">(</span><span class="pl-k">if</span> <span class="pl-en">qn</span> <span class="pl-c1">=</span> <span class="pl-en">any_qn</span> <span class="pl-k">then</span> <span class="pl-c1">PAny</span> <span class="pl-k">else</span> <span class="pl-c1">PQn</span> <span class="pl-en">qn</span><span class="pl-c1">)</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Tv_Type</span> <span class="pl-c1">()</span> <span class="pl-c1">-&gt;</span>
+    <span class="pl-en">return</span> <span class="pl-c1">PType</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Tv_App</span> <span class="pl-en">f</span> <span class="pl-c1">(</span><span class="pl-en">x</span><span class="pl-c1">,</span> <span class="pl-c1">_</span><span class="pl-c1">)</span> <span class="pl-c1">-&gt;</span>
+    <span class="pl-k">let</span> <span class="pl-en">is_any</span> <span class="pl-c1">=</span> <span class="pl-k">match</span> <span class="pl-en">inspect</span> <span class="pl-en">f</span> <span class="pl-k">with</span>
+                 <span class="pl-c1">|</span> <span class="pl-c1">Tv_FVar</span> <span class="pl-en">fv</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">fv_to_string</span> <span class="pl-en">fv</span> <span class="pl-c1">=</span> <span class="pl-en">any_qn</span>
+                 <span class="pl-c1">|</span> <span class="pl-c1">_</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">false</span> <span class="pl-k">in</span>
+    <span class="pl-k">if</span> <span class="pl-en">is_any</span> <span class="pl-k">then</span>
+      <span class="pl-en">return</span> <span class="pl-c1">PAny</span>
+    <span class="pl-k">else</span>
+      <span class="pl-c1">(</span><span class="pl-en">fpat</span> <span class="pl-c1">&lt;--</span> <span class="pl-en">pattern_of_term_ex</span> <span class="pl-en">f</span><span class="pl-c1">;</span>
+       <span class="pl-en">xpat</span> <span class="pl-c1">&lt;--</span> <span class="pl-en">pattern_of_term_ex</span> <span class="pl-en">x</span><span class="pl-c1">;</span>
+       <span class="pl-en">return</span> <span class="pl-c1">(</span><span class="pl-c1">PApp</span> <span class="pl-en">fpat</span> <span class="pl-en">xpat</span><span class="pl-c1">))</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">_</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">raise</span> <span class="pl-c1">(</span><span class="pl-c1">UnsupportedTermInPattern</span> <span class="pl-en">tm</span><span class="pl-c1">)</span></pre></div>
+<h4>
+<a id="user-content-beta_reduce" class="anchor" href="#beta_reduce" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>beta_reduce</h4>
+<p>β-reduce a term <code>tm</code>.
+This is useful to remove needles function applications introduced by F*, like
+<code>(fun a b c -&gt; a) 1 2 3</code>. *</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">beta_reduce</span> <span class="pl-c1">(</span><span class="pl-en">tm</span><span class="pl-c1">:</span> <span class="pl-en">term</span><span class="pl-c1">)</span> <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-en">term</span> <span class="pl-c1">=</span>
+  <span class="pl-en">norm_term</span> <span class="pl-c1">[]</span> <span class="pl-en">tm</span></pre></div>
+<h4>
+<a id="user-content-pattern_of_term" class="anchor" href="#pattern_of_term" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>pattern_of_term</h4>
 <p>Compile a term <code>tm</code> into a pattern. *</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((binders_and_body_of_abs tm):(Tac <span class="co">(*(binders, term)))):match inspect tm with (Tv_Abs binder tm)  -&gt; let  (binders, body) = binders_and_body_of_abs tm in (FStar.Pervasives.Native.Mktuple2 (Prims.Cons binder binders) body) | _  -&gt; (FStar.Pervasives.Native.Mktuple2 (Prims.Nil ) tm)</span></code></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">pattern_of_term</span> <span class="pl-en">tm</span> <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-en">pattern</span> <span class="pl-c1">=</span>
+    <span class="pl-k">match</span> <span class="pl-en">pattern_of_term_ex</span> <span class="pl-en">tm</span> <span class="pl-k">with</span>
+    <span class="pl-c1">|</span> <span class="pl-c1">Success</span> <span class="pl-en">bb</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">bb</span>
+    <span class="pl-c1">|</span> <span class="pl-c1">Failure</span> <span class="pl-en">ex</span> <span class="pl-c1">-&gt;</span> <span class="pl-smi">Tactics.</span><span class="pl-en">fail</span> <span class="pl-c1">(</span><span class="pl-en">string_of_match_exception</span> <span class="pl-en">ex</span><span class="pl-c1">)</span></pre></div>
+<blockquote>
+<h2>
+<a id="user-content-problem-notations" class="anchor" href="#problem-notations" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Problem notations</h2>
+<p>We then introduce a DSL for matching problems, best explained on the
+following example::</p>
+<p>(fun (a b c: ①) (h1 h2 h3: hyp ②) (g: pm_goal ③) → ④)</p>
+<p>This notation is intended to express a pattern-matching problems with three
+holes <code>a</code>, <code>b</code>, and <code>c</code> of type ①, matching hypotheses <code>h1</code>, <code>h2</code>,
+and <code>h3</code> against pattern ② and the goal against the pattern ③.  The body
+of the notation (④) is then run with appropriate terms bound to <code>a</code>,
+<code>b</code>, and <code>c</code>, appropriate binders bound to <code>h1</code>, <code>h2</code>, and <code>h3</code>,
+and <code>()</code> bound to <code>g</code>.</p>
+<p>We call these patterns <code>abspat</code>s (abstraction patterns), and we provide
+facilities to parse them into matching problems, and to run their bodies
+against a particular matching solution.</p>
+</blockquote>
+<p>We used to annotate variables with an explicit 'var' marker, but then that
+var annotation leaked into the types of other hypotheses due to type
+inference, requiring non-trivial normalization.</p>
+<p>let var (a: Type) = a</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">hyp</span> <span class="pl-c1">(</span><span class="pl-en">a</span><span class="pl-c1">:</span> <span class="pl-c1">Type)</span> <span class="pl-c1">=</span> <span class="pl-en">binder</span>
+<span class="pl-k">let</span> <span class="pl-en">pm_goal</span> <span class="pl-c1">(</span><span class="pl-en">a</span><span class="pl-c1">:</span> <span class="pl-c1">Type)</span> <span class="pl-c1">=</span> <span class="pl-c1">unit</span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">hyp_qn</span>  <span class="pl-c1">=</span> <span class="pl-c1">`</span>%<span class="pl-en">hyp</span>
+<span class="pl-k">let</span> <span class="pl-en">goal_qn</span> <span class="pl-c1">=</span> <span class="pl-c1">`</span>%<span class="pl-en">pm_goal</span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">noeq</span> <span class="pl-k">type</span> <span class="pl-en">abspat_binder_kind</span> <span class="pl-c1">=</span>
+<span class="pl-c1">|</span> <span class="pl-c1">ABKVar</span> <span class="pl-en">of</span> <span class="pl-en">typ</span>
+<span class="pl-c1">|</span> <span class="pl-c1">ABKHyp</span>
+<span class="pl-c1">|</span> <span class="pl-c1">ABKGoal</span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">string_of_abspat_binder_kind</span> <span class="pl-c1">=</span> <span class="pl-k">function</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">ABKVar</span> <span class="pl-c1">_</span> <span class="pl-c1">-&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>varname<span class="pl-pds">"</span></span>
+  <span class="pl-c1">|</span> <span class="pl-c1">ABKHyp</span> <span class="pl-c1">-&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>hyp<span class="pl-pds">"</span></span>
+  <span class="pl-c1">|</span> <span class="pl-c1">ABKGoal</span> <span class="pl-c1">-&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>goal<span class="pl-pds">"</span></span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">noeq</span> <span class="pl-k">type</span> <span class="pl-en">abspat_argspec</span> <span class="pl-c1">=</span>
+  <span class="pl-c1">{</span> <span class="pl-en">asa_name</span><span class="pl-c1">:</span> <span class="pl-en">absvar</span><span class="pl-c1">;</span>
+    <span class="pl-en">asa_kind</span><span class="pl-c1">:</span> <span class="pl-en">abspat_binder_kind</span> <span class="pl-c1">}</span></pre></div>
+<p>We must store this continuation, because recomputing it yields different
+names when the binders are re-opened.</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">type</span> <span class="pl-en">abspat_continuation</span> <span class="pl-c1">=</span>
+  <span class="pl-en">list</span> <span class="pl-en">abspat_argspec</span> * <span class="pl-en">term</span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">classify_abspat_binder</span> <span class="pl-en">binder</span> <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-c1">(</span><span class="pl-en">abspat_binder_kind</span> * <span class="pl-en">term</span><span class="pl-c1">)</span> <span class="pl-c1">=</span>
+  <span class="pl-k">let</span> <span class="pl-en">varname</span> <span class="pl-c1">=</span> <span class="pl-s"><span class="pl-pds">"</span>v<span class="pl-pds">"</span></span> <span class="pl-k">in</span>
+  <span class="pl-k">let</span> <span class="pl-en">hyp_pat</span> <span class="pl-c1">=</span> <span class="pl-c1">PApp</span> <span class="pl-c1">(</span><span class="pl-c1">PQn</span> <span class="pl-en">hyp_qn</span><span class="pl-c1">)</span> <span class="pl-c1">(</span><span class="pl-c1">PVar</span> <span class="pl-en">varname</span><span class="pl-c1">)</span> <span class="pl-k">in</span>
+  <span class="pl-k">let</span> <span class="pl-en">goal_pat</span> <span class="pl-c1">=</span> <span class="pl-c1">PApp</span> <span class="pl-c1">(</span><span class="pl-c1">PQn</span> <span class="pl-en">goal_qn</span><span class="pl-c1">)</span> <span class="pl-c1">(</span><span class="pl-c1">PVar</span> <span class="pl-en">varname</span><span class="pl-c1">)</span> <span class="pl-k">in</span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">typ</span> <span class="pl-c1">=</span> <span class="pl-en">type_of_binder</span> <span class="pl-en">binder</span> <span class="pl-k">in</span>
+<span class="pl-k">match</span> <span class="pl-en">interp_pattern</span> <span class="pl-en">hyp_pat</span> <span class="pl-en">typ</span> <span class="pl-k">with</span>
+<span class="pl-c1">|</span> <span class="pl-c1">Success</span> <span class="pl-c1">[(</span><span class="pl-c1">_</span><span class="pl-c1">,</span> <span class="pl-en">hyp_typ</span><span class="pl-c1">)]</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">ABKHyp</span><span class="pl-c1">,</span> <span class="pl-en">hyp_typ</span>
+<span class="pl-c1">|</span> <span class="pl-c1">Success</span> <span class="pl-c1">_</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">fail</span> <span class="pl-s"><span class="pl-pds">"</span>classifiy_abspat_binder: impossible (1)<span class="pl-pds">"</span></span>
+<span class="pl-c1">|</span> <span class="pl-c1">Failure</span> <span class="pl-c1">_</span> <span class="pl-c1">-&gt;</span>
+  <span class="pl-k">match</span> <span class="pl-en">interp_pattern</span> <span class="pl-en">goal_pat</span> <span class="pl-en">typ</span> <span class="pl-k">with</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Success</span> <span class="pl-c1">[(</span><span class="pl-c1">_</span><span class="pl-c1">,</span> <span class="pl-en">goal_typ</span><span class="pl-c1">)]</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">ABKGoal</span><span class="pl-c1">,</span> <span class="pl-en">goal_typ</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Success</span> <span class="pl-c1">_</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">fail</span> <span class="pl-s"><span class="pl-pds">"</span>classifiy_abspat_binder: impossible (2)<span class="pl-pds">"</span></span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Failure</span> <span class="pl-c1">_</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">ABKVar</span> <span class="pl-en">typ</span><span class="pl-c1">,</span> <span class="pl-en">typ</span></pre></div>
+<h4>
+<a id="user-content-binders_and_body_of_abs" class="anchor" href="#binders_and_body_of_abs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>binders_and_body_of_abs</h4>
 <p>Split an abstraction <code>tm</code> into a list of binders and a body. *</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((matching_problem_of_abs (tm:term)):(Tac <span class="co">(*(matching_problem, abspat_continuation)))):let  (binders, body) = binders_and_body_of_abs (cleanup_abspat tm) in debug (^(&quot;Got binders: &quot;, (String.concat &quot;, &quot; (map ((fun b -&gt; (name_of_binder b : (Tac string)))) binders)))); let  classified_binders = map ((fun binder -&gt; let  bv_name = name_of_binder binder in debug (^(&quot;Got binder: &quot;, ^(bv_name, ^(&quot;; type is &quot;, term_to_string (type_of_binder binder))))); let  (binder_kind, typ) = classify_abspat_binder binder in ((FStar.Pervasives.Native.Mktuple4 binder bv_name binder_kind typ)))) binders in let  problem = fold_left ((fun problem (binder, bv_name, binder_kind, typ) -&gt; debug (^(&quot;Compiling binder &quot;, ^(name_of_binder binder, ^(&quot;, classified as &quot;, ^(string_of_abspat_binder_kind binder_kind, ^(&quot;, with type &quot;, term_to_string typ)))))); match binder_kind with (ABKVar _)  -&gt; {problem with mp_vars=(Prims.Cons bv_name problem.mp_vars)} | ABKHyp  -&gt; {problem with mp_hyps=(Prims.Cons ((FStar.Pervasives.Native.Mktuple2 bv_name (pattern_of_term typ))) problem.mp_hyps)} | ABKGoal  -&gt; {problem with mp_goal=(Some (pattern_of_term typ))})) ({mp_vars=(Prims.Nil ) mp_hyps=(Prims.Nil ) mp_goal=None}) classified_binders in let  continuation = let  ((abspat_argspec_of_binder xx):(Tac abspat_argspec)) = match xx with (binder, xx, binder_kind, yy)  -&gt; {asa_name=binder asa_kind=binder_kind} in ((FStar.Pervasives.Native.Mktuple2 map abspat_argspec_of_binder classified_binders tm)) in let  mp = {mp_vars=List.rev #varname problem.mp_vars mp_hyps=List.rev #(*(varname, pattern)) problem.mp_hyps mp_goal=problem.mp_goal} in debug (^(&quot;Got matching problem: &quot;, (string_of_matching_problem mp))); (FStar.Pervasives.Native.Mktuple2 mp continuation)</span></code></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-k">rec</span> <span class="pl-en">binders_and_body_of_abs</span> <span class="pl-en">tm</span> <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-c1">(</span><span class="pl-en">binders</span> * <span class="pl-en">term</span><span class="pl-c1">)</span> <span class="pl-c1">=</span>
+  <span class="pl-k">match</span> <span class="pl-en">inspect</span> <span class="pl-en">tm</span> <span class="pl-k">with</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">Tv_Abs</span> <span class="pl-en">binder</span> <span class="pl-en">tm</span> <span class="pl-c1">-&gt;</span>
+    <span class="pl-k">let</span> <span class="pl-en">binders</span><span class="pl-c1">,</span> <span class="pl-en">body</span> <span class="pl-c1">=</span> <span class="pl-en">binders_and_body_of_abs</span> <span class="pl-en">tm</span> <span class="pl-k">in</span>
+    <span class="pl-en">binder</span> <span class="pl-c1">::</span> <span class="pl-en">binders</span><span class="pl-c1">,</span> <span class="pl-en">body</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">_</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">[],</span> <span class="pl-en">tm</span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">cleanup_abspat</span> <span class="pl-c1">(</span><span class="pl-en">t</span><span class="pl-c1">:</span> <span class="pl-en">term</span><span class="pl-c1">)</span> <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-en">term</span> <span class="pl-c1">=</span>
+  <span class="pl-en">norm_term</span> <span class="pl-c1">[]</span> <span class="pl-en">t</span></pre></div>
+<h4>
+<a id="user-content-matching_problem_of_abs" class="anchor" href="#matching_problem_of_abs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>matching_problem_of_abs</h4>
 <p>Parse a notation into a matching problem and a continuation.</p>
-<p>Pattern-matching notations are of the form <code>(fun binders… -&gt; continuation)</code>, where <code>binders</code> are of one of the forms <code>var …</code>, <code>hyp …</code>, or <code>goal …</code>. <code>var</code> binders are typed holes to be used in other binders; <code>hyp</code> binders indicate a pattern to be matched against hypotheses; and <code>goal</code> binders match the goal.</p>
-<p>A reduction phase is run to ensure that the pattern looks reasonable; it is needed because F* tends to infer arguments in β-expanded form.</p>
-<p>The continuation returned can't directly be applied to a pattern-matching solution; see <code>interp_abspat_continuation</code> below for that. *</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((arg_type_of_binder_kind binder_kind):(Tac term)):<span class="kw">match</span> binder_kind <span class="kw">with</span> (ABKVar typ)  -&gt; typ | ABKHyp  -&gt; (`(binder)) | ABKGoal  -&gt; (`(<span class="dt">unit</span>))</code></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">matching_problem_of_abs</span> <span class="pl-c1">(</span><span class="pl-en">tm</span><span class="pl-c1">:</span> <span class="pl-en">term</span><span class="pl-c1">)</span>
+    <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-c1">(</span><span class="pl-en">matching_problem</span> * <span class="pl-en">abspat_continuation</span><span class="pl-c1">)</span> <span class="pl-c1">=</span></pre></div>
+<p>Pattern-matching notations are of the form <code>(fun binders… -&gt; continuation)</code>,
+where <code>binders</code> are of one of the forms <code>var …</code>, <code>hyp …</code>, or <code>goal …</code>.
+<code>var</code> binders are typed holes to be used in other binders; <code>hyp</code> binders
+indicate a pattern to be matched against hypotheses; and <code>goal</code> binders match
+the goal.</p>
+<p>A reduction phase is run to ensure that the pattern looks reasonable; it is
+needed because F* tends to infer arguments in β-expanded form.</p>
+<p>The continuation returned can't directly be applied to a pattern-matching
+solution; see <code>[</code>interp_abspat_continuation<code>](#interp_abspat_continuation)</code> below for that. *</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">binders</span><span class="pl-c1">,</span> <span class="pl-en">body</span> <span class="pl-c1">=</span> <span class="pl-en">binders_and_body_of_abs</span> <span class="pl-c1">(</span><span class="pl-en">cleanup_abspat</span> <span class="pl-en">tm</span><span class="pl-c1">)</span> <span class="pl-k">in</span>
+<span class="pl-en">debug</span> <span class="pl-c1">(</span><span class="pl-s"><span class="pl-pds">"</span>Got binders: <span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-c1">(</span><span class="pl-smi">String.</span><span class="pl-en">concat</span> <span class="pl-s"><span class="pl-pds">"</span>, <span class="pl-pds">"</span></span>
+       <span class="pl-c1">(</span><span class="pl-en">map</span> <span class="pl-c1">(</span><span class="pl-k">fun</span> <span class="pl-en">b</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">name_of_binder</span> <span class="pl-en">b</span> <span class="pl-c1">&lt;:</span> <span class="pl-c1">Tac</span> <span class="pl-c1">string)</span> <span class="pl-en">binders</span><span class="pl-c1">)));</span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">classified_binders</span> <span class="pl-c1">=</span>
+  <span class="pl-en">map</span> <span class="pl-c1">(</span><span class="pl-k">fun</span> <span class="pl-en">binder</span> <span class="pl-c1">-&gt;</span>
+      <span class="pl-k">let</span> <span class="pl-en">bv_name</span> <span class="pl-c1">=</span> <span class="pl-en">name_of_binder</span> <span class="pl-en">binder</span> <span class="pl-k">in</span>
+      <span class="pl-en">debug</span> <span class="pl-c1">(</span><span class="pl-s"><span class="pl-pds">"</span>Got binder: <span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-en">bv_name</span> <span class="pl-c1">^</span> <span class="pl-s"><span class="pl-pds">"</span>; type is <span class="pl-pds">"</span></span> <span class="pl-c1">^</span>
+             <span class="pl-en">term_to_string</span> <span class="pl-c1">(</span><span class="pl-en">type_of_binder</span> <span class="pl-en">binder</span><span class="pl-c1">));</span>
+      <span class="pl-k">let</span> <span class="pl-en">binder_kind</span><span class="pl-c1">,</span> <span class="pl-en">typ</span> <span class="pl-c1">=</span> <span class="pl-en">classify_abspat_binder</span> <span class="pl-en">binder</span> <span class="pl-k">in</span>
+      <span class="pl-c1">(</span><span class="pl-en">binder</span><span class="pl-c1">,</span> <span class="pl-en">bv_name</span><span class="pl-c1">,</span> <span class="pl-en">binder_kind</span><span class="pl-c1">,</span> <span class="pl-en">typ</span><span class="pl-c1">))</span>
+    <span class="pl-en">binders</span> <span class="pl-k">in</span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">problem</span> <span class="pl-c1">=</span>
+  <span class="pl-en">fold_left</span>
+    <span class="pl-c1">(</span><span class="pl-k">fun</span> <span class="pl-en">problem</span> <span class="pl-c1">(</span><span class="pl-en">binder</span><span class="pl-c1">,</span> <span class="pl-en">bv_name</span><span class="pl-c1">,</span> <span class="pl-en">binder_kind</span><span class="pl-c1">,</span> <span class="pl-en">typ</span><span class="pl-c1">)</span> <span class="pl-c1">-&gt;</span>
+       <span class="pl-en">debug</span> <span class="pl-c1">(</span><span class="pl-s"><span class="pl-pds">"</span>Compiling binder <span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-en">name_of_binder</span> <span class="pl-en">binder</span> <span class="pl-c1">^</span>
+              <span class="pl-s"><span class="pl-pds">"</span>, classified as <span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-en">string_of_abspat_binder_kind</span> <span class="pl-en">binder_kind</span> <span class="pl-c1">^</span>
+              <span class="pl-s"><span class="pl-pds">"</span>, with type <span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-en">term_to_string</span> <span class="pl-en">typ</span><span class="pl-c1">);</span>
+       <span class="pl-k">match</span> <span class="pl-en">binder_kind</span> <span class="pl-k">with</span>
+       <span class="pl-c1">|</span> <span class="pl-c1">ABKVar</span> <span class="pl-c1">_</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">{</span> <span class="pl-en">problem</span> <span class="pl-k">with</span> <span class="pl-en">mp_vars</span> <span class="pl-c1">=</span> <span class="pl-en">bv_name</span> <span class="pl-c1">::</span> <span class="pl-en">problem</span><span class="pl-c1">.</span><span class="pl-en">mp_vars</span> <span class="pl-c1">}</span>
+       <span class="pl-c1">|</span> <span class="pl-c1">ABKHyp</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">{</span> <span class="pl-en">problem</span> <span class="pl-k">with</span> <span class="pl-en">mp_hyps</span> <span class="pl-c1">=</span> <span class="pl-c1">(</span><span class="pl-en">bv_name</span><span class="pl-c1">,</span> <span class="pl-c1">(</span><span class="pl-en">pattern_of_term</span> <span class="pl-en">typ</span><span class="pl-c1">))</span>
+                                           <span class="pl-c1">::</span> <span class="pl-en">problem</span><span class="pl-c1">.</span><span class="pl-en">mp_hyps</span> <span class="pl-c1">}</span>
+       <span class="pl-c1">|</span> <span class="pl-c1">ABKGoal</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">{</span> <span class="pl-en">problem</span> <span class="pl-k">with</span> <span class="pl-en">mp_goal</span> <span class="pl-c1">=</span> <span class="pl-c1">Some</span> <span class="pl-c1">(</span><span class="pl-en">pattern_of_term</span> <span class="pl-en">typ</span><span class="pl-c1">)</span> <span class="pl-c1">})</span>
+    <span class="pl-c1">({</span> <span class="pl-en">mp_vars</span> <span class="pl-c1">=</span> <span class="pl-c1">[];</span> <span class="pl-en">mp_hyps</span> <span class="pl-c1">=</span> <span class="pl-c1">[];</span> <span class="pl-en">mp_goal</span> <span class="pl-c1">=</span> <span class="pl-c1">None</span> <span class="pl-c1">})</span>
+    <span class="pl-en">classified_binders</span> <span class="pl-k">in</span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">continuation</span> <span class="pl-c1">=</span>
+  <span class="pl-k">let</span> <span class="pl-en">abspat_argspec_of_binder</span> <span class="pl-en">xx</span> <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-en">abspat_argspec</span> <span class="pl-c1">=</span>
+  <span class="pl-k">match</span> <span class="pl-en">xx</span> <span class="pl-k">with</span> <span class="pl-c1">|</span> <span class="pl-c1">(</span><span class="pl-en">binder</span><span class="pl-c1">,</span> <span class="pl-en">xx</span><span class="pl-c1">,</span> <span class="pl-en">binder_kind</span><span class="pl-c1">,</span> <span class="pl-en">yy</span><span class="pl-c1">)</span>  <span class="pl-c1">-&gt;</span>
+    <span class="pl-c1">{</span> <span class="pl-en">asa_name</span> <span class="pl-c1">=</span> <span class="pl-en">binder</span><span class="pl-c1">;</span> <span class="pl-en">asa_kind</span> <span class="pl-c1">=</span> <span class="pl-en">binder_kind</span> <span class="pl-c1">}</span> <span class="pl-k">in</span>
+  <span class="pl-c1">(</span><span class="pl-en">map</span> <span class="pl-en">abspat_argspec_of_binder</span> <span class="pl-en">classified_binders</span><span class="pl-c1">,</span> <span class="pl-en">tm</span><span class="pl-c1">)</span> <span class="pl-k">in</span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">mp</span> <span class="pl-c1">=</span>
+  <span class="pl-c1">{</span> <span class="pl-en">mp_vars</span> <span class="pl-c1">=</span> <span class="pl-smi">List.Tot.Base.</span><span class="pl-en">rev</span> <span class="pl-c1">#</span><span class="pl-en">varname</span> <span class="pl-en">problem</span><span class="pl-c1">.</span><span class="pl-en">mp_vars</span><span class="pl-c1">;</span>
+    <span class="pl-en">mp_hyps</span> <span class="pl-c1">=</span> <span class="pl-smi">List.Tot.Base.</span><span class="pl-en">rev</span> <span class="pl-c1">#(</span><span class="pl-en">varname</span> * <span class="pl-en">pattern</span><span class="pl-c1">)</span> <span class="pl-en">problem</span><span class="pl-c1">.</span><span class="pl-en">mp_hyps</span><span class="pl-c1">;</span>
+    <span class="pl-en">mp_goal</span> <span class="pl-c1">=</span> <span class="pl-en">problem</span><span class="pl-c1">.</span><span class="pl-en">mp_goal</span> <span class="pl-c1">}</span> <span class="pl-k">in</span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-en">debug</span> <span class="pl-c1">(</span><span class="pl-s"><span class="pl-pds">"</span>Got matching problem: <span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-c1">(</span><span class="pl-en">string_of_matching_problem</span> <span class="pl-en">mp</span><span class="pl-c1">));</span>
+<span class="pl-en">mp</span><span class="pl-c1">,</span> <span class="pl-en">continuation</span></pre></div>
+<blockquote>
+<h2>
+<a id="user-content-continuations" class="anchor" href="#continuations" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Continuations</h2>
+<p>Parsing an abspat yields a matching problem and a continuation of type
+<code>abspat_continuation</code>, which is essentially just a list of binders and a
+term (the body of the abstraction pattern).</p>
+</blockquote>
+<h4>
+<a id="user-content-arg_type_of_binder_kind" class="anchor" href="#arg_type_of_binder_kind" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>arg_type_of_binder_kind</h4>
 <p>Get the (quoted) type expected by a specific kind of abspat binder. *</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> (locate_fn_of_binder_kind binder_kind):<span class="kw">match</span> binder_kind <span class="kw">with</span> (ABKVar _)  -&gt; (`(ms_locate_var)) | ABKHyp  -&gt; (`(ms_locate_hyp)) | ABKGoal  -&gt; (`(ms_locate_unit))</code></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">arg_type_of_binder_kind</span> <span class="pl-en">binder_kind</span> <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-en">term</span> <span class="pl-c1">=</span>
+  <span class="pl-k">match</span> <span class="pl-en">binder_kind</span> <span class="pl-k">with</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">ABKVar</span> <span class="pl-en">typ</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">typ</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">ABKHyp</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">`</span><span class="pl-en">binder</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">ABKGoal</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">`unit</span></pre></div>
+<h4>
+<a id="user-content-locate_fn_of_binder_kind" class="anchor" href="#locate_fn_of_binder_kind" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>locate_fn_of_binder_kind</h4>
 <p>Retrieve the function used to locate a value for a given abspat binder. *</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((abspat_arg_of_abspat_argspec solution_term (argspec:abspat_argspec)):(Tac term)):<span class="kw">let</span>  loc_fn = locate_fn_of_binder_kind argspec.asa_kind <span class="kw">in</span> <span class="kw">let</span>  name_tm = pack ((Tv_Const ((C_String (name_of_binder argspec.asa_name))))) <span class="kw">in</span> <span class="kw">let</span>  locate_args = (Prims<span class="kw">.</span>Cons ((FStar<span class="kw">.</span>Pervasives<span class="kw">.</span>Native<span class="kw">.</span>Mktuple2 arg_type_of_binder_kind argspec.asa_kind Q_Explicit)) (Prims<span class="kw">.</span>Cons ((FStar<span class="kw">.</span>Pervasives<span class="kw">.</span>Native<span class="kw">.</span>Mktuple2 solution_term Q_Explicit)) (Prims<span class="kw">.</span>Cons ((FStar<span class="kw">.</span>Pervasives<span class="kw">.</span>Native<span class="kw">.</span>Mktuple2 name_tm Q_Explicit)) (Prims<span class="kw">.</span>Nil )))) <span class="kw">in</span> mk_app loc_fn locate_args</code></pre></div>
-<p>Construct a term fetching the value of an abspat argument from a quoted matching solution <code>solution_term</code>. *</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((specialize_abspat_continuation&#39; (continuation:abspat_continuation) (solution_term:term)):(Tac term)):<span class="kw">let</span>  (mk_arg argspec) = ((FStar<span class="kw">.</span>Pervasives<span class="kw">.</span>Native<span class="kw">.</span>Mktuple2 abspat_arg_of_abspat_argspec solution_term argspec Q_Explicit)) <span class="kw">in</span> <span class="kw">let</span>  (argspecs, body) = continuation <span class="kw">in</span> mk_app body (map mk_arg argspecs)</code></pre></div>
-<p>Specialize a continuation of type <code>abspat_continuation</code>. This constructs a fully applied version of <code>continuation</code>, but it requires a quoted solution to be passed in. *</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((specialize_abspat_continuation (continuation:abspat_continuation)):(Tac term)):<span class="kw">let</span>  solution_binder = fresh_binder ((`(matching_solution))) <span class="kw">in</span> <span class="kw">let</span>  solution_term = pack ((Tv_Var (bv_of_binder solution_binder))) <span class="kw">in</span> <span class="kw">let</span>  applied = specialize_abspat_continuation&#39; continuation solution_term <span class="kw">in</span> <span class="kw">let</span>  thunked = pack ((Tv_Abs solution_binder applied)) <span class="kw">in</span> debug (^(<span class="st">&quot;Specialized into &quot;</span>, (term_to_string thunked))); <span class="kw">let</span>  normalized = beta_reduce thunked <span class="kw">in</span> debug (^(<span class="st">&quot;… which reduces to &quot;</span>, (term_to_string normalized))); thunked</code></pre></div>
-<p>Specialize a continuation of type <code>abspat_continuation</code>. This yields a quoted function taking a matching solution and running its body with appropriate bindings. *</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((interp_abspat_continuation (a:Type0) (continuation:abspat_continuation)):(Tac (Unidentified product: [matching_solution] (Tac a)))):<span class="kw">let</span>  applied = specialize_abspat_continuation continuation <span class="kw">in</span> unquote #(Unidentified product: [matching_solution] (Tac a)) applied</code></pre></div>
-<p>Interpret a continuation of type <code>abspat_continuation</code>. This yields a function taking a matching solution and running the body of the continuation with appropriate bindings. *</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((interp_abspat #a (abspat:a)):(Tac <span class="co">(*(matching_problem, abspat_continuation)))):matching_problem_of_abs (quote (abspat))</span></code></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">locate_fn_of_binder_kind</span> <span class="pl-en">binder_kind</span> <span class="pl-c1">=</span>
+  <span class="pl-k">match</span> <span class="pl-en">binder_kind</span> <span class="pl-k">with</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">ABKVar</span> <span class="pl-c1">_</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">`</span><span class="pl-en">ms_locate_var</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">ABKHyp</span>   <span class="pl-c1">-&gt;</span> <span class="pl-c1">`</span><span class="pl-en">ms_locate_hyp</span>
+  <span class="pl-c1">|</span> <span class="pl-c1">ABKGoal</span>  <span class="pl-c1">-&gt;</span> <span class="pl-c1">`</span><span class="pl-en">ms_locate_unit</span></pre></div>
+<h4>
+<a id="user-content-abspat_arg_of_abspat_argspec" class="anchor" href="#abspat_arg_of_abspat_argspec" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>abspat_arg_of_abspat_argspec</h4>
+<p>Construct a term fetching the value of an abspat argument from a quoted
+matching solution <code>solution_term</code>. *</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">abspat_arg_of_abspat_argspec</span> <span class="pl-en">solution_term</span> <span class="pl-c1">(</span><span class="pl-en">argspec</span><span class="pl-c1">:</span> <span class="pl-en">abspat_argspec</span><span class="pl-c1">)</span>
+    <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-en">term</span> <span class="pl-c1">=</span>
+  <span class="pl-k">let</span> <span class="pl-en">loc_fn</span> <span class="pl-c1">=</span> <span class="pl-en">locate_fn_of_binder_kind</span> <span class="pl-en">argspec</span><span class="pl-c1">.</span><span class="pl-en">asa_kind</span> <span class="pl-k">in</span>
+  <span class="pl-k">let</span> <span class="pl-en">name_tm</span> <span class="pl-c1">=</span> <span class="pl-en">pack</span> <span class="pl-c1">(</span><span class="pl-c1">Tv_Const</span> <span class="pl-c1">(</span><span class="pl-c1">C_String</span> <span class="pl-c1">(</span><span class="pl-en">name_of_binder</span> <span class="pl-en">argspec</span><span class="pl-c1">.</span><span class="pl-en">asa_name</span><span class="pl-c1">)))</span> <span class="pl-k">in</span>
+  <span class="pl-k">let</span> <span class="pl-en">locate_args</span> <span class="pl-c1">=</span> <span class="pl-c1">[(</span><span class="pl-en">arg_type_of_binder_kind</span> <span class="pl-en">argspec</span><span class="pl-c1">.</span><span class="pl-en">asa_kind</span><span class="pl-c1">,</span> <span class="pl-c1">Q_Explicit</span><span class="pl-c1">);</span>
+                     <span class="pl-c1">(</span><span class="pl-en">solution_term</span><span class="pl-c1">,</span> <span class="pl-c1">Q_Explicit</span><span class="pl-c1">);</span> <span class="pl-c1">(</span><span class="pl-en">name_tm</span><span class="pl-c1">,</span> <span class="pl-c1">Q_Explicit</span><span class="pl-c1">)]</span> <span class="pl-k">in</span>
+  <span class="pl-en">mk_app</span> <span class="pl-en">loc_fn</span> <span class="pl-en">locate_args</span></pre></div>
+<h4>
+<a id="user-content-specialize_abspat_continuation" class="anchor" href="#specialize_abspat_continuation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>specialize_abspat_continuation'</h4>
+<p>Specialize a continuation of type <code>abspat_continuation</code>.
+This constructs a fully applied version of <code>continuation</code>, but it requires a
+quoted solution to be passed in. *</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">specialize_abspat_continuation'</span> <span class="pl-c1">(</span><span class="pl-en">continuation</span><span class="pl-c1">:</span> <span class="pl-en">abspat_continuation</span><span class="pl-c1">)</span>
+                                    <span class="pl-c1">(</span><span class="pl-en">solution_term</span><span class="pl-c1">:</span><span class="pl-en">term</span><span class="pl-c1">)</span>
+    <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-en">term</span> <span class="pl-c1">=</span>
+  <span class="pl-k">let</span> <span class="pl-en">mk_arg</span> <span class="pl-en">argspec</span> <span class="pl-c1">=</span>
+    <span class="pl-c1">(</span><span class="pl-en">abspat_arg_of_abspat_argspec</span> <span class="pl-en">solution_term</span> <span class="pl-en">argspec</span><span class="pl-c1">,</span> <span class="pl-c1">Q_Explicit</span><span class="pl-c1">)</span> <span class="pl-k">in</span>
+  <span class="pl-k">let</span> <span class="pl-en">argspecs</span><span class="pl-c1">,</span> <span class="pl-en">body</span> <span class="pl-c1">=</span> <span class="pl-en">continuation</span> <span class="pl-k">in</span>
+  <span class="pl-en">mk_app</span> <span class="pl-en">body</span> <span class="pl-c1">(</span><span class="pl-en">map</span> <span class="pl-en">mk_arg</span> <span class="pl-en">argspecs</span><span class="pl-c1">)</span></pre></div>
+<h4>
+<a id="user-content-specialize_abspat_continuation-1" class="anchor" href="#specialize_abspat_continuation-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>specialize_abspat_continuation</h4>
+<p>Specialize a continuation of type <code>abspat_continuation</code>.  This yields a
+quoted function taking a matching solution and running its body with appropriate
+bindings. *</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">specialize_abspat_continuation</span> <span class="pl-c1">(</span><span class="pl-en">continuation</span><span class="pl-c1">:</span> <span class="pl-en">abspat_continuation</span><span class="pl-c1">)</span>
+    <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-en">term</span> <span class="pl-c1">=</span>
+  <span class="pl-k">let</span> <span class="pl-en">solution_binder</span> <span class="pl-c1">=</span> <span class="pl-en">fresh_binder</span> <span class="pl-c1">(`</span><span class="pl-en">matching_solution</span><span class="pl-c1">)</span> <span class="pl-k">in</span>
+  <span class="pl-k">let</span> <span class="pl-en">solution_term</span> <span class="pl-c1">=</span> <span class="pl-en">pack</span> <span class="pl-c1">(</span><span class="pl-c1">Tv_Var</span> <span class="pl-c1">(</span><span class="pl-en">bv_of_binder</span> <span class="pl-en">solution_binder</span><span class="pl-c1">))</span> <span class="pl-k">in</span>
+  <span class="pl-k">let</span> <span class="pl-en">applied</span> <span class="pl-c1">=</span> <span class="pl-en">specialize_abspat_continuation'</span> <span class="pl-en">continuation</span> <span class="pl-en">solution_term</span> <span class="pl-k">in</span>
+  <span class="pl-k">let</span> <span class="pl-en">thunked</span> <span class="pl-c1">=</span> <span class="pl-en">pack</span> <span class="pl-c1">(</span><span class="pl-c1">Tv_Abs</span> <span class="pl-en">solution_binder</span> <span class="pl-en">applied</span><span class="pl-c1">)</span> <span class="pl-k">in</span>
+  <span class="pl-en">debug</span> <span class="pl-c1">(</span><span class="pl-s"><span class="pl-pds">"</span>Specialized into <span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-c1">(</span><span class="pl-en">term_to_string</span> <span class="pl-en">thunked</span><span class="pl-c1">));</span>
+  <span class="pl-k">let</span> <span class="pl-en">normalized</span> <span class="pl-c1">=</span> <span class="pl-en">beta_reduce</span> <span class="pl-en">thunked</span> <span class="pl-k">in</span>
+  <span class="pl-en">debug</span> <span class="pl-c1">(</span><span class="pl-s"><span class="pl-pds">"</span>… which reduces to <span class="pl-pds">"</span></span> <span class="pl-c1">^</span> <span class="pl-c1">(</span><span class="pl-en">term_to_string</span> <span class="pl-en">normalized</span><span class="pl-c1">));</span>
+  <span class="pl-en">thunked</span></pre></div>
+<h4>
+<a id="user-content-interp_abspat_continuation" class="anchor" href="#interp_abspat_continuation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>interp_abspat_continuation</h4>
+<p>Interpret a continuation of type <code>abspat_continuation</code>.
+This yields a function taking a matching solution and running the body of the
+continuation with appropriate bindings. *</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">interp_abspat_continuation</span> <span class="pl-c1">(</span><span class="pl-en">a</span><span class="pl-c1">:Type0)</span> <span class="pl-c1">(</span><span class="pl-en">continuation</span><span class="pl-c1">:</span> <span class="pl-en">abspat_continuation</span><span class="pl-c1">)</span>
+    <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-c1">(</span><span class="pl-en">matching_solution</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-en">a</span><span class="pl-c1">)</span> <span class="pl-c1">=</span>
+  <span class="pl-k">let</span> <span class="pl-en">applied</span> <span class="pl-c1">=</span> <span class="pl-en">specialize_abspat_continuation</span> <span class="pl-en">continuation</span> <span class="pl-k">in</span>
+  <span class="pl-en">unquote</span> <span class="pl-c1">#(</span><span class="pl-en">matching_solution</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-en">a</span><span class="pl-c1">)</span> <span class="pl-en">applied</span></pre></div>
+<blockquote>
+<h1>
+<a id="user-content-putting-it-all-together" class="anchor" href="#putting-it-all-together" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Putting it all together</h1>
+<p>We now have all we need to use pattern-matching, short of a few convenience functions:</p>
+</blockquote>
+<h4>
+<a id="user-content-interp_abspat" class="anchor" href="#interp_abspat" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>interp_abspat</h4>
 <p>Construct a matching problem from an abspat. *</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((match_abspat #b #a (abspat:a) (k:Unidentified product: [abspat_continuation] (Tac (Unidentified product: [matching_solution] (Tac b))))):(Tac b)):<span class="kw">let</span>  goal = cur_goal () <span class="kw">in</span> <span class="kw">let</span>  hypotheses = binders_of_env (cur_env ()) <span class="kw">in</span> <span class="kw">let</span>  (problem, continuation) = interp_abspat abspat <span class="kw">in</span> admit (); solve_mp #matching_solution problem hypotheses goal (k continuation)</code></pre></div>
-<p>Construct an solve a matching problem. This higher-order function isn't very usable on its own — it's mostly a convenience function to avoid duplicating the problem-parsing code. *</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((inspect_abspat_problem #a (abspat:a)):(Tac matching_problem)):fst (interp_abspat #a abspat)</code></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">interp_abspat</span> <span class="pl-c1">#</span><span class="pl-en">a</span> <span class="pl-c1">(</span><span class="pl-en">abspat</span><span class="pl-c1">:</span> <span class="pl-en">a</span><span class="pl-c1">)</span>
+    <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-c1">(</span><span class="pl-en">matching_problem</span> * <span class="pl-en">abspat_continuation</span><span class="pl-c1">)</span> <span class="pl-c1">=</span>
+  <span class="pl-en">matching_problem_of_abs</span> <span class="pl-c1">(</span><span class="pl-en">quote</span> <span class="pl-en">abspat</span><span class="pl-c1">)</span></pre></div>
+<h4>
+<a id="user-content-match_abspat" class="anchor" href="#match_abspat" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>match_abspat</h4>
+<p>Construct an solve a matching problem.
+This higher-order function isn't very usable on its own — it's mostly a
+convenience function to avoid duplicating the problem-parsing code. *</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">match_abspat</span> <span class="pl-c1">#</span><span class="pl-en">b</span> <span class="pl-c1">#</span><span class="pl-en">a</span> <span class="pl-c1">(</span><span class="pl-en">abspat</span><span class="pl-c1">:</span> <span class="pl-en">a</span><span class="pl-c1">)</span>
+                 <span class="pl-c1">(</span><span class="pl-en">k</span><span class="pl-c1">:</span> <span class="pl-en">abspat_continuation</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">(</span><span class="pl-en">matching_solution</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-en">b</span><span class="pl-c1">))</span>
+    <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-en">b</span> <span class="pl-c1">=</span>
+  <span class="pl-k">let</span> <span class="pl-en">goal</span> <span class="pl-c1">=</span> <span class="pl-en">cur_goal</span> <span class="pl-c1">()</span> <span class="pl-k">in</span>
+  <span class="pl-k">let</span> <span class="pl-en">hypotheses</span> <span class="pl-c1">=</span> <span class="pl-en">binders_of_env</span> <span class="pl-c1">(</span><span class="pl-en">cur_env</span> <span class="pl-c1">())</span> <span class="pl-k">in</span>
+  <span class="pl-k">let</span> <span class="pl-en">problem</span><span class="pl-c1">,</span> <span class="pl-en">continuation</span> <span class="pl-c1">=</span> <span class="pl-en">interp_abspat</span> <span class="pl-en">abspat</span> <span class="pl-k">in</span>
+  <span class="pl-k">admit</span><span class="pl-c1">();</span>  <span class="pl-c">//NS: imprecision in the encoding of the impure result function type</span>
+  <span class="pl-en">solve_mp</span> <span class="pl-c1">#</span><span class="pl-en">matching_solution</span> <span class="pl-en">problem</span> <span class="pl-en">hypotheses</span> <span class="pl-en">goal</span> <span class="pl-c1">(</span><span class="pl-en">k</span> <span class="pl-en">continuation</span><span class="pl-c1">)</span></pre></div>
+<h4>
+<a id="user-content-inspect_abspat_problem" class="anchor" href="#inspect_abspat_problem" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>inspect_abspat_problem</h4>
 <p>Inspect the matching problem produced by parsing an abspat. *</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((inspect_abspat_solution #a (abspat:a)):(Tac matching_solution)):match_abspat abspat ((<span class="kw">fun</span> _ -&gt; (((<span class="kw">fun</span> solution -&gt; solution)) : (Tac _))))</code></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">inspect_abspat_problem</span> <span class="pl-c1">#</span><span class="pl-en">a</span> <span class="pl-c1">(</span><span class="pl-en">abspat</span><span class="pl-c1">:</span> <span class="pl-en">a</span><span class="pl-c1">)</span> <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-en">matching_problem</span> <span class="pl-c1">=</span>
+  <span class="pl-en">fst</span> <span class="pl-c1">(</span><span class="pl-en">interp_abspat</span> <span class="pl-c1">#</span><span class="pl-en">a</span> <span class="pl-en">abspat</span><span class="pl-c1">)</span></pre></div>
+<h4>
+<a id="user-content-inspect_abspat_solution" class="anchor" href="#inspect_abspat_solution" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>inspect_abspat_solution</h4>
 <p>Inspect the matching solution produced by parsing and solving an abspat. *</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((gpm #b #a (abspat:a) ()):(Tac b)):<span class="kw">let</span>  (continuation, solution) = match_abspat abspat tpair <span class="kw">in</span> interp_abspat_continuation b continuation solution</code></pre></div>
-<p>Solve a greedy pattern-matching problem and run its continuation. This if for pattern-matching problems in the <code>Tac</code> effect. *</p>
-<div class="sourceCode"><pre class="sourceCode fsharp"><code class="sourceCode fsharp"><span class="kw">let</span> ((pm #b #a (abspat:a)):(Tac b)):match_abspat abspat (interp_abspat_continuation b)</code></pre></div>
-<p>Solve a greedy pattern-matching problem and run its continuation. This if for pattern-matching problems in the <code>Tac</code> effect. *</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">inspect_abspat_solution</span> <span class="pl-c1">#</span><span class="pl-en">a</span> <span class="pl-c1">(</span><span class="pl-en">abspat</span><span class="pl-c1">:</span> <span class="pl-en">a</span><span class="pl-c1">)</span> <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-en">matching_solution</span> <span class="pl-c1">=</span>
+  <span class="pl-en">match_abspat</span> <span class="pl-en">abspat</span> <span class="pl-c1">(</span><span class="pl-k">fun</span> <span class="pl-c1">_</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">(</span><span class="pl-k">fun</span> <span class="pl-en">solution</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">solution</span> <span class="pl-c1">&lt;:</span> <span class="pl-c1">Tac</span> <span class="pl-c1">_</span><span class="pl-c1">)</span> <span class="pl-c1">&lt;:</span> <span class="pl-c1">Tac</span> <span class="pl-c1">_</span><span class="pl-c1">)</span></pre></div>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">tpair</span> <span class="pl-c1">#</span><span class="pl-en">a</span> <span class="pl-c1">#</span><span class="pl-en">b</span> <span class="pl-c1">(</span><span class="pl-en">x</span> <span class="pl-c1">:</span> <span class="pl-en">a</span><span class="pl-c1">)</span> <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-c1">(</span><span class="pl-en">b</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">Tac</span> <span class="pl-c1">(</span><span class="pl-en">a</span> * <span class="pl-en">b</span><span class="pl-c1">))</span> <span class="pl-c1">=</span>
+  <span class="pl-k">fun</span> <span class="pl-c1">(</span><span class="pl-en">y</span><span class="pl-c1">:</span> <span class="pl-en">b</span><span class="pl-c1">)</span> <span class="pl-c1">-&gt;</span> <span class="pl-c1">(</span><span class="pl-en">x</span><span class="pl-c1">,</span> <span class="pl-en">y</span><span class="pl-c1">)</span></pre></div>
+<blockquote>
+<p>Our first convenient entry point!</p>
+<p>This takes an abspat, parses it, computes a solution, and runs the body of
+the abspat with appropriate bindings.  It implements what others call ‘lazy’
+pattern-matching, so called because the success of the body of the pattern
+isn't taken into account when deciding whether a particular set of matched
+hypothesis should be retained.  In other words, it picks the first matching
+set of hypotheses, and commits to it.</p>
+<p>If you think that sounds like a greedy algorithm, it does.  That's why it's
+called ‘gpm’ below: greedy pattern-matching.</p>
+</blockquote>
+<h4>
+<a id="user-content-gpm" class="anchor" href="#gpm" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>gpm</h4>
+<p>Solve a greedy pattern-matching problem and run its continuation.
+This if for pattern-matching problems in the <code>Tac</code> effect. *</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">gpm</span> <span class="pl-c1">#</span><span class="pl-en">b</span> <span class="pl-c1">#</span><span class="pl-en">a</span> <span class="pl-c1">(</span><span class="pl-en">abspat</span><span class="pl-c1">:</span> <span class="pl-en">a</span><span class="pl-c1">)</span> <span class="pl-c1">()</span> <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-en">b</span> <span class="pl-c1">=</span>
+  <span class="pl-k">let</span> <span class="pl-en">continuation</span><span class="pl-c1">,</span> <span class="pl-en">solution</span> <span class="pl-c1">=</span> <span class="pl-en">match_abspat</span> <span class="pl-en">abspat</span> <span class="pl-en">tpair</span> <span class="pl-k">in</span>
+  <span class="pl-en">interp_abspat_continuation</span> <span class="pl-en">b</span> <span class="pl-en">continuation</span> <span class="pl-en">solution</span></pre></div>
+<blockquote>
+<p>And here's the non-greedy version of the same.  It's informative to compare
+the implementations!  This one will only find assignments that let the body
+run successfuly.</p>
+</blockquote>
+<h4>
+<a id="user-content-pm" class="anchor" href="#pm" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>pm</h4>
+<p>Solve a greedy pattern-matching problem and run its continuation.
+This if for pattern-matching problems in the <code>Tac</code> effect. *</p>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">pm</span> <span class="pl-c1">#</span><span class="pl-en">b</span> <span class="pl-c1">#</span><span class="pl-en">a</span> <span class="pl-c1">(</span><span class="pl-en">abspat</span><span class="pl-c1">:</span> <span class="pl-en">a</span><span class="pl-c1">)</span> <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-en">b</span> <span class="pl-c1">=</span>
+  <span class="pl-en">match_abspat</span> <span class="pl-en">abspat</span> <span class="pl-c1">(</span><span class="pl-en">interp_abspat_continuation</span> <span class="pl-en">b</span><span class="pl-c1">)</span></pre></div>
+<blockquote>
+<h1>
+<a id="user-content-examples" class="anchor" href="#examples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Examples</h1>
+<p>We conclude with a small set of examples.</p>
+</blockquote>
+<blockquote>
+<h2>
+<a id="user-content-simple-examples" class="anchor" href="#simple-examples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Simple examples</h2>
+<p>Here's the example from the intro, which we can now run!</p>
+</blockquote>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">fetch_eq_side'</span> <span class="pl-c1">#</span><span class="pl-en">a</span> <span class="pl-c1">:</span> <span class="pl-c1">Tac</span> <span class="pl-c1">(</span><span class="pl-en">term</span> * <span class="pl-en">term</span><span class="pl-c1">)</span> <span class="pl-c1">=</span>
+  <span class="pl-en">gpm</span> <span class="pl-c1">(</span><span class="pl-k">fun</span> <span class="pl-c1">(</span><span class="pl-en">left</span> <span class="pl-en">right</span><span class="pl-c1">:</span> <span class="pl-en">a</span><span class="pl-c1">)</span> <span class="pl-c1">(</span><span class="pl-en">g</span><span class="pl-c1">:</span> <span class="pl-en">pm_goal</span> <span class="pl-c1">(</span><span class="pl-k">squash</span> <span class="pl-c1">(</span><span class="pl-en">left</span> <span class="pl-c1">==</span> <span class="pl-en">right</span><span class="pl-c1">)))</span> <span class="pl-c1">-&gt;</span>
+         <span class="pl-c1">(</span><span class="pl-en">quote</span> <span class="pl-en">left</span><span class="pl-c1">,</span> <span class="pl-en">quote</span> <span class="pl-en">right</span><span class="pl-c1">))</span> <span class="pl-c1">()</span></pre></div>
+<p>TODO: GM: The following definition breaks extraction with</p>
+<p>FStar.Tactics.Effect.fst(20,16-20,21): (Error 76) Ill-typed application: application is FStar.Tactics.PatternMatching.fetch_eq_side' (FStar.Tactics.Types.incr_depth (FStar.Tactics.Types.set_proofstate_range
+ps
+(FStar.Range.prims_to_fstar_range FStar.Tactics.PatternMatching.fst(811,26-811,45))))
+remaining args are FStar.Tactics.Types.incr_depth (FStar.Tactics.Types.set_proofstate_range ps
+(FStar.Range.prims_to_fstar_range FStar.Tactics.PatternMatching.fst(811,26-811,45)))
+ml type of head is (FStar_Reflection_Types.term * FStar_Reflection_Types.term)</p>
+<p>let _ =</p>
+<p>assert_by_tactic (1 + 1 == 2)</p>
+<p>(fun () -&gt; let l, r = fetch_eq_side' #int in</p>
+<p>print (term_to_string l ^ " / " ^ term_to_string r))</p>
+<p>let _ =</p>
+<p>assert_by_tactic (1 + 1 == 2)</p>
+<p>(gpm (fun (left right: int) (g: pm_goal (squash (left == right))) -&gt;</p>
+<p>let l, r = quote left, quote right in</p>
+<p>print (term_to_string l ^ " / " ^ term_to_string r) &lt;: Tac unit))</p>
+<blockquote>
+<p>Commenting out the following example and comparing <code>[</code>pm<code>](#pm)</code> and <code>[</code>gpm<code>](#gpm)</code> can be
+instructive:</p>
+</blockquote>
+<p>let test_bt (a: Type0) (b: Type0) (c: Type0) (d: Type0) =
+assert_by_tactic ((a ==&gt; d) ==&gt; (b ==&gt; d) ==&gt; (c ==&gt; d) ==&gt; a ==&gt; d)
+(fun () -&gt; repeat' implies_intro';
+gpm (fun (a b: Type0) (h: hyp (a ==&gt; b)) -&gt;
+print (binder_to_string h);
+fail "fail here" &lt;: Tac unit);
+qed ())</p>
+<blockquote>
+<h2>
+<a id="user-content-a-real-life-example" class="anchor" href="#a-real-life-example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>A real-life example</h2>
+<p>The following tactics combines mutliple simple building blocks to solve a
+goal.  Each use of <code>lpm</code> recognizes a specific pattern; and each tactic is
+tried in succession, until one succeeds.  The whole process is repeated as
+long as at least one tactic succeeds.</p>
+</blockquote>
+<div class="highlight highlight-source-fstar"><pre><span class="pl-k">let</span> <span class="pl-en">example</span> <span class="pl-c1">(#</span><span class="pl-en">a</span><span class="pl-c1">:Type0)</span> <span class="pl-c1">(#</span><span class="pl-en">b</span><span class="pl-c1">:Type0)</span> <span class="pl-c1">(#</span><span class="pl-en">c</span><span class="pl-c1">:Type0)</span> <span class="pl-c1">:unit</span> <span class="pl-c1">=</span>
+  <span class="pl-en">assert_by_tactic</span> <span class="pl-c1">(</span><span class="pl-en">a</span> <span class="pl-c1">/\</span> <span class="pl-en">b</span> <span class="pl-c1">==&gt;</span> <span class="pl-en">c</span> <span class="pl-c1">==</span> <span class="pl-en">b</span> <span class="pl-c1">==&gt;</span> <span class="pl-en">c</span><span class="pl-c1">)</span>
+    <span class="pl-c1">(</span><span class="pl-k">fun</span> <span class="pl-c1">()</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">repeat'</span> <span class="pl-c1">(</span><span class="pl-k">fun</span> <span class="pl-c1">()</span> <span class="pl-c1">-&gt;</span>
+                 <span class="pl-en">gpm</span> <span class="pl-c1">#unit</span> <span class="pl-c1">(</span><span class="pl-k">fun</span> <span class="pl-c1">(</span><span class="pl-en">a</span><span class="pl-c1">:</span> <span class="pl-c1">Type)</span> <span class="pl-c1">(</span><span class="pl-en">h</span><span class="pl-c1">:</span> <span class="pl-en">hyp</span> <span class="pl-c1">(</span><span class="pl-k">squash</span> <span class="pl-en">a</span><span class="pl-c1">))</span> <span class="pl-c1">-&gt;</span>
+                              <span class="pl-en">clear</span> <span class="pl-en">h</span> <span class="pl-c1">&lt;:</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit)</span> <span class="pl-c1">`</span><span class="pl-en">or_else</span><span class="pl-c1">`</span>
+                 <span class="pl-c1">(</span><span class="pl-k">fun</span> <span class="pl-c1">()</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">gpm</span> <span class="pl-c1">#unit</span> <span class="pl-c1">(</span><span class="pl-k">fun</span> <span class="pl-c1">(</span><span class="pl-en">a</span> <span class="pl-en">b</span><span class="pl-c1">:</span> <span class="pl-c1">Type0)</span> <span class="pl-c1">(</span><span class="pl-en">g</span><span class="pl-c1">:</span> <span class="pl-en">pm_goal</span> <span class="pl-c1">(</span><span class="pl-k">squash</span> <span class="pl-c1">(</span><span class="pl-en">a</span> <span class="pl-c1">==&gt;</span> <span class="pl-en">b</span><span class="pl-c1">)))</span> <span class="pl-c1">-&gt;</span>
+                              <span class="pl-en">implies_intro'</span> <span class="pl-c1">()</span> <span class="pl-c1">&lt;:</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit)</span> <span class="pl-c1">`</span><span class="pl-en">or_else</span><span class="pl-c1">`</span>
+                 <span class="pl-c1">(</span><span class="pl-k">fun</span> <span class="pl-c1">()</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">gpm</span> <span class="pl-c1">#unit</span> <span class="pl-c1">(</span><span class="pl-k">fun</span> <span class="pl-c1">(</span><span class="pl-en">a</span> <span class="pl-en">b</span><span class="pl-c1">:</span> <span class="pl-c1">Type0)</span> <span class="pl-c1">(</span><span class="pl-en">h</span><span class="pl-c1">:</span> <span class="pl-en">hyp</span> <span class="pl-c1">(</span><span class="pl-en">a</span> <span class="pl-c1">/\</span> <span class="pl-en">b</span><span class="pl-c1">))</span> <span class="pl-c1">-&gt;</span>
+                              <span class="pl-en">and_elim'</span> <span class="pl-en">h</span> <span class="pl-c1">&lt;:</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit)</span> <span class="pl-c1">`</span><span class="pl-en">or_else</span><span class="pl-c1">`</span>
+                 <span class="pl-c1">(</span><span class="pl-k">fun</span> <span class="pl-c1">()</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">gpm</span> <span class="pl-c1">#unit</span> <span class="pl-c1">(</span><span class="pl-k">fun</span> <span class="pl-c1">(</span><span class="pl-en">a</span> <span class="pl-en">b</span><span class="pl-c1">:</span> <span class="pl-c1">Type0)</span> <span class="pl-c1">(</span><span class="pl-en">h</span><span class="pl-c1">:</span> <span class="pl-en">hyp</span> <span class="pl-c1">(</span><span class="pl-en">a</span> <span class="pl-c1">==</span> <span class="pl-en">b</span><span class="pl-c1">))</span> <span class="pl-c1">(</span><span class="pl-en">g</span><span class="pl-c1">:</span> <span class="pl-en">pm_goal</span> <span class="pl-c1">(</span><span class="pl-k">squash</span> <span class="pl-en">a</span><span class="pl-c1">))</span> <span class="pl-c1">-&gt;</span>
+                              <span class="pl-en">rewrite</span> <span class="pl-en">h</span> <span class="pl-c1">&lt;:</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit)</span> <span class="pl-c1">`</span><span class="pl-en">or_else</span><span class="pl-c1">`</span>
+                 <span class="pl-c1">(</span><span class="pl-k">fun</span> <span class="pl-c1">()</span> <span class="pl-c1">-&gt;</span> <span class="pl-en">gpm</span> <span class="pl-c1">#unit</span> <span class="pl-c1">(</span><span class="pl-k">fun</span> <span class="pl-c1">(</span><span class="pl-en">a</span><span class="pl-c1">:</span> <span class="pl-c1">Type0)</span> <span class="pl-c1">(</span><span class="pl-en">h</span><span class="pl-c1">:</span> <span class="pl-en">hyp</span> <span class="pl-en">a</span><span class="pl-c1">)</span> <span class="pl-c1">(</span><span class="pl-en">g</span><span class="pl-c1">:</span> <span class="pl-en">pm_goal</span> <span class="pl-c1">(</span><span class="pl-k">squash</span> <span class="pl-en">a</span><span class="pl-c1">))</span> <span class="pl-c1">-&gt;</span>
+                              <span class="pl-en">exact_hyp</span> <span class="pl-en">a</span> <span class="pl-en">h</span> <span class="pl-c1">&lt;:</span> <span class="pl-c1">Tac</span> <span class="pl-c1">unit)</span> <span class="pl-c1">())))));</span>
+               <span class="pl-en">qed</span> <span class="pl-c1">())</span></pre></div>
+<blockquote>
+<h1>
+<a id="user-content-possible-extensions" class="anchor" href="#possible-extensions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Possible extensions</h1>
+<p>The following tasks would make for interesting extensions of this
+experiment:</p>
+<ul>
+<li>Handling multiple goal patterns (easy)</li>
+<li>Extending the matching language (match under binders?)</li>
+<li>Introducing specialized syntax</li>
+<li>Thinking about a sound way of supporting ‘match-anything’ patterns in
+abspat notations</li>
+<li>Using the normalizer to partially-evaluated pattern-matching tactics</li>
+<li>Migrating to a compile-time version of <code>quote</code>
+</li>
+</ul>
+</blockquote>
+
 </body>
 </html>
