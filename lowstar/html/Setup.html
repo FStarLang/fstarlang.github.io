@@ -246,10 +246,7 @@ interactive mode:</p>
 
 <span class="nv">BIGNUM_HOME</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span>.
 
-<span class="cp">ifeq (,$(KRML_HOME))</span>
-<span class="w">  </span><span class="k">$(</span>error<span class="w"> </span>KRML_HOME<span class="w"> </span>is<span class="w"> </span>not<span class="w"> </span>defined<span class="k">)</span>
-<span class="cp">endif</span>
-
+<span class="nv">KRML_EXE</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span>krml
 <span class="nv">FSTAR_EXE</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span>fstar.exe
 
 <span class="c"># I prefer to always check all fst files in the source directories; otherwise,</span>
@@ -267,7 +264,7 @@ interactive mode:</p>
 <span class="c"># the interactive mode, for finding checked files for our own F* files.</span>
 <span class="nv">INCLUDE_DIRS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span><span class="k">$(</span>SOURCE_DIRS<span class="k">)</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="k">$(</span>KRML_HOME<span class="k">)</span>/krmllib<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="k">$(</span>shell<span class="w"> </span><span class="k">$(</span>KRML_EXE<span class="k">)</span><span class="w"> </span>-locate-krmllib<span class="k">)</span>
 <span class="w">  </span><span class="k">$(</span>BIGNUM_HOME<span class="k">)</span>/obj
 
 
@@ -433,7 +430,7 @@ OCaml can no longer be interleaved.</p>
 <span class="c"># F* --&gt; C</span>
 <span class="c"># --------</span>
 
-<span class="nv">KRML</span><span class="o">=</span><span class="k">$(</span>KRML_HOME<span class="k">)</span>/krml
+<span class="nv">KRML_EXE</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span>krml
 
 <span class="c"># Note: the implementation of the intrinsic uses external linkage, but you could</span>
 <span class="c"># easily turn this file into a .h, use -add-include &#39;&quot;Impl_Bignum_Intrinsics.h&quot;&#39;</span>
@@ -534,7 +531,7 @@ OCaml can no longer be interleaved.</p>
 <span class="c"># Compiling the hand-written test</span>
 <span class="c"># -------------------------------</span>
 
-<span class="nv">CFLAGS</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span>-I<span class="w"> </span>dist<span class="w"> </span>-I<span class="w"> </span><span class="k">$(</span>KRML_HOME<span class="k">)</span>/include
+<span class="nv">CFLAGS</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span>-I<span class="w"> </span>dist<span class="w"> </span>-I<span class="w"> </span><span class="k">$(</span>shell<span class="w"> </span><span class="k">$(</span>KRML_EXE<span class="k">)</span><span class="w"> </span>-locate-include<span class="k">)</span>
 
 <span class="nf">tests/c-tests.exe</span><span class="o">:</span><span class="w"> </span><span class="n">tests</span>/<span class="n">c</span>-<span class="n">tests</span>.<span class="n">o</span> <span class="n">dist</span>/<span class="n">libbignum</span>.<span class="n">a</span>
 <span class="w">	</span><span class="k">$(</span>CC<span class="k">)</span><span class="w"> </span>$^<span class="w"> </span>-o<span class="w"> </span><span class="nv">$@</span>
